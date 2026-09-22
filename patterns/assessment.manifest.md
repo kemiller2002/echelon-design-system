@@ -24,12 +24,27 @@ Provide reusable semantic markup and CSS for assessment, decision, validation, a
 - `.ef-validation-summary`
 - `.ef-survey-progress`
 - `.ef-obligation-panel`
+- `.ef-binary-choice`
+- `.ef-semantic-differential`
+- `.ef-symbol-rating`
+- `.ef-numeric-stepper`
+- `.ef-range-entry`
+- `.ef-choice--media`
+- `.ef-matrix`
+- `.ef-pairwise`
+- `.ef-best-worst`
+- `.ef-hierarchy`
 
 ### Behavior-required visual contracts
 
 - `.ef-ranking`
 - `.ef-allocation` aggregate validation
 - `.ef-rule-builder`
+- graphical dual-thumb range interaction
+- best/worst cross-column exclusion
+- multi-choice cardinality/exclusive-option enforcement
+- matrix global constraints
+- hierarchical cascading/parent-child policy
 
 ## Tests and verification
 
@@ -66,7 +81,10 @@ Escalation required:
 - creating scoring semantics from presentation;
 - replacing native radio/checkbox semantics;
 - collapsing Unknown, Not Applicable, and ordinal values into one visual continuum;
-- making drag the only ranking path.
+- making drag the only ranking path;
+- using a checkbox switch where Unanswered must remain distinct from false;
+- treating NPS/Likert/star/icon labels as scoring authority;
+- requiring horizontal scrolling as the only matrix mobile interaction.
 
 ## Maintenance
 
