@@ -1,8 +1,9 @@
 ---
 id: ADR-0001
 title: Pilot implementation architecture
-status: accepted
+status: superseded
 date: 2026-09-22
+superseded_by: ADR-0002
 ---
 
 # Decision
