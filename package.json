@@ -4,15 +4,21 @@
   "private": true,
   "type": "module",
   "description": "Zero-runtime HTML and CSS design system for Echelon Foundry applications.",
-  "sideEffects": ["./dist/*.css"],
+  "sideEffects": [
+    "./dist/*.css"
+  ],
   "exports": {
     "./tokens.css": "./dist/tokens.css",
     "./foundations.css": "./dist/foundations.css",
     "./components.css": "./dist/components.css",
     "./all.css": "./dist/all.css",
-    "./patterns/*": "./dist/patterns/*"
+    "./patterns/*": "./dist/patterns/*",
+    "./assessment.css": "./dist/assessment.css"
   },
-  "files": ["dist", "patterns"],
+  "files": [
+    "dist",
+    "patterns"
+  ],
   "scripts": {
     "clean": "node tools/clean.mjs",
     "tokens:build": "dotnet run --project tools/TokenCompiler/TokenCompiler.fsproj -- tokens/echelon.tokens.json dist/tokens.css",
