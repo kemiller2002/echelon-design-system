@@ -1,37 +1,37 @@
-# Feature Manifest — ef-slider
+# Feature Manifest — slider pattern
 
 ## Purpose
 
-Provide a polished numeric range input while preserving native range interaction for keyboard, touch, and assistive technology.
+Provide a polished numeric range control using semantic HTML and CSS only while preserving native range behavior for keyboard, touch, and assistive technology.
 
 ## Ownership
 
-- State, including presentation state: `src/Slider.fs`
-- Transitions / commands / messages: native range input updates normalized value; continuous input and committed change are distinct
-- Invariants and guards: min <= max; value clamped to range; step delegated to native range semantics
-- Capabilities / authority: caller receives intent/value events; component does not infer domain legality
-- Important effects and effect contracts: ElementInternals form value; DOM events
+- State, including presentation state: native range value/disabled/focus states in `patterns/slider.html`
+- Transitions / commands / messages: browser-native `input` and `change`
+- Invariants and guards: min/max/step/value remain native HTML contracts
+- Capabilities / authority: none — application/Ordo owns domain legality
+- Important effects and effect contracts: native form value and DOM events
 
 ## Interfaces
 
-- Inbound: min, max, step, value, disabled, label, description
-- Outbound: ef-input, ef-change, input, change
+- Inbound: standard range attributes plus required Echelon class structure
+- Outbound: native input/change events and native form value
 
 ## Tests and verification
 
 - Local behavior tests: `tests/browser/slider.spec.mjs`
-- Boundary/contract tests: form value, keyboard, role/name, reduced motion
+- Boundary/contract tests: form value, keyboard, accessible name, zero-runtime scan
 - Integration/live verification: Playwright Chromium/Firefox/WebKit matrix
 
 ## Dependencies
 
-- Allowed direct dependencies: Component runtime, semantic tokens
-- Required composition context: generated tokens CSS
+- Allowed direct dependencies: semantic tokens, `src/styles/components.css`
+- Required composition context: Limen/application code only for value displays, business validation, persistence, or richer domain behavior
 
 ## Modification boundaries
 
-- Normal: `src/Slider.fs`, slider tests, slider documentation
-- Escalation required: replacing native range interaction, multi-thumb extension, event contract change
+- Normal: `patterns/slider.html`, slider CSS, slider tests
+- Escalation required: replacing native range interaction, multi-thumb behavior, live value synchronization inside the design-system package
 
 ## Local agent instructions
 
@@ -41,4 +41,4 @@ Provide a polished numeric range input while preserving native range interaction
 
 - Owner: Echelon Foundry design system
 - Last checked against implementation: 2026-09-22
-- Known gaps: vertical and multi-thumb variants follow only after single-slider evidence
+- Known gaps: cross-browser CSS cannot reliably synchronize an arbitrary live value bubble or filled custom track without behavior; native range presentation is intentionally retained
