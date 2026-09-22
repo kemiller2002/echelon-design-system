@@ -1,7 +1,7 @@
 module Echelon.DesignSystem.Slider
 
 open System
-open System.Globalization
+open Fable.Core
 open Fable.Core.JsInterop
 open Echelon.DesignSystem.Runtime.WebComponent
 
@@ -184,16 +184,21 @@ let private template = """
 let private attrOr fallback host name =
     getAttribute host name |> Option.defaultValue fallback
 
+[<Emit("Number.parseFloat($0)")>]
+let private parseFloat (value: string) : float = jsNative
+
+[<Emit("Number.isFinite($0)")>]
+let private isFinite (value: float) : bool = jsNative
+
+[<Emit("$0.toString()")>]
+let private invariant (value: float) : string = jsNative
+
 let private tryFloat fallback (value: string) =
-    match Double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture) with
-    | true, parsed -> parsed
-    | _ -> fallback
+    let parsed = parseFloat value
+    if isFinite parsed then parsed else fallback
 
 let private midpoint minValue maxValue =
     minValue + ((maxValue - minValue) / 2.0)
-
-let private invariant value =
-    value.ToString("0.########", CultureInfo.InvariantCulture)
 
 let private sync host =
     let root = storedShadow host
