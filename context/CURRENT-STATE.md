@@ -86,3 +86,23 @@ ROS attribution is complete as WI-0004; final branch validation is running on th
 ## Next boundary
 
 After this slice, use Signal to define the first reusable Limen behavior contracts for behavior-required patterns such as ranking, allocation aggregate validation, rule editing, tabs, and comboboxes without adding runtime behavior to the design-system package.
+
+
+## Signal selector completeness extension
+
+Signal SCS-009 through SCS-018 added a broader closed-ended selector catalog. The shared design system now includes:
+
+- binary choice preserving Unanswered;
+- 3/4/5/6/7/10/11-point ordinal presentation;
+- semantic differential;
+- symbol/star/icon rating;
+- numeric stepper;
+- direct range endpoint entry;
+- image-choice variant;
+- multi-choice cardinality/exclusive-option communication;
+- responsive matrix/repeated-scale composition;
+- pairwise comparison;
+- best-worst visual contract;
+- hierarchical single/multi-choice baseline.
+
+Behavior that HTML cannot safely own remains a Limen/application concern, notably graphical dual-thumb range interaction, cross-control best/worst exclusion, multi-choice cardinality enforcement, matrix global constraints, and hierarchy cascade semantics.
