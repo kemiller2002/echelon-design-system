@@ -96,7 +96,8 @@ Prefer the most semantic existing primitive.
 Every Forma component must have a usable 320 CSS px presentation. Agents must:
 
 - preserve semantic order and domain meaning across breakpoints;
-- avoid page-level horizontal overflow for essential content;
+- avoid page-level horizontal overflow for essential content at both 320px and a representative 390px phone width;
+- provide approximately 44 by 44 CSS pixel standalone touch targets where practical;
 - provide non-hover, non-drag, non-pointer-only alternatives;
 - keep critical actions reachable when toolbars, tabs, panes, and grids collapse;
 - preserve deep-link/URL state meaning when controls recompose;
@@ -117,8 +118,11 @@ npm run site:check
 ```
 
 The documentation build enforces that every implemented `patterns/*.html`
-component has a dedicated page with at least three rendered examples and that
-the published site contains no runtime `<script>` element.
+component has a dedicated page with at least three rendered examples including
+a true 320px mobile preview, that the published site contains no runtime
+`<script>` element, and that generated-site mobile containment regressions are
+tested. The browser suite also checks canonical patterns for mobile reflow and
+touch-target behavior.
 
 ## Documentation site
 

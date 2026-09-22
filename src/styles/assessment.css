@@ -311,7 +311,9 @@
   }
 
   .ef-survey-progress__header {
+    min-inline-size: 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
     align-items: baseline;
@@ -368,7 +370,11 @@
     font-weight: 800;
   }
 
-  .ef-ranking__label { font-weight: 650; }
+  .ef-ranking__label {
+    min-inline-size: 0;
+    font-weight: 650;
+    overflow-wrap: anywhere;
+  }
 
   .ef-ranking__actions {
     display: inline-flex;
@@ -414,6 +420,7 @@
 
   .ef-allocation__total {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
     margin-block-start: var(--ef-primitive-spacing-3, 0.75rem);
@@ -434,6 +441,7 @@
 
   /* Rule builder visual contract --------------------------------------- */
   .ef-rule-builder {
+    min-inline-size: 0;
     border: 1px solid var(--ef-color-border-functional, #3a403c);
     background: var(--ef-color-surface-primary, #f2efe7);
   }
@@ -479,6 +487,7 @@
   }
 
   .ef-rule-clause {
+    min-inline-size: 0;
     display: grid;
     grid-template-columns: minmax(8rem, 1.25fr) minmax(8rem, 1fr) minmax(8rem, 1fr) auto;
     gap: var(--ef-primitive-spacing-2, 0.5rem);
@@ -503,6 +512,7 @@
 
   /* Ordo obligation panel ---------------------------------------------- */
   .ef-obligation-panel {
+    min-inline-size: 0;
     border: 1px solid var(--ef-color-border-functional, #3a403c);
     background: var(--ef-color-surface-primary, #f2efe7);
   }
@@ -625,6 +635,7 @@
   }
 
   .ef-binary-choice__options {
+    max-inline-size: 100%;
     display: inline-grid;
     grid-auto-flow: column;
     grid-auto-columns: minmax(6rem, 1fr);
@@ -680,6 +691,7 @@
   .ef-semantic-differential__endpoints--mobile { display: none; }
 
   .ef-semantic-differential__scale {
+    max-inline-size: 100%;
     display: grid;
     grid-template-columns: repeat(7, minmax(2.75rem, 1fr));
     border: 1px solid var(--ef-color-border-functional, #3a403c);
@@ -708,7 +720,9 @@
   }
 
   .ef-symbol-rating__options {
+    max-inline-size: 100%;
     display: inline-flex;
+    flex-wrap: wrap;
     gap: 0.25rem;
   }
 
@@ -981,14 +995,58 @@
       border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
     }
 
-    .ef-rule-builder__header { align-items: stretch; flex-direction: column; }
+    .ef-rule-builder__header,
+    .ef-obligation-panel__header {
+      align-items: stretch;
+      flex-direction: column;
+    }
+
     .ef-rule-clause { grid-template-columns: 1fr; }
     .ef-obligation { grid-template-columns: 1fr; }
     .ef-obligation__status { justify-self: start; }
 
+    .ef-ranking__item {
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .ef-ranking__actions {
+      grid-column: 1 / -1;
+      inline-size: 100%;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .ef-ranking__actions button {
+      min-inline-size: 0;
+      inline-size: 100%;
+    }
+
+    .ef-allocation__item {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+
+    .ef-binary-choice__options {
+      inline-size: 100%;
+      grid-auto-flow: row;
+      grid-template-columns: 1fr;
+      grid-auto-columns: auto;
+    }
+
+    .ef-binary-option + .ef-binary-option {
+      border-inline-start: 0;
+      border-block-start: 1px solid var(--ef-color-border-functional, #3a403c);
+    }
+
     .ef-semantic-differential__endpoints:not(.ef-semantic-differential__endpoints--mobile) { display: none; }
     .ef-semantic-differential__endpoints--mobile { display: flex; }
-    .ef-semantic-differential__scale { grid-template-columns: repeat(7, minmax(2.75rem, 1fr)); overflow-x: auto; }
+    .ef-semantic-differential__scale {
+      grid-template-columns: repeat(7, minmax(2.75rem, 1fr));
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-gutter: stable;
+    }
     .ef-range-entry__inputs { grid-template-columns: 1fr; }
     .ef-range-entry__separator { padding: 0; }
     .ef-choice--media { grid-template-columns: 1fr; }
@@ -996,9 +1054,21 @@
     .ef-matrix__choices { grid-auto-flow: row; grid-template-columns: 1fr; }
     .ef-matrix__choices label { grid-template-columns: auto 1fr; justify-items: start; text-align: start; }
     .ef-best-worst__header { display: none; }
-    .ef-best-worst__row { grid-template-columns: minmax(0, 1fr) auto auto; }
+    .ef-best-worst__row {
+      grid-template-columns: minmax(0, 1fr) minmax(2.75rem, auto) minmax(2.75rem, auto);
+      padding-inline: 0.4rem;
+    }
+
     .ef-pairwise__options { grid-template-columns: 1fr; }
     .ef-pairwise__versus { justify-self: center; }
+
+    .ef-hierarchy__tree ul {
+      padding-inline-start: 0.75rem;
+    }
+
+    .ef-hierarchy details {
+      padding-inline-start: 0.5rem;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

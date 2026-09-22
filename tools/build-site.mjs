@@ -361,16 +361,18 @@ const agentBody = `<main id="main" class="content-section agent-page">
   </ol>
 
   <h2>Boundary ownership</h2>
-  <table>
-    <thead><tr><th>Concern</th><th>Owner</th></tr></thead>
-    <tbody>
-      <tr><td>Typography, color, spacing, layout, responsive presentation</td><td>Forma</td></tr>
-      <tr><td>Checked/open/required/disabled and native state</td><td>Native HTML rendered by the application</td></tr>
-      <tr><td>Async search, ranking movement, rule editing</td><td>Application / Limen</td></tr>
-      <tr><td>Legal transitions, capabilities, obligations, permissions</td><td>Ordo/application domain state</td></tr>
-      <tr><td>Scores and assessment interpretation</td><td>Application domain logic</td></tr>
-    </tbody>
-  </table>
+  <div class="table-scroll" role="region" aria-label="Boundary ownership table" tabindex="0">
+    <table>
+      <thead><tr><th>Concern</th><th>Owner</th></tr></thead>
+      <tbody>
+        <tr><td>Typography, color, spacing, layout, responsive presentation</td><td>Forma</td></tr>
+        <tr><td>Checked/open/required/disabled and native state</td><td>Native HTML rendered by the application</td></tr>
+        <tr><td>Async search, ranking movement, rule editing</td><td>Application / Limen</td></tr>
+        <tr><td>Legal transitions, capabilities, obligations, permissions</td><td>Ordo/application domain state</td></tr>
+        <tr><td>Scores and assessment interpretation</td><td>Application domain logic</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <h2>Do not</h2>
   <ul>

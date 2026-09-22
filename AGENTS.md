@@ -69,10 +69,13 @@ presentation vocabulary.
 6. When no existing pattern fits, check
    `requirements/COMPONENT-CATALOG.md` and record the gap through ROS before
    adding a new visual contract.
-7. Treat 320px mobile recomposition as part of every component contract; do not
-   create desktop-only components or separate mobile-only semantic forks.
+7. Treat mobile/reflow behavior as part of every canonical pattern: no
+   page-level overflow at 320 CSS pixels, preserve semantics when stacking,
+   keep standalone touch targets approximately 44 by 44 CSS pixels where
+   practical, and do not create desktop-only components or separate mobile-only
+   semantic forks.
 8. Run `npm run site:check` whenever canonical patterns or component styling
-   change.
+   change; it includes generated-site mobile regression coverage.
 
 ## Handoff
 

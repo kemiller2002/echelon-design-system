@@ -3,6 +3,8 @@
 
   :where(html) {
     color-scheme: light dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
     background: var(--ef-color-surface-primary, #f2efe7);
     color: var(--ef-color-text-primary, #171a18);
@@ -41,7 +43,18 @@
     text-underline-offset: 0.18em;
   }
 
-  :where(button, input, select, textarea) { font: inherit; }
+  :where(button, input, select, textarea) {
+    max-inline-size: 100%;
+    font: inherit;
+  }
+
+  :where(img, picture, video, canvas, svg) {
+    max-inline-size: 100%;
+  }
+
+  :where(img, video, canvas) {
+    block-size: auto;
+  }
 
   :where(button, .ef-button) {
     min-block-size: 2.75rem;
@@ -77,7 +90,11 @@
   .ef-cluster { display: flex; flex-wrap: wrap; gap: var(--ef-cluster-gap, var(--ef-primitive-spacing-3, 0.75rem)); align-items: center; }
   .ef-grid { display: grid; gap: var(--ef-grid-gap, var(--ef-primitive-spacing-4, 1rem)); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--ef-grid-min, 16rem)), 1fr)); }
   .ef-section { padding-block: var(--ef-section-space, var(--ef-primitive-spacing-7, 3rem)); }
-  .ef-surface { padding: var(--ef-surface-space, var(--ef-primitive-spacing-5, 1.5rem)); background: var(--ef-color-surface-secondary, #e3e0d7); color: var(--ef-color-text-on-secondary-surface, #3a403c); border: 1px solid var(--ef-color-border-subtle, #e3e0d7); }
+  .ef-surface { min-inline-size: 0; padding: var(--ef-surface-space, var(--ef-primitive-spacing-5, 1.5rem)); background: var(--ef-color-surface-secondary, #e3e0d7); color: var(--ef-color-text-on-secondary-surface, #3a403c); border: 1px solid var(--ef-color-border-subtle, #e3e0d7); }
+
+  :where(h1, h2, h3, h4, h5, h6, p, a, label, legend, td, th) {
+    overflow-wrap: anywhere;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {

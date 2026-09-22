@@ -19,6 +19,29 @@ Priority meanings:
 - **P2**: advanced capability justified by real product needs.
 - **P3**: specialized capability that requires evidence before implementation.
 
+## Cross-cutting mobile and reflow requirements
+
+These requirements apply to every shipped pattern, including advanced visual
+contracts whose behavior is supplied by Limen/application code.
+
+- The canonical pattern must remain contained at 320 CSS pixels and wider.
+- Responsive presentation must not create page-level horizontal scrolling.
+- Standalone controls and delegated label targets should expose approximately a
+  44 by 44 CSS pixel touch target where practical.
+- Layout changes may stack, wrap, collapse, or introduce component-contained
+  scrolling, but must preserve semantic order and accessible relationships.
+- Horizontal scrolling is acceptable only when the information model genuinely
+  depends on a horizontal continuum or table; the scroll region must remain
+  contained and keyboard reachable when needed.
+- Hover, drag, precise pointer input, color, and motion may enhance interaction
+  but may not be the sole usable path.
+- Long labels, translated content, large text, and user-generated values must
+  wrap or reflow rather than forcing viewport overflow.
+- Dialogs, popovers, drawers, menus, and other transient surfaces must fit
+  within the dynamic viewport and provide contained scrolling for long content.
+- Mobile verification must cover at least 320px and 390px widths and must run
+  against every canonical implemented pattern.
+
 ## 1. Native styled foundations
 
 These are primarily CSS and semantic HTML, not custom elements.
