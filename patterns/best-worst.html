@@ -1,0 +1,21 @@
+<fieldset class="ef-best-worst">
+  <legend class="ef-best-worst__legend">Choose the most important and least important item.</legend>
+  <p class="ef-field__description">One item must be Best and a different item must be Worst. Limen enforces the cross-column constraint.</p>
+
+  <div class="ef-best-worst__header" aria-hidden="true">
+    <span>Option</span><span>Best</span><span>Worst</span>
+  </div>
+
+  <div class="ef-best-worst__row">
+    <span id="bw-reliability">Reliability</span>
+    <label><input type="radio" name="best" value="reliability" aria-labelledby="bw-reliability bw-best-label"><span class="ef-sr-only" id="bw-best-label">Best</span></label>
+    <label><input type="radio" name="worst" value="reliability" aria-labelledby="bw-reliability bw-worst-label"><span class="ef-sr-only" id="bw-worst-label">Worst</span></label>
+  </div>
+  <div class="ef-best-worst__row">
+    <span id="bw-speed">Delivery speed</span>
+    <label><input type="radio" name="best" value="speed" aria-label="Delivery speed, Best"></label>
+    <label><input type="radio" name="worst" value="speed" aria-label="Delivery speed, Worst"></label>
+  </div>
+
+  <p class="ef-best-worst__status" data-ef-state="incomplete" aria-live="polite">Choose one Best and one Worst.</p>
+</fieldset>
