@@ -2,7 +2,7 @@
 
 | ID | Work | Status | Tags | Priority |
 |---|---|---|---|---|
-| GH-12 | Align Forma documentation site with Echelon Foundry CSS | ready | forma,css,visual-engineering | high |
+| GH-12 | Align Forma documentation site with Echelon Foundry CSS | complete | forma,css,visual-engineering | high |
 | GH-9 | Build Forma component documentation site | complete | forma,documentation,github-pages | high |
 | ROS-INSTALL-3-1-4 | ROS-INSTALL-3-1-4 | complete |  |  |
 | WI-0001 | Install Echelon engineering capabilities | complete |  | high |
