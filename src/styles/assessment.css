@@ -986,8 +986,7 @@
     .ef-matrix__choices { grid-auto-flow: row; grid-template-columns: 1fr; }
     .ef-matrix__choices label { grid-template-columns: auto 1fr; justify-items: start; text-align: start; }
     .ef-best-worst__header { display: none; }
-    .ef-best-worst__row,
-    .ef-pairwise__option { grid-template-columns: minmax(0, 1fr) auto auto; }
+    .ef-best-worst__row { grid-template-columns: minmax(0, 1fr) auto auto; }
     .ef-pairwise__options { grid-template-columns: 1fr; }
     .ef-pairwise__versus { justify-self: center; }
   }
@@ -1014,7 +1013,8 @@
     .ef-semantic-differential__scale,
     .ef-symbol-rating__option,
     .ef-matrix__row,
-    .ef-best-worst__row {
+    .ef-best-worst__row,
+    .ef-pairwise__option {
       border-color: CanvasText;
     }
 
@@ -1024,7 +1024,8 @@
     .ef-binary-option:has(input:checked),
     .ef-symbol-rating__option:has(input:checked),
     .ef-semantic-differential__scale label:has(input:checked),
-    .ef-matrix__choices label:has(input:checked) {
+    .ef-matrix__choices label:has(input:checked),
+    .ef-pairwise__option:has(input:checked) {
       background: Highlight;
       color: HighlightText;
     }
