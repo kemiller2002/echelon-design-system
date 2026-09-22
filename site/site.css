@@ -79,6 +79,7 @@
   :where(h1, h2, h3) {
     color: var(--ef-foundry-charcoal);
     margin-block-start: 0;
+    overflow-wrap: anywhere;
   }
 
   :where(h1, h2) {
@@ -170,6 +171,10 @@
   }
 
   .site-nav a {
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: .55rem .7rem;
     border-block-end: 2px solid transparent;
     color: var(--ef-carbon);
@@ -314,6 +319,9 @@
   }
 
   .component-card a {
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
     color: var(--ef-carbon);
     text-decoration: none;
   }
@@ -396,7 +404,9 @@
   }
 
   .component-nav a {
-    display: block;
+    min-block-size: 2.75rem;
+    display: flex;
+    align-items: center;
     padding: .38rem 0;
     border-inline-start: 2px solid transparent;
     color: var(--ef-graphite);
@@ -422,6 +432,7 @@
 
   .breadcrumbs {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: .5rem;
     margin-block-end: 3rem;
@@ -498,6 +509,8 @@
   }
 
   .example-canvas {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     min-block-size: 12rem;
     display: grid;
     align-content: center;
@@ -569,8 +582,16 @@
     max-inline-size: 72ch;
   }
 
+  .table-scroll {
+    max-inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-gutter: stable;
+  }
+
   .agent-page table {
     inline-size: 100%;
+    min-inline-size: 40rem;
     border-collapse: collapse;
     border-block-start: 1px solid var(--ef-forged-iron);
   }
@@ -608,6 +629,12 @@
   .site-footer p,
   .site-footer a {
     color: var(--ef-parchment);
+  }
+
+  .site-footer a {
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
   }
 
   .footer-grid {
@@ -657,6 +684,13 @@
       display: flex;
       gap: .85rem;
       overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-gutter: stable;
+      scroll-snap-type: inline proximity;
+    }
+
+    .component-nav a {
+      scroll-snap-align: start;
     }
 
     .component-nav li {
@@ -666,17 +700,34 @@
 
   @media (max-width: 680px) {
     .nav-shell {
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: stretch;
+      gap: .5rem;
+      padding-block: .6rem;
+    }
+
+    .brand {
+      inline-size: 100%;
+    }
+
+    .brand-link {
+      min-block-size: 2.75rem;
+      white-space: normal;
     }
 
     .site-nav {
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      inline-size: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .25rem;
     }
 
     .site-nav a {
-      padding: .4rem;
+      min-inline-size: 0;
+      padding: .5rem .35rem;
       font-size: .7rem;
+      text-align: center;
+      overflow-wrap: anywhere;
     }
 
     .site-nav .pill-link {
@@ -694,6 +745,29 @@
 
     .component-main {
       padding-inline: 1rem;
+    }
+
+    .hero,
+    .content-section {
+      padding-inline: 1rem;
+    }
+
+    .hero {
+      padding-block-start: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .hero h1,
+    .component-header h1,
+    .agent-page h1 {
+      font-size: clamp(2.75rem, 14vw, 3.5rem);
+    }
+
+    .agent-page h2 {
+      font-size: clamp(1.75rem, 9vw, 2.4rem);
+    }
+
+    .example-canvas {
+      padding: 1rem;
     }
 
     .footer-grid,
