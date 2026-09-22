@@ -202,7 +202,9 @@
   .ef-choice::before {
     content: "";
     position: absolute;
+    inset-block-start: 50%;
     inset-inline-start: 1rem;
+    transform: translateY(-50%);
     inline-size: 1.125rem;
     block-size: 1.125rem;
     border: 2px solid var(--ef-color-border-functional, #3a403c);
@@ -226,6 +228,13 @@
   .ef-choice:has(input[type="checkbox"]:checked)::before {
     background: var(--ef-color-accent-primary, #905831);
     box-shadow: inset 0 0 0 3px var(--ef-color-surface-primary, #f2efe7);
+  }
+
+  .ef-ordinal-option:has(input:disabled),
+  .ef-choice:has(input:disabled),
+  .ef-special-choice:has(input:disabled) {
+    opacity: 0.62;
+    cursor: not-allowed;
   }
 
   .ef-choice__content {
@@ -360,6 +369,19 @@
     min-inline-size: 2.75rem;
     min-block-size: 2.75rem;
     padding: 0;
+  }
+
+  .ef-ranking__announcement {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
   }
 
   /* Allocation ---------------------------------------------------------- */
