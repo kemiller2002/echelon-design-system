@@ -82,12 +82,14 @@ test("ranking exposes keyboard-operable move commands for Limen", async ({ page 
   await expect(page.getByRole("button", { name: "Move Reliability up" })).toBeDisabled();
   await expect(page.getByRole("button", { name: "Move Reliability down" })).toBeEnabled();
   await expect(page.getByRole("button", { name: "Move Delivery speed up" })).toBeEnabled();
+  await expect(page.locator(".ef-ranking__announcement")).toHaveAttribute("aria-live", "polite");
 });
 
 test("allocation keeps direct numeric entry as the non-drag path", async ({ page }) => {
   await expect(page.getByRole("spinbutton", { name: "Reliability" })).toHaveValue("4");
   await expect(page.getByRole("spinbutton", { name: "Delivery speed" })).toHaveValue("6");
   await expect(page.getByText("10 / 10", { exact: true })).toBeVisible();
+  await expect(page.locator(".ef-allocation__total")).toHaveAttribute("aria-live", "polite");
 });
 
 test("rule builder has labelled structured form controls", async ({ page }) => {
