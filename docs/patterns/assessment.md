@@ -4,6 +4,19 @@ These patterns were introduced from Echelon Signal requirements but are reusable
 
 They obey the design-system zero-runtime rule: HTML and CSS only.
 
+## Package usage
+
+Assessment consumers should load:
+
+```css
+@import "@echelon-foundry/design-system/tokens.css";
+@import "@echelon-foundry/design-system/foundations.css";
+@import "@echelon-foundry/design-system/components.css";
+@import "@echelon-foundry/design-system/assessment.css";
+```
+
+`all.css` includes the same assessment layer when a single combined stylesheet is preferable.
+
 ## Question shell
 
 Use `.ef-question` to compose:
