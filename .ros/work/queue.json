@@ -44,6 +44,20 @@
       "createdBy": "ChatGPT",
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "WI-0004",
+      "title": "Signal assessment and Ordo design-system patterns",
+      "description": null,
+      "tags": [],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-22T12:13:30.000Z",
+      "updatedAt": "2026-09-22T12:13:30.000Z",
+      "createdBy": "ChatGPT",
+      "source": "manual",
+      "sourceReference": null
     }
   ]
 }

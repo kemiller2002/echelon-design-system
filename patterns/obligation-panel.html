@@ -1,0 +1,36 @@
+<aside class="ef-obligation-panel" aria-labelledby="obligation-panel-title">
+  <header class="ef-obligation-panel__header">
+    <div>
+      <h2 id="obligation-panel-title">3 obligations require attention</h2>
+      <p>These must be resolved before finalization.</p>
+    </div>
+    <span class="ef-obligation-panel__count" aria-hidden="true">3</span>
+  </header>
+
+  <ul class="ef-obligation-list">
+    <li class="ef-obligation" data-ef-severity="blocking">
+      <span class="ef-obligation__status">Blocking</span>
+      <div>
+        <strong>Reconcile unknown storage outcome</strong>
+        <p>Verify whether the report snapshot write completed before retrying.</p>
+      </div>
+      <a href="#reconcile-storage">Review</a>
+    </li>
+    <li class="ef-obligation" data-ef-severity="warning">
+      <span class="ef-obligation__status">Required</span>
+      <div>
+        <strong>Rebuild stale aggregate</strong>
+        <p>The current aggregate does not include every accepted contribution.</p>
+      </div>
+      <a href="#aggregate-health">Review</a>
+    </li>
+    <li class="ef-obligation" data-ef-severity="information">
+      <span class="ef-obligation__status">Evidence</span>
+      <div>
+        <strong>Supply publication evidence</strong>
+        <p>A required validation fixture has not yet been recorded.</p>
+      </div>
+      <a href="#publication-evidence">Review</a>
+    </li>
+  </ul>
+</aside>

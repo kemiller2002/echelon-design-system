@@ -21,3 +21,24 @@ test("native controls expose expected roles and names", async ({ page }) => {
   await expect(page.getByRole("radio", { name: "Comfortable" })).toBeVisible();
   await expect(page.getByRole("radio", { name: "Compact" })).toBeVisible();
 });
+
+
+test("assessment patterns have no automatically detectable WCAG A/AA violations", async ({ page }) => {
+  await page.goto("/tests/browser/fixture/assessment.html");
+
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+
+  expect(results.violations).toEqual([]);
+});
+
+test("assessment primitives expose native accessible names and roles", async ({ page }) => {
+  await page.goto("/tests/browser/fixture/assessment.html");
+
+  await expect(page.getByRole("radio", { name: "Strongly disagree" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: "Don't know" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: /^Cloud\b/ })).toBeVisible();
+  await expect(page.getByRole("progressbar", { name: "Survey progress" })).toBeVisible();
+  await expect(page.getByRole("spinbutton", { name: "Reliability" })).toBeVisible();
+});

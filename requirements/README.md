@@ -29,6 +29,7 @@ The system exists to make Echelon applications look, communicate, and behave con
 - QUALITY-AND-DISTRIBUTION.md
 - PILOT-PLAN.md
 - DECLARATIVE-CAPABILITY-MATRIX.md
+- SIGNAL-COMPONENT-MAP.md
 
 ## External standards baseline
 

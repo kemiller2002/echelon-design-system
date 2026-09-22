@@ -1,0 +1,24 @@
+<fieldset class="ef-allocation">
+  <legend class="ef-allocation__legend">Distribute 10 points across these priorities.</legend>
+
+  <div class="ef-allocation__items">
+    <label class="ef-allocation__item">
+      <span>Reliability</span>
+      <input type="number" name="reliability" min="0" max="10" step="1" value="4" inputmode="numeric">
+    </label>
+    <label class="ef-allocation__item">
+      <span>Delivery speed</span>
+      <input type="number" name="delivery-speed" min="0" max="10" step="1" value="3" inputmode="numeric">
+    </label>
+    <label class="ef-allocation__item">
+      <span>Cost efficiency</span>
+      <input type="number" name="cost-efficiency" min="0" max="10" step="1" value="3" inputmode="numeric">
+    </label>
+  </div>
+
+  <div class="ef-allocation__total" data-ef-state="valid" aria-live="polite" aria-atomic="true">
+    <span>Total</span>
+    <output>10 / 10</output>
+  </div>
+  <p class="ef-field__description">Limen validates the aggregate total and renders the authoritative state.</p>
+</fieldset>

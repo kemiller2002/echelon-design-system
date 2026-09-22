@@ -1,0 +1,37 @@
+<section class="ef-rule-builder" aria-labelledby="rule-builder-title">
+  <header class="ef-rule-builder__header">
+    <div>
+      <h2 id="rule-builder-title">Applicability rule</h2>
+      <p>Define when this section is shown.</p>
+    </div>
+    <button type="button">Add condition</button>
+  </header>
+
+  <div class="ef-rule-group" data-ef-operator="and">
+    <div class="ef-rule-group__operator" aria-label="All conditions must be true">AND</div>
+
+    <div class="ef-rule-clause">
+      <label>
+        <span>Field</span>
+        <select>
+          <option>Answer: Q1</option>
+        </select>
+      </label>
+      <label>
+        <span>Operator</span>
+        <select>
+          <option>is equal to</option>
+        </select>
+      </label>
+      <label>
+        <span>Value</span>
+        <select>
+          <option>Yes</option>
+        </select>
+      </label>
+      <button type="button" aria-label="Remove condition">Remove</button>
+    </div>
+  </div>
+
+  <p class="ef-rule-builder__summary"><strong>Meaning:</strong> Show this section when Answer(Q1) = Yes.</p>
+</section>
