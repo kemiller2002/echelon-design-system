@@ -1,0 +1,18 @@
+<fieldset class="ef-range-entry">
+  <legend class="ef-range-entry__legend">Acceptable response-time range</legend>
+  <p class="ef-field__description">Enter both endpoints. A graphical range slider may be added by Limen as an enhancement, but direct entry remains available.</p>
+
+  <div class="ef-range-entry__inputs">
+    <label>
+      <span>Minimum</span>
+      <input type="number" name="response-time-min" min="0" max="5000" step="50" value="500" inputmode="decimal">
+    </label>
+    <span class="ef-range-entry__separator" aria-hidden="true">to</span>
+    <label>
+      <span>Maximum</span>
+      <input type="number" name="response-time-max" min="0" max="5000" step="50" value="1500" inputmode="decimal">
+    </label>
+  </div>
+
+  <p class="ef-range-entry__status" data-ef-state="valid" aria-live="polite">500 to 1500 milliseconds</p>
+</fieldset>
