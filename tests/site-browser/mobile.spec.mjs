@@ -52,7 +52,7 @@ for (const viewport of viewports) {
 
         return {
           documentWidth,
-          viewportWidth: window.innerWidth,
+          viewportWidth: document.documentElement.clientWidth,
           tooSmall
         };
       });
