@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Echelon Design System Pilot</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <script type="module" src="/dist/index.js"></script>
+  <style>
+    main { max-inline-size: 52rem; margin: 3rem auto; padding: 0 1.5rem; }
+    form { display: grid; gap: 2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Design system pilot</h1>
+    <form id="settings">
+      <ef-switch id="notifications" name="notifications" value="enabled" label="Notifications" description="Receive operational updates."></ef-switch>
+      <ef-switch id="required-switch" name="terms" value="accepted" label="Required setting" required></ef-switch>
+      <ef-slider id="volume" name="volume" min="0" max="100" step="5" value="25" label="Volume" description="Adjust the output level."></ef-slider>
+      <div class="ef-cluster">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </main>
+</body>
+</html>
