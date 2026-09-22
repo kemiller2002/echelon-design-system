@@ -696,6 +696,7 @@
   }
 
   .ef-semantic-differential__scale label + label { border-inline-start: 1px solid var(--ef-color-border-subtle, #e3e0d7); }
+  .ef-semantic-differential__scale label > span[aria-hidden="true"] { pointer-events: none; }
 
   .ef-symbol-rating__options {
     display: inline-flex;
