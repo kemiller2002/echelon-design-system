@@ -29,12 +29,12 @@
     {
       "path": ".gitignore",
       "ownership": "user-owned",
-      "sha256": "c54943daf26c21b7bce4a13ac0af2403f2382c95ae34bdc5538ecb031e37aeb4"
+      "sha256": "ae29f053451383e855a3405e2d57ea5f25e8353a8abac31fa82b91923a6a8acf"
     },
     {
       "path": "AGENTS.md",
       "ownership": "shared",
-      "sha256": "39c75fd9e34af40c1628402e4b8a909482e3597a7a9309a6a8a2b7afd3a8976f"
+      "sha256": "feacd247dc7760f2561b3db415d66240a93e25b6809e5974293396dd623ad444"
     },
     {
       "path": "BOOTSTRAP.md",
