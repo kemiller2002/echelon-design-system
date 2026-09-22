@@ -8,6 +8,11 @@ test.beforeEach(async ({ page }) => {
   await openAssessment(page);
 });
 
+test("assessment stylesheet is distributed and applied", async ({ page }) => {
+  const display = await page.locator(".ef-ordinal-scale__options").evaluate(element => getComputedStyle(element).display);
+  expect(display).toBe("grid");
+});
+
 test("ordinal scale is a native required radio group", async ({ page }) => {
   const agree = page.getByRole("radio", { name: "Agree" });
   await expect(agree).not.toBeChecked();
@@ -57,8 +62,8 @@ test("assessment reset restores native unanswered state", async ({ page }) => {
 test("ordinal scale stacks vertically on narrow screens", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
 
-  const first = await page.getByRole("radio", { name: "Strongly disagree" }).locator("..").boundingBox();
-  const second = await page.getByRole("radio", { name: "Disagree" }).locator("..").boundingBox();
+  const first = await page.locator(".ef-ordinal-option").nth(0).boundingBox();
+  const second = await page.locator(".ef-ordinal-option").nth(1).boundingBox();
 
   expect(first).not.toBeNull();
   expect(second).not.toBeNull();
