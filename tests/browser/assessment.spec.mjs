@@ -14,7 +14,7 @@ test("assessment stylesheet is distributed and applied", async ({ page }) => {
 });
 
 test("ordinal scale is a native required radio group", async ({ page }) => {
-  const agree = page.getByRole("radio", { name: "Agree" });
+  const agree = page.getByRole("radio", { name: "Agree", exact: true });
   await expect(agree).not.toBeChecked();
   await agree.check();
   await expect(agree).toBeChecked();
@@ -44,19 +44,19 @@ test("special answer states remain distinct choices outside the ordinal scale", 
 });
 
 test("choice cards preserve ordinary radio behavior", async ({ page }) => {
-  const hybrid = page.getByRole("radio", { name: /Hybrid/ });
+  const hybrid = page.getByRole("radio", { name: /^Hybrid\b/ });
   await hybrid.check();
   await expect(hybrid).toBeChecked();
-  await expect(page.getByRole("radio", { name: /Cloud/ })).not.toBeChecked();
+  await expect(page.getByRole("radio", { name: /^Cloud\b/ })).not.toBeChecked();
 });
 
 test("assessment reset restores native unanswered state", async ({ page }) => {
-  await page.getByRole("radio", { name: "Agree" }).check();
-  await page.getByRole("radio", { name: /Hybrid/ }).check();
+  await page.getByRole("radio", { name: "Agree", exact: true }).check();
+  await page.getByRole("radio", { name: /^Hybrid\b/ }).check();
   await page.getByRole("button", { name: "Reset assessment" }).click();
 
-  await expect(page.getByRole("radio", { name: "Agree" })).not.toBeChecked();
-  await expect(page.getByRole("radio", { name: /Hybrid/ })).not.toBeChecked();
+  await expect(page.getByRole("radio", { name: "Agree", exact: true })).not.toBeChecked();
+  await expect(page.getByRole("radio", { name: /^Hybrid\b/ })).not.toBeChecked();
 });
 
 test("ordinal scale stacks vertically on narrow screens", async ({ page }) => {
