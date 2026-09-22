@@ -5,7 +5,7 @@ test.beforeEach(async ({ page }) => {
   await openFixture(page);
 });
 
-test("switch exposes switch semantics and toggles from keyboard", async ({ page }) => {
+test("switch is a native form control with switch semantics", async ({ page }) => {
   const control = page.getByRole("switch", { name: "Notifications" });
   await expect(control).toBeVisible();
   await expect(control).not.toBeChecked();
@@ -14,53 +14,36 @@ test("switch exposes switch semantics and toggles from keyboard", async ({ page 
   await control.press("Space");
 
   await expect(control).toBeChecked();
-  await expect(page.locator("#notifications")).toHaveAttribute("checked", "");
-  await expect.poll(() => formData(page)).toEqual({ notifications: "enabled", volume: "25" });
-});
-
-test("cancelable intent can reject the state transition", async ({ page }) => {
-  const host = page.locator("#notifications");
-  await host.evaluate(element => {
-    element.addEventListener("ef-change-requested", event => event.preventDefault(), { once: true });
+  await expect.poll(() => formData(page)).toEqual({
+    notifications: "enabled",
+    volume: "25",
+    density: "comfortable"
   });
-
-  await page.getByRole("switch", { name: "Notifications" }).click();
-
-  await expect(page.getByRole("switch", { name: "Notifications" })).not.toBeChecked();
-  await expect(host).not.toHaveAttribute("checked", "");
-  await expect.poll(() => formData(page)).toEqual({ volume: "25" });
 });
 
-test("switch participates in reset and form submission", async ({ page }) => {
-  const control = page.getByRole("switch", { name: "Notifications" });
-  await control.click();
-  await expect.poll(() => formData(page)).toEqual({ notifications: "enabled", volume: "25" });
+test("switch reset and required validity are browser-native", async ({ page }) => {
+  const notifications = page.getByRole("switch", { name: "Notifications" });
+  const required = page.getByRole("switch", { name: "Required setting" });
+
+  await notifications.click();
+  await required.click();
+  await expect(required).toBeChecked();
 
   await page.getByRole("button", { name: "Reset" }).click();
-  await expect(control).not.toBeChecked();
-  await expect.poll(() => formData(page)).toEqual({ volume: "25" });
+  await expect(notifications).not.toBeChecked();
+  await expect(required).not.toBeChecked();
+
+  expect(await page.locator("#required-switch").evaluate(element => element.matches(":invalid"))).toBe(true);
 });
 
-test("required switch reports invalid until selected", async ({ page }) => {
-  const validBefore = await page.locator("#required-switch").evaluate(element => element.matches(":invalid"));
-  expect(validBefore).toBe(true);
-
-  await page.getByRole("switch", { name: "Required setting" }).click();
-
-  const validAfter = await page.locator("#required-switch").evaluate(element => element.matches(":valid"));
-  expect(validAfter).toBe(true);
-});
-
-test("switch motion collapses under reduced-motion preference", async ({ page }) => {
+test("switch animation collapses for reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
-  await page.evaluate(() => customElements.whenDefined("ef-switch"));
 
-  const seconds = await page.locator("#notifications").evaluate(element => {
-    const track = element.shadowRoot.querySelector(".track");
-    const duration = getComputedStyle(track).transitionDuration.split(",")[0];
-    return duration.endsWith("ms") ? parseFloat(duration) / 1000 : parseFloat(duration);
-  });
+  const duration = await page.locator(".ef-switch__track").first().evaluate(element =>
+    getComputedStyle(element).transitionDuration.split(",")[0]
+  );
 
+  const seconds = duration.endsWith("ms") ? parseFloat(duration) / 1000 : parseFloat(duration);
   expect(seconds).toBeLessThan(0.01);
 });
