@@ -81,6 +81,8 @@ The Signal assessment slice must pass:
 - axe WCAG A/AA scan;
 - ROS attribution and validation.
 
+ROS attribution is complete as WI-0004; final branch validation is running on the attributed head.
+
 ## Next boundary
 
 After this slice, use Signal to define the first reusable Limen behavior contracts for behavior-required patterns such as ranking, allocation aggregate validation, rule editing, tabs, and comboboxes without adding runtime behavior to the design-system package.
