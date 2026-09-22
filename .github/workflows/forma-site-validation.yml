@@ -16,6 +16,7 @@ on:
       - "package.json"
       - "docs/AGENT-USAGE.md"
       - "AGENTS.md"
+      - ".github/workflows/forma-site-validation.yml"
   workflow_dispatch:
 
 permissions:
