@@ -1,0 +1,49 @@
+name: Attribute selector completeness patterns
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  attribute:
+    if: github.head_ref == 'feature/signal-selector-completeness' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Record selector completeness work
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          TS="$(date -u +'%Y-%m-%dT%H:%M:%S.000Z')"
+          ./ros work capture --title "Signal selector completeness design-system patterns" --id WI-0005 --priority high --occurred-at "$TS" --actor "ChatGPT"
+          ./ros work backlog-transition --id WI-0005 --action ready --occurred-at "$TS"
+          ./ros work start --id WI-0005 --occurred-at "$TS" --type implementation --actor "ChatGPT"
+          ROS_BASE_REF="$BASE_SHA" ./ros work complete --id WI-0005 --occurred-at "$TS" --actor "ChatGPT"             --evidence requirements=requirements/SELECTOR-COMPLETENESS.md             --evidence implementation=patterns/semantic-differential.html             --evidence tests=tests/browser/selector-completeness.spec.mjs             --conclusion "Signal selector completeness incorporated into shared zero-runtime design-system contracts"
+          ROS_BASE_REF="$BASE_SHA" ./ros validate
+
+      - name: Commit ROS records
+        shell: bash
+        run: |
+          git config user.name "Echelon Upgrade Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git reset -- .github/workflows
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: record selector completeness in ROS"
+          git push
