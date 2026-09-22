@@ -46,3 +46,5 @@ The requirements are informed by:
 - established design-system patterns from mature systems including Carbon and Spectrum
 
 External systems are references, not dependencies and not visual templates to copy.
+
+- SHOWCASE-SITE.md
