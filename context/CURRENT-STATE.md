@@ -127,3 +127,5 @@ Accepted design:
 - CI coverage that blocks missing component pages/examples or browser script introduction.
 
 The site is a discovery and teaching surface. Canonical patterns and manifests remain authoritative.
+
+ROS attribution target: WI-0006, Echelon Foundry component showcase site.
