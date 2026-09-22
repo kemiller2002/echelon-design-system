@@ -4,3 +4,4 @@
 |---|---|---|---|---|
 | ROS-INSTALL-3-1-4 | ROS-INSTALL-3-1-4 | complete |  |  |
 | WI-0001 | Install Echelon engineering capabilities | complete |  | high |
+| WI-0002 | Deep design system requirements | complete |  | high |
