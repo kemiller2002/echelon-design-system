@@ -1,0 +1,25 @@
+<fieldset class="ef-hierarchy">
+  <legend class="ef-hierarchy__legend">Choose the affected service.</legend>
+  <p class="ef-field__description">Published hierarchy data is immutable. Limen coordinates expansion/cascading behavior when needed.</p>
+
+  <ul class="ef-hierarchy__tree">
+    <li>
+      <details open>
+        <summary>Platform</summary>
+        <ul>
+          <li><label><input type="radio" name="service" value="identity"> Identity</label></li>
+          <li><label><input type="radio" name="service" value="billing"> Billing</label></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>Data</summary>
+        <ul>
+          <li><label><input type="radio" name="service" value="warehouse"> Warehouse</label></li>
+          <li><label><input type="radio" name="service" value="analytics"> Analytics</label></li>
+        </ul>
+      </details>
+    </li>
+  </ul>
+</fieldset>

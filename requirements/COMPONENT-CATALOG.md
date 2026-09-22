@@ -358,6 +358,26 @@ Requirements:
 - severity is not communicated by color alone;
 - Ordo/application remains authority for whether obligations exist or are discharged.
 
+### P0/P1: Selector completeness additions
+
+The Signal SCS completeness pass establishes these additional reusable contracts:
+
+- **Binary choice**: `.ef-binary-choice`, radio-backed so Unanswered remains distinct from No/False.
+- **Semantic differential**: `.ef-semantic-differential`, textual bipolar endpoints with an ordinal radio scale.
+- **Symbol rating**: `.ef-symbol-rating`, covering star/icon rating as ordinal presentation with non-icon accessible text.
+- **Numeric stepper**: `.ef-numeric-stepper`, based on native number input.
+- **Range entry**: `.ef-range-entry`, paired direct endpoint inputs; a graphical dual-thumb control is Limen enhancement only.
+- **Image choice**: `.ef-choice--media`, reusing single/multi choice semantics with visible text.
+- **Multi-choice guidance**: `.ef-selection-guidance`, `.ef-selection-status`, and `.ef-choice--exclusive` for exact/min/max/between and exclusive-option communication.
+- **Matrix/repeated scale**: `.ef-matrix`, retaining row primitive semantics and decomposing to per-row controls on mobile.
+- **Pairwise**: `.ef-pairwise`, a two-option choice presentation.
+- **Best-Worst**: `.ef-best-worst`, a visual contract requiring Limen to enforce different Best/Worst selections.
+- **Hierarchical choice**: `.ef-hierarchy`, native disclosure/choice baseline with application-owned parent/descendant semantics.
+
+Ordinal scale cardinality shall include ordinary 3/4/5/6/7/10/11-point presentations. NPS, Likert, Agreement, Frequency, Satisfaction, Confidence, Maturity, and similar names remain presets/configuration, not duplicated components.
+
+A checkbox-backed switch shall not be used for an assessment binary response when an untouched Unanswered state must remain distinct from false.
+
 ## 4. Navigation and command components
 
 ### P0: Tabs

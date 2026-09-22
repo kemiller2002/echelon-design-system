@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Selector completeness fixture</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <link rel="stylesheet" href="/dist/components.css">
+  <link rel="stylesheet" href="/dist/assessment.css">
+  <style>
+    main { max-inline-size: 68rem; margin: 2rem auto; padding: 0 1rem 4rem; }
+    .stack { display: grid; gap: 2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Selector completeness</h1>
+    <div class="stack">
+
+      <form id="selector-form">
+        <fieldset class="ef-binary-choice">
+          <legend class="ef-binary-choice__legend">Is automated deployment currently in use?</legend>
+          <div class="ef-binary-choice__options">
+            <label class="ef-binary-option"><input type="radio" name="automated" value="yes" required><span>Yes</span></label>
+            <label class="ef-binary-option"><input type="radio" name="automated" value="no"><span>No</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="ef-semantic-differential">
+          <legend class="ef-semantic-differential__legend">How would you characterize the process?</legend>
+          <div class="ef-semantic-differential__endpoints" aria-hidden="true"><span>Highly manual</span><span>Highly automated</span></div>
+          <div class="ef-semantic-differential__scale">
+            <label><input type="radio" name="automation-level" value="1" required><span aria-hidden="true">1</span><span class="ef-sr-only">Highly manual, position 1 of 7</span></label>
+            <label><input type="radio" name="automation-level" value="2"><span aria-hidden="true">2</span><span class="ef-sr-only">Position 2 of 7</span></label>
+            <label><input type="radio" name="automation-level" value="3"><span aria-hidden="true">3</span><span class="ef-sr-only">Position 3 of 7</span></label>
+            <label><input type="radio" name="automation-level" value="4"><span aria-hidden="true">4</span><span class="ef-sr-only">Position 4 of 7</span></label>
+            <label><input type="radio" name="automation-level" value="5"><span aria-hidden="true">5</span><span class="ef-sr-only">Position 5 of 7</span></label>
+            <label><input type="radio" name="automation-level" value="6"><span aria-hidden="true">6</span><span class="ef-sr-only">Position 6 of 7</span></label>
+            <label><input type="radio" name="automation-level" value="7"><span aria-hidden="true">7</span><span class="ef-sr-only">Highly automated, position 7 of 7</span></label>
+          </div>
+          <div class="ef-semantic-differential__endpoints ef-semantic-differential__endpoints--mobile"><span>1 = Highly manual</span><span>7 = Highly automated</span></div>
+        </fieldset>
+
+        <fieldset class="ef-symbol-rating">
+          <legend class="ef-symbol-rating__legend">How satisfied are you?</legend>
+          <div class="ef-symbol-rating__options">
+            <label class="ef-symbol-rating__option"><input type="radio" name="satisfaction" value="1" required><span class="ef-symbol-rating__symbol" aria-hidden="true">★</span><span class="ef-sr-only">1 of 5, very dissatisfied</span></label>
+            <label class="ef-symbol-rating__option"><input type="radio" name="satisfaction" value="2"><span class="ef-symbol-rating__symbol" aria-hidden="true">★</span><span class="ef-sr-only">2 of 5, dissatisfied</span></label>
+            <label class="ef-symbol-rating__option"><input type="radio" name="satisfaction" value="3"><span class="ef-symbol-rating__symbol" aria-hidden="true">★</span><span class="ef-sr-only">3 of 5, neutral</span></label>
+            <label class="ef-symbol-rating__option"><input type="radio" name="satisfaction" value="4"><span class="ef-symbol-rating__symbol" aria-hidden="true">★</span><span class="ef-sr-only">4 of 5, satisfied</span></label>
+            <label class="ef-symbol-rating__option"><input type="radio" name="satisfaction" value="5"><span class="ef-symbol-rating__symbol" aria-hidden="true">★</span><span class="ef-sr-only">5 of 5, very satisfied</span></label>
+          </div>
+        </fieldset>
+
+        <label class="ef-numeric-stepper">
+          <span class="ef-numeric-stepper__label">Target deployments per week</span>
+          <input type="number" name="deployments" min="0" max="50" step="1" inputmode="numeric">
+          <span class="ef-field__description">Enter a whole number from 0 through 50.</span>
+        </label>
+
+        <fieldset class="ef-range-entry">
+          <legend class="ef-range-entry__legend">Acceptable response-time range</legend>
+          <div class="ef-range-entry__inputs">
+            <label><span>Minimum</span><input type="number" name="range-min" min="0" max="5000" step="50" value="500"></label>
+            <span class="ef-range-entry__separator" aria-hidden="true">to</span>
+            <label><span>Maximum</span><input type="number" name="range-max" min="0" max="5000" step="50" value="1500"></label>
+          </div>
+          <p class="ef-range-entry__status" data-ef-state="valid" aria-live="polite">500 to 1500 milliseconds</p>
+        </fieldset>
+
+        <fieldset class="ef-choice-group" aria-describedby="selector-guidance">
+          <legend class="ef-choice-group__legend">Select exactly two priorities.</legend>
+          <p class="ef-selection-guidance" id="selector-guidance">Choose exactly 2 options. None of these is exclusive.</p>
+          <label class="ef-choice"><input type="checkbox" name="priorities" value="reliability"><span class="ef-choice__content"><strong>Reliability</strong></span></label>
+          <label class="ef-choice"><input type="checkbox" name="priorities" value="speed"><span class="ef-choice__content"><strong>Delivery speed</strong></span></label>
+          <label class="ef-choice ef-choice--exclusive"><input type="checkbox" name="priorities" value="none"><span class="ef-choice__content"><strong>None of these</strong><span>Exclusive option</span></span></label>
+          <p class="ef-selection-status" data-ef-state="incomplete" aria-live="polite">0 of 2 selected</p>
+        </fieldset>
+
+        <button type="reset">Reset selectors</button>
+      </form>
+
+      <fieldset class="ef-matrix">
+        <legend class="ef-matrix__legend">Rate each practice.</legend>
+        <div class="ef-matrix__rows">
+          <fieldset class="ef-matrix__row">
+            <legend>Automated testing</legend>
+            <div class="ef-matrix__choices">
+              <label><input type="radio" name="testing" value="initial"><span>Initial</span></label>
+              <label><input type="radio" name="testing" value="developing"><span>Developing</span></label>
+              <label><input type="radio" name="testing" value="established"><span>Established</span></label>
+              <label><input type="radio" name="testing" value="optimized"><span>Optimized</span></label>
+            </div>
+          </fieldset>
+          <fieldset class="ef-matrix__row">
+            <legend>Deployment automation</legend>
+            <div class="ef-matrix__choices">
+              <label><input type="radio" name="deployment" value="initial"><span>Initial</span></label>
+              <label><input type="radio" name="deployment" value="developing"><span>Developing</span></label>
+              <label><input type="radio" name="deployment" value="established"><span>Established</span></label>
+              <label><input type="radio" name="deployment" value="optimized"><span>Optimized</span></label>
+            </div>
+          </fieldset>
+        </div>
+      </fieldset>
+
+      <fieldset class="ef-pairwise">
+        <legend class="ef-pairwise__legend">Which is more important?</legend>
+        <div class="ef-pairwise__options">
+          <label class="ef-pairwise__option"><input type="radio" name="pairwise" value="reliability"><span class="ef-pairwise__eyebrow">Option A</span><strong>Reliability</strong><span>Prefer predictable operation.</span></label>
+          <span class="ef-pairwise__versus" aria-hidden="true">or</span>
+          <label class="ef-pairwise__option"><input type="radio" name="pairwise" value="speed"><span class="ef-pairwise__eyebrow">Option B</span><strong>Delivery speed</strong><span>Prefer faster change.</span></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="ef-best-worst">
+        <legend class="ef-best-worst__legend">Choose the most and least important item.</legend>
+        <div class="ef-best-worst__header" aria-hidden="true"><span>Option</span><span>Best</span><span>Worst</span></div>
+        <div class="ef-best-worst__row">
+          <span>Reliability</span>
+          <label><input type="radio" name="best" value="reliability" aria-label="Reliability, Best"></label>
+          <label><input type="radio" name="worst" value="reliability" aria-label="Reliability, Worst"></label>
+        </div>
+        <div class="ef-best-worst__row">
+          <span>Delivery speed</span>
+          <label><input type="radio" name="best" value="speed" aria-label="Delivery speed, Best"></label>
+          <label><input type="radio" name="worst" value="speed" aria-label="Delivery speed, Worst"></label>
+        </div>
+        <p class="ef-best-worst__status" data-ef-state="incomplete" aria-live="polite">Choose one Best and one Worst.</p>
+      </fieldset>
+
+      <fieldset class="ef-hierarchy">
+        <legend class="ef-hierarchy__legend">Choose the affected service.</legend>
+        <ul class="ef-hierarchy__tree">
+          <li><details open><summary>Platform</summary><ul>
+            <li><label><input type="radio" name="service" value="identity"> Identity</label></li>
+            <li><label><input type="radio" name="service" value="billing"> Billing</label></li>
+          </ul></details></li>
+          <li><details><summary>Data</summary><ul>
+            <li><label><input type="radio" name="service" value="warehouse"> Warehouse</label></li>
+            <li><label><input type="radio" name="service" value="analytics"> Analytics</label></li>
+          </ul></details></li>
+        </ul>
+      </fieldset>
+    </div>
+  </main>
+</body>
+</html>

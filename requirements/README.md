@@ -30,6 +30,7 @@ The system exists to make Echelon applications look, communicate, and behave con
 - PILOT-PLAN.md
 - DECLARATIVE-CAPABILITY-MATRIX.md
 - SIGNAL-COMPONENT-MAP.md
+- SELECTOR-COMPLETENESS.md
 
 ## External standards baseline
 

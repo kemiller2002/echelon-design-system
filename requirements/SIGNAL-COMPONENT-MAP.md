@@ -13,7 +13,8 @@ The mapping was derived from Signal requirements including:
 - `survey-engine-template-authoring-publication-workflow.txt`;
 - `survey-engine-advanced-ros-ordo-limen-stress-requirements.txt`;
 - `survey-engine-administrator-console-storage-analytics-visualization-requirements.txt`;
-- `survey-engine-reporting-requirements-data-contract.txt`.
+- `survey-engine-reporting-requirements-data-contract.txt`;
+- `survey-engine-scoring-selector-completeness-requirements.txt` (SCS-001 through SCS-019).
 
 ## Respondent-side mapping
 
@@ -124,3 +125,55 @@ Conditional visibility is rendered from authoritative Signal/Limen state. CSS ma
 - obligation panel.
 
 All production artifacts remain HTML/CSS only.
+
+
+## Selector completeness update — 2026-09-22
+
+Signal source revision reviewed: `kemiller2002/echelon-signal@036f4591d2e4d550d084241262ad81f70756dd51` ("Merge scoring and selector completeness requirements").
+
+Signal's SCS completeness pass adds the following shared design-system contracts.
+
+| Signal selector family | Design-system contract | Boundary |
+|---|---|---|
+| YesNo / TrueFalse / three-way | `.ef-binary-choice` | native radios, HTML/CSS |
+| BinaryToggle with Unanswered | `.ef-binary-choice` styled binary presentation | do **not** use checkbox switch when Unanswered matters |
+| Likert 3/4/5/6/7/10/11 | `.ef-ordinal-scale` cardinality variants | HTML/CSS |
+| NPS 0–10 | `.ef-ordinal-scale--11` numeric preset | Signal owns NPS meaning/scoring |
+| Semantic differential | `.ef-semantic-differential` | HTML/CSS |
+| Numeric rating | ordinal scale or native number input | depends on discrete vs numeric semantics |
+| Star/Icon rating | `.ef-symbol-rating` | HTML/CSS; symbol is decorative, text alternative required |
+| Slider | existing `.ef-slider` | native range |
+| Range slider / BoundedRange | `.ef-range-entry` + optional graphical Limen enhancement | direct paired numeric entry always retained |
+| Numeric stepper | `.ef-numeric-stepper` | native number input |
+| Radio/buttons/cards | existing choice patterns | HTML/CSS |
+| Image single/multi choice | `.ef-choice--media` | image decorative or redundantly described; visible text required |
+| Multi-select count guidance | `.ef-selection-guidance`, `.ef-selection-status` | Limen validates exact/min/max/between |
+| Exclusive None/N/A option | `.ef-choice--exclusive` | Limen clears/rejects incompatible selections |
+| Matrix single/Likert/numeric | `.ef-matrix` | repeated primitive answers; responsive row decomposition |
+| Matrix dropdown/multi/side-by-side | `.ef-matrix` visual family | Limen/application supplies row selector behavior/state |
+| Pairwise comparison | `.ef-pairwise` | native radio pair |
+| Best-Worst | `.ef-best-worst` | Limen enforces different Best/Worst options |
+| Hierarchical single | `.ef-hierarchy` with radios | native disclosure + application hierarchy semantics |
+| Hierarchical multi | `.ef-hierarchy` with checkboxes | parent/descendant policy belongs to application |
+
+### Binary toggle rule
+
+The existing `.ef-switch` is correct for a setting that already has an authoritative boolean value.
+
+It is **not** correct for a survey answer where untouched/Unanswered must remain different from No/False, because an unchecked checkbox cannot distinguish those states without application behavior.
+
+For Signal-style binary questions, use a radio-backed `.ef-binary-choice` presentation so the initial state can remain unanswered.
+
+### Matrix rule
+
+Matrix is a composite presentation, not a new answer primitive. Each row/cell remains an ordinary primitive answer with its own label, value, validation, and scoring declaration.
+
+The shared matrix contract must decompose to per-row controls on narrow layouts. Horizontal scrolling cannot be the only usable mobile interaction.
+
+### Range rule
+
+There is no native multi-thumb HTML range input. The design system therefore exposes paired numeric endpoint entry as the accessibility baseline. Limen may add a graphical dual-thumb enhancement, but must not remove direct entry.
+
+### Symbol rating rule
+
+Star and icon rating are presentation variants of an ordinal scale. The glyph is never the sole semantic channel and scoring is never inferred from the icon.

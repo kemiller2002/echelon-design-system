@@ -7,3 +7,4 @@
 | WI-0002 | Deep design system requirements | complete |  | high |
 | WI-0003 | Zero-runtime HTML CSS design system pilot | complete |  | high |
 | WI-0004 | Signal assessment and Ordo design-system patterns | complete |  | high |
+| WI-0005 | Signal selector completeness design-system patterns | complete |  | high |
