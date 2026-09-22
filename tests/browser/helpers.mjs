@@ -1,0 +1,13 @@
+export async function openFixture(page) {
+  await page.goto("/tests/browser/fixture/index.html");
+  await page.evaluate(async () => {
+    await Promise.all([
+      customElements.whenDefined("ef-switch"),
+      customElements.whenDefined("ef-slider")
+    ]);
+  });
+}
+
+export async function formData(page) {
+  return page.evaluate(() => Object.fromEntries(new FormData(document.querySelector("#settings")).entries()));
+}
