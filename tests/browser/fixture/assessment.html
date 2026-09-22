@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Echelon Assessment Patterns</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <link rel="stylesheet" href="/dist/components.css">
+  <link rel="stylesheet" href="/dist/assessment.css">
+  <style>
+    main { max-inline-size: 64rem; margin: 2rem auto; padding: 0 1rem 4rem; }
+    .demo-stack { display: grid; gap: 2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Assessment pattern fixture</h1>
+
+    <div class="demo-stack">
+      <div class="ef-survey-progress">
+        <div class="ef-survey-progress__header">
+          <span class="ef-survey-progress__label" id="fixture-progress-label">Survey progress</span>
+          <span class="ef-survey-progress__value">Question 3 of 12</span>
+        </div>
+        <progress class="ef-survey-progress__bar" value="3" max="12" aria-labelledby="fixture-progress-label">25%</progress>
+        <p class="ef-survey-progress__context">Section 1 of 4 · Governance</p>
+      </div>
+
+      <form id="assessment-form">
+        <section class="ef-question" aria-labelledby="likert-question-title">
+          <header class="ef-question__header">
+            <span class="ef-question__number" aria-hidden="true">7</span>
+            <div>
+              <h2 class="ef-question__prompt" id="likert-question-title">Our deployment process is predictable.</h2>
+              <p class="ef-question__help" id="likert-help">Choose the response that best describes the current state.</p>
+            </div>
+          </header>
+
+          <div class="ef-question__body">
+            <fieldset class="ef-ordinal-scale ef-ordinal-scale--5" aria-describedby="likert-help">
+              <legend class="ef-ordinal-scale__legend">Agreement</legend>
+              <div class="ef-ordinal-scale__options">
+                <label class="ef-ordinal-option">
+                  <input type="radio" name="likert" value="0" required>
+                  <span class="ef-ordinal-option__marker">1</span>
+                  <span class="ef-ordinal-option__label">Strongly disagree</span>
+                </label>
+                <label class="ef-ordinal-option">
+                  <input type="radio" name="likert" value="1">
+                  <span class="ef-ordinal-option__marker">2</span>
+                  <span class="ef-ordinal-option__label">Disagree</span>
+                </label>
+                <label class="ef-ordinal-option">
+                  <input type="radio" name="likert" value="2">
+                  <span class="ef-ordinal-option__marker">3</span>
+                  <span class="ef-ordinal-option__label">Neither agree nor disagree</span>
+                </label>
+                <label class="ef-ordinal-option">
+                  <input type="radio" name="likert" value="3">
+                  <span class="ef-ordinal-option__marker">4</span>
+                  <span class="ef-ordinal-option__label">Agree</span>
+                </label>
+                <label class="ef-ordinal-option">
+                  <input type="radio" name="likert" value="4">
+                  <span class="ef-ordinal-option__marker">5</span>
+                  <span class="ef-ordinal-option__label">Strongly agree</span>
+                </label>
+              </div>
+              <div class="ef-special-choices" aria-label="Other responses">
+                <label class="ef-special-choice">
+                  <input type="radio" name="likert" value="unknown">
+                  <span>Don't know</span>
+                </label>
+                <label class="ef-special-choice">
+                  <input type="radio" name="likert" value="na">
+                  <span>Not applicable</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+        </section>
+
+        <fieldset class="ef-choice-group">
+          <legend class="ef-choice-group__legend">Which environment is most representative?</legend>
+          <label class="ef-choice">
+            <input type="radio" name="environment" value="cloud" required>
+            <span class="ef-choice__content"><strong>Cloud</strong><span>Primarily hosted cloud infrastructure.</span></span>
+          </label>
+          <label class="ef-choice">
+            <input type="radio" name="environment" value="hybrid">
+            <span class="ef-choice__content"><strong>Hybrid</strong><span>Cloud and on-premises infrastructure.</span></span>
+          </label>
+        </fieldset>
+
+        <div class="ef-cluster" style="margin-top: 1rem">
+          <button type="reset">Reset assessment</button>
+          <button type="submit">Submit assessment</button>
+        </div>
+      </form>
+
+      <div class="ef-validation-summary" role="alert" tabindex="-1" aria-labelledby="fixture-validation-title">
+        <div class="ef-validation-summary__icon" aria-hidden="true">!</div>
+        <div>
+          <h2 class="ef-validation-summary__title" id="fixture-validation-title">There are 2 responses to review</h2>
+          <ul class="ef-validation-summary__list">
+            <li><a href="#likert-question-title">Question 7 requires a response.</a></li>
+            <li><a href="#allocation-title">Allocation must total 10 points.</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <fieldset class="ef-ranking">
+        <legend class="ef-ranking__legend">Rank the priorities from most to least important.</legend>
+        <ol class="ef-ranking__list">
+          <li class="ef-ranking__item" data-ef-rank="1">
+            <span class="ef-ranking__position" aria-hidden="true">1</span>
+            <span class="ef-ranking__label">Reliability</span>
+            <span class="ef-ranking__actions">
+              <button type="button" disabled aria-label="Move Reliability up">↑</button>
+              <button type="button" aria-label="Move Reliability down">↓</button>
+            </span>
+          </li>
+          <li class="ef-ranking__item" data-ef-rank="2">
+            <span class="ef-ranking__position" aria-hidden="true">2</span>
+            <span class="ef-ranking__label">Delivery speed</span>
+            <span class="ef-ranking__actions">
+              <button type="button" aria-label="Move Delivery speed up">↑</button>
+              <button type="button" disabled aria-label="Move Delivery speed down">↓</button>
+            </span>
+          </li>
+        </ol>
+      </fieldset>
+
+      <fieldset class="ef-allocation" aria-labelledby="allocation-title">
+        <legend class="ef-allocation__legend" id="allocation-title">Distribute 10 points across these priorities.</legend>
+        <div class="ef-allocation__items">
+          <label class="ef-allocation__item"><span>Reliability</span><input type="number" min="0" max="10" step="1" value="4"></label>
+          <label class="ef-allocation__item"><span>Delivery speed</span><input type="number" min="0" max="10" step="1" value="6"></label>
+        </div>
+        <div class="ef-allocation__total" data-ef-state="valid"><span>Total</span><output>10 / 10</output></div>
+      </fieldset>
+
+      <section class="ef-rule-builder" aria-labelledby="fixture-rule-title">
+        <header class="ef-rule-builder__header">
+          <div><h2 id="fixture-rule-title">Applicability rule</h2><p>Define when this section is shown.</p></div>
+          <button type="button">Add condition</button>
+        </header>
+        <div class="ef-rule-group" data-ef-operator="and">
+          <div class="ef-rule-group__operator" aria-label="All conditions must be true">AND</div>
+          <div class="ef-rule-clause">
+            <label><span>Field</span><select><option>Answer: Q1</option></select></label>
+            <label><span>Operator</span><select><option>is equal to</option></select></label>
+            <label><span>Value</span><select><option>Yes</option></select></label>
+            <button type="button" aria-label="Remove condition">Remove</button>
+          </div>
+        </div>
+        <p class="ef-rule-builder__summary"><strong>Meaning:</strong> Show this section when Answer(Q1) = Yes.</p>
+      </section>
+
+      <aside class="ef-obligation-panel" aria-labelledby="fixture-obligations-title">
+        <header class="ef-obligation-panel__header">
+          <div><h2 id="fixture-obligations-title">2 obligations require attention</h2><p>Resolve these before finalization.</p></div>
+          <span class="ef-obligation-panel__count" aria-hidden="true">2</span>
+        </header>
+        <ul class="ef-obligation-list">
+          <li class="ef-obligation" data-ef-severity="blocking">
+            <span class="ef-obligation__status">Blocking</span>
+            <div><strong>Reconcile unknown storage outcome</strong><p>Verify whether the write completed before retrying.</p></div>
+            <a href="#reconcile">Review</a>
+          </li>
+          <li class="ef-obligation" data-ef-severity="warning">
+            <span class="ef-obligation__status">Required</span>
+            <div><strong>Rebuild stale aggregate</strong><p>The aggregate is missing an accepted contribution.</p></div>
+            <a href="#aggregate">Review</a>
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>
