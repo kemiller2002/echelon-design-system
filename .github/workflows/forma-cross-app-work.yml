@@ -27,6 +27,7 @@ jobs:
         run: |
           npm install --ignore-scripts=false
           dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
+          npx playwright install --with-deps chromium
           npm run site:check
       - name: Complete GH-14 and validate
         shell: bash
