@@ -1,6 +1,6 @@
-# Component Showcase Site
+# Forma Component Showcase Site
 
-The showcase is a static documentation site generated from the canonical Echelon Design System patterns.
+Forma is the Echelon Foundry design system. This showcase is a static documentation site generated from Forma's canonical patterns.
 
 ## Source of truth
 
@@ -58,4 +58,4 @@ Then open the local server on port 4000.
 
 The generator fails if a canonical pattern has no showcase metadata.
 
-ROS work item: `WI-0006` records the initial component showcase implementation.
+Tracked work item: `GH-9` records the initial Forma component showcase implementation.
