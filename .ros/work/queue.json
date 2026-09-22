@@ -120,6 +120,22 @@
       "createdBy": "agent:chatgpt",
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/14"
+    },
+    {
+      "id": "GH-18",
+      "title": "Prepare Forma for application consumption",
+      "description": null,
+      "tags": [
+        "readiness,bootstrap"
+      ],
+      "priority": "high",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-09-22T22:11:57.886Z",
+      "updatedAt": "2026-09-22T22:11:58.000Z",
+      "createdBy": "agent:chatgpt",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/18"
     }
   ]
 }
