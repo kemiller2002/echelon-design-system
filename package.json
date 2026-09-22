@@ -3,30 +3,29 @@
   "version": "0.1.0-alpha.0",
   "private": true,
   "type": "module",
-  "description": "Standards-based Echelon Foundry design system pilot.",
-  "sideEffects": ["./dist/*.css", "./dist/*.js"],
+  "description": "Zero-runtime HTML and CSS design system for Echelon Foundry applications.",
+  "sideEffects": ["./dist/*.css"],
   "exports": {
-    ".": "./dist/index.js",
-    "./switch": "./dist/switch.js",
-    "./slider": "./dist/slider.js",
     "./tokens.css": "./dist/tokens.css",
-    "./foundations.css": "./dist/foundations.css"
+    "./foundations.css": "./dist/foundations.css",
+    "./components.css": "./dist/components.css",
+    "./all.css": "./dist/all.css",
+    "./patterns/*": "./dist/patterns/*"
   },
-  "files": ["dist", "custom-elements.json"],
+  "files": ["dist", "patterns"],
   "scripts": {
     "clean": "node tools/clean.mjs",
     "tokens:build": "dotnet run --project tools/TokenCompiler/TokenCompiler.fsproj -- tokens/echelon.tokens.json dist/tokens.css",
-    "fable:build": "dotnet tool restore && dotnet fable src/Echelon.DesignSystem.fsproj --outDir build/fable",
-    "bundle": "node tools/build-components.mjs",
-    "build": "npm run clean && npm run tokens:build && npm run fable:build && npm run bundle",
+    "assets:build": "node tools/build-assets.mjs",
+    "build": "npm run clean && npm run tokens:build && npm run assets:build",
     "test:tokens": "node --test tests/token-compiler.test.mjs",
     "test:browser": "playwright test",
     "test:a11y": "playwright test tests/browser/accessibility.spec.mjs",
-    "check": "npm run build && npm run test:tokens && npm run test:browser"
+    "test:runtime": "node --test tests/zero-runtime.test.mjs",
+    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:browser"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
-    "@playwright/test": "1.63.0",
-    "esbuild": "0.28.2"
+    "@playwright/test": "1.63.0"
   }
 }
