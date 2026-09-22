@@ -128,4 +128,4 @@ Accepted design:
 
 The site is a discovery and teaching surface. Canonical patterns and manifests remain authoritative.
 
-ROS attribution target: WI-0006, Echelon Foundry component showcase site.
+ROS attribution is complete as WI-0006 for the Echelon Foundry component showcase site.
