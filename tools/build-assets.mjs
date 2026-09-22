@@ -3,7 +3,7 @@ import path from "node:path";
 
 fs.mkdirSync("dist/patterns", { recursive: true });
 
-for (const file of ["foundations.css", "components.css"]) {
+for (const file of ["foundations.css", "components.css", "assessment.css"]) {
   fs.copyFileSync(path.join("src/styles", file), path.join("dist", file));
 }
 
@@ -16,7 +16,8 @@ for (const file of fs.readdirSync("patterns")) {
 const tokens = fs.readFileSync("dist/tokens.css", "utf8");
 const foundations = fs.readFileSync("dist/foundations.css", "utf8");
 const components = fs.readFileSync("dist/components.css", "utf8");
-fs.writeFileSync("dist/all.css", [tokens, foundations, components].join("\n"));
+const assessment = fs.readFileSync("dist/assessment.css", "utf8");
+fs.writeFileSync("dist/all.css", [tokens, foundations, components, assessment].join("\n"));
 
 const outputFiles = [];
 function walk(dir) {
