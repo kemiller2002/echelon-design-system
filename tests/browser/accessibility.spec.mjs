@@ -38,7 +38,7 @@ test("assessment primitives expose native accessible names and roles", async ({ 
 
   await expect(page.getByRole("radio", { name: "Strongly disagree" })).toBeVisible();
   await expect(page.getByRole("radio", { name: "Don't know" })).toBeVisible();
-  await expect(page.getByRole("radio", { name: /Cloud/ })).toBeVisible();
+  await expect(page.getByRole("radio", { name: /^Cloud\b/ })).toBeVisible();
   await expect(page.getByRole("progressbar", { name: "Survey progress" })).toBeVisible();
   await expect(page.getByRole("spinbutton", { name: "Reliability" })).toBeVisible();
 });
