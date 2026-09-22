@@ -120,7 +120,7 @@ function header(prefix, current) {
     <div class="docs-header__inner">
       <a class="docs-brand" href="${prefix}index.html">
         <span class="docs-brand__mark" aria-hidden="true">EF</span>
-        <span class="docs-brand__text"><span>Echelon / Foundry</span><small>Design System</small></span>
+        <span class="docs-brand__text"><span>Echelon / Foundry</span><small>Forma · Design System</small></span>
       </a>
       <nav class="docs-nav" aria-label="Primary">
         <a href="${prefix}index.html"${current === "home" ? ' aria-current="page"' : ""}>Components</a>
@@ -154,7 +154,7 @@ function sidebar(prefix, components, currentSlug) {
 function footer() {
   return `
   <footer class="docs-footer">
-    <p>Echelon Foundry Design System · Zero-runtime HTML/CSS components · Ordo for meaningful state · Limen for browser behavior beyond native HTML.</p>
+    <p>Forma · Echelon Foundry Design System · Zero-runtime HTML/CSS components · Ordo for meaningful state · Limen for browser behavior beyond native HTML.</p>
   </footer>`;
 }
 
@@ -165,7 +165,7 @@ function shell({ title, description, prefix, current, components, currentSlug, c
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="${escapeHtml(description)}">
-  <title>${escapeHtml(title)} | Echelon Foundry Design System</title>
+  <title>${escapeHtml(title)} | Forma · Echelon Foundry</title>
   ${styles(prefix)}
 </head>
 <body class="docs-site">
@@ -263,9 +263,9 @@ function homePage(components) {
   const content = `
     <section class="docs-hero docs-hero--home">
       <div>
-        <div class="docs-eyebrow">Echelon / Foundry · Design System</div>
+        <div class="docs-eyebrow">Forma · Echelon / Foundry Design System</div>
         <h1>Build the interface from known parts.</h1>
-        <p class="docs-hero__lead">A zero-runtime HTML and CSS component system for Echelon applications. Native browser semantics first, Ordo for meaningful state, and Limen only where behavior exceeds the platform.</p>
+        <p class="docs-hero__lead">Forma is the zero-runtime HTML and CSS design system for Echelon applications. Native browser semantics first, Ordo for meaningful state, and Limen only where behavior exceeds the platform.</p>
         <div class="docs-meta"><span class="docs-tag">${components.length} canonical patterns</span><span class="docs-tag">WCAG 2.2 AA target</span><span class="docs-tag">0-byte browser runtime</span></div>
       </div>
       <p class="docs-signal">The design system owns presentation and interaction substrate. Applications keep domain authority.</p>
@@ -283,7 +283,7 @@ function homePage(components) {
         </div>`).join("\n")}
     </section>`;
 
-  return shell({ title: "Components", description: "Echelon Foundry zero-runtime design-system component showcase.", prefix, current: "home", components, content });
+  return shell({ title: "Components", description: "Forma, the Echelon Foundry zero-runtime design-system component showcase.", prefix, current: "home", components, content });
 }
 
 function agentsPage(components) {
@@ -322,7 +322,7 @@ function agentsPage(components) {
 @import "@echelon-foundry/design-system/assessment.css";</code></pre>
     </section>`;
 
-  return shell({ title: "Agent use", description: "Explicit agent instructions for using the Echelon Foundry Design System.", prefix, current: "agents", components, content });
+  return shell({ title: "Agent use", description: "Explicit agent instructions for using Forma, the Echelon Foundry Design System.", prefix, current: "agents", components, content });
 }
 
 async function copyRequiredFile(source, target) {
