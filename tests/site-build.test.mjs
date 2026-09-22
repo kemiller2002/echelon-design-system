@@ -59,3 +59,30 @@ test("index and agent documentation are complete", () => {
   assert.ok(fs.existsSync(path.join(output, "assets", "site.css")));
   assert.ok(fs.existsSync(path.join(output, ".nojekyll")));
 });
+
+
+test("site chrome preserves the canonical Echelon Foundry visual system", () => {
+  const css = fs.readFileSync(path.join(output, "assets", "site.css"), "utf8");
+  const index = fs.readFileSync(path.join(output, "index.html"), "utf8");
+
+  for (const value of [
+    "#202421",
+    "#3a403c",
+    "#f2efe7",
+    "#905831",
+    "#47756b",
+    "#171a18",
+    "#686d68",
+    "#e3e0d7"
+  ]) {
+    assert.match(css, new RegExp(value.replace("#", "\\#"), "i"), `missing Echelon Foundry palette value ${value}`);
+  }
+
+  assert.match(css, /background-size:\s*48px\s+48px/);
+  assert.match(css, /rgb\(242 239 231 \/ \.94\)/);
+  assert.match(css, /backdrop-filter:\s*blur\(14px\)/);
+  assert.match(index, /family=IBM\+Plex\+Mono/);
+  assert.match(index, /family=Manrope/);
+  assert.match(index, /family=Newsreader/);
+  assert.match(index, /Forma \/ Interface system/);
+});
