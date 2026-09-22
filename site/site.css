@@ -409,6 +409,7 @@
   }
 
   .component-nav a {
+    min-inline-size: 2.75rem;
     min-block-size: 2.75rem;
     display: flex;
     align-items: center;
