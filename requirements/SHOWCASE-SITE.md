@@ -1,16 +1,16 @@
-# Component Showcase Site Requirements
+# Forma Component Showcase Site Requirements
 
 Status: implementation baseline.
 
 ## Purpose
 
-Provide a public Echelon Foundry design-system site that explains and demonstrates every canonical component while remaining coupled to the actual package source.
+Provide a public Forma site for the Echelon Foundry design system that explains and demonstrates every canonical component while remaining coupled to the actual package source.
 
 ## Requirements
 
 ### SHOW-001 — Echelon Foundry visual language
 
-The site must use the established Echelon Foundry visual language, including:
+Forma must use the established Echelon Foundry visual language, including:
 
 - parchment, charcoal, forged iron, oxide bronze, verdigris, graphite, and stone roles through design-system tokens;
 - Newsreader display typography;
