@@ -4,7 +4,7 @@
   "repository": "echelon-design-system",
   "actor": "ChatGPT",
   "startedAt": "2026-09-22T05:56:29.390Z",
-  "updatedAt": "2026-09-22T14:25:11.000Z",
+  "updatedAt": "2026-09-22T14:38:24.000Z",
   "baselineDirtyPaths": [],
   "workItems": [
     {
@@ -125,13 +125,23 @@
     {
       "id": "GH-9",
       "type": "feature",
-      "state": "active",
-      "semanticState": "active",
-      "evidence": [],
-      "updatedAt": "2026-09-22T14:25:11.000Z",
+      "state": "complete",
+      "semanticState": "complete",
+      "evidence": [
+        {
+          "type": "implementation",
+          "path": "tools/build-site.mjs"
+        },
+        {
+          "type": "tests",
+          "path": "tests/site-build.test.mjs"
+        }
+      ],
+      "updatedAt": "2026-09-22T14:38:24.000Z",
       "telemetryExecutionIds": [
         "EXE-20260922T142511823Z-66700c8e"
-      ]
+      ],
+      "completedAt": "2026-09-22T14:38:24.000Z"
     }
   ]
 }
