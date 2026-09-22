@@ -86,25 +86,35 @@ function representativeState(source) {
 function header(rootPath) {
   return `<header class="site-header">
   <div class="nav-shell">
-    <a class="brand-link" href="${rootPath}">
-      <span class="brand-mark" aria-hidden="true">EF</span>
-      <span>Echelon / Foundry</span>
-      <span class="brand-product">Forma</span>
-    </a>
+    <div class="brand">
+      <a class="brand-link" href="${rootPath}">
+        <span class="brand-mark" aria-hidden="true">EF</span>
+        <span>Echelon / Foundry</span>
+      </a>
+      <span class="brand-subtitle">Forma / Interface system</span>
+    </div>
     <nav class="site-nav" aria-label="Primary">
       <a href="${rootPath}">Overview</a>
       <a href="${rootPath}#components">Components</a>
-      <a href="${rootPath}agents/">Agent use</a>
+      <a class="pill-link" href="${rootPath}agents/">Agent use</a>
     </nav>
   </div>
 </header>`;
 }
 
 function footer() {
-  return `<footer class="site-footer"><div class="footer-inner">
-  <div><strong>Forma / Echelon Foundry</strong><p>Semantic HTML. Deliberate CSS. No hidden runtime.</p></div>
-  <p>Generated from canonical component patterns.</p>
-</div></footer>`;
+  return `<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <p class="eyebrow">Echelon / Foundry</p>
+      <p>Forma: semantic HTML, deliberate CSS, and explicit application boundaries.</p>
+    </div>
+    <div>
+      <a href="https://echelonfoundry.com/">Echelon Foundry</a>
+    </div>
+  </div>
+  <p class="footer-note">Forma design system <span>Generated from canonical component patterns.</span></p>
+</footer>`;
 }
 
 function page(title, rootPath, body) {
@@ -113,9 +123,12 @@ function page(title, rootPath, body) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
+  <meta name="color-scheme" content="light">
   <meta name="description" content="Forma, the zero-runtime Echelon Foundry design system.">
   <title>${escapeHtml(title)} · Forma · Echelon Foundry</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,650&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${rootPath}assets/forma.css">
   <link rel="stylesheet" href="${rootPath}assets/site.css">
 </head>
