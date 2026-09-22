@@ -34,7 +34,34 @@ const meta = {
   "switch": ["Switch", "Input", "Native HTML", "A checkbox-backed on/off preference control with role=switch and a visible track/thumb treatment."],
   "symbol-rating": ["Symbol rating", "Assessment & decision", "Native HTML", "Ordinal rating presented with symbols while retaining accessible textual labels."],
   "validation-message": ["Validation message", "State & feedback", "Application state", "Question-level recovery guidance with icon, text, and non-color signaling."],
-  "validation-summary": ["Validation summary", "State & feedback", "Application state", "Focusable page-level error summary with links back to affected controls."]
+  "validation-summary": ["Validation summary", "State & feedback", "Application state", "Focusable page-level error summary with links back to affected controls."],
+  "alert": ["Alert", "State & feedback", "Application state", "Structured status or warning communication with text, icon, and non-color cues."],
+  "collection-toolbar": ["Collection toolbar", "Data & productivity", "Application / Limen", "A responsive composition for search, filters, sort, saved views, and result counts."],
+  "combobox": ["Combobox", "Input", "Native baseline / Limen enhancement", "Searchable selection baseline that preserves direct text entry and native semantics."],
+  "command-palette": ["Command palette", "Navigation & commands", "Application / Limen", "Keyboard-first command discovery that can become a full-screen mobile surface."],
+  "conflict-review": ["Conflict review", "State & feedback", "Ordo / application", "Explain optimistic-concurrency conflicts and expose application-supplied recovery actions without guessing."],
+  "dashboard-grid": ["Dashboard grid", "Layout & workspace", "Application content", "Responsive operational dashboard composition for metrics, status, and attention-first blocks."],
+  "data-grid": ["Data grid", "Data & productivity", "Application / Limen", "Semantic tabular records with sortable affordances and a labeled mobile record projection."],
+  "date-range": ["Date range", "Input", "Native HTML / application", "Paired direct date entry with reusable preset affordances and mobile stacking."],
+  "diff-viewer": ["Diff viewer", "Data & productivity", "Application content", "Before/after structured differences with explicit changed-field cues and stacked mobile comparison."],
+  "empty-state": ["Empty state", "State & feedback", "Application content", "Explain an empty result and provide a useful recovery action without treating absence as failure."],
+  "file-upload": ["File upload queue", "Input", "Native HTML / Limen", "Native file selection plus a reusable upload queue for progress, success, cancellation, failure, and unknown outcomes."],
+  "master-detail": ["Master/detail workspace", "Layout & workspace", "Application / Limen", "List-and-detail composition that collapses cleanly from multi-pane desktop to mobile navigation."],
+  "metric-card": ["Metric card", "Content & utility", "Application content", "A compact labeled value with context and optional action, without inventing metric meaning."],
+  "mobile-action-bar": ["Mobile action bar", "Navigation & commands", "Application / Limen", "Safe-area-aware mobile action region for critical contextual actions."],
+  "operation-status": ["Operation status", "State & feedback", "Ordo / application", "Present pending, confirmed, failed, conflict, unknown, reconciling, stale, blocked, unavailable, or insufficient states."],
+  "pagination": ["Pagination", "Navigation & commands", "Application / Limen", "Page navigation with explicit current-page semantics and compact mobile presentation."],
+  "preview-surface": ["Preview surface", "Layout & workspace", "Application content", "A bounded review surface for consequential content before an application commits or publishes it."],
+  "provenance-trail": ["Provenance trail", "Data & productivity", "Application content", "Trace displayed output through source, aggregate, analysis, and presentation stages."],
+  "readiness-checklist": ["Readiness checklist", "State & feedback", "Ordo / application", "Explicit complete, incomplete, and blocking prerequisites before a consequential transition."],
+  "record-header": ["Record header", "Layout & workspace", "Application content", "Persistent record identity, status, context, breadcrumbs, and legal actions with mobile action collapse."],
+  "search": ["Search", "Input", "Application / Limen", "Search entry, clearing, and result-count feedback with asynchronous behavior owned by the application."],
+  "skeleton": ["Skeleton", "State & feedback", "Application state", "Low-information loading placeholder with explicit busy semantics and reduced-motion support."],
+  "status-lozenge": ["Status lozenge", "Content & utility", "Application state", "Compact textual state labels with structural and non-color cues."],
+  "tabs": ["Tabs", "Navigation & commands", "Application / Limen", "Focused views with keyboard and deep-link integration hooks plus mobile overflow strategy."],
+  "timeline": ["Timeline", "Data & productivity", "Application content", "Chronological or ordered activity with timestamps, state changes, provenance, and single-column mobile flow."],
+  "wizard": ["Wizard", "Navigation & commands", "Limen / Ordo", "Step-by-step workflow shell with current-step state, progress, validation hooks, resume, and mobile reduction."],
+  "work-queue": ["Work queue", "State & feedback", "Ordo / application", "Attention-first list of unresolved work with reason, context, and application-supplied legal actions."]
 };
 
 const escapeHtml = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
@@ -224,7 +251,7 @@ const indexBody = `<main id="main">
 <section class="content-section" id="components">
   <div class="section-heading">
     <div><span class="eyebrow">Component catalog</span><h2>One contract at a time.</h2></div>
-    <p>Every implemented pattern has a dedicated page with default, representative-state, and constrained-layout examples.</p>
+    <p>Every implemented pattern has a dedicated page with canonical, representative-state, and explicit Mobile · 320px examples.</p>
   </div>
   ${[...grouped.entries()].map(([category, items]) => `<section class="catalog-group">
     <span class="category-label">${escapeHtml(category)}</span>
@@ -270,7 +297,7 @@ for (const slug of slugs) {
       <div class="examples">
         ${example(1, "Canonical", "Canonical repository markup, namespaced only to keep examples independent.", canonical)}
         ${example(2, state.changed ? "Representative state" : "Secondary surface", state.changed ? "A browser-native state made visible without adding a runtime." : "The same contract demonstrated on a secondary Forma surface.", stateful, "example-canvas--secondary")}
-        ${example(3, "Constrained layout", "The canonical contract inside a narrow application region.", narrow, "example-canvas--narrow")}
+        ${example(3, "Mobile · 320px", "The canonical contract inside the minimum supported phone-width presentation. Semantic meaning and actions must remain available.", narrow, "example-canvas--mobile")}
       </div>
     </main>
   </div>`;
@@ -316,6 +343,19 @@ const agentBody = `<main id="main" class="content-section agent-page">
     <li>Infer domain meaning from color, order, or CSS state.</li>
     <li>Make drag, hover, pointer input, or color the only usable path.</li>
     <li>Fork a pattern in an application merely to change visual styling.</li>
+  </ul>
+
+  <h2>Mobile is part of the component contract</h2>
+  <p>Every Forma pattern must recompose at 320 CSS px without changing its semantic meaning or domain authority.</p>
+  <ul>
+    <li>No essential page-level horizontal scrolling.</li>
+    <li>No hover-only, drag-only, pointer-only, or color-only interaction.</li>
+    <li>Critical actions remain reachable when layouts collapse.</li>
+    <li>Side-by-side comparisons stack with explicit labels.</li>
+    <li>Tables provide a usable narrow projection when ordinary columns cannot fit.</li>
+    <li>Target sizes should be approximately 44×44 CSS px where practical.</li>
+    <li>Deep-link and URL-backed state keeps the same meaning when its visual control changes form.</li>
+    <li>Reduced-motion and forced-colors behavior still applies on mobile.</li>
   </ul>
 
   <h2>Build and verify</h2>
