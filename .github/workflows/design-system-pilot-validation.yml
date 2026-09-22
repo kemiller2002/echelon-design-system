@@ -25,26 +25,23 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Install JavaScript development tools
+      - name: Install test tooling
         run: npm install --ignore-scripts=false
 
-      - name: Restore Fable tool
-        run: dotnet tool restore
+      - name: Restore token compiler
+        run: dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
 
-      - name: Restore .NET projects
-        run: dotnet restore src/Echelon.DesignSystem.fsproj && dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
-
-      - name: Build pilot
+      - name: Build HTML/CSS pilot
         run: npm run build
 
-      - name: Verify runtime dependency boundary
-        shell: bash
-        run: |
-          node -e "const p=require('./package.json'); if (p.dependencies && Object.keys(p.dependencies).length) { console.error(p.dependencies); process.exit(1); }"
-          cat dist/build-metrics.json
+      - name: Enforce zero-runtime boundary
+        run: npm run test:runtime
 
       - name: Test token compiler
         run: npm run test:tokens
+
+      - name: Show artifact metrics
+        run: cat dist/build-metrics.json
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium firefox webkit
