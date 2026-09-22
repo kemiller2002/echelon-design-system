@@ -290,6 +290,9 @@ body.docs-site::before {
 }
 
 .docs-component-card:hover { background: var(--ef-color-surface-primary, #f2efe7); }
+.docs-component-card__category {
+  color: var(--ef-color-text-on-secondary-surface, #3a403c);
+}
 .docs-component-card h3 { margin: .5rem 0; font-family: var(--docs-display); font-size: 1.65rem; font-weight: 500; }
 .docs-component-card p { margin: 0; color: var(--ef-color-text-primary, #171a18); font-size: .85rem; }
 
