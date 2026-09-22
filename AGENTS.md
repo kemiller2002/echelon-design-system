@@ -52,6 +52,26 @@ Apply, in descending order: explicit user instruction; applicable safety, legal,
 - Treat execution telemetry as evidence: discover capabilities, distinguish zero from unavailable, preserve normalized and sanitized raw provider data, prefer deterministic collection, and never invent a metric.
 - Not every edit needs a REP. Use the artifact threshold in the Agent Operating Manual.
 
+## Forma component usage
+
+When creating or changing Echelon application UI, treat Forma as the default
+presentation vocabulary.
+
+1. Read `docs/AGENT-USAGE.md` before producing UI markup.
+2. Reuse a canonical `patterns/*.html` contract before inventing a new control.
+3. Use semantic/native HTML first and preserve the documented `ef-*` class
+   structure and accessible-name relationships.
+4. Do not add JavaScript, WebAssembly, custom-element registration, hidden
+   behavior, scoring, or domain transition authority to Forma.
+5. Browser-native state may live in markup. Behavior beyond native HTML belongs
+   to the consuming application/Limen; legal domain transitions belong to
+   Ordo/application state.
+6. When no existing pattern fits, check
+   `requirements/COMPONENT-CATALOG.md` and record the gap through ROS before
+   adding a new visual contract.
+7. Run `npm run site:check` whenever canonical patterns or component styling
+   change.
+
 ## Handoff
 
 For substantial work, record: objective; work completed; files changed; decisions and assumptions; tests run and results; evidence added; unresolved questions; risks; and next recommended action. A capable successor must be able to continue without the originating conversation.

@@ -19,3 +19,24 @@ Current capability baseline:
 - ROS 3.1.4
 - Visual Engineering 1.0.0
 - Communication Engineering 1.0.0
+
+
+## Forma
+
+**Forma** is the product name for this Echelon Foundry design system. The
+package identifier remains `@echelon-foundry/design-system` during the current
+alpha/private phase.
+
+Forma is intentionally zero-runtime. Semantic HTML, CSS, design tokens,
+accessibility contracts, and visual patterns live here. Behavior beyond
+browser-native interaction belongs to the consuming application, normally
+through Limen.
+
+Build the component documentation site with:
+
+```bash
+npm run site:check
+```
+
+The generated GitHub Pages artifact is written to `site-dist/`.
+Agent usage rules are in [docs/AGENT-USAGE.md](docs/AGENT-USAGE.md).
