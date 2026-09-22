@@ -57,3 +57,5 @@ Then open the local server on port 4000.
 7. Complete ROS attribution.
 
 The generator fails if a canonical pattern has no showcase metadata.
+
+ROS work item: `WI-0006` records the initial component showcase implementation.
