@@ -370,6 +370,7 @@
   }
 
   .docs-shell {
+    min-inline-size: 0;
     inline-size: min(var(--site-max), 100%);
     margin-inline: auto;
     display: grid;
@@ -377,11 +378,15 @@
   }
 
   .component-nav {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     padding: 2rem 1.2rem 4rem var(--site-gutter);
     border-inline-end: 1px solid var(--ef-forged-iron);
   }
 
   .component-nav-inner {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     position: sticky;
     inset-block-start: 5.5rem;
     max-block-size: calc(100vh - 7rem);
@@ -692,6 +697,7 @@
     }
 
     .component-nav ul {
+      max-inline-size: 100%;
       display: flex;
       gap: .85rem;
       overflow-x: auto;
