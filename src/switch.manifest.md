@@ -1,37 +1,37 @@
-# Feature Manifest — ef-switch
+# Feature Manifest — switch pattern
 
 ## Purpose
 
-Provide a polished binary on/off input while preserving native checkbox interaction and form behavior.
+Provide a polished binary on/off control using semantic HTML and CSS only while preserving native checkbox form, keyboard, touch, and accessibility behavior.
 
 ## Ownership
 
-- State, including presentation state: `src/Switch.fs`
-- Transitions / commands / messages: user request -> cancelable `ef-change-requested` -> accepted local commit -> `input`/`change`
-- Invariants and guards: checked is binary; disabled blocks user transition; form value exists only when checked
-- Capabilities / authority: caller may cancel requested transition before commit
-- Important effects and effect contracts: ElementInternals form value; DOM events
+- State, including presentation state: native checkbox checked/disabled/required/focus states in `patterns/switch.html`
+- Transitions / commands / messages: browser-native `input` and `change`
+- Invariants and guards: input remains native and labelled; visual state derives from native checked state
+- Capabilities / authority: none — application/Ordo owns domain legality
+- Important effects and effect contracts: native form submission/reset and DOM events
 
 ## Interfaces
 
-- Inbound: checked, disabled, required, value, label, description attributes/properties
-- Outbound: ef-change-requested, input, change
+- Inbound: standard checkbox attributes plus required Echelon class structure
+- Outbound: native input/change events and native form value
 
 ## Tests and verification
 
 - Local behavior tests: `tests/browser/switch.spec.mjs`
-- Boundary/contract tests: form submission, cancellation, keyboard, role/name
+- Boundary/contract tests: form submission/reset, keyboard, role/name, zero-runtime scan
 - Integration/live verification: Playwright Chromium/Firefox/WebKit matrix
 
 ## Dependencies
 
-- Allowed direct dependencies: Component runtime, semantic tokens
-- Required composition context: generated tokens CSS
+- Allowed direct dependencies: semantic tokens, `src/styles/components.css`
+- Required composition context: Limen/application code only when domain behavior exceeds native checkbox semantics
 
 ## Modification boundaries
 
-- Normal: `src/Switch.fs`, switch tests, switch documentation
-- Escalation required: event semantics, role change, form contract change
+- Normal: `patterns/switch.html`, switch CSS, switch tests
+- Escalation required: replacing the native checkbox or introducing component script
 
 ## Local agent instructions
 
@@ -41,4 +41,4 @@ Provide a polished binary on/off input while preserving native checkbox interact
 
 - Owner: Echelon Foundry design system
 - Last checked against implementation: 2026-09-22
-- Known gaps: richer slotted label content deferred until pilot semantics are proven
+- Known gaps: pre-commit domain authorization is an application/Limen concern, not a design-system feature
