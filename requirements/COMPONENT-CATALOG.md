@@ -198,7 +198,167 @@ Only if product requirements justify it.
 
 Support text values, swatches, alpha policy, contrast preview where relevant, keyboard operation, and non-spatial value entry. Color selection may not rely solely on a 2D pointer canvas.
 
-## 3. Navigation and command components
+## 3. Assessment, decision, and state patterns
+
+These patterns were derived from Echelon Signal requirements but are intentionally application-independent.
+
+### P0: Question shell
+Pattern: `.ef-question`
+
+Requirements:
+
+- stable question/prompt region;
+- optional question number that is not required for the accessible name;
+- help/instruction text;
+- required/optional communication supplied by the application;
+- selector slot/body;
+- validation region;
+- conditional/hidden presentation supplied by application state;
+- no scoring or applicability logic inside the design system.
+
+### P0: Ordinal / Likert scale
+Pattern: `.ef-ordinal-scale`
+
+One pattern shall support discrete ordered scales such as:
+
+- 3-point;
+- 5-point;
+- 7-point;
+- agreement;
+- frequency;
+- quality;
+- confidence;
+- satisfaction;
+- maturity/readiness;
+- numeric discrete ratings.
+
+Requirements:
+
+- native radio inputs;
+- fieldset/legend semantics;
+- cardinality variants;
+- equal-width horizontal presentation when space permits;
+- stacked mobile presentation;
+- strong selected and focus-visible states;
+- selection not communicated by color alone;
+- label text supplied by the application;
+- keyboard behavior remains native radio-group behavior;
+- reduced-motion support;
+- special states such as Don't Know and Not Applicable rendered outside the ordinal continuum;
+- no scoring semantics inferred from position or label.
+
+Separate `Likert5`, `Agreement5`, `Frequency5`, and similar components shall not be created. They are application/presentation presets over the same ordinal pattern.
+
+### P0: Choice group
+Pattern: `.ef-choice-group` / `.ef-choice`
+
+Support:
+
+- single choice using radios;
+- multi-choice using checkboxes;
+- forced choice and pairwise choice through the same semantic primitives;
+- primary and supporting option text;
+- native required/disabled behavior;
+- mobile/touch targets;
+- selected and focus-visible states;
+- no hidden score/meaning attached to visual order.
+
+### P0: Special answer choices
+Pattern: `.ef-special-choices` / `.ef-special-choice`
+
+Use for semantic states that must not be confused with the primary answer scale, including:
+
+- Don't Know / Unknown;
+- Not Applicable;
+- other application-defined non-scale states.
+
+The pattern must visually and structurally separate these from an ordinal scale while preserving the same native radio group when they are mutually exclusive with scale values.
+
+### P0: Validation message and summary
+Patterns: `.ef-validation-message`, `.ef-validation-summary`
+
+Requirements:
+
+- question-level message;
+- page/section/survey error summary;
+- focusable summary for application-directed focus;
+- links back to affected controls where appropriate;
+- icon/text/non-color cues;
+- stable heading;
+- compatible with live insertion by Limen;
+- no raw exception text as primary user communication.
+
+### P0: Survey/task progress
+Pattern: `.ef-survey-progress`
+
+Requirements:
+
+- native `progress` element for determinate progress;
+- explicit accessible name;
+- current/total text;
+- optional section/context text;
+- indeterminate variant when total is unknown;
+- application supplies current value and progress semantics;
+- progress must not infer domain completion.
+
+### P1: Ranking
+Visual contract: `.ef-ranking` (Limen behavior required)
+
+Requirements:
+
+- ordered list semantics;
+- visible ordinal position;
+- keyboard-operable move up/down or move-to-position path;
+- drag-and-drop optional only;
+- disabled boundary actions;
+- live announcement contract for changed position;
+- cancel/revert;
+- small-item-set emphasis;
+- application/Ordo owns uniqueness and ranking validation.
+
+### P1: Allocation
+Visual contract: `.ef-allocation` (Limen behavior required for aggregate validation)
+
+Requirements:
+
+- direct numeric entry for every allocation item;
+- per-item min/max/step;
+- visible aggregate total;
+- explicit valid/invalid aggregate state supplied by application;
+- remaining/excess amount presentation when applicable;
+- no slider-only or drag-only allocation;
+- application/Ordo owns total constraints and scoring.
+
+### P1: Rule builder
+Visual contract: `.ef-rule-builder` (Limen behavior required)
+
+Requirements:
+
+- field/operator/value clause layout;
+- AND/OR group presentation;
+- nested groups when justified;
+- add/remove controls;
+- keyboard operation;
+- validation;
+- plain-language meaning/preview;
+- application owns typed expression semantics and serialization;
+- design system shall not embed Signal-specific AST or rule meaning.
+
+### P0: Obligation panel
+Pattern/visual contract: `.ef-obligation-panel`
+
+Requirements:
+
+- unresolved obligation count;
+- textual severity/type labels;
+- blocking versus nonblocking distinction;
+- obligation title and recovery/evidence description;
+- action/navigation affordance supplied by application;
+- unknown/unreconciled work can be represented distinctly;
+- severity is not communicated by color alone;
+- Ordo/application remains authority for whether obligations exist or are discharged.
+
+## 4. Navigation and command components
 
 ### P0: Tabs
 Visual contract: `.ef-tabs` (Limen behavior required)
@@ -248,7 +408,7 @@ Visual contract: `.ef-tree` (Limen behavior required)
 
 Support expand/collapse, selection policy, keyboard tree interaction, async children, loading/error nodes, and large-tree performance.
 
-## 4. Overlay and transient surfaces
+## 5. Overlay and transient surfaces
 
 ### P0: Dialog
 Pattern: `.ef-dialog` using native `dialog`
@@ -307,7 +467,7 @@ Support:
 
 Tours shall never block access to the underlying feature merely because onboarding state is missing.
 
-## 5. Feedback and status
+## 6. Feedback and status
 
 ### P0
 - ef-alert
@@ -332,7 +492,7 @@ The visual success state must not substitute for durable application confirmatio
 ### P1: Undo notification
 Support a bounded undo window without requiring the user to act before reading the message.
 
-## 6. Data and productivity
+## 7. Data and productivity
 
 ### P0: Data table styling
 Static and lightly interactive tables shall remain semantic HTML.
@@ -403,7 +563,7 @@ Support grouped timestamps, status changes, expandable detail, source attributio
 ### P2: Diff viewer
 Support text/structured differences, additions/removals/changes, keyboard navigation between changes, and non-color cues.
 
-## 7. Layout and workspace components
+## 8. Layout and workspace components
 
 ### P0
 - page shell;
@@ -437,7 +597,7 @@ Supports navigation/content/detail compositions that transition between multi-pa
 ### P2: Dockable panels
 Only if multiple applications demonstrate need. Docking must not become a general desktop-window framework by default.
 
-## 8. Content and utility components
+## 9. Content and utility components
 
 ### P0
 - badge;
@@ -469,7 +629,7 @@ Only if multiple applications demonstrate need. Docking must not become a genera
 
 The design system should style and integrate editors rather than invent a full text editor engine without a demonstrated need.
 
-## 9. Visualization
+## 10. Visualization
 
 ### P1: Visualization tokens
 Define categorical, sequential, diverging, positive/negative, threshold, focus, and selection color tokens.
@@ -489,7 +649,7 @@ Any chart implementation shall provide an equivalent data representation, keyboa
 
 The design system shall not become a full charting framework unless application requirements demonstrate that need.
 
-## 10. Specialized interaction patterns
+## 11. Specialized interaction patterns
 
 ### P1: Reorderable list
 Visual contract: `.ef-reorder-list` (Limen behavior required)
@@ -520,13 +680,13 @@ Supports:
 
 Business transition legality remains application/Ordo owned.
 
-## 11. Zero-runtime rule
+## 12. Zero-runtime rule
 
 No catalog entry authorizes JavaScript or WebAssembly inside the design-system package.
 
 If an entry requires behavior beyond semantic HTML, its behavior belongs to Limen/application code while this repository owns only markup/CSS/accessibility/communication contracts.
 
-## 12. Explicit non-goals
+## 13. Explicit non-goals
 
 Do not automatically build:
 
