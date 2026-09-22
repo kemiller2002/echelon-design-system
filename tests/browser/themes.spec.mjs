@@ -3,7 +3,7 @@ import { openFixture } from "./helpers.mjs";
 
 test("explicit dark theme resolves accessible derived accent tokens", async ({ page }) => {
   await openFixture(page);
-  await page.locator("html").setAttribute("data-ef-theme", "dark");
+  await page.locator("html").evaluate(element => element.setAttribute("data-ef-theme", "dark"));
 
   const values = await page.locator("html").evaluate(element => {
     const style = getComputedStyle(element);
