@@ -10,7 +10,18 @@ The design-system package is HTML and CSS only. This matrix determines whether a
 | Slider | complete with native presentation tradeoffs | native range markup + accent/focus polish | live computed display, domain validation if needed |
 | Segmented control | complete | radio-based markup + selection polish | domain handling |
 | Question shell | complete | prompt/help/validation layout | applicability, scoring, branching |
-| Ordinal / Likert scale | complete | native radios, responsive scale, selected/focus states | labels, scoring, applicability |
+| Ordinal / Likert scale | complete | native radios, responsive 3/4/5/6/7/10/11 scales | labels, scoring, applicability |
+| Binary choice | complete | radio-backed 2/3-way selection preserving Unanswered | domain meaning/scoring |
+| Semantic differential | complete | labelled endpoint ordinal radio scale | endpoint semantics/scoring |
+| Symbol/star/icon rating | complete | native radios + decorative symbols + text alternatives | semantic labels/scoring |
+| Numeric stepper | complete | native number input | value interpretation/validation |
+| Range entry / range slider | baseline complete; graphical enhancement requires behavior | paired direct numeric endpoints | coordinated dual-thumb behavior and cross-endpoint validation |
+| Image choice | complete presentation variant | choice card + image + visible text | option identity/meaning |
+| Multi-choice cardinality/exclusive option | presentation complete; constraint behavior required | guidance/status/exclusive styling | count validation and deterministic clear/reject policy |
+| Matrix/repeated scale | repeated controls complete; advanced variants require behavior | responsive per-row semantic composition | global constraints, side-by-side coordination |
+| Pairwise | complete | two-option native radio presentation | scoring/aggregation |
+| Best-Worst | behavior required for cross-column constraint | labelled Best/Worst columns and status | enforce distinct selections |
+| Hierarchical choice | baseline native tree/disclosure presentation; cascading semantics require behavior | nested labels/disclosures | parent/descendant and cascade policy |
 | Choice group | complete | native radio/checkbox card presentation | option meaning and scoring |
 | Special answer states | complete | visually separate native choices | Unknown/N/A domain semantics |
 | Validation message/summary | complete as presentation | semantic message/summary regions | validation evaluation and focus routing |
