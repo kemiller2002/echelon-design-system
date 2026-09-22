@@ -1,0 +1,617 @@
+@layer echelon.assessment {
+  /* Question shell ------------------------------------------------------ */
+  .ef-question {
+    display: grid;
+    gap: var(--ef-primitive-spacing-4, 1rem);
+    padding-block: var(--ef-primitive-spacing-5, 1.5rem);
+    border-block-end: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  .ef-question__header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+  }
+
+  .ef-question__number {
+    min-inline-size: 2rem;
+    block-size: 2rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: 50%;
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .ef-question__prompt {
+    margin: 0;
+    color: var(--ef-color-text-heading, #202421);
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+    font-size: clamp(1rem, 0.95rem + 0.25vw, 1.2rem);
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.35;
+  }
+
+  .ef-question__help {
+    margin: 0.35rem 0 0;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.875rem;
+  }
+
+  .ef-question__body { min-inline-size: 0; }
+
+  /* Ordinal / Likert scale --------------------------------------------- */
+  .ef-ordinal-scale,
+  .ef-choice-group,
+  .ef-special-choice-group,
+  .ef-ranking,
+  .ef-allocation {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .ef-ordinal-scale__legend,
+  .ef-choice-group__legend,
+  .ef-ranking__legend,
+  .ef-allocation__legend {
+    margin-block-end: var(--ef-primitive-spacing-3, 0.75rem);
+    color: var(--ef-color-text-primary, #171a18);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .ef-ordinal-scale__options {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+  }
+
+  .ef-ordinal-scale--3 .ef-ordinal-scale__options { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ef-ordinal-scale--7 .ef-ordinal-scale__options { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+
+  .ef-ordinal-option {
+    position: relative;
+    min-inline-size: 0;
+    min-block-size: 5.5rem;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    place-items: center;
+    gap: 0.45rem;
+    padding: 0.75rem 0.45rem;
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    text-align: center;
+    cursor: pointer;
+    transition:
+      background var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease),
+      color var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease),
+      transform var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease);
+  }
+
+  .ef-ordinal-option + .ef-ordinal-option {
+    border-inline-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  .ef-ordinal-option input,
+  .ef-choice input,
+  .ef-special-choice input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+  }
+
+  .ef-ordinal-option__marker {
+    inline-size: 2rem;
+    block-size: 2rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: 50%;
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .ef-ordinal-option__label {
+    align-self: start;
+    font-size: 0.8125rem;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+
+  .ef-ordinal-option:hover { background: var(--ef-color-surface-secondary, #e3e0d7); }
+  .ef-ordinal-option:has(input:active) { transform: scale(0.985); }
+
+  .ef-ordinal-option:has(input:checked) {
+    background: var(--ef-color-surface-inverse, #202421);
+    color: var(--ef-color-text-inverse, #f2efe7);
+  }
+
+  .ef-ordinal-option:has(input:checked) .ef-ordinal-option__marker {
+    background: var(--ef-color-accent-primary, #905831);
+    color: var(--ef-color-text-inverse, #f2efe7);
+    border-color: currentColor;
+  }
+
+  .ef-ordinal-option:has(input:focus-visible),
+  .ef-choice:has(input:focus-visible),
+  .ef-special-choice:has(input:focus-visible) {
+    z-index: 1;
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  /* Special answer states ---------------------------------------------- */
+  .ef-special-choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    margin-block-start: var(--ef-primitive-spacing-3, 0.75rem);
+    padding-block-start: var(--ef-primitive-spacing-3, 0.75rem);
+    border-block-start: 1px dashed var(--ef-color-border-functional, #3a403c);
+  }
+
+  .ef-special-choice {
+    position: relative;
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    cursor: pointer;
+  }
+
+  .ef-special-choice:has(input:checked) {
+    background: var(--ef-color-surface-inverse, #202421);
+    color: var(--ef-color-text-inverse, #f2efe7);
+  }
+
+  /* Choice cards -------------------------------------------------------- */
+  .ef-choice-group {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+  }
+
+  .ef-choice {
+    position: relative;
+    min-block-size: 3.25rem;
+    display: grid;
+    align-items: center;
+    padding: 0.8rem 1rem 0.8rem 3rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    cursor: pointer;
+    transition:
+      background var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease),
+      border-color var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease);
+  }
+
+  .ef-choice::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: 1rem;
+    inline-size: 1.125rem;
+    block-size: 1.125rem;
+    border: 2px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: 50%;
+    background: var(--ef-color-surface-primary, #f2efe7);
+  }
+
+  .ef-choice:has(input[type="checkbox"])::before { border-radius: 0.2rem; }
+
+  .ef-choice:has(input:checked) {
+    border-color: var(--ef-color-accent-primary, #905831);
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+  }
+
+  .ef-choice:has(input:checked)::before {
+    background:
+      radial-gradient(circle, var(--ef-color-accent-primary, #905831) 0 42%, transparent 44%);
+    border-color: var(--ef-color-accent-primary, #905831);
+  }
+
+  .ef-choice:has(input[type="checkbox"]:checked)::before {
+    background: var(--ef-color-accent-primary, #905831);
+    box-shadow: inset 0 0 0 3px var(--ef-color-surface-primary, #f2efe7);
+  }
+
+  .ef-choice__content {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .ef-choice__content > span {
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.8125rem;
+  }
+
+  /* Validation ---------------------------------------------------------- */
+  .ef-validation-message {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    margin: 0.5rem 0 0;
+    color: var(--ef-color-text-primary, #171a18);
+    font-size: 0.875rem;
+    font-weight: 650;
+  }
+
+  .ef-validation-message__mark,
+  .ef-validation-summary__icon {
+    flex: 0 0 auto;
+    inline-size: 1.5rem;
+    block-size: 1.5rem;
+    display: grid;
+    place-items: center;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-weight: 800;
+  }
+
+  .ef-validation-summary {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border: 2px solid var(--ef-color-accent-primary, #905831);
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
+  }
+
+  .ef-validation-summary__title {
+    margin: 0;
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+    font-size: 1rem;
+    letter-spacing: 0;
+    line-height: 1.35;
+  }
+
+  .ef-validation-summary__list {
+    margin: 0.5rem 0 0;
+    padding-inline-start: 1.25rem;
+  }
+
+  /* Survey progress ----------------------------------------------------- */
+  .ef-survey-progress {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+  }
+
+  .ef-survey-progress__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: baseline;
+  }
+
+  .ef-survey-progress__label { font-weight: 700; }
+  .ef-survey-progress__value {
+    color: var(--ef-color-text-secondary, #686d68);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+  }
+
+  .ef-survey-progress__bar {
+    inline-size: 100%;
+    block-size: 0.65rem;
+    accent-color: var(--ef-color-accent-primary, #905831);
+  }
+
+  .ef-survey-progress__context {
+    margin: 0;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.8125rem;
+  }
+
+  /* Ranking visual contract -------------------------------------------- */
+  .ef-ranking__list {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    margin: var(--ef-primitive-spacing-3, 0.75rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ef-ranking__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    min-block-size: 3.25rem;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+  }
+
+  .ef-ranking__position {
+    inline-size: 2rem;
+    block-size: 2rem;
+    display: grid;
+    place-items: center;
+    background: var(--ef-color-surface-inverse, #202421);
+    color: var(--ef-color-text-inverse, #f2efe7);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .ef-ranking__label { font-weight: 650; }
+
+  .ef-ranking__actions {
+    display: inline-flex;
+    gap: 0.25rem;
+  }
+
+  .ef-ranking__actions button {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    padding: 0;
+  }
+
+  /* Allocation ---------------------------------------------------------- */
+  .ef-allocation__items {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+  }
+
+  .ef-allocation__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(5rem, 7rem);
+    align-items: center;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+  }
+
+  .ef-allocation__item input {
+    text-align: end;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ef-allocation__total {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-block-start: var(--ef-primitive-spacing-3, 0.75rem);
+    padding-block-start: var(--ef-primitive-spacing-3, 0.75rem);
+    border-block-start: 1px solid var(--ef-color-border-functional, #3a403c);
+    font-weight: 750;
+  }
+
+  .ef-allocation__total output {
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ef-allocation__total[data-ef-state="invalid"] {
+    border-block-start-width: 2px;
+    color: var(--ef-color-accent-primary, #905831);
+  }
+
+  /* Rule builder visual contract --------------------------------------- */
+  .ef-rule-builder {
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+  }
+
+  .ef-rule-builder__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border-block-end: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  .ef-rule-builder__header h2,
+  .ef-rule-builder__header p { margin: 0; }
+
+  .ef-rule-builder__header h2 {
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .ef-rule-builder__header p {
+    margin-block-start: 0.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .ef-rule-group {
+    position: relative;
+    display: grid;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    padding: var(--ef-primitive-spacing-4, 1rem);
+  }
+
+  .ef-rule-group__operator {
+    justify-self: start;
+    padding: 0.25rem 0.45rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .ef-rule-clause {
+    display: grid;
+    grid-template-columns: minmax(8rem, 1.25fr) minmax(8rem, 1fr) minmax(8rem, 1fr) auto;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    align-items: end;
+  }
+
+  .ef-rule-clause label {
+    display: grid;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .ef-rule-builder__summary {
+    margin: 0;
+    padding: var(--ef-primitive-spacing-3, 0.75rem) var(--ef-primitive-spacing-4, 1rem);
+    border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
+    font-size: 0.8125rem;
+  }
+
+  /* Ordo obligation panel ---------------------------------------------- */
+  .ef-obligation-panel {
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+  }
+
+  .ef-obligation-panel__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border-block-end: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  .ef-obligation-panel__header h2,
+  .ef-obligation-panel__header p { margin: 0; }
+
+  .ef-obligation-panel__header h2 {
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+    font-size: 1rem;
+    letter-spacing: 0;
+  }
+
+  .ef-obligation-panel__header p {
+    margin-block-start: 0.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .ef-obligation-panel__count {
+    min-inline-size: 2rem;
+    block-size: 2rem;
+    display: grid;
+    place-items: center;
+    background: var(--ef-color-surface-inverse, #202421);
+    color: var(--ef-color-text-inverse, #f2efe7);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .ef-obligation-list {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ef-obligation {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border-inline-start: 4px solid var(--ef-color-border-functional, #3a403c);
+  }
+
+  .ef-obligation + .ef-obligation {
+    border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  .ef-obligation[data-ef-severity="blocking"] { border-inline-start-color: var(--ef-color-accent-primary, #905831); }
+  .ef-obligation[data-ef-severity="warning"] { border-inline-start-style: double; }
+  .ef-obligation[data-ef-severity="information"] { border-inline-start-color: var(--ef-color-accent-secondary, #47756b); }
+
+  .ef-obligation__status {
+    min-inline-size: 5.5rem;
+    padding: 0.2rem 0.4rem;
+    border: 1px solid currentColor;
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.625rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .ef-obligation p {
+    margin: 0.25rem 0 0;
+    font-size: 0.8125rem;
+  }
+
+  @media (max-width: 44rem) {
+    .ef-ordinal-scale__options,
+    .ef-ordinal-scale--3 .ef-ordinal-scale__options,
+    .ef-ordinal-scale--7 .ef-ordinal-scale__options {
+      grid-template-columns: 1fr;
+    }
+
+    .ef-ordinal-option {
+      min-block-size: 3.25rem;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: auto;
+      place-items: center start;
+      text-align: start;
+      padding-inline: 0.75rem;
+    }
+
+    .ef-ordinal-option + .ef-ordinal-option {
+      border-inline-start: 0;
+      border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+    }
+
+    .ef-rule-builder__header { align-items: stretch; flex-direction: column; }
+    .ef-rule-clause { grid-template-columns: 1fr; }
+    .ef-obligation { grid-template-columns: 1fr; }
+    .ef-obligation__status { justify-self: start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ef-ordinal-option,
+    .ef-choice {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .ef-ordinal-scale__options,
+    .ef-ordinal-option,
+    .ef-special-choice,
+    .ef-choice,
+    .ef-validation-summary,
+    .ef-ranking__item,
+    .ef-rule-builder,
+    .ef-obligation-panel {
+      border-color: CanvasText;
+    }
+
+    .ef-ordinal-option:has(input:checked),
+    .ef-special-choice:has(input:checked),
+    .ef-choice:has(input:checked) {
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    .ef-ordinal-option:has(input:checked) .ef-ordinal-option__marker {
+      background: Highlight;
+      color: HighlightText;
+      border-color: HighlightText;
+    }
+
+    .ef-obligation {
+      border-inline-start-color: CanvasText;
+    }
+  }
+}
