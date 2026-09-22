@@ -69,7 +69,9 @@ presentation vocabulary.
 6. When no existing pattern fits, check
    `requirements/COMPONENT-CATALOG.md` and record the gap through ROS before
    adding a new visual contract.
-7. Run `npm run site:check` whenever canonical patterns or component styling
+7. Treat 320px mobile recomposition as part of every component contract; do not
+   create desktop-only components or separate mobile-only semantic forks.
+8. Run `npm run site:check` whenever canonical patterns or component styling
    change.
 
 ## Handoff
