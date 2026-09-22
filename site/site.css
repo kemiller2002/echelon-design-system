@@ -511,9 +511,31 @@
     background: var(--ef-stone);
   }
 
-  .example-canvas--narrow > * {
-    inline-size: min(100%, 25rem);
+  .example-canvas--mobile {
+    display: block;
+    padding: 1rem;
+    background: var(--ef-stone);
+  }
+
+  .example-canvas--mobile::before {
+    content: "320px mobile viewport";
+    display: block;
+    inline-size: min(100%, 320px);
     margin-inline: auto;
+    padding: .35rem .5rem;
+    border: 1px solid var(--ef-forged-iron);
+    border-block-end: 0;
+    background: var(--ef-foundry-charcoal);
+    color: var(--ef-parchment);
+    font-family: var(--mono);
+    font-size: .65rem;
+  }
+
+  .example-canvas--mobile > * {
+    inline-size: min(100%, 320px);
+    max-inline-size: 320px;
+    margin-inline: auto;
+    border-color: var(--ef-forged-iron);
   }
 
   .example-block details {
