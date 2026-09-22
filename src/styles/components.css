@@ -1,0 +1,312 @@
+@layer echelon.components {
+  .ef-field {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+  }
+
+  .ef-field__label {
+    color: var(--ef-color-text-primary, #171a18);
+    font-size: 0.9375rem;
+    font-weight: 650;
+    line-height: 1.25;
+  }
+
+  .ef-field__description {
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.8125rem;
+    line-height: 1.4;
+  }
+
+  /* Switch -------------------------------------------------------------- */
+  .ef-switch {
+    --ef-switch-width: 2.75rem;
+    --ef-switch-height: 1.5rem;
+    --ef-switch-thumb: 1.125rem;
+    --ef-switch-gap: 0.1875rem;
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: var(--ef-switch-width) minmax(0, 1fr);
+    align-items: center;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    min-block-size: 2.75rem;
+    color: var(--ef-color-text-primary, #171a18);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ef-switch__input {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .ef-switch__track {
+    position: relative;
+    inline-size: var(--ef-switch-width);
+    block-size: var(--ef-switch-height);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: var(--ef-primitive-radius-pill, 999px);
+    background: var(--ef-color-control-track, #686d68);
+    transition:
+      background var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease),
+      border-color var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease);
+  }
+
+  .ef-switch__track::after {
+    content: "";
+    position: absolute;
+    inset-block-start: var(--ef-switch-gap);
+    inset-inline-start: var(--ef-switch-gap);
+    inline-size: var(--ef-switch-thumb);
+    block-size: var(--ef-switch-thumb);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: 50%;
+    background: var(--ef-color-control-thumb, #f2efe7);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.18);
+    transform: translateX(0);
+    transition:
+      transform var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease),
+      scale var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease);
+  }
+
+  .ef-switch__input:checked + .ef-switch__track {
+    background: var(--ef-color-control-active, #905831);
+  }
+
+  .ef-switch__input:checked + .ef-switch__track::after {
+    transform: translateX(calc(var(--ef-switch-width) - var(--ef-switch-thumb) - (2 * var(--ef-switch-gap))));
+  }
+
+  .ef-switch__input:active + .ef-switch__track::after { scale: 1.12; }
+
+  .ef-switch__input:focus-visible + .ef-switch__track {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  .ef-switch__input:disabled ~ * { opacity: 0.62; }
+  .ef-switch:has(.ef-switch__input:disabled) { cursor: not-allowed; }
+
+  .ef-switch__text { min-inline-size: 0; }
+  .ef-switch__label { display: block; font-size: 0.9375rem; font-weight: 650; line-height: 1.25; }
+  .ef-switch__description {
+    display: block;
+    margin-block-start: 0.2rem;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  /* Slider -------------------------------------------------------------- */
+  .ef-slider {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+  }
+
+  .ef-slider__header,
+  .ef-slider__bounds {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+  }
+
+  .ef-slider__label { font-size: 0.9375rem; font-weight: 650; }
+  .ef-slider__bounds {
+    color: var(--ef-color-text-secondary, #686d68);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.6875rem;
+  }
+
+  .ef-slider__input {
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    margin: 0;
+    accent-color: var(--ef-color-control-active, #905831);
+    cursor: pointer;
+    transition:
+      filter var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease),
+      opacity var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease);
+  }
+
+  .ef-slider__input:hover { filter: saturate(1.08); }
+  .ef-slider__input:active { filter: saturate(1.14); }
+  .ef-slider__input:disabled { cursor: not-allowed; opacity: 0.62; }
+
+  .ef-slider__input:focus-visible {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  /* Segmented control --------------------------------------------------- */
+  .ef-segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+  }
+
+  .ef-segment {
+    position: relative;
+    min-block-size: 2.75rem;
+    display: grid;
+    place-items: center;
+    padding: 0.55rem 0.9rem;
+    background: transparent;
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
+    cursor: pointer;
+    transition:
+      background var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease),
+      color var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease),
+      transform var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease);
+  }
+
+  .ef-segment:has(input:checked) {
+    background: var(--ef-color-surface-inverse, #202421);
+    color: var(--ef-color-text-inverse, #f2efe7);
+  }
+
+  .ef-segment:has(input:active) { transform: scale(0.985); }
+  .ef-segment input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+  }
+
+  .ef-segment:has(input:focus-visible) {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  /* Disclosure ---------------------------------------------------------- */
+  .ef-disclosure {
+    border-block: 1px solid var(--ef-color-border-functional, #3a403c);
+  }
+
+  .ef-disclosure + .ef-disclosure { border-block-start: 0; }
+
+  .ef-disclosure > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-block-size: 2.75rem;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    font-weight: 650;
+    list-style: none;
+  }
+
+  .ef-disclosure > summary::-webkit-details-marker { display: none; }
+  .ef-disclosure > summary::after {
+    content: "+";
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    transition: rotate var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease);
+  }
+  .ef-disclosure[open] > summary::after { rotate: 45deg; }
+  .ef-disclosure__content { padding: 0 0 1rem; }
+
+  /* Popover ------------------------------------------------------------- */
+  .ef-popover {
+    max-inline-size: min(30rem, calc(100vw - 2rem));
+    margin: 0;
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.18);
+    opacity: 0;
+    transform: translateY(-0.35rem) scale(0.985);
+    transition:
+      opacity var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-enter, ease),
+      transform var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-enter, ease),
+      display var(--ef-primitive-motion-duration-fast, 120ms) allow-discrete,
+      overlay var(--ef-primitive-motion-duration-fast, 120ms) allow-discrete;
+  }
+
+  .ef-popover:popover-open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @starting-style {
+    .ef-popover:popover-open {
+      opacity: 0;
+      transform: translateY(-0.35rem) scale(0.985);
+    }
+  }
+
+  /* Dialog -------------------------------------------------------------- */
+  .ef-dialog {
+    inline-size: min(38rem, calc(100vw - 2rem));
+    max-block-size: calc(100dvh - 2rem);
+    padding: 0;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.28);
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.985);
+    transition:
+      opacity var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-enter, ease),
+      transform var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-enter, ease),
+      display var(--ef-primitive-motion-duration-standard, 180ms) allow-discrete,
+      overlay var(--ef-primitive-motion-duration-standard, 180ms) allow-discrete;
+  }
+
+  .ef-dialog[open] { opacity: 1; transform: translateY(0) scale(1); }
+  .ef-dialog::backdrop {
+    background: rgb(23 26 24 / 0.48);
+    backdrop-filter: blur(2px);
+  }
+
+  @starting-style {
+    .ef-dialog[open] { opacity: 0; transform: translateY(0.75rem) scale(0.985); }
+  }
+
+  .ef-dialog__body { padding: var(--ef-primitive-spacing-5, 1.5rem); }
+  .ef-dialog__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    padding: 1rem 1.5rem;
+    border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ef-switch__track,
+    .ef-switch__track::after,
+    .ef-slider__input,
+    .ef-segment,
+    .ef-disclosure > summary::after,
+    .ef-popover,
+    .ef-dialog {
+      transition-duration: 0.01ms;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .ef-switch__track,
+    .ef-segmented,
+    .ef-popover,
+    .ef-dialog {
+      border-color: CanvasText;
+    }
+
+    .ef-switch__track { background: Canvas; }
+    .ef-switch__track::after { background: Canvas; border-color: CanvasText; box-shadow: none; }
+    .ef-switch__input:checked + .ef-switch__track { background: Highlight; }
+    .ef-switch__input:checked + .ef-switch__track::after { background: HighlightText; }
+    .ef-segment:has(input:checked) { background: Highlight; color: HighlightText; }
+  }
+}
