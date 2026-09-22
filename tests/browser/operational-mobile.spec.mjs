@@ -43,7 +43,7 @@ const operationalPatterns = [
 
 function fixture(slug) {
   const fragment = fs.readFileSync(path.join(root, "patterns", slug + ".html"), "utf8");
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}body{padding:8px}main{max-inline-size:100%}</style></head><body><main>${fragment}</main></body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Forma ${slug} mobile fixture</title><style>${css}body{padding:8px}main{max-inline-size:100%}</style></head><body><main>${fragment}</main></body></html>`;
 }
 
 for (const slug of operationalPatterns) {
