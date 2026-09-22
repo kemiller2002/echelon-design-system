@@ -12,10 +12,12 @@ test("pilot fixture has no automatically detectable WCAG A/AA violations", async
   expect(results.violations).toEqual([]);
 });
 
-test("open shadow roots expose expected accessible roles and names", async ({ page }) => {
+test("native controls expose expected roles and names", async ({ page }) => {
   await openFixture(page);
 
   await expect(page.getByRole("switch", { name: "Notifications" })).toBeVisible();
   await expect(page.getByRole("switch", { name: "Required setting" })).toBeVisible();
   await expect(page.getByRole("slider", { name: "Volume" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: "Comfortable" })).toBeVisible();
+  await expect(page.getByRole("radio", { name: "Compact" })).toBeVisible();
 });
