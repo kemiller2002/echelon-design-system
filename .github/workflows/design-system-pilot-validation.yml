@@ -42,6 +42,12 @@ jobs:
       - name: Show artifact metrics
         run: cat dist/build-metrics.json
 
+      - name: Build component showcase
+        run: npm run site:build:only
+
+      - name: Validate component showcase
+        run: npm run site:test
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium firefox webkit
 
