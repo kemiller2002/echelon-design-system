@@ -1,0 +1,96 @@
+name: Release Forma package
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: forma-release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+          package-manager-cache: false
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts=false
+
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Require tag and package versions to match
+        shell: bash
+        run: |
+          package_version="$(node -p "require('./package.json').version")"
+          tag_version="${GITHUB_REF_NAME#v}"
+          test "$package_version" = "$tag_version" || {
+            echo "package.json version $package_version does not match tag $GITHUB_REF_NAME"
+            exit 1
+          }
+
+      - name: Validate package and site
+        run: |
+          npm run check
+          npm run site:check
+
+      - name: Pack release
+        shell: bash
+        run: |
+          mkdir -p release
+          npm pack --pack-destination release
+          archive="$(ls release/*.tgz)"
+          echo "ARCHIVE=$archive" >> "$GITHUB_ENV"
+
+      - name: Verify release contents
+        shell: bash
+        run: |
+          contents="$(tar -tzf "$ARCHIVE")"
+          for required in             package/dist/all.css             package/dist/tokens.css             package/dist/foundations.css             package/dist/components.css             package/dist/assessment.css             package/patterns/search.html             package/patterns/data-grid.html             package/patterns/work-queue.html; do
+            grep -qx "$required" <<<"$contents" || {
+              echo "missing $required from release package"
+              exit 1
+            }
+          done
+
+      - name: Exercise packed package as a consumer
+        shell: bash
+        run: |
+          workspace="$(mktemp -d)"
+          cp "$ARCHIVE" "$workspace/forma.tgz"
+          cd "$workspace"
+          npm init -y >/dev/null
+          npm install --no-audit --no-fund ./forma.tgz
+          test -f node_modules/@echelon-foundry/design-system/dist/all.css
+          test -f node_modules/@echelon-foundry/design-system/patterns/data-grid.html
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" "$ARCHIVE" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "$ARCHIVE"               --title "$GITHUB_REF_NAME"               --notes "Forma ${GITHUB_REF_NAME#v}: zero-runtime Echelon Foundry design system."
+          fi
+
+      - name: Publish to npm when trusted publishing is enabled
+        if: vars.NPM_PUBLISH_ENABLED == 'true'
+        run: |
+          npm install -g npm@11
+          npm publish --access public "$ARCHIVE"
