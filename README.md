@@ -20,9 +20,9 @@ Current capability baseline:
 - Visual Engineering 1.0.0
 - Communication Engineering 1.0.0
 
-## Component showcase
+## Forma component showcase
 
-This repository builds a static Echelon Foundry component showcase from the canonical `patterns/*.html` files.
+Forma is the Echelon Foundry design system. This repository builds a static Forma component showcase from the canonical `patterns/*.html` files.
 
 Each canonical component receives its own page with at least three live examples and visible source markup. The published site contains no browser JavaScript.
 
