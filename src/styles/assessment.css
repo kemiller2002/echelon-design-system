@@ -871,6 +871,68 @@
   .ef-best-worst__row label { display: grid; place-items: center; min-block-size: 2.75rem; }
   .ef-best-worst__row input { inline-size: 1.25rem; block-size: 1.25rem; accent-color: var(--ef-color-accent-primary, #905831); }
 
+  .ef-pairwise {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .ef-pairwise__legend {
+    margin-block-end: var(--ef-primitive-spacing-3, 0.75rem);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+
+  .ef-pairwise__options {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: stretch;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+  }
+
+  .ef-pairwise__option {
+    position: relative;
+    min-block-size: 5rem;
+    display: grid;
+    align-content: center;
+    gap: 0.2rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    cursor: pointer;
+  }
+
+  .ef-pairwise__option input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    opacity: 0;
+  }
+
+  .ef-pairwise__option:has(input:checked) {
+    background: var(--ef-color-surface-inverse, #202421);
+    color: var(--ef-color-text-inverse, #f2efe7);
+  }
+
+  .ef-pairwise__option:has(input:focus-visible) {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  .ef-pairwise__eyebrow {
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.6875rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .ef-pairwise__option > span:last-child { font-size: 0.8125rem; }
+  .ef-pairwise__versus { align-self: center; color: var(--ef-color-text-secondary, #686d68); font-size: 0.8125rem; }
+
   .ef-hierarchy__tree,
   .ef-hierarchy__tree ul {
     margin: 0;
@@ -924,7 +986,10 @@
     .ef-matrix__choices { grid-auto-flow: row; grid-template-columns: 1fr; }
     .ef-matrix__choices label { grid-template-columns: auto 1fr; justify-items: start; text-align: start; }
     .ef-best-worst__header { display: none; }
-    .ef-best-worst__row { grid-template-columns: minmax(0, 1fr) auto auto; }
+    .ef-best-worst__row,
+    .ef-pairwise__option { grid-template-columns: minmax(0, 1fr) auto auto; }
+    .ef-pairwise__options { grid-template-columns: 1fr; }
+    .ef-pairwise__versus { justify-self: center; }
   }
 
   @media (prefers-reduced-motion: reduce) {
