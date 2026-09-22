@@ -82,36 +82,32 @@ Thumb travel may become immediate or nearly immediate. State differentiation rem
 
 ## 4. Slider polish contract
 
-### SL-MOT-001 Thumb behavior
-The thumb shall have distinct rest, hover, focus, pressed, and disabled visuals.
+The canonical slider uses native `input[type=range]` behavior.
 
-Pressed feedback may use controlled scale or emphasis without changing the hit target.
+### SL-MOT-001 Native interaction is authoritative
+The browser-owned thumb, track, keyboard behavior, touch behavior, and value semantics shall remain the interaction substrate.
 
-### SL-MOT-002 Track fill
-The selected portion of the track shall update continuously with the value.
+CSS may style accent color, focus treatment, opacity, surrounding labels, bounds, and non-semantic hover/active emphasis without replacing the native control.
 
-The fill must not visually lag behind the thumb during direct manipulation.
+### SL-MOT-002 No fake synchronized fill
+The HTML/CSS-only package shall not promise a cross-browser custom filled track that must continuously mirror the changing range value.
 
-### SL-MOT-003 Value bubble
-A value bubble may appear on focus, keyboard adjustment, or pointer drag.
+If a consuming application needs a custom fill, live value bubble, histogram, or synchronized numeric display, Limen/application behavior owns that synchronization.
 
-Appearance/disappearance should use short opacity and position/scale transitions.
+### SL-MOT-003 Focus and active polish
+The slider shall have deliberate focus-visible treatment and may use subtle CSS-only hover/active emphasis that does not interfere with direct manipulation.
 
-The value remains available in accessible semantics whether or not the bubble is visible.
+### SL-MOT-004 Bounds and named context
+Static minimum/maximum labels, named stops, help text, units, and descriptive context may be included in the canonical markup because they do not require value synchronization.
 
-### SL-MOT-004 Discrete stops
-When a slider has meaningful discrete stops, snap feedback may emphasize arrival at a stop.
-
-Snap animation must not prevent selecting neighboring values or create false values.
-
-### SL-MOT-005 Ticks
-Ticks may animate emphasis for the selected stop or range, but non-selected ticks must remain stable enough for visual comparison.
+### SL-MOT-005 Reduced motion
+Any CSS transitions around the native control shall collapse under reduced motion.
 
 ### SL-MOT-006 Multi-thumb
-When thumbs approach or cross according to the component policy, labels must avoid unreadable overlap and keyboard focus must remain on the same logical thumb.
+Multi-thumb range selection is not a declarative design-system component. It is a visual contract whose coordinated value/keyboard behavior must be implemented and tested by Limen/application code.
 
-### SL-MOT-007 Input synchronization
-If a numeric text input mirrors the slider, both shall update from the same semantic value with no visible oscillation or delayed disagreement.
+### SL-MOT-007 Application synchronization
+When application behavior mirrors the range value elsewhere, the application must treat the native input value as the browser source for the current interaction and avoid oscillation or delayed disagreement.
 
 ## 5. Segmented control
 

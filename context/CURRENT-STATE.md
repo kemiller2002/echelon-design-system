@@ -9,51 +9,49 @@ Repository initialized with:
 - Visual Engineering 1.0.0
 - Communication Engineering 1.0.0
 
-A comprehensive first-pass design-system requirement set now exists on the active requirements branch.
+The design-system architecture has pivoted from Custom Elements to a zero-runtime HTML/CSS model.
 
 ## Accepted direction
 
-- Standards-based Web Components are the reusable behavior layer.
-- Native HTML remains preferred where native behavior is sufficient.
-- CSS/design tokens form the visual foundation below components.
-- Advanced components are in scope where they centralize difficult reusable interaction.
-- Motion and microinteraction are explicit component requirements.
-- Accessibility targets WCAG 2.2 AA for stable components.
-- Ordo/application code retains domain-state authority.
-- Limen integrates through standard DOM contracts rather than a custom fork.
+- Production design-system components contain HTML and CSS only.
+- No Custom Elements, Shadow DOM, Fable browser output, Lit, JavaScript, or WebAssembly ship with components.
+- DTCG token JSON remains canonical and is compiled to CSS by build-time F#.
+- Native HTML owns interaction whenever it can do so correctly.
+- CSS owns appearance and motion.
+- Limen/application code owns behavior beyond native HTML.
+- Ordo retains application/domain authority.
+- Accessibility targets WCAG 2.2 AA for stable patterns.
+- Browser differences are tested rather than hidden behind a component runtime.
 
-## Requirements created
+## Implemented pilot patterns
 
-See requirements/ for:
+- switch using native checkbox + role=switch;
+- native range slider;
+- segmented radio control;
+- details/summary disclosure;
+- declarative popover;
+- declarative modal dialog.
 
-- core architecture and token requirements;
-- advanced component catalog;
-- motion and interaction contract;
-- accessibility and inclusive-design contract;
-- Ordo/Limen integration contract;
-- packaging, testing, and release gates;
-- first implementation pilot.
+## Explicit zero-runtime gate
 
-## First bounded pilot
+CI scans production distribution and canonical patterns for executable artifacts.
 
-The recommended first slice is:
+The design-system browser runtime budget is 0 bytes.
 
-- tokens/themes;
-- native foundations;
-- ef-switch;
-- ef-slider;
-- ef-popover;
-- ef-tabs;
-- async-action feedback pattern.
+## Important slider conclusion
 
-This combination deliberately exercises simple and advanced interaction, form behavior, motion, focus management, modern browser APIs, accessibility, and application-state integration.
+CSS-only cross-browser components cannot reliably synchronize an arbitrary live value bubble or custom filled track with the changing range value.
 
-## Largest decision-relevant unknown
+The pilot therefore preserves native range rendering/accent behavior. Rich value displays belong to consuming application/Limen behavior.
 
-Whether explicit Ordo-style state modeling provides enough benefit inside complex reusable UI components to justify its cost compared with simpler local component state.
+## Remaining validation
 
-The pilot includes an experiment rather than assuming the answer.
+- run current zero-runtime build/test workflow;
+- confirm declarative dialog baseline across Chromium/Firefox/WebKit;
+- run axe accessibility scan;
+- complete ROS work attribution;
+- record final pilot evidence.
 
-## Next action
+## Next boundary after pilot
 
-Review and accept the requirements set, then create the initial semantic map/feature manifests and implement the pilot vertically.
+Create Limen behavior contracts for the first patterns that cannot be complete declaratively, likely tabs and combobox, without adding runtime behavior to this package.

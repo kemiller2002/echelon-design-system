@@ -2,118 +2,115 @@
 
 ## Current architecture
 
-The system is standards-first and layered.
+The system is standards-first and zero-runtime.
 
 ```text
-Applications / Limen
+Ordo / application state
         |
         v
-DOM properties, attributes, methods, events
+F# / Limen behavior when required
         |
         v
-Behavior-rich Web Components
+semantic HTML attributes, values, content
         |
         v
-Native HTML + CSS foundations
+Echelon HTML patterns + CSS
         |
         v
-Semantic design tokens
+browser-native behavior
+        |
+        v
+semantic design tokens
 ```
 
-Ordo/application state remains beside and above this visual stack as the authority for domain legality, capabilities, obligations, and consequential transitions.
+The design-system package itself contains no JavaScript or WebAssembly.
 
 ## Layers
 
 ### 1. Tokens
-Primitive, semantic, component, state, motion, visualization, and accessibility-related tokens.
+Primitive and semantic design decisions live in DTCG JSON. A build-time F# compiler emits CSS variables.
 
 ### 2. Foundations
-Native HTML styling, typography, forms, layout primitives, focus, surfaces, responsive behavior, and utilities.
+Typography, forms, focus, surfaces, layout primitives, responsive behavior, and utilities are CSS over native HTML.
 
-### 3. Components
-Custom Elements for composite or behavior-rich interaction such as switch, slider, popover, tabs, combobox, data grid, and resizable split panes.
+### 3. Declarative patterns
+Canonical HTML + CSS patterns such as switch, native range slider, segmented radio control, disclosure, popover, and dialog.
 
-### 4. Patterns
-Compositions such as async action, search/results, form layout, master/detail, bulk actions, filters, navigation shell, and wizard flow.
+### 4. Behavioral visual contracts
+Complex patterns such as tabs, comboboxes, grids, command palettes, reorder, and split panes have markup/state/style contracts here, but their behavior lives in Limen/application code.
 
-### 5. Integration
-Stable browser-native contracts that plain HTML, Limen, F#, and framework consumers can use without forks.
+### 5. Application integration
+Limen observes normal DOM/native events and renders application/Ordo state back into semantic HTML.
 
-## Native versus component decision
+## Zero-runtime boundary
 
-Do not create a Custom Element solely to restyle a native element.
+The following are prohibited from the canonical design-system runtime:
 
-Use a component when reuse materially benefits from centralized behavior, accessibility, focus management, state coordination, encapsulation, overlay handling, or a stable cross-application contract.
+- Custom Element registration;
+- component JavaScript;
+- component WebAssembly;
+- Shadow DOM;
+- ElementInternals;
+- framework runtimes;
+- hidden persistence/network/effects.
 
-## Shadow DOM
+Build and test tooling may use executable code because it is not shipped browser behavior.
 
-Shadow DOM is selective.
+## HTML structure as API
 
-Prefer light DOM for:
+Canonical semantic elements, required class names, attributes, relationships, and nesting are public versioned contracts.
 
-- layout;
-- content structure;
-- typography;
-- page shells where composition is more important than encapsulation;
-- print-adjacent structures.
-
-Use open Shadow DOM for components whose internal structure needs protection or tightly coordinated styling.
-
-Expose public customization deliberately through tokens, slots, properties, attributes, and CSS parts.
+Applications may render these structures using F#, server templates, React, Vue, static HTML, or another system, but the resulting contract is the same.
 
 ## State
 
-Three state categories must remain distinct:
+State has two owners:
 
-1. **Domain state**: application/Ordo authority.
-2. **Component state**: reusable interaction state such as open, selected, editing, dragging, or validating when the component itself legitimately owns it.
-3. **Ephemeral presentation state**: hover, pressed, focus-visible, animation phase, pointer capture.
+1. **Browser-native UI state**, such as checked, selected, open, invalid, disabled, focus, and popover-open.
+2. **Application/Ordo state**, such as permissions, pending domain operations, obligations, failure/unknown states, editing workflows, and business transitions.
 
-Complex components should use explicit state models where this prevents illegal combinations. Simple components should remain simple.
+CSS renders those states. It does not create a third semantic state authority.
 
 ## Browser platform strategy
 
-Prefer standard platform facilities including:
+Prefer declarative platform facilities including:
 
-- Custom Elements;
 - native form controls;
-- ElementInternals when true custom form association is required;
-- dialog;
-- Popover API;
-- CSS anchor positioning where supported;
+- details/summary;
+- Popover + popovertarget;
+- dialog + commandfor/command on the declared baseline;
+- CSS :has();
+- @starting-style;
+- discrete transitions;
+- anchor positioning where supported;
 - container queries;
 - logical properties;
-- View Transitions as optional enhancement;
-- Invoker Commands where supported and useful.
-
-Every optional enhancement requires a fallback contract.
+- media queries for reduced motion, forced colors, contrast, and input characteristics.
 
 ## Distribution
 
-Publish framework-independent ES modules and CSS with subpath exports so applications load only the capabilities they use.
-
-Runtime dependencies require explicit justification.
+Publish CSS and canonical HTML patterns. The browser runtime payload from the design system is zero bytes.
 
 ## Documentation
 
-The documentation site dogfoods the design system and must expose:
+Documentation must expose:
 
-- live component states;
-- keyboard behavior;
-- accessibility notes;
-- motion/reduced-motion examples;
-- API/events;
+- canonical markup;
+- native states;
+- Limen-required behavior boundaries;
+- accessibility;
+- motion/reduced-motion;
 - tokens;
 - anti-patterns;
+- browser support;
 - stability status.
 
 ## Architectural constraints
 
-- Canonical requirements and decisions remain repository artifacts.
-- Application-domain rules do not move into visual components.
+- Components/patterns are HTML and CSS only.
+- Application-domain rules never move into CSS.
+- Advanced UI that needs behavior uses Limen/application code.
+- Native semantics are preserved whenever possible.
+- Accessibility-critical behavior is not recreated when the browser already supplies it.
+- No pointer-only workflow is considered complete.
 - Generated views do not replace canonical source records.
-- Untrusted content is treated as text by default.
-- Components do not persist application secrets.
-- Advanced UI cannot be pointer-only.
-- Accessibility-critical behavior cannot be application-specific styling.
-- The public API is browser-native first.

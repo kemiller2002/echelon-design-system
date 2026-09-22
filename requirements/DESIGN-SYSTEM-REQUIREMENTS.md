@@ -4,90 +4,89 @@
 
 The Echelon Design System shall provide a common visual, interaction, accessibility, and communication foundation across Echelon applications while preserving application-specific domain behavior.
 
-It shall support simple applications without forcing framework overhead and complex applications without forcing them to rebuild difficult interaction patterns.
+The production design-system package shall contain HTML and CSS only. It shall not contain component JavaScript, WebAssembly, Custom Element registration, or another browser runtime.
 
 ## 2. Architecture
 
-### DS-ARCH-001 Native HTML first
-The system shall style native semantic HTML directly when native behavior is sufficient.
+### DS-ARCH-001 HTML and CSS only
+Canonical component artifacts shall be semantic HTML patterns and CSS.
 
-Examples include headings, paragraphs, links, ordinary buttons, lists, basic tables, labels, fieldsets, checkboxes, radios, and simple form controls.
+Build-time tooling may use F#, Node, or other approved tools, but generated production design-system artifacts shall contain no executable browser runtime.
 
-### DS-ARCH-002 Web Components for composition and behavior
-Custom Elements shall be used when one or more of the following are true:
+### DS-ARCH-002 Native behavior first
+When semantic HTML already provides the required interaction, the design system shall preserve that native behavior.
 
-- the control requires coordinated internal elements;
-- the control has a meaningful reusable interaction model;
-- focus management is non-trivial;
-- overlays or top-layer behavior are required;
-- several native elements must behave as one logical control;
-- a reusable accessibility implementation materially reduces risk;
-- encapsulation protects the component from application CSS;
-- the component exposes a stable cross-application browser contract.
+Examples include buttons, links, checkboxes, radios, range inputs, details/summary, popovers, dialogs on the declared baseline, forms, validation, progress, and meter elements.
 
-### DS-ARCH-003 No framework dependency
-Consumers shall not be required to install React, Vue, Angular, Lit, or another UI framework.
+### DS-ARCH-003 No Custom Elements
+The design system shall not require Custom Elements, Shadow DOM, ElementInternals, Lit, Fable browser output, or framework-specific wrappers.
 
-Published components shall be standards-based ES modules plus CSS and assets.
+Consumers may wrap Echelon patterns in application-local abstractions if they choose, but those wrappers are not the canonical design-system API.
 
-An implementation tool may be used internally only if it does not become a mandatory runtime dependency without an explicit architecture decision.
+### DS-ARCH-004 Zero runtime dependency
+Consumers shall not be required to install or execute a design-system JavaScript runtime.
 
-### DS-ARCH-004 F# compatible implementation
-The source implementation may use F# tooling where useful, but published browser artifacts must remain consumable as ordinary Web Components.
+The package shall publish CSS plus canonical HTML patterns and documentation.
 
-If F# is used to author component state or build tooling, generated JavaScript or WebAssembly shall not require consumer applications to adopt the same build chain.
+### DS-ARCH-005 F# is build-time or application behavior
+F# may be used for build tooling such as token compilation.
 
-### DS-ARCH-005 Semantic authority
-Visual components shall not decide application-domain legality.
+F#/WASM through Limen may own application behavior, but that behavior is outside the design-system package.
 
-A component may represent disabled, unavailable, loading, pending, selected, expanded, invalid, or similar UI state. Application-specific decisions such as whether an invoice may be posted, a workflow may advance, or a destructive action is allowed remain application or Ordo authority.
+### DS-ARCH-006 Semantic authority
+Visual patterns shall not decide application-domain legality.
 
-### DS-ARCH-006 Ephemeral state boundary
-Components may directly own ephemeral interaction state including:
+HTML may represent checked, selected, open, disabled, required, invalid, pending, or other supplied states. Application-specific decisions such as whether an invoice may be posted or a workflow may advance remain application/Ordo authority.
 
-- pointer hover;
-- keyboard focus visibility;
-- pressed visual state;
-- open or closed tooltip state;
-- drag preview;
-- local typeahead buffer;
-- local animation phase;
-- resize gesture state.
+### DS-ARCH-007 Native state is the component state substrate
+Where possible, CSS shall derive presentation from native states and selectors such as:
 
-Components shall not silently promote ephemeral state into domain state.
+- :checked;
+- :disabled;
+- :required;
+- :invalid;
+- :focus-visible;
+- :hover;
+- :active;
+- details[open];
+- :popover-open;
+- dialog[open];
+- :has(...).
 
-### DS-ARCH-007 Progressive enhancement
-Use newer platform capabilities such as Popover, CSS anchor positioning, View Transitions, Invoker Commands, container queries, and advanced selectors where they reduce custom code.
+Do not mirror native state into parallel data attributes unless application-rendered state genuinely has no native representation.
 
-Every such use shall document:
+### DS-ARCH-008 Declarative progressive enhancement
+Prefer declarative platform capabilities such as:
 
-- minimum supported browser baseline;
-- fallback behavior;
-- whether lack of support changes appearance only or functionality;
-- automated coverage for the fallback.
+- Popover and popovertarget;
+- dialog with commandfor/command on the supported baseline;
+- details/summary;
+- CSS anchor positioning;
+- container queries;
+- logical properties;
+- :has();
+- @starting-style;
+- discrete transitions.
 
-### DS-ARCH-008 Shadow DOM policy
-Shadow DOM shall be opt-in by component class, not automatic.
+Every capability with browser-baseline risk shall be cross-browser tested.
 
-Use Shadow DOM when internal structure or styling needs meaningful encapsulation.
+### DS-ARCH-009 Limen behavior boundary
+When a pattern requires state coordination, asynchronous data, domain legality, computed synchronization, drag geometry, virtualization, complex focus orchestration, or behavior not provided by HTML, Limen/application code owns that behavior.
 
-Prefer light DOM for layout primitives, content containers, typography, print-related structures, and components where document-level styling, content semantics, or integration tooling benefits from direct DOM visibility.
+The design system may still define the markup, state attributes, visual states, and accessibility contract for that behavior.
 
-Every Shadow DOM component shall expose deliberate customization through design tokens, slots, attributes, properties, and where necessary CSS parts.
+### DS-ARCH-010 HTML structure is public API
+Required class names, semantic elements, relationships, attributes, and nesting in canonical patterns are versioned public contracts because CSS depends on them.
 
-Closed shadow roots are prohibited unless a documented security or platform reason exists.
+Breaking structural changes require migration guidance.
 
-### DS-ARCH-009 Form-associated custom elements
-Custom form controls shall use native controls internally where practical.
+### DS-ARCH-011 Server rendering is the default
+Canonical patterns shall be valid useful HTML before any application behavior initializes.
 
-When a true custom form control is required, it shall participate in form value, validity, reset, disabled, and form association behavior through browser standards such as ElementInternals.
+Core content and native interactions shall not depend on hydration or component upgrade.
 
-### DS-ARCH-010 SSR and pre-upgrade behavior
-Custom elements shall not make server-rendered or initially parsed content unusable before component registration.
-
-Critical content shall remain readable before upgrade where feasible.
-
-The package shall document handling of :defined, declarative shadow DOM where used, hydration-free enhancement, and flash-of-unstyled-content prevention.
+### DS-ARCH-012 No hidden persistence or effects
+HTML/CSS patterns shall not persist values, perform network activity, generate application events beyond native browser events, or execute side effects.
 
 ## 3. Design tokens
 
@@ -285,10 +284,10 @@ No component shall persist tokens, credentials, or application secrets.
 ## 8. Performance
 
 ### DS-PERF-001 Load only what is used
-Consumers shall be able to import components through subpath exports so unused components do not become mandatory startup cost.
+Consumers shall be able to load token, foundation, and component CSS independently or use the combined stylesheet.
 
-### DS-PERF-002 Shared runtime
-If a shared runtime exists, it shall remain small, versioned, dependency-light, and free of application-domain logic.
+### DS-PERF-002 Zero design-system runtime
+The production package shall contain no JavaScript or WebAssembly runtime. Runtime byte cost for the design system is therefore zero; CSS and HTML size remain measured release budgets.
 
 ### DS-PERF-003 Interaction latency
 Direct manipulation such as sliders, dragging, resizing, menu opening, and toggles shall update visually within the current interaction frame when possible.
@@ -300,17 +299,16 @@ Large list and grid patterns may provide virtualization, but accessibility, find
 
 ## 9. Documentation
 
-Every public component shall document:
+Every public pattern shall document:
 
 - purpose;
 - when to use;
 - when not to use;
-- anatomy;
-- properties and attributes;
-- events;
-- slots;
-- CSS tokens/parts;
-- states;
+- canonical HTML anatomy;
+- required elements, classes, and attributes;
+- native events exposed to application code;
+- CSS tokens and classes;
+- native and application-rendered states;
 - keyboard behavior;
 - accessibility behavior;
 - motion behavior;
@@ -318,6 +316,7 @@ Every public component shall document:
 - examples;
 - anti-patterns;
 - Ordo/Limen boundary guidance where relevant;
+- whether the pattern is fully declarative or requires application behavior;
 - browser support and fallback;
 - test coverage status.
 

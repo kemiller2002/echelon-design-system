@@ -1,0 +1,96 @@
+@layer echelon.foundations {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :where(html) {
+    color-scheme: light dark;
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+  }
+
+  :where(body) {
+    margin: 0;
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  :where(h1, h2) {
+    color: var(--ef-color-text-heading, #202421);
+    font-family: var(--ef-primitive-font-family-display, Georgia, serif);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+
+  :where(h3, h4, h5, h6) {
+    color: var(--ef-color-text-heading, #202421);
+    line-height: 1.25;
+  }
+
+  :where(p) {
+    color: var(--ef-color-text-secondary, #686d68);
+    max-inline-size: 72ch;
+  }
+
+  :where(a) {
+    color: var(--ef-color-accent-primary, #905831);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.18em;
+  }
+
+  :where(button, input, select, textarea) { font: inherit; }
+
+  :where(button, .ef-button) {
+    min-block-size: 2.75rem;
+    padding: 0.65rem 1rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: var(--ef-primitive-radius-none, 0);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    font-weight: 700;
+  }
+
+  :where(button, .ef-button):where(:not(:disabled)):hover {
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+  }
+
+  :where(input:not([type="checkbox"], [type="radio"], [type="range"]), textarea, select) {
+    min-block-size: 2.75rem;
+    inline-size: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: var(--ef-primitive-radius-none, 0);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+  }
+
+  :where(:focus-visible) {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  .ef-stack { display: flex; flex-direction: column; gap: var(--ef-stack-gap, var(--ef-primitive-spacing-4, 1rem)); }
+  .ef-cluster { display: flex; flex-wrap: wrap; gap: var(--ef-cluster-gap, var(--ef-primitive-spacing-3, 0.75rem)); align-items: center; }
+  .ef-grid { display: grid; gap: var(--ef-grid-gap, var(--ef-primitive-spacing-4, 1rem)); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--ef-grid-min, 16rem)), 1fr)); }
+  .ef-section { padding-block: var(--ef-section-space, var(--ef-primitive-spacing-7, 3rem)); }
+  .ef-surface { padding: var(--ef-surface-space, var(--ef-primitive-spacing-5, 1.5rem)); background: var(--ef-color-surface-secondary, #e3e0d7); color: var(--ef-color-text-on-secondary-surface, #3a403c); border: 1px solid var(--ef-color-border-subtle, #e3e0d7); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    :where(button, .ef-button, input, textarea, select, .ef-surface) {
+      border-color: CanvasText;
+    }
+  }
+}

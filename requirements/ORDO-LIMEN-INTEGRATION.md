@@ -2,41 +2,56 @@
 
 ## 1. Boundary principle
 
-The design system renders state and captures user intent. It does not own application-domain authority.
+The design-system package owns **structure and presentation**.
 
-A component may know that it is visually disabled. It should not decide that a business action is illegal.
+It does not own application behavior.
 
-## 2. Event contract
+The production package contains HTML and CSS only. Native browser interactions are allowed because the browser owns them. Any behavior beyond native HTML belongs to Limen/application code.
 
-### STATE-001 Intent events
-Behavior-rich components shall emit stable DOM events representing user intent.
+## 2. Native event contract
+
+### STATE-001 Native events are the default contract
+Patterns shall expose the native events of their underlying semantic elements.
 
 Examples:
 
-- value-input
-- value-commit
-- selection-change-requested
-- open-requested
-- close-requested
-- reorder-requested
-- resize-requested
-- retry-requested
-- command-invoked
+- checkbox/switch: `input`, `change`;
+- slider: `input`, `change`;
+- radio/segmented control: `input`, `change`;
+- forms: `submit`, `reset`, `invalid`;
+- details: `toggle`;
+- popover: `toggle` / `beforetoggle` where supported by the browser;
+- dialog: native close/cancel/command behavior provided by the platform.
 
-The exact public event names shall be versioned and consistent across components.
+The design system shall not wrap these in custom JavaScript events.
 
 ### STATE-002 Input versus commit
-Direct-manipulation components shall distinguish transient input from committed value where that distinction matters.
+Where the platform already distinguishes continuous input from committed change, application code shall use that distinction rather than inventing a parallel design-system protocol.
 
-For example, a slider can emit continuous input while dragging and a commit event on release.
+A range input is the primary example: `input` represents continuous value changes and `change` represents committed change.
 
-### STATE-003 Event payloads
-Event detail shall use small, documented, serializable payloads.
+### STATE-003 Application events belong to Limen
+If an application needs events such as:
 
-Do not expose internal DOM nodes or implementation classes as part of the stable contract.
+- selection-change-requested;
+- reorder-requested;
+- resize-requested;
+- retry-requested;
+- command-invoked;
 
-### STATE-004 Cancellation
-Where the caller may legitimately reject an intent before a local visual state becomes committed, events should support a documented cancellation or controlled-component model.
+those are Limen/application contracts, not design-system runtime behavior.
+
+### STATE-004 Rejection and rollback
+Pure HTML controls may change their local native state before Ordo evaluates a domain transition.
+
+For consequential operations, the application shall choose an appropriate interaction model:
+
+- treat the local HTML value as draft input until submission;
+- let Limen translate native events into Ordo messages and re-render authoritative state if rejected;
+- intercept the interaction in application behavior when pre-authorization is essential;
+- use an explicit command/confirmation flow rather than an immediate toggle.
+
+The design system shall not add JavaScript solely to provide pre-commit cancellation.
 
 ## 3. Ordo use
 
@@ -52,66 +67,51 @@ Ordo or the application state authority determines:
 - unknown effect state;
 - durable workflow state.
 
-### ORDO-002 Component-local state
-A component may use an explicit state model when its own behavior is complex.
+### ORDO-002 No Ordo state inside the design-system package
+Because the design-system package contains no executable component behavior, it contains no Ordo state machine for components.
 
-Good candidates:
+Ordo models may exist in consuming applications for complex UI workflows.
 
-- editable data grid;
-- file upload queue;
-- wizard shell;
-- command palette with nested levels;
-- coachmark tour;
-- async action presentation;
-- resizable/dockable workspace;
-- complex combobox;
-- drag/reorder interaction.
+### ORDO-003 Native state remains native
+Checked, selected, open, required, invalid, focused, and similar browser-native state should remain represented by native elements where possible.
 
-### ORDO-003 Avoid architecture theater
-Simple components do not require an Ordo model merely because Ordo exists.
+Do not duplicate these states into application state unless the application needs durable/domain meaning.
 
-A static card, badge, divider, paragraph style, or simple disclosure should remain simple.
+### ORDO-004 Application-rendered state
+When Ordo/application state must affect presentation, the application may render:
 
-### ORDO-004 Illegal visual combinations
-For complex components, mutually exclusive visual states should be represented explicitly rather than through unrelated boolean flags.
+- native attributes such as `disabled`, `checked`, `selected`, `open`;
+- semantic ARIA attributes when appropriate;
+- documented `data-ef-state` values when no native state represents the concept.
 
-Example:
-
-- Ready
-- Editing
-- Validating
-- Saving
-- SaveFailed
-- Conflict
-
-is preferable to independent editing/loading/error/success booleans when those booleans can create nonsensical combinations.
+CSS may render those states but shall not infer their legality.
 
 ### ORDO-005 Unknown is first class
-Where the caller supplies an unknown or indeterminate result, the component must preserve it.
-
-Unknown external effect must not be rendered as ordinary failure unless the application has reconciled it as failure.
+Where application state is unknown or an external effect has an indeterminate outcome, the markup contract must allow that state to be rendered distinctly from success or failure.
 
 ## 4. Capabilities
 
-### CAP-001 Actions supplied by caller
-Components that display actions shall accept currently available actions from the application.
+### CAP-001 Actions supplied by application
+Pattern markup may display action locations, but currently legal actions come from the application.
 
-A data grid bulk-action bar, command palette, wizard action row, or context menu must not infer permissions from hidden heuristics.
+A bulk-action bar, command palette, wizard, or context menu must not infer permissions from CSS or static markup.
 
 ### CAP-002 Disabled reason
-When an action is visible but unavailable, the system should support a human-readable reason supplied by the application.
+When an action remains visible but unavailable, the application should render a human-readable explanation through the documented pattern.
 
 ### CAP-003 Hidden versus disabled
-The design system shall document the semantic distinction:
+The semantic distinction remains:
 
 - hidden: not relevant or not discoverable in current context;
 - disabled: relevant but unavailable;
 - blocked: unavailable because a known condition is unmet;
 - pending: already requested and unresolved.
 
+CSS may distinguish these supplied states; it does not choose them.
+
 ## 5. Obligations
 
-Components may visualize unresolved obligations supplied by the application, for example:
+Patterns may visualize unresolved obligations supplied by the application, for example:
 
 - validation errors;
 - missing required fields;
@@ -123,58 +123,75 @@ They shall not invent domain obligations.
 
 ## 6. Limen integration
 
-### LIMEN-001 Browser-native contract
-All components shall be usable without Limen.
+### LIMEN-001 Standard DOM only
+Limen integrates with semantic HTML through normal DOM queries, properties, attributes, forms, and native events.
 
-Limen integration is an adapter over standard properties, attributes, methods, and DOM events.
+There is no design-system JavaScript API.
 
-### LIMEN-002 No framework coupling
-The component package shall not import Limen application code or require a Limen runtime to render.
+### LIMEN-002 No design-system runtime dependency
+The design-system package shall not import Limen, and Limen shall not be required to render static or natively interactive patterns.
 
 ### LIMEN-003 Message translation
-A Limen adapter may translate component intent into application messages and application state back into component properties.
+Limen may translate native browser events into typed application messages and application state back into HTML attributes/content.
 
-### LIMEN-004 Stable event ordering
-For direct manipulation and async interactions, event ordering must be documented so Limen can process messages deterministically.
+### LIMEN-004 Behavioral adapters live outside the package
+Advanced patterns may publish a behavioral contract documenting:
+
+- required DOM structure;
+- selectors;
+- focus expectations;
+- application-rendered state attributes;
+- native events to observe;
+- messages an application would typically generate.
+
+The adapter implementation belongs to Limen/application code.
 
 ### LIMEN-005 Render loop safety
-Controlled component updates from Limen shall not recursively re-emit the same user-intent event unless the user actually performed another action.
+Application re-rendering after a native event must not accidentally treat programmatic state synchronization as a second user intent.
 
-## 7. Example boundary
+This is an application integration concern and must be tested in consuming systems.
 
-A switch controlling an application setting:
+## 7. Switch example
 
-1. The component renders Checked = false.
-2. The user activates the switch.
-3. The component emits a change request.
-4. Limen translates it into an application message.
-5. Ordo/application logic decides whether the transition is legal.
-6. The application returns the authoritative new state.
-7. The component renders the new state.
+A switch controlling a domain setting:
 
-For purely local non-consequential settings, the application may choose an uncontrolled mode. The component still must not assume that pattern for consequential domain changes.
+1. HTML renders a native checkbox styled as an Echelon switch.
+2. The user changes the checkbox.
+3. The browser emits native `input`/`change`.
+4. Limen translates the event into an application message.
+5. Ordo decides whether the domain transition is legal.
+6. The application renders the authoritative resulting state.
+7. CSS renders that state.
 
-## 8. Async effects
+The design system participates only in steps 1 and 7.
 
-Complex action components shall support the application presenting:
+## 8. Behavior-required patterns
 
-- idle;
-- pending;
-- succeeded;
-- failed;
-- unknown;
-- retry-blocked where relevant.
+The following remain design-system visual/markup contracts but require Limen/application behavior for a complete product interaction:
 
-Retry UI must not appear when retry safety is unknown.
+- tabs with coordinated keyboard focus;
+- combobox/autocomplete;
+- multi-range slider;
+- date-range picker;
+- command palette;
+- interactive data grid/treegrid;
+- drag/reorder;
+- resizable split panes;
+- filter/query builders;
+- branching wizards;
+- upload queues/progress;
+- notification lifecycle.
 
-## 9. Testing the boundary
+See `DECLARATIVE-CAPABILITY-MATRIX.md`.
 
-Integration tests shall prove:
+## 9. Integration testing
 
-- a component cannot invent a domain transition;
-- rejected intent returns to authoritative state cleanly;
+Consuming applications shall test that:
+
+- native events map to the intended typed messages;
+- rejected domain changes return to authoritative rendered state;
 - stale async responses do not overwrite newer authoritative state;
-- controlled updates do not loop;
 - unknown effects remain unknown;
-- disabled capabilities cannot be invoked through alternate input paths;
-- keyboard and pointer paths emit equivalent intent.
+- disabled capabilities cannot be invoked through alternate paths;
+- keyboard and pointer paths produce equivalent domain intent where required;
+- application behavior does not depend on design-system JavaScript because none exists.

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Echelon Design System Pilot</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <link rel="stylesheet" href="/dist/components.css">
+  <style>
+    main { max-inline-size: 52rem; margin: 3rem auto; padding: 0 1.5rem; }
+    form, .examples { display: grid; gap: 2rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Design system pilot</h1>
+
+    <form id="settings">
+      <label class="ef-switch">
+        <input id="notifications" class="ef-switch__input" type="checkbox" role="switch" name="notifications" value="enabled" aria-describedby="notifications-description">
+        <span class="ef-switch__track" aria-hidden="true"></span>
+        <span class="ef-switch__text">
+          <span class="ef-switch__label">Notifications</span>
+          <span class="ef-switch__description" id="notifications-description">Receive operational updates.</span>
+        </span>
+      </label>
+
+      <label class="ef-switch">
+        <input id="required-switch" class="ef-switch__input" type="checkbox" role="switch" name="terms" value="accepted" required>
+        <span class="ef-switch__track" aria-hidden="true"></span>
+        <span class="ef-switch__text">
+          <span class="ef-switch__label">Required setting</span>
+        </span>
+      </label>
+
+      <label class="ef-slider">
+        <span class="ef-slider__header">
+          <span class="ef-slider__label">Volume</span>
+        </span>
+        <input id="volume" class="ef-slider__input" type="range" name="volume" min="0" max="100" step="5" value="25">
+        <span class="ef-slider__bounds" aria-hidden="true"><span>0</span><span>100</span></span>
+        <span class="ef-field__description">Adjust the output level.</span>
+      </label>
+
+      <fieldset class="ef-field">
+        <legend class="ef-field__label">Density</legend>
+        <div class="ef-segmented">
+          <label class="ef-segment">
+            <input id="density-comfortable" type="radio" name="density" value="comfortable" checked>
+            <span>Comfortable</span>
+          </label>
+          <label class="ef-segment">
+            <input id="density-compact" type="radio" name="density" value="compact">
+            <span>Compact</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="ef-cluster">
+        <button type="reset">Reset</button>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+
+    <section class="examples" aria-label="Declarative examples">
+      <details class="ef-disclosure" id="advanced-options">
+        <summary>Advanced options</summary>
+        <div class="ef-disclosure__content"><p>Additional content.</p></div>
+      </details>
+
+      <div>
+        <button id="popover-open" type="button" popovertarget="example-popover">Show options</button>
+        <div class="ef-popover" id="example-popover" popover>
+          <strong>Options</strong>
+          <p>This surface is controlled entirely by declarative HTML.</p>
+          <button id="popover-close" type="button" popovertarget="example-popover" popovertargetaction="hide">Close</button>
+        </div>
+      </div>
+
+      <div>
+        <button id="dialog-open" type="button" commandfor="example-dialog" command="show-modal">Open dialog</button>
+        <dialog class="ef-dialog" id="example-dialog" aria-labelledby="dialog-title">
+          <div class="ef-dialog__body">
+            <h2 id="dialog-title">Confirm action</h2>
+            <p>The browser owns modal behavior.</p>
+          </div>
+          <div class="ef-dialog__actions">
+            <button id="dialog-close" type="button" commandfor="example-dialog" command="close">Cancel</button>
+          </div>
+        </dialog>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

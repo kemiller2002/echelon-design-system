@@ -110,5 +110,188 @@
       "mature-systems"
     ],
     "title": "Mature design systems include advanced reusable controls"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "primary",
+    "id": "EV-DESIGN-2026-0006",
+    "path": "research/evidence/EV-DESIGN-2026-0006--dtcg-stable-token-format.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "Design Tokens Community Group",
+    "source_date": "2025-10-28",
+    "source_title": "Design Tokens Format Module 2025.10",
+    "source_uri": "https://www.designtokens.org/TR/2025.10/format/",
+    "supports": [],
+    "tags": [
+      "tokens",
+      "dtcg",
+      "interoperability"
+    ],
+    "title": "DTCG 2025.10 stable design-token interchange format"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "primary",
+    "id": "EV-DESIGN-2026-0007",
+    "path": "research/evidence/EV-DESIGN-2026-0007--native-slider-accessibility.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "W3C Web Accessibility Initiative",
+    "source_date": {},
+    "source_title": "Slider Pattern and accessible faked slider working example",
+    "source_uri": "https://www.w3.org/WAI/ARIA/apg/patterns/slider/",
+    "supports": [],
+    "tags": [
+      "slider",
+      "accessibility",
+      "touch",
+      "native-html"
+    ],
+    "title": "Native range input is safer substrate for pilot slider"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0008",
+    "path": "research/evidence/EV-DESIGN-2026-0008--elementinternals-and-custom-state.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "ElementInternals documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals",
+    "supports": [],
+    "tags": [
+      "web-components",
+      "forms",
+      "elementinternals",
+      "custom-state"
+    ],
+    "title": "ElementInternals supports form-associated custom elements"
+  },
+  {
+    "confidence": "medium",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0009",
+    "path": "research/evidence/EV-DESIGN-2026-0009--fable-web-component-options.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "Fable project contributors",
+    "source_date": {},
+    "source_title": "Fable and Fable.Lit documentation",
+    "source_uri": "https://fable.io/docs/getting-started/javascript.html",
+    "supports": [],
+    "tags": [
+      "fsharp",
+      "fable",
+      "web-components",
+      "runtime"
+    ],
+    "title": "Fable can target browser-native JavaScript and Web Components"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "primary",
+    "id": "EV-DESIGN-2026-0010",
+    "path": "research/evidence/EV-DESIGN-2026-0010--brand-palette-contrast-audit.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "Echelon Foundry",
+    "source_date": "2026-09-22",
+    "source_title": "consulting-company canonical CSS palette",
+    "source_uri": "repository:kemiller2002/consulting-company/assets/css/style.css",
+    "supports": [],
+    "tags": [
+      "color",
+      "contrast",
+      "brand",
+      "accessibility"
+    ],
+    "title": "Echelon Foundry palette semantic contrast audit"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0011",
+    "path": "research/evidence/EV-DESIGN-2026-0011--declarative-popover.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "Popover API and popover HTML attribute documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/popover",
+    "supports": [],
+    "tags": [
+      "html",
+      "popover",
+      "declarative",
+      "accessibility"
+    ],
+    "title": "Popover supports accessible declarative invocation without JavaScript"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0012",
+    "path": "research/evidence/EV-DESIGN-2026-0012--declarative-dialog-commands.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "dialog HTML element and Invoker Commands API documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog",
+    "supports": [],
+    "tags": [
+      "html",
+      "dialog",
+      "commandfor",
+      "declarative"
+    ],
+    "title": "Native dialog supports declarative modal invocation through commands"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0013",
+    "path": "research/evidence/EV-DESIGN-2026-0013--native-disclosure.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "details HTML disclosure element documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details",
+    "supports": [],
+    "tags": [
+      "html",
+      "disclosure",
+      "details",
+      "summary"
+    ],
+    "title": "details and summary provide native disclosure behavior"
   }
 ]

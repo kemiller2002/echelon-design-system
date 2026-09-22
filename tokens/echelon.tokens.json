@@ -1,0 +1,125 @@
+{
+  "$description": "Canonical Echelon Foundry design tokens. DTCG 2025.10 format subset.",
+  "primitive": {
+    "color": {
+      "$type": "color",
+      "foundry-charcoal": { "$value": { "colorSpace": "srgb", "components": [0.12549, 0.141176, 0.129412], "alpha": 1, "hex": "#202421" } },
+      "forged-iron": { "$value": { "colorSpace": "srgb", "components": [0.227451, 0.25098, 0.235294], "alpha": 1, "hex": "#3a403c" } },
+      "parchment": { "$value": { "colorSpace": "srgb", "components": [0.94902, 0.937255, 0.905882], "alpha": 1, "hex": "#f2efe7" } },
+      "oxide-bronze": { "$value": { "colorSpace": "srgb", "components": [0.564706, 0.345098, 0.192157], "alpha": 1, "hex": "#905831" } },
+      "oxide-bronze-light": { "$description": "Accessible dark-surface accent derived from oxide bronze.", "$value": { "colorSpace": "srgb", "components": [0.658824, 0.494118, 0.368627], "alpha": 1, "hex": "#a87e5e" } },
+      "verdigris": { "$value": { "colorSpace": "srgb", "components": [0.278431, 0.458824, 0.419608], "alpha": 1, "hex": "#47756b" } },
+      "verdigris-light": { "$description": "Accessible dark-surface accent derived from verdigris.", "$value": { "colorSpace": "srgb", "components": [0.411765, 0.552941, 0.517647], "alpha": 1, "hex": "#698d84" } },
+      "carbon": { "$value": { "colorSpace": "srgb", "components": [0.090196, 0.101961, 0.094118], "alpha": 1, "hex": "#171a18" } },
+      "graphite": { "$value": { "colorSpace": "srgb", "components": [0.407843, 0.427451, 0.407843], "alpha": 1, "hex": "#686d68" } },
+      "stone": { "$value": { "colorSpace": "srgb", "components": [0.890196, 0.878431, 0.843137], "alpha": 1, "hex": "#e3e0d7" } }
+    },
+    "spacing": {
+      "$type": "dimension",
+      "1": { "$value": { "value": 4, "unit": "px" } },
+      "2": { "$value": { "value": 8, "unit": "px" } },
+      "3": { "$value": { "value": 12, "unit": "px" } },
+      "4": { "$value": { "value": 16, "unit": "px" } },
+      "5": { "$value": { "value": 24, "unit": "px" } },
+      "6": { "$value": { "value": 32, "unit": "px" } },
+      "7": { "$value": { "value": 48, "unit": "px" } },
+      "8": { "$value": { "value": 64, "unit": "px" } }
+    },
+    "radius": {
+      "$type": "dimension",
+      "none": { "$value": { "value": 0, "unit": "px" } },
+      "small": { "$value": { "value": 4, "unit": "px" } },
+      "medium": { "$value": { "value": 8, "unit": "px" } },
+      "pill": { "$value": { "value": 999, "unit": "px" } }
+    },
+    "motion-duration": {
+      "$type": "duration",
+      "instant": { "$value": { "value": 0, "unit": "ms" } },
+      "fast": { "$value": { "value": 120, "unit": "ms" } },
+      "standard": { "$value": { "value": 180, "unit": "ms" } },
+      "slow": { "$value": { "value": 280, "unit": "ms" } }
+    },
+    "motion-easing": {
+      "$type": "cubicBezier",
+      "standard": { "$value": [0.2, 0, 0, 1] },
+      "enter": { "$value": [0, 0, 0.2, 1] },
+      "exit": { "$value": [0.4, 0, 1, 1] }
+    },
+    "font-family": {
+      "$type": "fontFamily",
+      "display": { "$value": ["Newsreader", "Georgia", "serif"] },
+      "sans": { "$value": ["Manrope", "system-ui", "sans-serif"] },
+      "mono": { "$value": ["IBM Plex Mono", "ui-monospace", "monospace"] }
+    }
+  },
+  "semantic": {
+    "light": {
+      "color": {
+        "text": {
+          "primary": { "$value": "{primitive.color.carbon}" },
+          "heading": { "$value": "{primitive.color.foundry-charcoal}" },
+          "secondary": { "$value": "{primitive.color.graphite}" },
+          "on-secondary-surface": { "$value": "{primitive.color.forged-iron}" },
+          "inverse": { "$value": "{primitive.color.parchment}" }
+        },
+        "surface": {
+          "primary": { "$value": "{primitive.color.parchment}" },
+          "secondary": { "$value": "{primitive.color.stone}" },
+          "inverse": { "$value": "{primitive.color.foundry-charcoal}" },
+          "inverse-secondary": { "$value": "{primitive.color.forged-iron}" }
+        },
+        "accent": {
+          "primary": { "$value": "{primitive.color.oxide-bronze}" },
+          "secondary": { "$value": "{primitive.color.verdigris}" }
+        },
+        "border": {
+          "subtle": { "$value": "{primitive.color.stone}" },
+          "functional": { "$value": "{primitive.color.forged-iron}" }
+        },
+        "focus": {
+          "ring": { "$value": "{primitive.color.carbon}" },
+          "gap": { "$value": "{primitive.color.parchment}" }
+        },
+        "control": {
+          "track": { "$value": "{primitive.color.graphite}" },
+          "thumb": { "$value": "{primitive.color.parchment}" },
+          "active": { "$value": "{primitive.color.oxide-bronze}" }
+        }
+      }
+    },
+    "dark": {
+      "color": {
+        "text": {
+          "primary": { "$value": "{primitive.color.parchment}" },
+          "heading": { "$value": "{primitive.color.parchment}" },
+          "secondary": { "$value": "{primitive.color.stone}" },
+          "on-secondary-surface": { "$value": "{primitive.color.parchment}" },
+          "inverse": { "$value": "{primitive.color.carbon}" }
+        },
+        "surface": {
+          "primary": { "$value": "{primitive.color.carbon}" },
+          "secondary": { "$value": "{primitive.color.foundry-charcoal}" },
+          "inverse": { "$value": "{primitive.color.parchment}" },
+          "inverse-secondary": { "$value": "{primitive.color.stone}" }
+        },
+        "accent": {
+          "primary": { "$value": "{primitive.color.oxide-bronze-light}" },
+          "secondary": { "$value": "{primitive.color.verdigris-light}" }
+        },
+        "border": {
+          "subtle": { "$value": "{primitive.color.forged-iron}" },
+          "functional": { "$value": "{primitive.color.stone}" }
+        },
+        "focus": {
+          "ring": { "$value": "{primitive.color.parchment}" },
+          "gap": { "$value": "{primitive.color.carbon}" }
+        },
+        "control": {
+          "track": { "$value": "{primitive.color.graphite}" },
+          "thumb": { "$value": "{primitive.color.parchment}" },
+          "active": { "$value": "{primitive.color.oxide-bronze-light}" }
+        }
+      }
+    }
+  }
+}

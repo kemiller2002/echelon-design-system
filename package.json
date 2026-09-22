@@ -1,0 +1,31 @@
+{
+  "name": "@echelon-foundry/design-system",
+  "version": "0.1.0-alpha.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-runtime HTML and CSS design system for Echelon Foundry applications.",
+  "sideEffects": ["./dist/*.css"],
+  "exports": {
+    "./tokens.css": "./dist/tokens.css",
+    "./foundations.css": "./dist/foundations.css",
+    "./components.css": "./dist/components.css",
+    "./all.css": "./dist/all.css",
+    "./patterns/*": "./dist/patterns/*"
+  },
+  "files": ["dist", "patterns"],
+  "scripts": {
+    "clean": "node tools/clean.mjs",
+    "tokens:build": "dotnet run --project tools/TokenCompiler/TokenCompiler.fsproj -- tokens/echelon.tokens.json dist/tokens.css",
+    "assets:build": "node tools/build-assets.mjs",
+    "build": "npm run clean && npm run tokens:build && npm run assets:build",
+    "test:tokens": "node --test tests/token-compiler.test.mjs",
+    "test:browser": "playwright test",
+    "test:a11y": "playwright test tests/browser/accessibility.spec.mjs",
+    "test:runtime": "node --test tests/zero-runtime.test.mjs",
+    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:browser"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.63.0"
+  }
+}

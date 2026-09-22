@@ -1,6 +1,16 @@
-# Component Catalog Requirements
+# Component and Pattern Catalog Requirements
 
-This catalog defines capability requirements. Inclusion here does not mean every entry must ship in the first release.
+This catalog defines capability requirements. The canonical design-system package is HTML and CSS only.
+
+An entry may be:
+
+- a **declarative pattern** fully implemented by semantic HTML + CSS;
+- a **visual contract** whose behavior is supplied by Limen/application code;
+- native HTML styled by the foundation layer.
+
+Names beginning with `ef-` describe the Echelon pattern/class contract. They do not imply Custom Elements.
+
+Inclusion here does not mean every entry must ship in the first release.
 
 Priority meanings:
 
@@ -31,7 +41,7 @@ These are primarily CSS and semantic HTML, not custom elements.
 ## 2. Form and selection components
 
 ### P0: Switch / toggle
-Component: ef-switch
+Pattern: `.ef-switch`
 
 Requirements:
 
@@ -51,7 +61,7 @@ Requirements:
 - controlled and uncontrolled presentation modes without inventing domain authority.
 
 ### P0: Slider
-Component: ef-slider
+Pattern: `.ef-slider`
 
 Requirements:
 
@@ -75,7 +85,7 @@ Requirements:
 - form participation and validity.
 
 ### P1: Multi-range slider
-Component: ef-range-slider
+Visual contract: `.ef-range-slider` (Limen behavior required)
 
 Requirements:
 
@@ -89,7 +99,7 @@ Requirements:
 - collision behavior without inaccessible tiny targets.
 
 ### P0: Segmented control
-Component: ef-segmented-control
+Pattern: `.ef-segmented` using native radios
 
 Requirements:
 
@@ -107,7 +117,7 @@ Native select shall remain available and preferred for ordinary selection.
 A custom select is justified only where searchable, rich, or multi-select behavior is needed.
 
 ### P1: Combobox / autocomplete
-Component: ef-combobox
+Visual contract: `.ef-combobox` (Limen behavior required)
 
 Requirements:
 
@@ -122,7 +132,7 @@ Requirements:
 - safe cancellation of obsolete async requests.
 
 ### P1: Multiselect
-Component: ef-multiselect
+Visual contract: `.ef-multiselect` (Limen behavior required)
 
 Requirements:
 
@@ -134,7 +144,7 @@ Requirements:
 - accessible summary of current selections.
 
 ### P1: Date picker and date-range picker
-Components: ef-date-picker, ef-date-range
+Visual contracts: `.ef-date-picker`, `.ef-date-range` (Limen behavior required)
 
 Requirements:
 
@@ -150,17 +160,17 @@ Requirements:
 - clear errors for invalid or ambiguous input.
 
 ### P1: Time and date-time
-Components: ef-time-picker, ef-date-time
+Visual contracts: `.ef-time-picker`, `.ef-date-time` (Limen behavior required where native inputs are insufficient)
 
 Support 12/24 hour presentation, timezone labeling where relevant, explicit ambiguity handling, and keyboard text entry.
 
 ### P1: Search
-Component: ef-search
+Visual contract: `.ef-search` (Limen behavior required for suggestions/async search)
 
 Support debounce as an integration option, clear button, recent/query suggestions supplied by the application, keyboard shortcut affordance, pending state, and result count announcement.
 
 ### P1: File upload
-Component: ef-file-upload
+Pattern: native file input; visual contract for upload queues requires Limen
 
 Support:
 
@@ -177,12 +187,12 @@ Support:
 - keyboard accessibility.
 
 ### P2: Tag / token input
-Component: ef-token-input
+Visual contract: `.ef-token-input` (Limen behavior required)
 
 Support freeform or constrained tokens, keyboard editing, paste of multiple values, duplicate policy, validation, and accessible token removal.
 
 ### P2: Color picker
-Component: ef-color-picker
+Visual contract: `.ef-color-picker` (Limen behavior required unless native color input suffices)
 
 Only if product requirements justify it.
 
@@ -191,7 +201,7 @@ Support text values, swatches, alpha policy, contrast preview where relevant, ke
 ## 3. Navigation and command components
 
 ### P0: Tabs
-Component: ef-tabs
+Visual contract: `.ef-tabs` (Limen behavior required)
 
 Support manual and automatic activation modes, overflow, deep-link integration hooks, keyboard navigation, and reduced-motion panel transitions.
 
@@ -202,22 +212,22 @@ Prefer semantic nav/list markup with system styling. A component is optional for
 Support page navigation, unknown total count, cursor-style next/previous variants, compact mobile representation, and clear current-page semantics.
 
 ### P0: Application shell
-Component: ef-app-shell
+Pattern: `.ef-app-shell`
 
 Provide stable regions for header, navigation, main, contextual rail, footer, alerts, and transient overlays without owning application routing.
 
 ### P1: Side navigation
-Component: ef-side-nav
+Pattern/visual contract: `.ef-side-nav`
 
 Support nested groups, compact mode, responsive drawer mode, keyboard navigation, current-location semantics, and persistent versus transient behavior.
 
 ### P1: Toolbar
-Component: ef-toolbar
+Pattern/visual contract: `.ef-toolbar`
 
 Support roving keyboard focus when appropriate, overflow, separator semantics, contextual actions, and adaptive collapse.
 
 ### P1: Command palette
-Component: ef-command-palette
+Visual contract: `.ef-command-palette` (Limen behavior required)
 
 Requirements:
 
@@ -234,53 +244,53 @@ Requirements:
 - mobile full-screen mode.
 
 ### P2: Tree navigation
-Component: ef-tree
+Visual contract: `.ef-tree` (Limen behavior required)
 
 Support expand/collapse, selection policy, keyboard tree interaction, async children, loading/error nodes, and large-tree performance.
 
 ## 4. Overlay and transient surfaces
 
 ### P0: Dialog
-Component: ef-dialog
+Pattern: `.ef-dialog` using native `dialog`
 
 Use native dialog behavior where it satisfies requirements. Provide consistent focus management, labelled structure, destructive variants, scroll containment, responsive full-screen mode, and return-focus behavior.
 
 ### P0: Popover
-Component: ef-popover
+Pattern: `.ef-popover` using native Popover HTML
 
 Prefer the platform Popover API and CSS anchor positioning when available.
 
 Support auto/light-dismiss and controlled/manual variants, placement fallback, collision handling, focus behavior, and top-layer animation.
 
 ### P0: Tooltip
-Component: ef-tooltip
+Declarative pattern where browser baseline supports it; otherwise visual contract
 
 Tooltips are supplemental only. Required information and essential actions shall not exist only in a tooltip.
 
 Support hover and keyboard focus, delayed open/close, pointer-safe hover travel, and reduced motion.
 
 ### P0: Menu and menu button
-Components: ef-menu, ef-menu-button
+Visual contracts: `.ef-menu`, `.ef-menu-button` (Limen behavior required for menu keyboard model)
 
 Support actions, checkable items, radio groups, nested submenu only where justified, keyboard typeahead, separators, disabled items, icons, shortcuts, and responsive mobile presentation.
 
 ### P1: Context menu
-Component: ef-context-menu
+Visual contract: `.ef-context-menu` (Limen behavior required)
 
 Must always have a non-context-menu path to essential actions.
 
 ### P1: Drawer / sheet
-Component: ef-drawer
+Visual contract: `.ef-drawer` (Limen behavior required)
 
 Support modal and nonmodal modes, side and bottom placement, responsive adaptation, focus management, swipe as optional enhancement only, and reduced-motion entry/exit.
 
 ### P1: Toggletip
-Component: ef-toggletip
+Declarative popover pattern where sufficient
 
 For interactive explanatory content that is too important or interactive for a tooltip.
 
 ### P1: Coachmark / guided tour
-Component: ef-coachmark
+Visual contract: `.ef-coachmark` (Limen behavior required)
 
 Support:
 
@@ -328,7 +338,7 @@ Support a bounded undo window without requiring the user to act before reading t
 Static and lightly interactive tables shall remain semantic HTML.
 
 ### P1: Data grid
-Component: ef-data-grid
+Visual contract: `.ef-data-grid` (Limen behavior required for interactive grid)
 
 Requirements:
 
@@ -364,17 +374,17 @@ Add:
 This component has meaningful internal state and should receive an explicit Ordo-style state model.
 
 ### P2: Tree grid
-Component: ef-tree-grid
+Visual contract: `.ef-tree` (Limen behavior required)-grid
 
 Combine hierarchy and tabular data only after the keyboard and screen-reader model is proven against WAI-ARIA expectations.
 
 ### P1: List and virtual list
-Components: ef-list, ef-virtual-list
+Static list pattern; `.ef-virtual-list` requires Limen behavior
 
 Virtualization is optional and must never become the default for small lists.
 
 ### P1: Filter builder
-Component: ef-filter-builder
+Visual contract: `.ef-filter-builder` (Limen behavior required)
 
 Support composable field/operator/value clauses, nested groups where justified, keyboard editing, validation, removable clauses, and application-owned expression serialization.
 
@@ -407,7 +417,7 @@ Support text/structured differences, additions/removals/changes, keyboard naviga
 - sticky action region.
 
 ### P1: Resizable split pane
-Component: ef-split-pane
+Visual contract: `.ef-split-pane` (Limen behavior required)
 
 Requirements:
 
@@ -482,12 +492,12 @@ The design system shall not become a full charting framework unless application 
 ## 10. Specialized interaction patterns
 
 ### P1: Reorderable list
-Component: ef-reorder-list
+Visual contract: `.ef-reorder-list` (Limen behavior required)
 
 Support drag, keyboard move up/down or position controls, live announcement of movement, auto-scroll, drop indicators, and cancel/revert.
 
 ### P2: Transfer list
-Component: ef-transfer-list
+Visual contract: `.ef-transfer-list` (Limen behavior required)
 
 Support moving items between sets without requiring drag-and-drop.
 
@@ -495,7 +505,7 @@ Support moving items between sets without requiring drag-and-drop.
 For metadata, tags, environment variables, and configuration where pair editing is common.
 
 ### P2: Step-by-step wizard shell
-Component: ef-wizard
+Visual contract: `.ef-wizard` (Limen/Ordo behavior required)
 
 Supports:
 
@@ -510,7 +520,13 @@ Supports:
 
 Business transition legality remains application/Ordo owned.
 
-## 11. Explicit non-goals
+## 11. Zero-runtime rule
+
+No catalog entry authorizes JavaScript or WebAssembly inside the design-system package.
+
+If an entry requires behavior beyond semantic HTML, its behavior belongs to Limen/application code while this repository owns only markup/CSS/accessibility/communication contracts.
+
+## 12. Explicit non-goals
 
 Do not automatically build:
 
