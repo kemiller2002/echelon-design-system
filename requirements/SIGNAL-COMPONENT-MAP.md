@@ -129,6 +129,8 @@ All production artifacts remain HTML/CSS only.
 
 ## Selector completeness update — 2026-09-22
 
+Signal source revision reviewed: `kemiller2002/echelon-signal@036f4591d2e4d550d084241262ad81f70756dd51` ("Merge scoring and selector completeness requirements").
+
 Signal's SCS completeness pass adds the following shared design-system contracts.
 
 | Signal selector family | Design-system contract | Boundary |
