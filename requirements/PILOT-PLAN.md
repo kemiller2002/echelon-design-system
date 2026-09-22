@@ -2,130 +2,78 @@
 
 ## Objective
 
-Prove the architectural approach with a vertical slice that includes native styling, a form-associated custom component, advanced motion, overlay behavior, accessibility, and Ordo/Limen integration.
+Prove that the Echelon Design System can deliver polished, accessible components with **zero browser runtime** by using semantic HTML, CSS, and declarative platform behavior only.
 
-## Pilot components
+## Pilot foundation
 
-### Foundation
-- design tokens;
+- DTCG design tokens compiled to CSS;
 - light/dark themes;
 - typography;
-- native buttons;
-- native text fields;
+- native buttons and fields;
 - layout stack/cluster/grid;
-- focus system.
+- focus system;
+- reduced-motion and forced-colors behavior.
 
-### Component 1: ef-switch
-Why:
+## Pilot patterns
 
-- simple enough to finish completely;
-- exercises form association;
-- requires polished microinteraction;
-- exposes accessibility and reduced-motion requirements;
-- demonstrates controlled versus uncontrolled state.
+### Switch
+Native checkbox with `role="switch"` plus CSS track/thumb animation.
 
-### Component 2: ef-slider
-Why:
+Validates native forms, keyboard/touch behavior, focus, disabled state, motion, and theming.
 
-- advanced direct manipulation;
-- keyboard/pointer parity;
-- value semantics;
-- motion;
-- tooltip/value bubble;
-- range geometry;
-- form integration;
-- reduced motion.
+### Slider
+Native `input[type=range]`.
 
-Implement the single-value slider first. The multi-range variant follows only after the single slider passes the full interaction and accessibility matrix.
+The pilot deliberately preserves native range behavior and `accent-color` rather than requiring JavaScript to synchronize a custom filled track or live value bubble.
 
-### Component 3: ef-popover
-Why:
+### Segmented control
+Native radio group styled as a segmented selector.
 
-- exercises browser top layer;
-- positioning;
-- focus relationships;
-- modern Popover API;
-- animation;
-- progressive enhancement.
+### Disclosure
+Native `details`/`summary`.
 
-### Component 4: ef-tabs
-Why:
+### Popover
+Declarative `popover` + `popovertarget` HTML with CSS top-layer transitions.
 
-- composite keyboard model;
-- selection indicator animation;
-- content composition;
-- responsive overflow.
+### Dialog
+Native `dialog` controlled declaratively using `commandfor` and `command` on the declared browser baseline.
 
-### Pattern: async action
-Use a native button plus system feedback patterns rather than forcing a custom button element.
+## Explicit exclusions
 
-States:
+The pilot shall contain:
 
-- ready;
-- pending;
-- succeeded;
-- failed;
-- unknown where the calling workflow can produce indeterminate effect outcome.
+- no Custom Elements;
+- no Shadow DOM;
+- no ElementInternals;
+- no Fable browser code;
+- no JavaScript or WebAssembly in production artifacts;
+- no hidden design-system runtime.
+
+Build and test tooling may use scripts because they are not shipped component behavior.
 
 ## Pilot acceptance
 
 The pilot is complete only when:
 
-- components install from the package into a clean consumer;
-- plain HTML can use them;
-- Limen can consume them through ordinary DOM events/properties;
-- form participation works;
+- `dist/` contains no JavaScript or WebAssembly;
+- package production dependencies are empty;
+- canonical patterns are HTML only;
+- switch and slider participate in native forms;
 - keyboard tests pass;
+- popover, dialog, disclosure, and segmented control work declaratively across the declared browser baseline;
 - reduced motion works;
-- forced colors works;
-- 400% zoom/reflow is acceptable;
+- forced colors remains usable;
 - light/dark themes work;
-- pointer/touch tests pass;
-- visual regression exists;
-- documentation examples are live;
-- public API is documented;
+- axe reports no automated WCAG A/AA violations in the representative fixture;
 - ROS validation passes;
-- Ordo boundary is demonstrated without embedding business logic.
+- the Limen boundary is documented for behavior the declarative layer cannot own.
 
-## Explicit experiment
+## Validation question
 
-Compare two implementation strategies for component behavioral state:
+The experiment is no longer whether Ordo-style state belongs inside components.
 
-A. ordinary small component-local state logic;
-B. explicit discriminated-union / Ordo-style state modeling.
+The experiment is:
 
-Run this only on ef-slider and one more complex component.
+> How far can standards-based HTML and CSS provide a professional Echelon component system before behavior legitimately requires Limen?
 
-Measure:
-
-- illegal state combinations prevented;
-- implementation complexity;
-- test count and defect yield;
-- event contract clarity;
-- maintenance cost;
-- code size.
-
-Do not assume Ordo-style modeling is automatically better for every component.
-
-## Next wave after pilot
-
-If the pilot validates the architecture, next build:
-
-- segmented control;
-- dialog;
-- menu/menu-button;
-- combobox;
-- toast/alert;
-- application shell;
-- side navigation;
-- date picker;
-- file upload;
-- resizable split pane.
-
-Then use real application demand to select the first heavy component:
-
-- data grid;
-- command palette;
-- filter builder;
-- coachmark;
-- reorderable list.
+Behavior that crosses that boundary is documented, not smuggled into the design-system package.
