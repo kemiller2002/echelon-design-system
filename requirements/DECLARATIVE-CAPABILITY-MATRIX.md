@@ -9,6 +9,16 @@ The design-system package is HTML and CSS only. This matrix determines whether a
 | Switch | complete | checkbox-based markup + motion | persist/authorize domain change |
 | Slider | complete with native presentation tradeoffs | native range markup + accent/focus polish | live computed display, domain validation if needed |
 | Segmented control | complete | radio-based markup + selection polish | domain handling |
+| Question shell | complete | prompt/help/validation layout | applicability, scoring, branching |
+| Ordinal / Likert scale | complete | native radios, responsive scale, selected/focus states | labels, scoring, applicability |
+| Choice group | complete | native radio/checkbox card presentation | option meaning and scoring |
+| Special answer states | complete | visually separate native choices | Unknown/N/A domain semantics |
+| Validation message/summary | complete as presentation | semantic message/summary regions | validation evaluation and focus routing |
+| Survey/task progress | complete as presentation | native progress + context | current value and completion semantics |
+| Ranking | behavior required | ordered-list/move-control contract | ordering, announcements, validation |
+| Allocation | partially declarative | direct numeric-entry/total-state contract | aggregate total calculation and validation |
+| Rule builder | behavior required | clause/group visual contract | typed expression editing/validation |
+| Obligation panel | complete as presentation | obligation/severity/recovery presentation | authoritative obligation state and actions |
 | Disclosure/accordion | complete | details/summary styling | persistence if needed |
 | Popover | complete on declared browser baseline | popovertarget markup + top-layer styling | populate/act on dynamic content |
 | Modal dialog | complete on declared browser baseline | dialog + commandfor/command markup/styling | business action logic |
