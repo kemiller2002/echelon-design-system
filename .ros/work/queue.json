@@ -58,6 +58,20 @@
       "createdBy": "ChatGPT",
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "WI-0005",
+      "title": "Signal selector completeness design-system patterns",
+      "description": null,
+      "tags": [],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-22T13:51:26.000Z",
+      "updatedAt": "2026-09-22T13:51:26.000Z",
+      "createdBy": "ChatGPT",
+      "source": "manual",
+      "sourceReference": null
     }
   ]
 }
