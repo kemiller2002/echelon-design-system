@@ -1,4 +1,4 @@
-name: Design system pilot validation
+name: Design system validation
 
 on:
   pull_request:
@@ -8,8 +8,7 @@ permissions:
   contents: read
 
 jobs:
-  validate-pilot:
-    if: github.head_ref == 'pilot/tokens-switch-slider'
+  validate-design-system:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,7 +30,7 @@ jobs:
       - name: Restore token compiler
         run: dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
 
-      - name: Build HTML/CSS pilot
+      - name: Build HTML/CSS package
         run: npm run build
 
       - name: Enforce zero-runtime boundary
