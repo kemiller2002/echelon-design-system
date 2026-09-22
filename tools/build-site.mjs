@@ -168,6 +168,26 @@ function page(title, rootPath, body) {
 </html>`;
 }
 
+function mobileDocument(title, source) {
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${escapeHtml(title)} mobile preview</title>
+  <link rel="stylesheet" href="../../assets/forma.css">
+  <style>
+    html, body { inline-size: 100%; max-inline-size: 100%; overflow-x: clip; }
+    body { margin: 0; padding: 8px; }
+    main { inline-size: 100%; max-inline-size: 100%; }
+  </style>
+</head>
+<body>
+  <main>${source}</main>
+</body>
+</html>`;
+}
+
 function nav(active) {
   return `<nav class="component-nav" aria-label="Component catalog"><div class="component-nav-inner">
   <h2>Components</h2>
@@ -184,6 +204,22 @@ function example(number, title, note, snippet, canvasClass = "") {
     <p>${escapeHtml(note)}</p>
   </div>
   <div class="example-canvas ${canvasClass}">${snippet}</div>
+  <details>
+    <summary>View HTML</summary>
+    <pre><code>${escapeHtml(snippet.trim())}</code></pre>
+  </details>
+</section>`;
+}
+
+function mobileExample(number, title, note, snippet) {
+  return `<section class="example-block" data-example="${number}" data-mobile-example="320">
+  <div class="example-heading">
+    <div><span class="component-kicker">Example ${number}</span><h2>${escapeHtml(title)}</h2></div>
+    <p>${escapeHtml(note)}</p>
+  </div>
+  <div class="example-canvas example-canvas--mobile">
+    <iframe class="example-mobile-frame" title="${escapeHtml(title)} component preview" src="mobile.html" loading="lazy"></iframe>
+  </div>
   <details>
     <summary>View HTML</summary>
     <pre><code>${escapeHtml(snippet.trim())}</code></pre>
@@ -277,7 +313,7 @@ for (const slug of slugs) {
   const state = representativeState(source);
   const canonical = namespaceSnippet(source, `ex1-${slug}-`);
   const stateful = namespaceSnippet(state.html, `ex2-${slug}-`);
-  const narrow = namespaceSnippet(source, `ex3-${slug}-`);
+  const mobileMarkup = source;
 
   const body = `<div class="docs-shell">
     ${nav(slug)}
@@ -297,7 +333,7 @@ for (const slug of slugs) {
       <div class="examples">
         ${example(1, "Canonical", "Canonical repository markup, namespaced only to keep examples independent.", canonical)}
         ${example(2, state.changed ? "Representative state" : "Secondary surface", state.changed ? "A browser-native state made visible without adding a runtime." : "The same contract demonstrated on a secondary Forma surface.", stateful, "example-canvas--secondary")}
-        ${example(3, "Mobile · 320px", "The canonical contract inside the minimum supported phone-width presentation. Semantic meaning and actions must remain available.", narrow, "example-canvas--mobile")}
+        ${mobileExample(3, "Mobile · 320px", "Rendered inside a true 320px viewport so Forma's mobile media queries execute. Semantic meaning and actions must remain available.", mobileMarkup)}
       </div>
     </main>
   </div>`;
@@ -305,6 +341,7 @@ for (const slug of slugs) {
   const dir = path.join(output, "components", slug);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(path.join(dir, "index.html"), page(title, "../../", body));
+  fs.writeFileSync(path.join(dir, "mobile.html"), mobileDocument(title, mobileMarkup));
 }
 
 const agentBody = `<main id="main" class="content-section agent-page">
