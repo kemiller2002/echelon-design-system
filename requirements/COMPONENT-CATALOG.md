@@ -26,8 +26,8 @@ contracts whose behavior is supplied by Limen/application code.
 
 - The canonical pattern must remain contained at 320 CSS pixels and wider.
 - Responsive presentation must not create page-level horizontal scrolling.
-- Standalone controls and delegated label targets should expose at least a
-  44 by 44 CSS pixel touch target.
+- Standalone controls and delegated label targets should expose approximately a
+  44 by 44 CSS pixel touch target where practical.
 - Layout changes may stack, wrap, collapse, or introduce component-contained
   scrolling, but must preserve semantic order and accessible relationships.
 - Horizontal scrolling is acceptable only when the information model genuinely
@@ -600,10 +600,10 @@ Support multi-column priority ordering and non-drag reordering.
 ### P1: Bulk action bar
 Appears based on selection state, announces selection count, exposes legal actions supplied by application, and remains keyboard reachable.
 
-### P2: Timeline / activity feed
+### P1: Timeline / activity feed
 Support grouped timestamps, status changes, expandable detail, source attribution, and virtual loading if needed.
 
-### P2: Diff viewer
+### P1: Diff viewer
 Support text/structured differences, additions/removals/changes, keyboard navigation between changes, and non-color cues.
 
 ## 8. Layout and workspace components
@@ -707,7 +707,7 @@ Support moving items between sets without requiring drag-and-drop.
 ### P2: Editable key/value collection
 For metadata, tags, environment variables, and configuration where pair editing is common.
 
-### P2: Step-by-step wizard shell
+### P1: Step-by-step wizard shell
 Visual contract: `.ef-wizard` (Limen/Ordo behavior required)
 
 Supports:
@@ -742,3 +742,69 @@ Do not automatically build:
 - a framework-specific wrapper as the canonical API.
 
 Those may be added only after concrete application evidence.
+
+
+## 14. Cross-application operational compositions
+
+These contracts are promoted by repeated requirements across Chrona/time-tracking, Signal, Summa, Sales & Marketing, HelixNote, and Research Publisher. See `requirements/CROSS-APPLICATION-COMPONENT-WAVE.md`.
+
+### P0/P1: Collection toolbar
+Pattern: `.ef-collection-toolbar`
+
+Compose search, filter entry, sort, result count, saved view, and optional view mode. On mobile, search remains prominent and secondary controls recompose without hiding active state.
+
+### P1: Conflict review
+Pattern: `.ef-conflict-review`
+
+Compose version/current-state comparison, changed facts, explanatory consequence, and application-supplied recovery actions. Domain merge legality remains application/Ordo owned.
+
+### P0: Metric card and dashboard grid
+Patterns: `.ef-metric-card`, `.ef-dashboard-grid`
+
+Provide responsive operational summaries without assigning analytical meaning. Dashboard content order remains application supplied.
+
+### P0/P1: Work queue
+Pattern: `.ef-work-queue`
+
+Present attention-required work with reason, context, status, age/due information, and application-supplied legal actions. This generalizes the obligation presentation without making Forma authoritative over obligations.
+
+### P0/P1: Operation status
+Pattern: `.ef-operation-status`
+
+Present pending, confirmed, failed, conflict, unknown, reconciling, stale, blocked, unavailable, and insufficient-data states with explicit text and non-color cues.
+
+### P1: Readiness checklist
+Pattern: `.ef-readiness-checklist`
+
+Present complete, incomplete, warning, and blocking prerequisites before an application-owned transition. Forma does not calculate readiness.
+
+### P0: Record header
+Pattern: `.ef-record-header`
+
+Provide stable record identity, type, status, context, breadcrumbs, and action region. Secondary actions may collapse on mobile; critical actions remain reachable.
+
+### P1: Master/detail workspace
+Pattern: `.ef-master-detail`
+
+Provide responsive list/detail composition. The application owns selection, routing, browser history, and focus restoration.
+
+### P1: Provenance trail
+Pattern: `.ef-provenance-trail`
+
+Present a trace through source, aggregate, analysis, derivation, and presentation stages using application-supplied facts.
+
+### P1: Preview surface
+Pattern: `.ef-preview-surface`
+
+Provide a bounded review surface for consequential content before publish/issue/send/commit operations. Preview presentation never implies authorization.
+
+### P0/P1: Mobile action bar
+Pattern: `.ef-mobile-action-bar`
+
+Provide a safe-area-aware contextual action region for narrow screens. It must not cover focused content or become the only path to essential actions on wider layouts.
+
+## 15. Mobile completeness
+
+Every implemented component is subject to `requirements/MOBILE-COMPONENT-CONTRACT.md`.
+
+A component is not complete until its 320px presentation is documented and tested. Mobile is a recomposition of the same semantic contract, not a separate component family.

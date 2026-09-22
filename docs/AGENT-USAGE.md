@@ -25,7 +25,7 @@ When an agent creates or changes UI:
    Limen boundary.
 7. Keep transition legality, obligations, scoring, permissions, and domain
    invariants in Ordo/application state, never in Forma.
-8. Validate the result with repository, accessibility, and mobile/reflow tests.
+8. Validate the result with repository and accessibility tests.
 
 ## How to consume Forma
 
@@ -91,23 +91,20 @@ Prefer the most semantic existing primitive.
 - Complex ranking or rule construction: use the Forma visual contract and put
   behavior in Limen/application code.
 
-## Mobile and reflow contract
+## Mobile contract
 
-Every canonical Forma pattern and the generated documentation site must remain
-usable at 320 CSS pixels and wider.
+Every Forma component must have a usable 320 CSS px presentation. Agents must:
 
-- Do not create page-level horizontal scrolling at phone widths.
-- Standalone controls and delegated label targets should provide at least a
-  44 by 44 CSS pixel touch target.
-- Preserve semantic order, accessible names, keyboard operation, and visible
-  focus when a layout stacks or collapses.
-- Keep any necessary horizontal scrolling inside the component. Reserve it for
-  structures whose meaning depends on a horizontal continuum or table.
-- Do not make hover, drag, precise pointer input, color, or motion the only
-  usable path.
-- Validate both a compact 320px viewport and a representative 390px viewport.
-- Treat responsive behavior as part of the canonical component contract, not
-  as an application-specific patch.
+- preserve semantic order and domain meaning across breakpoints;
+- avoid page-level horizontal overflow for essential content at both 320px and a representative 390px phone width;
+- provide approximately 44 by 44 CSS pixel standalone touch targets where practical;
+- provide non-hover, non-drag, non-pointer-only alternatives;
+- keep critical actions reachable when toolbars, tabs, panes, and grids collapse;
+- preserve deep-link/URL state meaning when controls recompose;
+- test reduced motion, focus, and forced-colors behavior after recomposition;
+- use the documented Mobile · 320px example as a minimum baseline, not a device-specific fork.
+
+Read `requirements/MOBILE-COMPONENT-CONTRACT.md` before adding or modifying a component.
 
 ## Verification
 
@@ -121,11 +118,11 @@ npm run site:check
 ```
 
 The documentation build enforces that every implemented `patterns/*.html`
-component has a dedicated page with at least three rendered examples, that the
-published site contains no runtime `<script>` element, and that the generated
-site remains contained at compact and representative phone widths. The browser
-suite applies the same mobile containment and touch-target checks to every
-canonical pattern.
+component has a dedicated page with at least three rendered examples including
+a true 320px mobile preview, that the published site contains no runtime
+`<script>` element, and that generated-site mobile containment regressions are
+tested. The browser suite also checks canonical patterns for mobile reflow and
+touch-target behavior.
 
 ## Documentation site
 
@@ -138,6 +135,6 @@ When adding a pattern:
 1. add the canonical `patterns/<slug>.html` file and tests;
 2. add its metadata to `tools/build-site.mjs`;
 3. run `npm run site:check`;
-4. confirm the new component page contains at least three meaningful examples;
+4. confirm the new component page contains at least three meaningful examples, including the explicit Mobile · 320px example;
 5. update requirements/decision records through ROS when the addition changes
    the public design-system contract.

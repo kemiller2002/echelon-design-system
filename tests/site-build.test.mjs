@@ -86,3 +86,22 @@ test("site chrome preserves the canonical Echelon Foundry visual system", () => 
   assert.match(index, /family=Newsreader/);
   assert.match(index, /Forma \/ Interface system/);
 });
+
+
+test("every component page publishes an explicit 320px mobile example", () => {
+  for (const slug of patterns) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    assert.match(html, /Mobile · 320px/, `${slug} is missing the explicit mobile example title`);
+    assert.match(html, /example-canvas--mobile/, `${slug} is missing the mobile example canvas`);
+    assert.match(html, /class="example-mobile-frame"/, `${slug} is missing the true mobile iframe`);
+    const mobilePath = path.join(output, "components", slug, "mobile.html");
+    assert.ok(fs.existsSync(mobilePath), `${slug} is missing mobile.html`);
+    const mobile = fs.readFileSync(mobilePath, "utf8");
+    assert.match(mobile, /width=device-width/);
+    assert.equal(/<script\b/i.test(mobile), false, `runtime script found in mobile preview for ${slug}`);
+  }
+
+  const css = fs.readFileSync(path.join(output, "assets", "site.css"), "utf8");
+  assert.match(css, /max-inline-size:\s*320px/);
+  assert.match(css, /320px mobile viewport/);
+});

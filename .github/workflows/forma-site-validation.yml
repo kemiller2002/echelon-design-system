@@ -15,6 +15,23 @@ on:
       - "package.json"
       - "docs/AGENT-USAGE.md"
       - "AGENTS.md"
+      - ".github/workflows/forma-site-validation.yml"
+  push:
+    branches:
+      - "work/**"
+    paths:
+      - "patterns/**"
+      - "src/styles/**"
+      - "tokens/**"
+      - "site/**"
+      - "tools/build-site.mjs"
+      - "tests/site-build.test.mjs"
+      - "tests/site-browser/**"
+      - "playwright.site.config.mjs"
+      - "package.json"
+      - "docs/AGENT-USAGE.md"
+      - "AGENTS.md"
+      - ".github/workflows/forma-site-validation.yml"
   workflow_dispatch:
 
 permissions:

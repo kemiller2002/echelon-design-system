@@ -535,9 +535,34 @@
     background: var(--ef-stone);
   }
 
-  .example-canvas--narrow > * {
-    inline-size: min(100%, 25rem);
+  .example-canvas--mobile {
+    display: block;
+    padding: 1rem;
+    background: var(--ef-stone);
+  }
+
+  .example-canvas--mobile::before {
+    content: "320px mobile viewport";
+    display: block;
+    inline-size: min(100%, 320px);
     margin-inline: auto;
+    padding: .35rem .5rem;
+    border: 1px solid var(--ef-forged-iron);
+    border-block-end: 0;
+    background: var(--ef-foundry-charcoal);
+    color: var(--ef-parchment);
+    font-family: var(--mono);
+    font-size: .65rem;
+  }
+
+  .example-mobile-frame {
+    display: block;
+    inline-size: min(100%, 320px);
+    max-inline-size: 320px;
+    block-size: 34rem;
+    margin-inline: auto;
+    border: 1px solid var(--ef-forged-iron);
+    background: var(--ef-parchment);
   }
 
   .example-block details {
@@ -575,6 +600,10 @@
   }
 
   .example-block code {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     color: inherit;
   }
 
@@ -690,11 +719,13 @@
       padding: 1rem var(--site-gutter);
       border-inline-end: 0;
       border-block-end: 1px solid var(--ef-forged-iron);
+      overflow: hidden;
     }
 
     .component-nav-inner {
       position: static;
       max-block-size: none;
+      overflow: hidden;
     }
 
     .component-nav ul {
@@ -786,6 +817,12 @@
 
     .example-canvas {
       padding: 1rem;
+    }
+
+    .example-block pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .footer-grid,
