@@ -106,3 +106,5 @@ Signal SCS-009 through SCS-018 added a broader closed-ended selector catalog. Th
 - hierarchical single/multi-choice baseline.
 
 Behavior that HTML cannot safely own remains a Limen/application concern, notably graphical dual-thumb range interaction, cross-control best/worst exclusion, multi-choice cardinality enforcement, matrix global constraints, and hierarchy cascade semantics.
+
+ROS attribution is complete as WI-0005 for the selector-completeness extension. Final cross-browser/accessibility validation remains the merge gate.
