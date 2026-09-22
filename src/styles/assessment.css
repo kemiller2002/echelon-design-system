@@ -294,6 +294,11 @@
     padding-inline-start: 1.25rem;
   }
 
+  .ef-validation-summary a {
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
+    font-weight: 700;
+  }
+
   /* Survey progress ----------------------------------------------------- */
   .ef-survey-progress {
     display: grid;
