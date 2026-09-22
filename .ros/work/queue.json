@@ -74,18 +74,20 @@
       "sourceReference": null
     },
     {
-      "id": "WI-0006",
-      "title": "Echelon Foundry component showcase site",
+      "id": "GH-9",
+      "title": "Build Forma component documentation site",
       "description": null,
-      "tags": [],
+      "tags": [
+        "forma,documentation,github-pages"
+      ],
       "priority": "high",
-      "status": "complete",
+      "status": "ready",
       "attachments": [],
-      "createdAt": "2026-09-22T14:29:20.000Z",
-      "updatedAt": "2026-09-22T14:29:20.000Z",
-      "createdBy": "ChatGPT",
-      "source": "manual",
-      "sourceReference": null
+      "createdAt": "2026-09-22T14:25:11.311Z",
+      "updatedAt": "2026-09-22T14:25:11.000Z",
+      "createdBy": "agent:chatgpt",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/9"
     }
   ]
 }
