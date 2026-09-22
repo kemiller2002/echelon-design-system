@@ -1,0 +1,60 @@
+name: Design system pilot validation
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-pilot:
+    if: github.head_ref == 'pilot/tokens-switch-slider'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install JavaScript development tools
+        run: npm install --ignore-scripts=false
+
+      - name: Restore Fable tool
+        run: dotnet tool restore
+
+      - name: Restore .NET projects
+        run: dotnet restore src/Echelon.DesignSystem.fsproj && dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
+
+      - name: Build pilot
+        run: npm run build
+
+      - name: Verify runtime dependency boundary
+        shell: bash
+        run: |
+          node -e "const p=require('./package.json'); if (p.dependencies && Object.keys(p.dependencies).length) { console.error(p.dependencies); process.exit(1); }"
+          cat dist/build-metrics.json
+
+      - name: Test token compiler
+        run: npm run test:tokens
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Cross-browser and accessibility tests
+        run: npm run test:browser
+
+      - name: Verify Echelon governance installations
+        run: |
+          npx --yes @echelon-foundry/sde@1.3.0 verify --strict
+          npx --yes --package=@echelon-foundry/repository-operating-system@3.1.4 ros registry check
+          npx --yes @echelon-foundry/visual-engineering@1.0.0 verify --strict
+          npm exec --yes --package=github:kemiller2002/communication-engineering#4590d2fe6f7e80b339117d3fbee5803f2dd39122 communication-engineering -- verify --strict
