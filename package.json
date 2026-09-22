@@ -28,7 +28,12 @@
     "test:browser": "playwright test",
     "test:a11y": "playwright test tests/browser/accessibility.spec.mjs",
     "test:runtime": "node --test tests/zero-runtime.test.mjs",
-    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:browser"
+    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run site:build:only && npm run site:test && npm run test:browser",
+    "site:build:only": "node site/build-site.mjs",
+    "site:build": "npm run build && npm run site:build:only",
+    "site:test": "node --test tests/site.test.mjs",
+    "site:check": "npm run site:build && npm run site:test",
+    "site:serve": "npm run site:build && python3 -m http.server 4000 -d site-dist"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
