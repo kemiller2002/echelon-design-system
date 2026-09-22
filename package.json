@@ -31,7 +31,8 @@
     "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:browser",
     "site:build": "npm run build && node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
-    "site:check": "npm run site:build && npm run site:test"
+    "site:check": "npm run site:build && npm run site:test && npm run site:mobile",
+    "site:mobile": "playwright test --config=playwright.site.config.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
