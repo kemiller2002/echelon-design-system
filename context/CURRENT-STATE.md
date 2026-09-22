@@ -110,9 +110,9 @@ Behavior that HTML cannot safely own remains a Limen/application concern, notabl
 ROS attribution is complete as WI-0005 for the selector-completeness extension. Final cross-browser/accessibility validation remains the merge gate.
 
 
-## Component showcase site
+## Forma component showcase site
 
-A generated static documentation site is being added under `site/`.
+A generated static documentation site for Forma is being added under `site/`.
 
 Accepted design:
 
@@ -128,4 +128,4 @@ Accepted design:
 
 The site is a discovery and teaching surface. Canonical patterns and manifests remain authoritative.
 
-ROS attribution is complete as WI-0006 for the Echelon Foundry component showcase site.
+Tracked work item: GH-9, Build Forma component documentation site.
