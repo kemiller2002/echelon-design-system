@@ -18,6 +18,7 @@ The system exists to make Echelon applications look, communicate, and behave con
 8. **Communication Engineering governs interface language.**
 9. **Progressive enhancement.** Prefer declarative browser capabilities such as popover, details/summary, dialog commands, modern selectors, and CSS transitions.
 10. **Zero browser runtime.** Published design-system artifacts shall contain no JavaScript or WebAssembly runtime.
+11. **Mobile is part of correctness.** Every implemented pattern must define and verify a 320px recomposition without changing semantic meaning or domain authority.
 
 ## Requirement documents
 
@@ -31,6 +32,8 @@ The system exists to make Echelon applications look, communicate, and behave con
 - DECLARATIVE-CAPABILITY-MATRIX.md
 - SIGNAL-COMPONENT-MAP.md
 - SELECTOR-COMPLETENESS.md
+- CROSS-APPLICATION-COMPONENT-WAVE.md
+- MOBILE-COMPONENT-CONTRACT.md
 
 ## External standards baseline
 
