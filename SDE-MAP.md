@@ -9,6 +9,7 @@
 | Slider | Numeric range pattern preserving native slider behavior | `patterns/slider.html` + `src/styles/components.css` | `src/slider.manifest.md` | Native range input |
 | Assessment patterns | Reusable question/ordinal/choice/validation/progress/workflow contracts | `patterns/` + `src/styles/assessment.css` | `patterns/assessment.manifest.md` | Signal-derived, application-independent |
 | Foundations | Native HTML/layout/focus styling | `src/styles/` | `src/styles/manifest.md` | CSS only |
+| Component showcase | Generated static documentation and examples for every canonical pattern | `site/` | `site/manifest.md` | Zero-runtime GitHub Pages artifact |
 | Browser verification | Cross-browser behavior/accessibility contract tests | `tests/browser/` | not needed — test-only routing is obvious | Playwright |
 
 ## Repository-wide composition
