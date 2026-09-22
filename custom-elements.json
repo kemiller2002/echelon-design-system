@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "2.1.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "dist/switch.js",
+      "declarations": [{
+        "kind": "class",
+        "name": "EfSwitch",
+        "tagName": "ef-switch",
+        "description": "Form-associated binary switch built on a native checkbox.",
+        "attributes": [
+          { "name": "checked", "type": { "text": "boolean" } },
+          { "name": "disabled", "type": { "text": "boolean" } },
+          { "name": "required", "type": { "text": "boolean" } },
+          { "name": "value", "type": { "text": "string" } },
+          { "name": "label", "type": { "text": "string" } },
+          { "name": "description", "type": { "text": "string" } }
+        ],
+        "events": [
+          { "name": "ef-change-requested", "description": "Cancelable intent event emitted before checked is committed." },
+          { "name": "input" },
+          { "name": "change" }
+        ]
+      }]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "dist/slider.js",
+      "declarations": [{
+        "kind": "class",
+        "name": "EfSlider",
+        "tagName": "ef-slider",
+        "description": "Form-associated numeric slider built on a native range input.",
+        "attributes": [
+          { "name": "value", "type": { "text": "number|string" } },
+          { "name": "min", "type": { "text": "number|string" } },
+          { "name": "max", "type": { "text": "number|string" } },
+          { "name": "step", "type": { "text": "number|string" } },
+          { "name": "disabled", "type": { "text": "boolean" } },
+          { "name": "label", "type": { "text": "string" } },
+          { "name": "description", "type": { "text": "string" } }
+        ],
+        "events": [
+          { "name": "ef-input", "description": "Continuous user value change." },
+          { "name": "ef-change", "description": "Committed user value change." },
+          { "name": "input" },
+          { "name": "change" }
+        ]
+      }]
+    }
+  ]
+}
