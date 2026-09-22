@@ -25,7 +25,7 @@ When an agent creates or changes UI:
    Limen boundary.
 7. Keep transition legality, obligations, scoring, permissions, and domain
    invariants in Ordo/application state, never in Forma.
-8. Validate the result with repository and accessibility tests.
+8. Validate the result with repository, accessibility, and mobile/reflow tests.
 
 ## How to consume Forma
 
@@ -91,6 +91,24 @@ Prefer the most semantic existing primitive.
 - Complex ranking or rule construction: use the Forma visual contract and put
   behavior in Limen/application code.
 
+## Mobile and reflow contract
+
+Every canonical Forma pattern and the generated documentation site must remain
+usable at 320 CSS pixels and wider.
+
+- Do not create page-level horizontal scrolling at phone widths.
+- Standalone controls and delegated label targets should provide at least a
+  44 by 44 CSS pixel touch target.
+- Preserve semantic order, accessible names, keyboard operation, and visible
+  focus when a layout stacks or collapses.
+- Keep any necessary horizontal scrolling inside the component. Reserve it for
+  structures whose meaning depends on a horizontal continuum or table.
+- Do not make hover, drag, precise pointer input, color, or motion the only
+  usable path.
+- Validate both a compact 320px viewport and a representative 390px viewport.
+- Treat responsive behavior as part of the canonical component contract, not
+  as an application-specific patch.
+
 ## Verification
 
 Before claiming a Forma UI change complete:
@@ -103,8 +121,11 @@ npm run site:check
 ```
 
 The documentation build enforces that every implemented `patterns/*.html`
-component has a dedicated page with at least three rendered examples and that
-the published site contains no runtime `<script>` element.
+component has a dedicated page with at least three rendered examples, that the
+published site contains no runtime `<script>` element, and that the generated
+site remains contained at compact and representative phone widths. The browser
+suite applies the same mobile containment and touch-target checks to every
+canonical pattern.
 
 ## Documentation site
 
