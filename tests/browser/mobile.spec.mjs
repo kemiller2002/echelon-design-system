@@ -89,10 +89,27 @@ async function mobileMetrics(page) {
       }
     }
 
+    const viewportWidth = document.documentElement.clientWidth;
+    const overflowElements = [...document.querySelectorAll("body *")]
+      .map(element => {
+        const rect = element.getBoundingClientRect();
+        return {
+          element: element.tagName.toLowerCase(),
+          className: typeof element.className === "string" ? element.className : "",
+          left: Math.round(rect.left),
+          right: Math.round(rect.right),
+          width: Math.round(rect.width)
+        };
+      })
+      .filter(item => item.left < -1 || item.right > viewportWidth + 1)
+      .sort((a, b) => b.width - a.width)
+      .slice(0, 8);
+
     return {
       documentWidth,
-      viewportWidth: document.documentElement.clientWidth,
-      tooSmall
+      viewportWidth,
+      tooSmall,
+      overflowElements
     };
   });
 }
@@ -109,7 +126,7 @@ for (const viewport of viewports) {
       const metrics = await mobileMetrics(page);
       expect(
         metrics.documentWidth,
-        `${file} creates page-level horizontal overflow at ${viewport.width}px`
+        `${file} creates page-level horizontal overflow at ${viewport.width}px: ${JSON.stringify(metrics.overflowElements)}`
       ).toBeLessThanOrEqual(metrics.viewportWidth + 1);
 
       expect(
