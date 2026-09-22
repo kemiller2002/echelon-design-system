@@ -1,0 +1,49 @@
+name: Attribute component showcase site
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  attribute:
+    if: github.head_ref == 'feature/component-showcase-site' && github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Record showcase site work
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          TS="$(date -u +'%Y-%m-%dT%H:%M:%S.000Z')"
+          ./ros work capture --title "Echelon Foundry component showcase site" --id WI-0006 --priority high --occurred-at "$TS" --actor "ChatGPT"
+          ./ros work backlog-transition --id WI-0006 --action ready --occurred-at "$TS"
+          ./ros work start --id WI-0006 --occurred-at "$TS" --type implementation --actor "ChatGPT"
+          ROS_BASE_REF="$BASE_SHA" ./ros work complete --id WI-0006 --occurred-at "$TS" --actor "ChatGPT"             --evidence requirements=requirements/SHOWCASE-SITE.md             --evidence implementation=site/build-site.mjs             --evidence tests=tests/site.test.mjs             --evidence documentation=docs/agents/DESIGN-SYSTEM-USAGE.md             --conclusion "Generated Echelon Foundry component showcase, agent usage contract, and GitHub Pages deployment established"
+          ROS_BASE_REF="$BASE_SHA" ./ros validate
+
+      - name: Commit ROS records
+        shell: bash
+        run: |
+          git config user.name "Echelon Upgrade Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git reset -- .github/workflows
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: record component showcase site in ROS"
+          git push
