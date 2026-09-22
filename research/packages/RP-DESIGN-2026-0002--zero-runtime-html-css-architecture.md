@@ -139,7 +139,7 @@ The executable pilot must prove:
 
 # Current validation status
 
-Implementation exists on the pilot branch. ROS attribution is complete as WI-0003. Zero-runtime build, artifact scanning, and token compiler gates have passed; final cross-browser/axe validation is in progress.
+Implementation exists on the pilot branch. ROS attribution is complete as WI-0003. Zero-runtime build, artifact scanning, token compiler, and all 42 Chromium/Firefox/WebKit accessibility/interaction tests have passed. Final governance-tool verification is being rerun after hydrating the intentionally gitignored Visual Engineering context in CI.
 
 # Next step
 
