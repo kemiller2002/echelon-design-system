@@ -1,0 +1,49 @@
+name: Attribute capability bootstrap
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  attribute:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Record capability installation work
+        shell: bash
+        run: |
+          set -euo pipefail
+          TS="$(date -u +'%Y-%m-%dT%H:%M:%S.000Z')"
+          ./ros work capture --title "Install Echelon engineering capabilities" --id WI-0001 --priority high --occurred-at "$TS" --actor "Echelon Upgrade Bot"
+          ./ros work backlog-transition --id WI-0001 --action ready --occurred-at "$TS"
+          ./ros work start --id WI-0001 --occurred-at "$TS" --type mechanical --actor "Echelon Upgrade Bot"
+          ROS_BASE_REF="d23283d7d802adeaca4b598a6e8cd588179af0d1" ./ros work complete --id WI-0001 --occurred-at "$TS" --actor "Echelon Upgrade Bot"
+          ROS_BASE_REF="d23283d7d802adeaca4b598a6e8cd588179af0d1" ./ros validate
+
+      - name: Commit ROS attribution
+        shell: bash
+        run: |
+          git config user.name "Echelon Upgrade Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git reset -- .github/workflows
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "chore: record capability installation in ROS"
+          git push
