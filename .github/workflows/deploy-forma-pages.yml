@@ -47,6 +47,9 @@ jobs:
       - name: Restore token compiler
         run: dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
 
+      - name: Install mobile validation browser
+        run: npx playwright install --with-deps chromium
+
       - name: Build and verify Forma documentation
         run: npm run site:check
 

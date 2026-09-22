@@ -79,6 +79,7 @@
   :where(h1, h2, h3) {
     color: var(--ef-foundry-charcoal);
     margin-block-start: 0;
+    overflow-wrap: anywhere;
   }
 
   :where(h1, h2) {
@@ -170,6 +171,10 @@
   }
 
   .site-nav a {
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     padding: .55rem .7rem;
     border-block-end: 2px solid transparent;
     color: var(--ef-carbon);
@@ -314,6 +319,9 @@
   }
 
   .component-card a {
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
     color: var(--ef-carbon);
     text-decoration: none;
   }
@@ -362,6 +370,7 @@
   }
 
   .docs-shell {
+    min-inline-size: 0;
     inline-size: min(var(--site-max), 100%);
     margin-inline: auto;
     display: grid;
@@ -369,11 +378,15 @@
   }
 
   .component-nav {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     padding: 2rem 1.2rem 4rem var(--site-gutter);
     border-inline-end: 1px solid var(--ef-forged-iron);
   }
 
   .component-nav-inner {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     position: sticky;
     inset-block-start: 5.5rem;
     max-block-size: calc(100vh - 7rem);
@@ -396,7 +409,10 @@
   }
 
   .component-nav a {
-    display: block;
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    display: flex;
+    align-items: center;
     padding: .38rem 0;
     border-inline-start: 2px solid transparent;
     color: var(--ef-graphite);
@@ -422,6 +438,7 @@
 
   .breadcrumbs {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: .5rem;
     margin-block-end: 3rem;
@@ -470,6 +487,11 @@
     padding-block: 4rem 0;
   }
 
+  .example-block {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+  }
+
   .example-block + .example-block {
     margin-block-start: 5rem;
   }
@@ -498,6 +520,8 @@
   }
 
   .example-canvas {
+    min-inline-size: 0;
+    max-inline-size: 100%;
     min-block-size: 12rem;
     display: grid;
     align-content: center;
@@ -517,6 +541,9 @@
   }
 
   .example-block details {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+    overflow: hidden;
     border: 1px solid var(--ef-forged-iron);
     border-block-start: 0;
     background: var(--ef-foundry-charcoal);
@@ -533,6 +560,9 @@
   }
 
   .example-block pre {
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     margin: 0;
     padding: 1rem;
     overflow: auto;
@@ -569,8 +599,16 @@
     max-inline-size: 72ch;
   }
 
+  .table-scroll {
+    max-inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-gutter: stable;
+  }
+
   .agent-page table {
     inline-size: 100%;
+    min-inline-size: 40rem;
     border-collapse: collapse;
     border-block-start: 1px solid var(--ef-forged-iron);
   }
@@ -608,6 +646,12 @@
   .site-footer p,
   .site-footer a {
     color: var(--ef-parchment);
+  }
+
+  .site-footer a {
+    min-block-size: 2.75rem;
+    display: inline-flex;
+    align-items: center;
   }
 
   .footer-grid {
@@ -654,9 +698,17 @@
     }
 
     .component-nav ul {
+      max-inline-size: 100%;
       display: flex;
       gap: .85rem;
       overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-gutter: stable;
+      scroll-snap-type: inline proximity;
+    }
+
+    .component-nav a {
+      scroll-snap-align: start;
     }
 
     .component-nav li {
@@ -666,17 +718,34 @@
 
   @media (max-width: 680px) {
     .nav-shell {
-      align-items: flex-start;
+      flex-direction: column;
+      align-items: stretch;
+      gap: .5rem;
+      padding-block: .6rem;
+    }
+
+    .brand {
+      inline-size: 100%;
+    }
+
+    .brand-link {
+      min-block-size: 2.75rem;
+      white-space: normal;
     }
 
     .site-nav {
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      inline-size: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: .25rem;
     }
 
     .site-nav a {
-      padding: .4rem;
+      min-inline-size: 0;
+      padding: .5rem .35rem;
       font-size: .7rem;
+      text-align: center;
+      overflow-wrap: anywhere;
     }
 
     .site-nav .pill-link {
@@ -694,6 +763,29 @@
 
     .component-main {
       padding-inline: 1rem;
+    }
+
+    .hero,
+    .content-section {
+      padding-inline: 1rem;
+    }
+
+    .hero {
+      padding-block-start: clamp(2.5rem, 12vw, 4rem);
+    }
+
+    .hero h1,
+    .component-header h1,
+    .agent-page h1 {
+      font-size: clamp(2.75rem, 14vw, 3.5rem);
+    }
+
+    .agent-page h2 {
+      font-size: clamp(1.75rem, 9vw, 2.4rem);
+    }
+
+    .example-canvas {
+      padding: 1rem;
     }
 
     .footer-grid,

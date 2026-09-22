@@ -69,8 +69,11 @@ presentation vocabulary.
 6. When no existing pattern fits, check
    `requirements/COMPONENT-CATALOG.md` and record the gap through ROS before
    adding a new visual contract.
-7. Run `npm run site:check` whenever canonical patterns or component styling
-   change.
+7. Treat mobile/reflow behavior as part of every canonical pattern: no
+   page-level overflow at 320 CSS pixels, preserve semantics when stacking, and
+   keep standalone touch targets at least 44 by 44 CSS pixels.
+8. Run `npm run site:check` whenever canonical patterns or component styling
+   change; it includes generated-site mobile regression coverage.
 
 ## Handoff
 
