@@ -1,8 +1,8 @@
-# Feature Manifest — Component Showcase Site
+# Feature Manifest — Forma Component Showcase Site
 
 ## Purpose
 
-Generate and publish a static Echelon Foundry site that explains and demonstrates every canonical design-system pattern.
+Generate and publish a static Forma site for Echelon Foundry that explains and demonstrates every canonical design-system pattern.
 
 ## Ownership
 
