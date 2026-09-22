@@ -1,4 +1,4 @@
-name: Begin Forma CSS alignment work
+name: Complete Forma CSS alignment work
 
 on:
   push:
@@ -10,36 +10,47 @@ permissions:
   contents: write
 
 jobs:
-  begin:
+  complete:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: "10.0.x"
+
       - uses: actions/setup-node@v4
         with:
-          node-version: "22"
-      - name: Begin GH-12
+          node-version: "24"
+
+      - name: Install and build
+        run: |
+          npm install --ignore-scripts=false
+          dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
+          npm run site:check
+
+      - name: Complete GH-12 and validate
         shell: bash
         run: |
           set -euo pipefail
-          WORK_ID="GH-12"
-          ./ros add "Align Forma documentation site with Echelon Foundry CSS"             --id "$WORK_ID"             --tag forma,css,visual-engineering             --priority high             --source github-issue             --source-reference "https://github.com/kemiller2002/echelon-design-system/issues/12"             --actor "agent:chatgpt"
           NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
-          ./ros work backlog-transition --action ready --id "$WORK_ID" --occurred-at "$NOW"
-          NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
-          ./ros work start --id "$WORK_ID" --occurred-at "$NOW" --type feature
-          ./ros work context "$WORK_ID"
+          ./ros work complete             --id "GH-12"             --occurred-at "$NOW"             --evidence implementation=site/site.css             --evidence tests=tests/site-build.test.mjs
+          ./ros registry build
+          ./ros validate
+          ./ros status
 
-      - name: Commit active work state
+      - name: Commit completed work state
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .ros/context .ros/events .ros/work || true
+          git add .ros/context .ros/events .ros/work registries || true
           if [ -d .ros/telemetry ]; then git add -f .ros/telemetry; fi
-          git commit -m "Begin GH-12 Forma CSS alignment"
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Complete GH-12 Forma CSS alignment"
           git pull --rebase origin main
           git push
