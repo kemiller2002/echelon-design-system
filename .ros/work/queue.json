@@ -104,6 +104,22 @@
       "createdBy": "agent:chatgpt",
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/12"
+    },
+    {
+      "id": "GH-14",
+      "title": "Build cross-application mobile Forma component wave",
+      "description": null,
+      "tags": [
+        "forma,mobile,cross-application"
+      ],
+      "priority": "high",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-09-22T17:14:06.925Z",
+      "updatedAt": "2026-09-22T17:14:07.000Z",
+      "createdBy": "agent:chatgpt",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/14"
     }
   ]
 }
