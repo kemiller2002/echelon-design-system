@@ -19,3 +19,25 @@ Current capability baseline:
 - ROS 3.1.4
 - Visual Engineering 1.0.0
 - Communication Engineering 1.0.0
+
+## Component showcase
+
+This repository builds a static Echelon Foundry component showcase from the canonical `patterns/*.html` files.
+
+Each canonical component receives its own page with at least three live examples and visible source markup. The published site contains no browser JavaScript.
+
+Build and validate it with:
+
+```bash
+npm run site:check
+```
+
+Preview locally with:
+
+```bash
+npm run site:serve
+```
+
+GitHub Pages deployment is defined in `.github/workflows/deploy-pages.yml` and publishes `site-dist/` after a successful build and showcase validation.
+
+Agents must read [docs/agents/DESIGN-SYSTEM-USAGE.md](docs/agents/DESIGN-SYSTEM-USAGE.md) before implementing Echelon UI.
