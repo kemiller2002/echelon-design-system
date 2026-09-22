@@ -698,6 +698,15 @@
   .ef-semantic-differential__scale label + label { border-inline-start: 1px solid var(--ef-color-border-subtle, #e3e0d7); }
   .ef-semantic-differential__scale label > span[aria-hidden="true"] { pointer-events: none; }
 
+  .ef-semantic-differential__scale input {
+    inset: 0;
+    z-index: 1;
+    inline-size: 100%;
+    block-size: 100%;
+    margin: 0;
+    cursor: pointer;
+  }
+
   .ef-symbol-rating__options {
     display: inline-flex;
     gap: 0.25rem;
