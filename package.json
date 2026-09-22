@@ -28,12 +28,13 @@
     "test:browser": "playwright test",
     "test:a11y": "playwright test tests/browser/accessibility.spec.mjs",
     "test:runtime": "node --test tests/zero-runtime.test.mjs",
-    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:browser",
+    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:package && npm run test:browser",
     "site:build": "npm run build && node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
     "site:check": "npm run site:build && npm run site:test && npm run site:mobile",
     "site:mobile": "playwright test --config=playwright.site.config.mjs",
-    "pack:verify": "npm run build && npm pack --dry-run"
+    "pack:verify": "npm run build && npm pack --dry-run",
+    "test:package": "node --test tests/package-contract.test.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
