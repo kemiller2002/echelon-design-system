@@ -85,7 +85,8 @@ let renderLiteral tokenType (value: JsonNode) =
         number + unitName
     | "cubicBezier" ->
         let values = value.AsArray() |> Seq.map (fun n -> n.GetValue<float>() |> invariant)
-        $"cubic-bezier({String.concat ", " values})"
+        let joined = String.concat ", " values
+        $"cubic-bezier({joined})"
     | "fontFamily" ->
         match value with
         | :? JsonArray as arr ->
