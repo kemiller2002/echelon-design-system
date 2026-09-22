@@ -8,3 +8,4 @@
 | WI-0003 | Zero-runtime HTML CSS design system pilot | complete |  | high |
 | WI-0004 | Signal assessment and Ordo design-system patterns | complete |  | high |
 | WI-0005 | Signal selector completeness design-system patterns | complete |  | high |
+| WI-0006 | Echelon Foundry component showcase site | complete |  | high |
