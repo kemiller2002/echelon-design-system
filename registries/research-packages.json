@@ -44,5 +44,49 @@
     "title": "Echelon Design System requirements research",
     "updated": "2026-09-22",
     "version": "1.0.0"
+  },
+  {
+    "author_agent": "chatgpt",
+    "completion": "active",
+    "confidence": "high",
+    "created": "2026-09-22",
+    "discipline": [
+      "software-engineering",
+      "accessibility",
+      "interaction-design"
+    ],
+    "id": "RP-DESIGN-2026-0002",
+    "keywords": [
+      "html",
+      "css",
+      "declarative",
+      "popover",
+      "dialog",
+      "slider",
+      "limen"
+    ],
+    "path": "research/packages/RP-DESIGN-2026-0002--zero-runtime-html-css-architecture.md",
+    "priority": "high",
+    "related_documents": [
+      "docs/decisions/ADR-0002-zero-runtime-html-css-components.md",
+      "requirements/DECLARATIVE-CAPABILITY-MATRIX.md",
+      "requirements/PILOT-PLAN.md"
+    ],
+    "related_projects": [
+      "echelon-design-system"
+    ],
+    "research_area": "design-system",
+    "superseded_by": [],
+    "supersedes": [],
+    "tags": [
+      "design-system",
+      "html",
+      "css",
+      "zero-runtime",
+      "limen"
+    ],
+    "title": "Zero-runtime HTML and CSS design-system architecture",
+    "updated": "2026-09-22",
+    "version": "1.0.0"
   }
 ]

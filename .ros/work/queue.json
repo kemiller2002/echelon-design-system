@@ -30,6 +30,20 @@
       "createdBy": "ChatGPT",
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "WI-0003",
+      "title": "Zero-runtime HTML CSS design system pilot",
+      "description": null,
+      "tags": [],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-22T10:36:11.000Z",
+      "updatedAt": "2026-09-22T10:36:11.000Z",
+      "createdBy": "ChatGPT",
+      "source": "manual",
+      "sourceReference": null
     }
   ]
 }

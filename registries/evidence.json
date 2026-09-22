@@ -224,5 +224,74 @@
       "accessibility"
     ],
     "title": "Echelon Foundry palette semantic contrast audit"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0011",
+    "path": "research/evidence/EV-DESIGN-2026-0011--declarative-popover.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "Popover API and popover HTML attribute documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/popover",
+    "supports": [],
+    "tags": [
+      "html",
+      "popover",
+      "declarative",
+      "accessibility"
+    ],
+    "title": "Popover supports accessible declarative invocation without JavaScript"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0012",
+    "path": "research/evidence/EV-DESIGN-2026-0012--declarative-dialog-commands.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "dialog HTML element and Invoker Commands API documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog",
+    "supports": [],
+    "tags": [
+      "html",
+      "dialog",
+      "commandfor",
+      "declarative"
+    ],
+    "title": "Native dialog supports declarative modal invocation through commands"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0013",
+    "path": "research/evidence/EV-DESIGN-2026-0013--native-disclosure.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "details HTML disclosure element documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details",
+    "supports": [],
+    "tags": [
+      "html",
+      "disclosure",
+      "details",
+      "summary"
+    ],
+    "title": "details and summary provide native disclosure behavior"
   }
 ]
