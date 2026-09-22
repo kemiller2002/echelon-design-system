@@ -91,7 +91,7 @@ async function mobileMetrics(page) {
 
     return {
       documentWidth,
-      viewportWidth: window.innerWidth,
+      viewportWidth: document.documentElement.clientWidth,
       tooSmall
     };
   });
