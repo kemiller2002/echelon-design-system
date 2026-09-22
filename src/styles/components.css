@@ -29,6 +29,7 @@
     align-items: center;
     gap: var(--ef-primitive-spacing-3, 0.75rem);
     min-block-size: 2.75rem;
+    max-inline-size: 100%;
     color: var(--ef-color-text-primary, #171a18);
     cursor: pointer;
     user-select: none;
@@ -110,7 +111,9 @@
 
   .ef-slider__header,
   .ef-slider__bounds {
+    min-inline-size: 0;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     gap: var(--ef-primitive-spacing-3, 0.75rem);
   }
@@ -145,6 +148,7 @@
 
   /* Segmented control --------------------------------------------------- */
   .ef-segmented {
+    max-inline-size: 100%;
     display: inline-flex;
     flex-wrap: wrap;
     gap: 2px;
@@ -156,6 +160,7 @@
   .ef-segment {
     position: relative;
     min-block-size: 2.75rem;
+    min-inline-size: 0;
     display: grid;
     place-items: center;
     padding: 0.55rem 0.9rem;
@@ -195,6 +200,7 @@
   .ef-disclosure + .ef-disclosure { border-block-start: 0; }
 
   .ef-disclosure > summary {
+    min-inline-size: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -218,12 +224,15 @@
   /* Popover ------------------------------------------------------------- */
   .ef-popover {
     max-inline-size: min(30rem, calc(100vw - 2rem));
+    max-block-size: min(80dvh, calc(100dvh - 2rem));
     margin: 0;
     padding: var(--ef-primitive-spacing-4, 1rem);
     border: 1px solid var(--ef-color-border-functional, #3a403c);
     background: var(--ef-color-surface-primary, #f2efe7);
     color: var(--ef-color-text-primary, #171a18);
     box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.18);
+    overflow: auto;
+    overscroll-behavior: contain;
     opacity: 0;
     transform: translateY(-0.35rem) scale(0.985);
     transition:
@@ -275,12 +284,46 @@
 
   .ef-dialog__body { padding: var(--ef-primitive-spacing-5, 1.5rem); }
   .ef-dialog__actions {
+    min-inline-size: 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: var(--ef-primitive-spacing-2, 0.5rem);
     padding: 1rem 1.5rem;
     border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  @media (max-width: 44rem) {
+    .ef-segmented {
+      inline-size: 100%;
+    }
+
+    .ef-segment {
+      flex: 1 1 min(10rem, 100%);
+    }
+
+    .ef-popover {
+      max-inline-size: calc(100vw - 1rem);
+      max-block-size: calc(100dvh - 1rem);
+    }
+
+    .ef-dialog {
+      inline-size: calc(100vw - 1rem);
+      max-block-size: calc(100dvh - 1rem);
+    }
+
+    .ef-dialog__body {
+      padding: var(--ef-primitive-spacing-4, 1rem);
+    }
+
+    .ef-dialog__actions {
+      justify-content: stretch;
+      padding: 0.75rem var(--ef-primitive-spacing-4, 1rem);
+    }
+
+    .ef-dialog__actions > :where(button, .ef-button) {
+      flex: 1 1 100%;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
