@@ -7,6 +7,7 @@
 | HTML patterns | Canonical semantic markup contracts | `patterns/` | `patterns/manifest.md` | HTML only |
 | Switch | Binary on/off pattern with native semantics | `patterns/switch.html` + `src/styles/components.css` | `src/switch.manifest.md` | Native checkbox |
 | Slider | Numeric range pattern preserving native slider behavior | `patterns/slider.html` + `src/styles/components.css` | `src/slider.manifest.md` | Native range input |
+| Assessment patterns | Reusable question/ordinal/choice/validation/progress/workflow contracts | `patterns/` + `src/styles/assessment.css` | `patterns/assessment.manifest.md` | Signal-derived, application-independent |
 | Foundations | Native HTML/layout/focus styling | `src/styles/` | `src/styles/manifest.md` | CSS only |
 | Browser verification | Cross-browser behavior/accessibility contract tests | `tests/browser/` | not needed — test-only routing is obvious | Playwright |
 
