@@ -4,20 +4,20 @@ Status: proposed baseline for implementation pilot.
 
 This directory is the canonical requirements set for the Echelon Design System.
 
-The system exists to make Echelon applications look, communicate, and behave consistently without forcing every application into the same implementation architecture.
+The system exists to make Echelon applications look, communicate, and behave consistently without making the design-system package an application runtime.
 
 ## Governing principles
 
-1. **Native first.** Use semantic HTML and CSS where the browser already provides correct behavior. Do not create custom elements merely to rename native elements.
-2. **Web Components for reusable behavior.** Use standards-based Custom Elements for composite, behavior-rich, or strongly encapsulated controls.
-3. **Accessibility is a contract.** Accessibility is part of component correctness, not a later review step.
-4. **Motion communicates state.** Animation must explain change, improve continuity, or provide feedback. Decorative motion must never obstruct comprehension.
-5. **Ordo owns meaningful state.** Components may own ephemeral presentation state, but application legality, capability, obligation, and consequential transitions remain outside visual components.
-6. **Limen owns browser boundary behavior where applications use Limen.** The design system must expose stable browser-native events and properties so Limen can adapt without special component forks.
-7. **Visual Engineering governs visual decisions.** Individual applications consume the system rather than independently redefining typography, color, focus, motion, and control behavior.
-8. **Communication Engineering governs interface language.** Labels, status, warnings, errors, empty states, help, confirmation, and recovery language must support the user's task and preserve uncertainty where material.
-9. **Progressive enhancement.** New browser capabilities may improve behavior, but core workflows must remain usable when an optional enhancement is unavailable.
-10. **Polish is systematic.** Hover, focus, press, loading, success, failure, drag, resize, open, close, selection, and disabled states require deliberate visual and motion treatment.
+1. **HTML and CSS only.** Production design-system components and patterns contain semantic HTML and CSS, never component JavaScript.
+2. **Native first.** Browser-native semantics and behavior are preferred over recreated widgets.
+3. **Limen owns non-native behavior.** Search, async workflows, grids, command palettes, drag/reorder, and similar behavior belongs outside the design-system package.
+4. **Accessibility is a contract.** Accessibility is part of pattern correctness, not a later review step.
+5. **Motion communicates state.** CSS animation may explain change, continuity, or feedback but never owns semantic state.
+6. **Ordo owns meaningful application state.** Domain legality, capabilities, obligations, external effects, and consequential transitions remain outside visual patterns.
+7. **Visual Engineering governs visual decisions.**
+8. **Communication Engineering governs interface language.**
+9. **Progressive enhancement.** Prefer declarative browser capabilities such as popover, details/summary, dialog commands, modern selectors, and CSS transitions.
+10. **Zero browser runtime.** Published design-system artifacts shall contain no JavaScript or WebAssembly runtime.
 
 ## Requirement documents
 
@@ -28,6 +28,7 @@ The system exists to make Echelon applications look, communicate, and behave con
 - ORDO-LIMEN-INTEGRATION.md
 - QUALITY-AND-DISTRIBUTION.md
 - PILOT-PLAN.md
+- DECLARATIVE-CAPABILITY-MATRIX.md
 
 ## External standards baseline
 
@@ -35,7 +36,11 @@ The requirements are informed by:
 
 - W3C Web Content Accessibility Guidelines 2.2
 - WAI-ARIA Authoring Practices Guide
-- HTML, CSS, DOM, Custom Elements, Shadow DOM, ElementInternals, Popover, Dialog, and related browser standards
+- semantic HTML forms and controls
+- HTML Popover
+- dialog and Invoker Commands
+- details/summary
+- CSS selectors, transitions, media features, anchor positioning, and related platform standards
 - established design-system patterns from mature systems including Carbon and Spectrum
 
 External systems are references, not dependencies and not visual templates to copy.
