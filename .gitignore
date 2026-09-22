@@ -16,6 +16,9 @@ venv/
 # Node
 node_modules/
 
+# Generated site
+site-dist/
+
 # Generated transient work
 .ros/locks/
 work/staging/*
