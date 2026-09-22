@@ -1,5 +1,7 @@
 # Echelon Design System Requirements
 
+Status: proposed baseline for implementation pilot.
+
 This directory is the canonical requirements set for the Echelon Design System.
 
 The system exists to make Echelon applications look, communicate, and behave consistently without forcing every application into the same implementation architecture.
