@@ -1,0 +1,27 @@
+<fieldset class="ef-hierarchy">
+  <legend class="ef-hierarchy__legend">Choose affected services.</legend>
+  <p class="ef-field__description">Parent/descendant selection semantics are supplied by the application. The design system does not infer whether selecting a parent includes its children.</p>
+
+  <ul class="ef-hierarchy__tree">
+    <li>
+      <details open>
+        <summary>Platform</summary>
+        <ul>
+          <li><label><input type="checkbox" name="services" value="identity"> Identity</label></li>
+          <li><label><input type="checkbox" name="services" value="billing"> Billing</label></li>
+        </ul>
+      </details>
+    </li>
+    <li>
+      <details>
+        <summary>Data</summary>
+        <ul>
+          <li><label><input type="checkbox" name="services" value="warehouse"> Warehouse</label></li>
+          <li><label><input type="checkbox" name="services" value="analytics"> Analytics</label></li>
+        </ul>
+      </details>
+    </li>
+  </ul>
+
+  <p class="ef-selection-status" data-ef-state="valid" aria-live="polite">2 services selected</p>
+</fieldset>
