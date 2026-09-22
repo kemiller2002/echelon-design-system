@@ -1,12 +1,12 @@
-# Echelon Design System Agent Usage
+# Forma Design System Agent Usage
 
 Status: canonical local usage instructions for coding agents.
 
 ## Purpose
 
-Agents working in Echelon applications must use this repository as the source of reusable interface presentation before creating application-local controls or interaction styling.
+Agents working in Echelon applications must use Forma in this repository as the source of reusable interface presentation before creating application-local controls or interaction styling.
 
-The component showcase is a discovery surface. The canonical implementation remains the repository source:
+The Forma component showcase is a discovery surface. The canonical implementation remains the repository source:
 
 - `patterns/*.html`;
 - `dist/tokens.css`;
