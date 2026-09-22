@@ -1,0 +1,22 @@
+<section class="ef-collection-toolbar" aria-label="Collection controls">
+  <form class="ef-search ef-collection-toolbar__search" role="search">
+    <label class="ef-search__label" for="collection-search">Search records</label>
+    <input id="collection-search" type="search" placeholder="Search">
+  </form>
+  <div class="ef-collection-toolbar__controls">
+    <details class="ef-collection-toolbar__filters">
+      <summary>Filters <span class="ef-status-lozenge">2 active</span></summary>
+      <div class="ef-collection-toolbar__filter-panel">
+        <label>Status <select><option>Any status</option><option>Needs attention</option><option>Complete</option></select></label>
+        <label>Owner <select><option>Anyone</option><option>Me</option></select></label>
+      </div>
+    </details>
+    <label class="ef-collection-toolbar__sort">Sort
+      <select><option>Most recent</option><option>Oldest</option><option>Name</option></select>
+    </label>
+    <label class="ef-collection-toolbar__view">Saved view
+      <select><option>All records</option><option>Needs my attention</option></select>
+    </label>
+  </div>
+  <p class="ef-collection-toolbar__count" role="status">24 records</p>
+</section>
