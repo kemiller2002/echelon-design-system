@@ -1,1 +1,114 @@
-[]
+[
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "primary",
+    "id": "EV-DESIGN-2026-0001",
+    "path": "research/evidence/EV-DESIGN-2026-0001--wcag-2-2-interaction-accessibility.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "W3C Accessibility Guidelines Working Group",
+    "source_date": "2023-10-05",
+    "source_title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+    "source_uri": "https://www.w3.org/TR/WCAG22/",
+    "supports": [],
+    "tags": [
+      "accessibility",
+      "wcag",
+      "interaction"
+    ],
+    "title": "WCAG 2.2 interaction accessibility baseline"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "primary",
+    "id": "EV-DESIGN-2026-0002",
+    "path": "research/evidence/EV-DESIGN-2026-0002--wai-aria-apg-patterns.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "W3C Web Accessibility Initiative",
+    "source_date": {},
+    "source_title": "ARIA Authoring Practices Guide",
+    "source_uri": "https://www.w3.org/WAI/ARIA/apg/patterns/",
+    "supports": [],
+    "tags": [
+      "accessibility",
+      "aria",
+      "components",
+      "keyboard"
+    ],
+    "title": "WAI-ARIA Authoring Practices component interaction patterns"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0003",
+    "path": "research/evidence/EV-DESIGN-2026-0003--web-components-platform.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "Web Components",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/API/Web_components",
+    "supports": [],
+    "tags": [
+      "web-components",
+      "custom-elements",
+      "shadow-dom"
+    ],
+    "title": "Browser-native Web Components platform capabilities"
+  },
+  {
+    "confidence": "high",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0004",
+    "path": "research/evidence/EV-DESIGN-2026-0004--modern-overlay-and-motion-platform.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "MDN contributors",
+    "source_date": {},
+    "source_title": "Popover API and View Transition API documentation",
+    "source_uri": "https://developer.mozilla.org/en-US/docs/Web/API/Popover_API",
+    "supports": [],
+    "tags": [
+      "popover",
+      "view-transitions",
+      "motion",
+      "progressive-enhancement"
+    ],
+    "title": "Modern browser overlay and view-transition capabilities"
+  },
+  {
+    "confidence": "medium",
+    "contradicts": [],
+    "created_by_agent": "chatgpt",
+    "evidence_type": "secondary",
+    "id": "EV-DESIGN-2026-0005",
+    "path": "research/evidence/EV-DESIGN-2026-0005--mature-design-system-component-scope.md",
+    "related_theories": [],
+    "research_area": "design-system",
+    "retrieved": "2026-09-22",
+    "source_author": "IBM Carbon and Adobe Spectrum teams",
+    "source_date": {},
+    "source_title": "Carbon Design System and Spectrum Web Components component catalogs",
+    "source_uri": "https://carbondesignsystem.com/components/overview/components/",
+    "supports": [],
+    "tags": [
+      "design-systems",
+      "components",
+      "mature-systems"
+    ],
+    "title": "Mature design systems include advanced reusable controls"
+  }
+]

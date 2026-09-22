@@ -16,6 +16,20 @@
       "createdBy": "Echelon Upgrade Bot",
       "source": "manual",
       "sourceReference": null
+    },
+    {
+      "id": "WI-0002",
+      "title": "Deep design system requirements",
+      "description": null,
+      "tags": [],
+      "priority": "high",
+      "status": "complete",
+      "attachments": [],
+      "createdAt": "2026-09-22T06:27:02.000Z",
+      "updatedAt": "2026-09-22T06:27:02.000Z",
+      "createdBy": "ChatGPT",
+      "source": "manual",
+      "sourceReference": null
     }
   ]
 }
