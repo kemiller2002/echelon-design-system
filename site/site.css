@@ -531,11 +531,14 @@
     font-size: .65rem;
   }
 
-  .example-canvas--mobile > * {
+  .example-mobile-frame {
+    display: block;
     inline-size: min(100%, 320px);
     max-inline-size: 320px;
+    block-size: 34rem;
     margin-inline: auto;
-    border-color: var(--ef-forged-iron);
+    border: 1px solid var(--ef-forged-iron);
+    background: var(--ef-parchment);
   }
 
   .example-block details {
