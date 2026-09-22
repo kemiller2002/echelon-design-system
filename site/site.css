@@ -600,6 +600,10 @@
   }
 
   .example-block code {
+    display: block;
+    inline-size: 100%;
+    min-inline-size: 0;
+    max-inline-size: 100%;
     color: inherit;
   }
 
@@ -715,11 +719,13 @@
       padding: 1rem var(--site-gutter);
       border-inline-end: 0;
       border-block-end: 1px solid var(--ef-forged-iron);
+      overflow: hidden;
     }
 
     .component-nav-inner {
       position: static;
       max-block-size: none;
+      overflow: hidden;
     }
 
     .component-nav ul {
@@ -811,6 +817,12 @@
 
     .example-canvas {
       padding: 1rem;
+    }
+
+    .example-block pre {
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
 
     .footer-grid,
