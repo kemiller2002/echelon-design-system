@@ -139,7 +139,7 @@ The executable pilot must prove:
 
 # Current validation status
 
-Implementation exists on the pilot branch. Final browser/axe results and ROS validation are pending at the time of this record.
+Implementation exists on the pilot branch. Zero-runtime CI is active and ROS attribution is staged as WI-0003. Final browser/axe results remain pending until the validation run completes.
 
 # Next step
 
