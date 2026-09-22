@@ -1139,6 +1139,15 @@
     .ef-collection-toolbar__search { grid-column: 1 / -1; }
     .ef-collection-toolbar__controls { grid-column: 1 / -1; }
     .ef-collection-toolbar__controls > * { flex: 1 1 9rem; }
+    .ef-collection-toolbar__filters { position: static; }
+    .ef-collection-toolbar__filter-panel {
+      position: static;
+      min-inline-size: 0;
+      inline-size: 100%;
+      max-inline-size: 100%;
+      margin-block-start: 0.5rem;
+      box-shadow: none;
+    }
     .ef-collection-toolbar__count { margin: 0; align-self: center; }
 
     .ef-dashboard-grid { grid-template-columns: 1fr; }
