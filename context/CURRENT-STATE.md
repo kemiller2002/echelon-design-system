@@ -108,3 +108,22 @@ Signal SCS-009 through SCS-018 added a broader closed-ended selector catalog. Th
 Behavior that HTML cannot safely own remains a Limen/application concern, notably graphical dual-thumb range interaction, cross-control best/worst exclusion, multi-choice cardinality enforcement, matrix global constraints, and hierarchy cascade semantics.
 
 ROS attribution is complete as WI-0005 for the selector-completeness extension. Final cross-browser/accessibility validation remains the merge gate.
+
+
+## Component showcase site
+
+A generated static documentation site is being added under `site/`.
+
+Accepted design:
+
+- Echelon Foundry visual language using the design system's own token/CSS output;
+- one generated page for every canonical `patterns/*.html` file;
+- minimum three live examples per page;
+- source HTML shown with each example;
+- examples derived from canonical markup rather than separately maintained copies;
+- zero browser JavaScript;
+- explicit agent usage instructions;
+- GitHub Pages publication from `site-dist/`;
+- CI coverage that blocks missing component pages/examples or browser script introduction.
+
+The site is a discovery and teaching surface. Canonical patterns and manifests remain authoritative.
