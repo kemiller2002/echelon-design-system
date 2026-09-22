@@ -313,7 +313,10 @@ body.docs-site::before {
 
 .docs-example__header h3 { margin: 0; font-size: .95rem; }
 .docs-example__preview { min-inline-size: 0; padding: clamp(1.25rem, 3vw, 2.5rem); }
-.docs-example__preview--secondary { background: var(--ef-color-surface-secondary, #e3e0d7); }
+.docs-example__preview--secondary {
+  background: var(--ef-color-surface-primary, #f2efe7);
+  border-inline-start: 4px solid var(--ef-color-accent-secondary, #47756b);
+}
 .docs-example__preview--narrow > * { max-inline-size: 28rem; margin-inline: auto; }
 
 .docs-example details { border-block-start: 1px solid var(--ef-color-border-decorative, #e3e0d7); }
