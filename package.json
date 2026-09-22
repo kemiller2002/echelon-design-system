@@ -1,7 +1,7 @@
 {
   "name": "@echelon-foundry/design-system",
-  "version": "0.1.0-alpha.0",
-  "private": true,
+  "version": "0.1.0",
+  "private": false,
   "type": "module",
   "description": "Zero-runtime HTML and CSS design system for Echelon Foundry applications.",
   "sideEffects": [
@@ -28,14 +28,25 @@
     "test:browser": "playwright test",
     "test:a11y": "playwright test tests/browser/accessibility.spec.mjs",
     "test:runtime": "node --test tests/zero-runtime.test.mjs",
-    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:browser",
+    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:package && npm run test:browser",
     "site:build": "npm run build && node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
     "site:check": "npm run site:build && npm run site:test && npm run site:mobile",
-    "site:mobile": "playwright test --config=playwright.site.config.mjs"
+    "site:mobile": "playwright test --config=playwright.site.config.mjs",
+    "pack:verify": "npm run build && npm pack --dry-run",
+    "test:package": "node --test tests/package-contract.test.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.63.0"
-  }
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kemiller2002/echelon-design-system.git"
+  },
+  "homepage": "https://forma.echelonfoundry.com/"
 }
