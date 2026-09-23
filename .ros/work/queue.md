@@ -7,6 +7,7 @@
 | GH-18 | Prepare Forma for application consumption | active | readiness,bootstrap | high |
 | GH-25 | Add CSS-only physics-derived motion and native checkbox/select controls | complete | forma,motion,css,accessibility | high |
 | GH-29 | Extend physics-derived motion across Forma transient surfaces | complete | forma,motion,css,accessibility,transient-surfaces | high |
+| GH-33 | Add explicit physics-motion examples to Forma component site | ready | forma,documentation,motion,examples | high |
 | GH-9 | Build Forma component documentation site | complete | forma,documentation,github-pages | high |
 | ROS-INSTALL-3-1-4 | ROS-INSTALL-3-1-4 | complete |  |  |
 | WI-0001 | Install Echelon engineering capabilities | complete |  | high |
