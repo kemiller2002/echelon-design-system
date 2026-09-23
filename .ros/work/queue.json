@@ -136,6 +136,22 @@
       "createdBy": "agent:chatgpt",
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/18"
+    },
+    {
+      "id": "GH-25",
+      "title": "Add CSS-only physics-derived motion and native checkbox/select controls",
+      "description": null,
+      "tags": [
+        "forma,motion,css,accessibility"
+      ],
+      "priority": "high",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-09-23T07:45:46.369Z",
+      "updatedAt": "2026-09-23T07:45:46.000Z",
+      "createdBy": "agent:chatgpt",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/25"
     }
   ]
 }
