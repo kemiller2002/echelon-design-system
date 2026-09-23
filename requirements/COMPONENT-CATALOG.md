@@ -891,3 +891,36 @@ Provide a safe-area-aware contextual action region for narrow screens. It must n
 Every implemented component is subject to `requirements/MOBILE-COMPONENT-CONTRACT.md`.
 
 A component is not complete until its 320px presentation is documented and tested. Mobile is a recomposition of the same semantic contract, not a separate component family.
+
+
+## 16. Aegis fault presentation
+
+### P0: Aegis fault presentation family
+
+Canonical patterns:
+
+- `.ef-fault` / `fault`: common safe fault shell;
+- `.ef-fault--inline` / `fault-inline`: Aegis Inline intent;
+- `.ef-fault-notification` / `fault-notification`: Aegis Notification intent;
+- `.ef-fault-banner` / `fault-banner`: Aegis Banner intent;
+- `.ef-fault-blocking` / `fault-blocking`: Aegis Blocking intent;
+- `.ef-fault-summary` / `fault-summary`: grouped unresolved fault presentation;
+- `.ef-recovery-actions` / `recovery-actions`: application-supplied Aegis recovery capabilities;
+- `.ef-fault-reference` / `fault-reference`: quotable Aegis reference;
+- `.ef-diagnostic-status` / `diagnostic-status`: Aegis persistence/synchronization state;
+- `.ef-fault-details` / `fault-details`: explicitly sanitized diagnostic disclosure.
+
+Requirements:
+
+- default data boundary is Aegis `Presentation.T`, not raw `Fault`;
+- `Silent` renders no visible fault surface;
+- severity is textual and structural, never color-only;
+- recovery buttons carry exact Aegis capability identity but do not authorize effects;
+- current Aegis/Ordo/application state is revalidated at activation;
+- raw technical details, exception chains, stack traces, context, breadcrumbs, snapshots, and secrets are excluded from normal UI;
+- blocking presentation uses native dialog semantics with application/Limen-owned modal lifecycle and close policy;
+- summary grouping/fingerprinting/throttling remain Aegis/application responsibilities;
+- notification timers are not part of Forma;
+- every pattern satisfies the canonical 320px, reduced-motion, forced-colors, keyboard, and WCAG 2.2 AA contracts.
+
+See `requirements/AEGIS-FAULT-PRESENTATION.md`.
