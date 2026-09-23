@@ -44,14 +44,16 @@ test("switch thumb is vertically centered in the track", async ({ page }) => {
   const geometry = await track.evaluate(element => {
     const rect = element.getBoundingClientRect();
     const thumb = getComputedStyle(element, "::after");
+    const trackStyle = getComputedStyle(element);
+
     return {
       trackHeight: rect.height,
-      thumbTop: parseFloat(thumb.top),
+      thumbAnchor: parseFloat(trackStyle.borderBlockStartWidth) + parseFloat(thumb.top),
       translate: thumb.translate
     };
   });
 
-  expect(geometry.thumbTop).toBeCloseTo(geometry.trackHeight / 2, 1);
+  expect(geometry.thumbAnchor).toBeCloseTo(geometry.trackHeight / 2, 1);
   expect(geometry.translate).toContain("-50%");
 
   await page.getByRole("switch", { name: "Notifications" }).click();
