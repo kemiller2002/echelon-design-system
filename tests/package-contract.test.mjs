@@ -6,7 +6,7 @@ import test from "node:test";
 test("Forma is a versioned public-consumer package", () => {
   const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
   assert.equal(pkg.name, "@echelon-foundry/design-system");
-  assert.equal(pkg.version, "0.1.0");
+  assert.equal(pkg.version, "0.2.0");
   assert.equal(pkg.private, false);
   assert.equal(pkg.publishConfig?.access, "public");
   assert.equal(pkg.exports?.["./skins.css"], "./dist/skins.css");
