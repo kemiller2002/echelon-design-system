@@ -39,7 +39,9 @@ More selective imports are available:
 - `@echelon-foundry/design-system/tokens.css`
 - `@echelon-foundry/design-system/foundations.css`
 - `@echelon-foundry/design-system/components.css`
-- `@echelon-foundry/design-system/assessment.css`\n- `@echelon-foundry/design-system/skins.css`\n- `@echelon-foundry/design-system/brands/<brand-id>.css`
+- `@echelon-foundry/design-system/assessment.css`
+- `@echelon-foundry/design-system/skins.css`
+- `@echelon-foundry/design-system/brands/<brand-id>.css`
 
 Canonical HTML patterns are exported under `patterns/*` and documented at
 https://forma.echelonfoundry.com/.
