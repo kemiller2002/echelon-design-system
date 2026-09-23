@@ -72,7 +72,7 @@ Agents must not:
 | Concern | Owner |
 | --- | --- |
 | Checked, open, required, disabled, native validity | Native HTML rendered by the application |
-| Color, spacing, typography, responsive layout | Forma |
+| Color, spacing, typography, responsive layout | Forma |\n| Brand identity and semantic visual tokens | Brand Manifest + Forma compiler |\n| Runtime brand/theme/skin selection and persistence | Consuming application / Limen |
 | Async search, ranking movement, rule editing | Consuming application / Limen |
 | Legal transitions, capabilities, obligations | Ordo/application domain state |
 | Survey scoring or interpretation | Signal/application domain logic |
@@ -90,6 +90,19 @@ Prefer the most semantic existing primitive.
 - Simple single/multi selection: `choice-group` / `multi-choice`.
 - Complex ranking or rule construction: use the Forma visual contract and put
   behavior in Limen/application code.
+
+## Brand and skin contract
+
+Before changing application CSS for customer identity or presentation, read
+`docs/BRANDING.md` and
+`requirements/WHITE-LABEL-AND-SKINNING.md`.
+
+- Express customer/product identity through a versioned Brand Manifest.
+- Use documented `data-ef-skin` presets for presentation-only density or shape changes.
+- Do not fork canonical component CSS, depend on internal selectors, or accept arbitrary customer CSS as the normal white-label path.
+- Runtime brand/theme/skin selection, persistence, remote loading, and interactive preview behavior belong to the consuming application, normally through Limen.
+- Brand terminology and asset references are application/build inputs; they are not hidden CSS content.
+- Brand or skin changes must never alter legal actions, permissions, validation, scoring, obligations, or domain transitions.
 
 ## Mobile contract
 
