@@ -195,3 +195,36 @@ Consuming applications shall test that:
 - disabled capabilities cannot be invoked through alternate paths;
 - keyboard and pointer paths produce equivalent domain intent where required;
 - application behavior does not depend on design-system JavaScript because none exists.
+
+
+## 10. Aegis fault presentation boundary
+
+### AEGIS-LIMEN-001 Safe view model
+
+Aegis faults reach Forma through the safe `Aegis.Presentation.T` model by default. Forma shall not import Aegis or inspect raw `Fault` records.
+
+### AEGIS-LIMEN-002 Intent mapping
+
+The consuming application maps Aegis presentation intent to Forma markup:
+
+- Silent → no visible fault;
+- Inline → fault-inline;
+- Notification → fault-notification;
+- Banner → fault-banner;
+- Blocking → fault-blocking.
+
+### AEGIS-LIMEN-003 Recovery capability identity
+
+Recovery controls may expose exact Aegis capability identity in `data-ef-aegis-capability`. Limen may observe native click events and translate them into typed recovery requests.
+
+The presence of the attribute is not authorization. Aegis/Ordo/application state is revalidated before any recovery effect.
+
+### AEGIS-LIMEN-004 Blocking state
+
+Forma supplies a native-dialog visual/semantic contract. Limen/application code owns `showModal()`, current dismissal/cancel policy, focus choice, resolution, and focus restoration.
+
+### AEGIS-LIMEN-005 Diagnostic disclosure
+
+If an application offers fault details, it creates an explicitly sanitized audience-specific view model before rendering. Raw technical fields never become a default Forma binding surface.
+
+See `requirements/AEGIS-FAULT-PRESENTATION.md` and `docs/AEGIS-INTEGRATION.md`.

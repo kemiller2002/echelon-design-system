@@ -1,0 +1,20 @@
+<aside
+  class="ef-toast ef-fault-notification"
+  role="status"
+  data-ef-intent="notification"
+  data-ef-severity="warning"
+  data-ef-motion-weight="standard"
+  data-ef-motion-entry
+  aria-labelledby="fault-notification-title">
+  <div class="ef-fault-notification__marker" aria-hidden="true">!</div>
+  <div class="ef-fault-notification__body">
+    <p class="ef-fault__severity">Warning</p>
+    <h3 class="ef-toast__title" id="fault-notification-title">GitHub is temporarily unavailable</h3>
+    <p>Your work is still local. You can retry the synchronization.</p>
+    <p class="ef-fault-reference">Reference <code>AG-91B7Q</code></p>
+    <div class="ef-recovery-actions" role="group" aria-label="Recovery actions">
+      <button type="button" data-ef-aegis-capability="CanRetry">Try again</button>
+    </div>
+  </div>
+  <button type="button" class="ef-fault-notification__dismiss" data-ef-action="dismiss" aria-label="Dismiss notification">Close</button>
+</aside>

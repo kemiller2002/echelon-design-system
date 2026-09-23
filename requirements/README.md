@@ -49,3 +49,8 @@ The requirements are informed by:
 - established design-system patterns from mature systems including Carbon and Spectrum
 
 External systems are references, not dependencies and not visual templates to copy.
+
+
+## Aegis fault presentation
+
+- [AEGIS-FAULT-PRESENTATION.md](AEGIS-FAULT-PRESENTATION.md) defines the safe Aegis `Presentation.T` to Forma mapping, recovery action boundary, accessibility behavior, diagnostic disclosure rules, and intent-specific component family.

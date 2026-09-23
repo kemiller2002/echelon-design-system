@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forma Aegis fault presentation fixture</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <link rel="stylesheet" href="/dist/components.css">
+  <style>
+    main { max-inline-size: 58rem; margin: 2rem auto; padding: 0 1rem; display: grid; gap: 1.5rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Aegis fault presentation</h1>
+
+    <section class="ef-fault" data-ef-intent="inline" data-ef-severity="error" aria-labelledby="fixture-fault-title">
+      <div class="ef-fault__marker" aria-hidden="true">!</div>
+      <div class="ef-fault__body">
+        <p class="ef-fault__severity">Error</p>
+        <h2 class="ef-fault__title" id="fixture-fault-title">Could not save changes</h2>
+        <p class="ef-fault__message">The update did not complete.</p>
+        <p class="ef-fault-reference">Reference <code>AG-4F82C</code></p>
+      </div>
+      <div class="ef-recovery-actions" role="group" aria-label="Recovery actions">
+        <button type="button" data-ef-aegis-capability="CanRetry">Try again</button>
+      </div>
+    </section>
+
+    <aside class="ef-toast ef-fault-notification" role="status" data-ef-intent="notification" data-ef-severity="warning" data-ef-motion-weight="standard" aria-labelledby="fixture-notification-title">
+      <div class="ef-fault-notification__marker" aria-hidden="true">!</div>
+      <div class="ef-fault-notification__body">
+        <p class="ef-fault__severity">Warning</p>
+        <h2 class="ef-toast__title" id="fixture-notification-title">Synchronization is waiting</h2>
+        <p>Your work remains available locally.</p>
+        <p class="ef-fault-reference">Reference <code>AG-91B7Q</code></p>
+      </div>
+      <button type="button" class="ef-fault-notification__dismiss" aria-label="Dismiss notification">Close</button>
+    </aside>
+
+    <aside class="ef-alert ef-fault-banner" role="status" data-ef-intent="banner" data-ef-severity="critical" data-ef-motion-weight="standard" aria-labelledby="fixture-banner-title">
+      <div class="ef-alert__icon ef-fault-banner__marker" aria-hidden="true">!!</div>
+      <div class="ef-fault-banner__body">
+        <p class="ef-fault__severity">Critical</p>
+        <h2 class="ef-alert__title" id="fixture-banner-title">Diagnostics storage is unavailable</h2>
+        <p>New diagnostics are queued locally.</p>
+        <p class="ef-fault-reference">Reference <code>AG-22K8M</code></p>
+      </div>
+      <div class="ef-recovery-actions" role="group" aria-label="Diagnostics recovery">
+        <button type="button" data-ef-aegis-capability="CanRestoreSink">Reconnect diagnostics</button>
+      </div>
+    </aside>
+
+    <section class="ef-fault-summary" tabindex="-1" aria-labelledby="fixture-summary-title">
+      <div class="ef-fault-summary__heading">
+        <div class="ef-fault-summary__marker" aria-hidden="true">!</div>
+        <div><p class="ef-fault__severity">2 unresolved faults</p><h2 id="fixture-summary-title">Some work needs attention</h2></div>
+      </div>
+      <ol class="ef-fault-summary__list">
+        <li><a href="#fixture-target">Save failed</a><span class="ef-fault-summary__meta">Error · AG-4F82C</span></li>
+      </ol>
+    </section>
+
+    <div id="fixture-target" tabindex="-1">Affected region</div>
+
+    <div class="ef-diagnostic-status" data-ef-state="queued" role="status">
+      <span class="ef-diagnostic-status__marker" aria-hidden="true">↥</span>
+      <span class="ef-diagnostic-status__body"><strong>Diagnostics queued</strong><span>3 reports are waiting to synchronize.</span></span>
+    </div>
+
+    <details class="ef-fault-details">
+      <summary>Safe diagnostic details</summary>
+      <div class="ef-fault-details__content">
+        <dl class="ef-fault-details__list"><div><dt>Reference</dt><dd><code>AG-4F82C</code></dd></div></dl>
+      </div>
+    </details>
+
+    <dialog class="ef-dialog ef-fault-blocking" open data-ef-intent="blocking" data-ef-severity="critical" aria-labelledby="fixture-blocking-title" aria-describedby="fixture-blocking-description">
+      <div class="ef-dialog__body">
+        <div class="ef-fault-blocking__heading">
+          <div class="ef-fault-blocking__marker" aria-hidden="true">!!</div>
+          <div><p class="ef-fault__severity">Critical</p><h2 id="fixture-blocking-title">Application cannot continue safely</h2></div>
+        </div>
+        <p id="fixture-blocking-description">Recover before continuing.</p>
+        <p class="ef-fault-reference">Reference <code>AG-7P2DX</code></p>
+      </div>
+      <div class="ef-dialog__actions ef-recovery-actions" role="group" aria-label="Blocking recovery actions">
+        <button type="button" data-ef-aegis-capability="CanOpenReadOnly">Open read-only</button>
+        <button type="button" data-ef-aegis-capability="CanReload">Reload</button>
+      </div>
+    </dialog>
+  </main>
+</body>
+</html>

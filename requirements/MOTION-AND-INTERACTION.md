@@ -332,3 +332,16 @@ Each animated component shall have tests or deterministic checks for:
 - no semantic delay;
 - no interactive invisible state after close;
 - no pointer-only dependence.
+
+
+## 13. Aegis fault surfaces
+
+Aegis presentation intent determines the surface family; motion does not determine severity or intent.
+
+- Inline faults do not require spatial entry motion.
+- Fault notifications use the standard perceived-weight preset by default.
+- Fault banners use the standard perceived-weight preset only for initial insertion and do not repeatedly animate while persistent.
+- Blocking faults use the heavy perceived-weight preset because they are modal surfaces with greater spatial/attentional commitment.
+- `data-ef-motion-weight` remains a presentation override only and may not encode Diagnostic/Warning/Error/Critical.
+- Aegis lifecycle state changes immediately. Animation never delays acknowledgement, recovery, resolution, focus, or application state.
+- Reduced motion removes notification/banner travel and modal scale/travel while preserving the final visible state.

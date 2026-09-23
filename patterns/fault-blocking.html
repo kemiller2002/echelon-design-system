@@ -1,0 +1,25 @@
+<button type="button" commandfor="blocking-fault-dialog" command="show-modal">Preview blocking fault</button>
+<dialog
+  class="ef-dialog ef-fault-blocking"
+  id="blocking-fault-dialog"
+  data-ef-intent="blocking"
+  data-ef-severity="critical"
+  data-ef-motion-weight="heavy"
+  aria-labelledby="blocking-fault-title"
+  aria-describedby="blocking-fault-message">
+  <div class="ef-dialog__body">
+    <div class="ef-fault-blocking__heading">
+      <div class="ef-fault-blocking__marker" aria-hidden="true">!!</div>
+      <div>
+        <p class="ef-fault__severity">Critical</p>
+        <h2 id="blocking-fault-title">This application cannot continue safely</h2>
+      </div>
+    </div>
+    <p id="blocking-fault-message">The current state cannot be verified. Use one of the recovery actions below before continuing.</p>
+    <p class="ef-fault-reference">Reference <code>AG-7P2DX</code></p>
+  </div>
+  <div class="ef-dialog__actions ef-recovery-actions" role="group" aria-label="Recovery actions">
+    <button type="button" data-ef-aegis-capability="CanOpenReadOnly">Open read-only</button>
+    <button type="button" data-ef-aegis-capability="CanReload">Reload</button>
+  </div>
+</dialog>

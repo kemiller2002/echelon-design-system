@@ -1,77 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 import { componentTag, physicsMotionClasses, physicsMotionExample } from "./site-examples.mjs";
+import { componentMeta as meta } from "./component-meta.mjs";
 
 const root = process.cwd();
 const patternDir = path.join(root, "patterns");
 const output = path.join(root, "site-dist");
-
-const meta = {
-  "allocation": ["Allocation", "Assessment & decision", "Application / Limen", "Distribute a bounded amount across multiple choices while preserving direct numeric entry."],
-  "best-worst": ["Best–Worst", "Assessment & decision", "Application / Limen", "Capture distinct strongest and weakest choices without hiding the two-selection constraint."],
-  "binary-choice": ["Binary choice", "Assessment & decision", "Native HTML", "A two-option radio-backed answer that preserves Unanswered as distinct from false."],
-  "checkbox": ["Checkbox", "Input", "Native HTML", "A native checkbox with a delegated touch target, non-color checked cue, and physics-derived CSS state motion."],
-  "choice-group": ["Choice group", "Selection", "Native HTML", "Semantic single-choice options with primary and supporting text."],
-  "dialog": ["Dialog", "Overlay & disclosure", "Native HTML", "Modal presentation built on the platform dialog element and declarative commands."],
-  "flyout": ["Flyout", "Overlay & disclosure", "Native HTML", "Left/right edge modal surface built on native dialog semantics with physics-derived motion."],
-  "menu": ["Action menu", "Overlay & disclosure", "Native HTML", "A Popover-backed ordinary action list with light physics-derived motion; full ARIA menu behavior remains application-owned."],
-  "disclosure": ["Disclosure", "Overlay & disclosure", "Native HTML", "Expandable content built on details and summary with no runtime behavior layer."],
-  "hierarchical-choice": ["Hierarchical choice", "Selection", "Native baseline / application semantics", "Nested disclosure and choice structure for hierarchy without assigning parent-child domain meaning."],
-  "hierarchical-multi-choice": ["Hierarchical multi-choice", "Selection", "Application / Limen", "Multi-selection across a hierarchy with application-owned propagation and selection rules."],
-  "image-choice": ["Image choice", "Selection", "Native HTML", "Choice cards that pair media with visible text while keeping the input semantic."],
-  "matrix-single": ["Single-choice matrix", "Assessment & decision", "Native HTML", "Repeated single-choice scales arranged as a matrix while retaining per-row radio semantics."],
-  "multi-choice": ["Multi-choice", "Selection", "Native HTML", "Checkbox-backed selection with explicit guidance for minimum, maximum, or exclusive choices."],
-  "numeric-stepper": ["Numeric stepper", "Input", "Native HTML", "Bounded numeric entry using the native number input and explicit constraints."],
-  "obligation-panel": ["Obligation panel", "State & feedback", "Application state", "Present unresolved work, evidence needs, and blocking status without making the design system authoritative."],
-  "ordinal-scale": ["Ordinal scale", "Assessment & decision", "Native HTML", "One radio-backed contract for ordered Likert, agreement, confidence, frequency, and similar scales."],
-  "pairwise-choice": ["Pairwise choice", "Assessment & decision", "Native HTML", "A focused two-alternative comparison using ordinary choice semantics."],
-  "popover": ["Popover", "Overlay & disclosure", "Native HTML", "Top-layer supplemental content built on the Popover API."],
-  "question": ["Question shell", "Assessment & decision", "Application content", "A stable prompt, help, selector, and validation structure for assessment questions."],
-  "range-entry": ["Range entry", "Input", "Native HTML", "Direct lower/upper endpoint entry; graphical dual-thumb behavior is an optional application enhancement."],
-  "ranking": ["Ranking", "Assessment & decision", "Application / Limen", "Ordered-choice presentation with non-drag movement controls and visible positions."],
-  "rule-builder": ["Rule builder", "Advanced input", "Application / Limen", "Field/operator/value clauses for typed rule editing while the application owns expression semantics."],
-  "segmented-control": ["Segmented control", "Selection", "Native HTML", "Radio-backed compact selection with visible selected and focus states."],
-  "semantic-differential": ["Semantic differential", "Assessment & decision", "Native HTML", "A bipolar textual scale that keeps the ordered response radio-backed and explicit."],
-  "slider": ["Slider", "Input", "Native HTML", "Single-value range input with accessible bounds and direct keyboard/pointer control."],
-  "special-choice": ["Special choice", "Assessment & decision", "Native HTML", "Unknown, not-applicable, and other non-scale answers visually separated from the primary continuum."],
-  "survey-progress": ["Survey progress", "State & feedback", "Native HTML", "Determinate progress using the native progress element plus explicit current/total text."],
-  "switch": ["Switch", "Input", "Native HTML", "A checkbox-backed on/off preference control with role=switch and a visible track/thumb treatment."],
-  "symbol-rating": ["Symbol rating", "Assessment & decision", "Native HTML", "Ordinal rating presented with symbols while retaining accessible textual labels."],
-  "validation-message": ["Validation message", "State & feedback", "Application state", "Question-level recovery guidance with icon, text, and non-color signaling."],
-  "validation-summary": ["Validation summary", "State & feedback", "Application state", "Focusable page-level error summary with links back to affected controls."],
-  "alert": ["Alert", "State & feedback", "Application state", "Structured status or warning communication with text, icon, and non-color cues."],
-  "collection-toolbar": ["Collection toolbar", "Data & productivity", "Application / Limen", "A responsive composition for search, filters, sort, saved views, and result counts."],
-  "combobox": ["Combobox", "Input", "Native baseline / Limen enhancement", "Searchable selection baseline that preserves direct text entry and native semantics."],
-  "composer": ["Composer", "Assisted interaction", "Application / Limen", "Natural-language composition surface for type, dictate, paste, and attach workflows without embedding agent behavior."],
-  "command-palette": ["Command palette", "Navigation & commands", "Application / Limen", "Keyboard-first command discovery that can become a full-screen mobile surface."],
-  "conflict-review": ["Conflict review", "State & feedback", "Ordo / application", "Explain optimistic-concurrency conflicts and expose application-supplied recovery actions without guessing."],
-  "conversation": ["Conversation", "Assisted interaction", "Application / Limen", "Inspectable user/application turns with explicit speakers and no consumer-chat authority assumptions."],
-  "dashboard-grid": ["Dashboard grid", "Layout & workspace", "Application content", "Responsive operational dashboard composition for metrics, status, and attention-first blocks."],
-  "data-grid": ["Data grid", "Data & productivity", "Application / Limen", "Semantic tabular records with sortable affordances and a labeled mobile record projection."],
-  "date-range": ["Date range", "Input", "Native HTML / application", "Paired direct date entry with reusable preset affordances and mobile stacking."],
-  "diff-viewer": ["Diff viewer", "Data & productivity", "Application content", "Before/after structured differences with explicit changed-field cues and stacked mobile comparison."],
-  "empty-state": ["Empty state", "State & feedback", "Application content", "Explain an empty result and provide a useful recovery action without treating absence as failure."],
-  "file-upload": ["File upload queue", "Input", "Native HTML / Limen", "Native file selection plus a reusable upload queue for progress, success, cancellation, failure, and unknown outcomes."],
-  "master-detail": ["Master/detail workspace", "Layout & workspace", "Application / Limen", "List-and-detail composition that collapses cleanly from multi-pane desktop to mobile navigation."],
-  "metric-card": ["Metric card", "Content & utility", "Application content", "A compact labeled value with context and optional action, without inventing metric meaning."],
-  "mobile-action-bar": ["Mobile action bar", "Navigation & commands", "Application / Limen", "Safe-area-aware mobile action region for critical contextual actions."],
-  "operation-status": ["Operation status", "State & feedback", "Ordo / application", "Present pending, confirmed, failed, conflict, unknown, reconciling, stale, blocked, unavailable, or insufficient states."],
-  "pagination": ["Pagination", "Navigation & commands", "Application / Limen", "Page navigation with explicit current-page semantics and compact mobile presentation."],
-  "preview-surface": ["Preview surface", "Layout & workspace", "Application content", "A bounded review surface for consequential content before an application commits or publishes it."],
-  "provenance-trail": ["Provenance trail", "Data & productivity", "Application content", "Trace displayed output through source, aggregate, analysis, and presentation stages."],
-  "readiness-checklist": ["Readiness checklist", "State & feedback", "Ordo / application", "Explicit complete, incomplete, and blocking prerequisites before a consequential transition."],
-  "record-header": ["Record header", "Layout & workspace", "Application content", "Persistent record identity, status, context, breadcrumbs, and legal actions with mobile action collapse."],
-  "search": ["Search", "Input", "Application / Limen", "Search entry, clearing, and result-count feedback with asynchronous behavior owned by the application."],
-  "select": ["Select", "Input", "Native HTML", "An ordinary native select with platform picker behavior and physics-derived CSS affordance motion."],
-  "skeleton": ["Skeleton", "State & feedback", "Application state", "Low-information loading placeholder with explicit busy semantics and reduced-motion support."],
-  "status-lozenge": ["Status lozenge", "Content & utility", "Application state", "Compact textual state labels with structural and non-color cues."],
-  "tabs": ["Tabs", "Navigation & commands", "Application / Limen", "Focused views with keyboard and deep-link integration hooks plus mobile overflow strategy."],
-  "toast": ["Toast", "State & feedback", "Native HTML", "A Popover-backed transient notification with standard perceived weight and a shorter derived dismissal."],
-  "timeline": ["Timeline", "Data & productivity", "Application content", "Chronological or ordered activity with timestamps, state changes, provenance, and single-column mobile flow."],
-  "understanding": ["Understanding review", "Assisted interaction", "Ordo / application", "Review proposed understanding, unknowns, conflicts, and source actions before consequential transitions."],
-  "wizard": ["Wizard", "Navigation & commands", "Limen / Ordo", "Step-by-step workflow shell with current-step state, progress, validation hooks, resume, and mobile reduction."],
-  "work-queue": ["Work queue", "State & feedback", "Ordo / application", "Attention-first list of unresolved work with reason, context, and application-supplied legal actions."]
-};
 
 const escapeHtml = value => value.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 

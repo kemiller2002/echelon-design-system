@@ -80,3 +80,12 @@ domain authority.
 
 See [docs/BRANDING.md](docs/BRANDING.md) and
 [requirements/WHITE-LABEL-AND-SKINNING.md](requirements/WHITE-LABEL-AND-SKINNING.md).
+
+
+## Aegis fault presentation
+
+Forma includes a zero-runtime fault presentation family for Aegis `Presentation.T`: inline, notification, banner, blocking, summary, recovery actions, references, safe details, and diagnostic persistence status.
+
+Applications should map Aegis through the safe presentation model rather than bind a raw `Fault`. Recovery actions remain application/Ordo authorized and Limen-executed.
+
+See [docs/AEGIS-INTEGRATION.md](docs/AEGIS-INTEGRATION.md) and [requirements/AEGIS-FAULT-PRESENTATION.md](requirements/AEGIS-FAULT-PRESENTATION.md).

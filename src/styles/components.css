@@ -27,7 +27,7 @@
   }
 
   /* Physics-derived motion ---------------------------------------------- */
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette) {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette, .ef-fault-notification, .ef-fault-banner, .ef-fault-blocking) {
     /*
      * CSS cannot run a continuous rigid-body simulation. Forma therefore uses
      * a physics-derived response model. The fallback values remain usable in
@@ -48,19 +48,19 @@
     --ef-motion-damped-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette)[data-ef-motion-weight="light"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette, .ef-fault-notification, .ef-fault-banner, .ef-fault-blocking)[data-ef-motion-weight="light"] {
     --ef-motion-mass: 0.65;
     --ef-motion-stiffness: 1.15;
     --ef-motion-damping: 0.94;
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette)[data-ef-motion-weight="standard"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette, .ef-fault-notification, .ef-fault-banner, .ef-fault-blocking)[data-ef-motion-weight="standard"] {
     --ef-motion-mass: 1;
     --ef-motion-stiffness: 1;
     --ef-motion-damping: 0.84;
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette)[data-ef-motion-weight="heavy"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette, .ef-fault-notification, .ef-fault-banner, .ef-fault-blocking)[data-ef-motion-weight="heavy"] {
     --ef-motion-mass: 1.8;
     --ef-motion-stiffness: 0.92;
     --ef-motion-damping: 0.76;
@@ -72,14 +72,14 @@
     --ef-motion-damping: 0.94;
   }
 
-  :where(.ef-dialog, .ef-flyout, .ef-command-palette):not([data-ef-motion-weight]) {
+  :where(.ef-dialog, .ef-flyout, .ef-command-palette, .ef-fault-notification, .ef-fault-banner, .ef-fault-blocking):not([data-ef-motion-weight]) {
     --ef-motion-mass: 1.8;
     --ef-motion-stiffness: 0.92;
     --ef-motion-damping: 0.76;
   }
 
   @supports (width: calc(1px * sqrt(1))) {
-    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette) {
+    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette, .ef-fault-notification, .ef-fault-banner, .ef-fault-blocking) {
       /*
        * Response time follows sqrt(mass / stiffness), then is lengthened as
        * damping decreases. Vertical gravity time follows sqrt(2s / g) and is
@@ -351,7 +351,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette) {
+    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette, .ef-fault-notification, .ef-fault-banner, .ef-fault-blocking) {
       --ef-motion-inertia-duration: 0.01ms;
       --ef-motion-gravity-duration: 0.01ms;
       --ef-motion-state-duration: 0.01ms;
@@ -2120,4 +2120,406 @@
     }
   }
 
+}
+
+
+@layer echelon.components {
+  /* Aegis notification/banner default perceived weight ----------------- */
+  :where(.ef-fault-notification, .ef-fault-banner):not([data-ef-motion-weight]) {
+    --ef-motion-mass: 1;
+    --ef-motion-stiffness: 1;
+    --ef-motion-damping: 0.84;
+  }
+
+  :where(.ef-fault-blocking):not([data-ef-motion-weight]) {
+    --ef-motion-mass: 1.8;
+    --ef-motion-stiffness: 0.92;
+    --ef-motion-damping: 0.76;
+  }
+
+  /* Aegis fault presentation -------------------------------------------- */
+  .ef-fault,
+  .ef-fault-notification,
+  .ef-fault-banner,
+  .ef-fault-summary,
+  .ef-diagnostic-status,
+  .ef-fault-details {
+    box-sizing: border-box;
+    max-inline-size: 100%;
+  }
+
+  .ef-fault {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-inline-start-width: 0.35rem;
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+  }
+
+  .ef-fault[data-ef-severity="diagnostic"] { border-inline-start-style: dotted; }
+  .ef-fault[data-ef-severity="warning"] { border-inline-start-style: dashed; }
+  .ef-fault[data-ef-severity="critical"] {
+    border-inline-start-width: 0.55rem;
+    outline: 1px solid var(--ef-color-border-functional, #3a403c);
+    outline-offset: 2px;
+  }
+
+  .ef-fault__marker,
+  .ef-fault-notification__marker,
+  .ef-fault-summary__marker,
+  .ef-fault-blocking__marker {
+    min-inline-size: 1.75rem;
+    min-block-size: 1.75rem;
+    display: inline-grid;
+    place-items: center;
+    border: 2px solid currentColor;
+    border-radius: var(--ef-primitive-radius-pill, 999px);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .ef-fault__body,
+  .ef-fault-notification__body,
+  .ef-fault-banner__body {
+    min-inline-size: 0;
+  }
+
+  .ef-fault__severity {
+    margin: 0 0 0.2rem;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+    text-transform: uppercase;
+  }
+
+  .ef-fault__title,
+  .ef-fault__message,
+  .ef-fault-notification p,
+  .ef-fault-banner p {
+    margin-block-start: 0;
+  }
+
+  .ef-fault__title { margin-block-end: 0.35rem; }
+  .ef-fault__message { margin-block-end: 0.5rem; }
+
+  .ef-fault-reference {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0.55rem 0 0;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.8125rem;
+  }
+
+  .ef-fault-reference code {
+    color: var(--ef-color-text-primary, #171a18);
+    font-weight: 750;
+    overflow-wrap: anywhere;
+  }
+
+  .ef-fault-reference button {
+    min-block-size: 2.75rem;
+    min-inline-size: 2.75rem;
+  }
+
+  .ef-recovery-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    min-inline-size: 0;
+  }
+
+  .ef-recovery-actions > button,
+  .ef-fault-notification__dismiss {
+    min-block-size: 2.75rem;
+  }
+
+  .ef-fault--inline {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    padding: 0.75rem;
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+  }
+
+  .ef-fault-notification {
+    --ef-motion-distance: 0.45;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    inline-size: min(32rem, calc(100vw - 2rem));
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-inline-start-width: 0.35rem;
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    box-shadow: 0 0.8rem 2.2rem rgb(0 0 0 / 0.18);
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+
+  .ef-fault-notification[data-ef-motion-entry] {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity var(--ef-motion-state-duration) linear,
+      translate var(--ef-motion-inertia-duration) var(--ef-motion-damped-easing);
+  }
+
+  @starting-style {
+    .ef-fault-notification[data-ef-motion-entry] {
+      opacity: 0;
+      translate: 0 -0.45rem;
+    }
+  }
+
+  .ef-fault-notification__dismiss {
+    align-self: start;
+  }
+
+  .ef-fault-banner {
+    --ef-motion-distance: 0.3;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: start;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    inline-size: 100%;
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-block-width: 2px;
+  }
+
+  .ef-fault-banner[data-ef-severity="critical"] {
+    border-block-width: 3px;
+  }
+
+  .ef-fault-banner[data-ef-motion-entry] {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity var(--ef-motion-state-duration) linear,
+      translate var(--ef-motion-inertia-duration) var(--ef-motion-damped-easing);
+  }
+
+  @starting-style {
+    .ef-fault-banner[data-ef-motion-entry] {
+      opacity: 0;
+      translate: 0 -0.3rem;
+    }
+  }
+
+  .ef-fault-blocking {
+    inline-size: min(42rem, calc(100vw - 2rem));
+    max-block-size: min(90dvh, calc(100dvh - 2rem));
+  }
+
+  .ef-fault-blocking__heading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+  }
+
+  .ef-fault-blocking__heading h2 {
+    margin-block-start: 0;
+  }
+
+  .ef-fault-summary {
+    display: grid;
+    gap: var(--ef-primitive-spacing-4, 1rem);
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border: 2px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+  }
+
+  .ef-fault-summary:focus-visible {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  .ef-fault-summary__heading {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    align-items: start;
+  }
+
+  .ef-fault-summary__heading h2 {
+    margin-block: 0;
+  }
+
+  .ef-fault-summary__list {
+    display: grid;
+    gap: 0.65rem;
+    margin: 0;
+    padding-inline-start: 1.4rem;
+  }
+
+  .ef-fault-summary__list > li {
+    padding-inline-start: 0.2rem;
+  }
+
+  .ef-fault-summary__list > li[data-ef-severity="critical"] {
+    font-weight: 750;
+  }
+
+  .ef-fault-summary__meta {
+    display: block;
+    margin-block-start: 0.15rem;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: 0.75rem;
+    overflow-wrap: anywhere;
+  }
+
+  .ef-diagnostic-status {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+    color: var(--ef-color-text-primary, #171a18);
+  }
+
+  .ef-diagnostic-status__marker {
+    min-inline-size: 1.5rem;
+    text-align: center;
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-weight: 800;
+  }
+
+  .ef-diagnostic-status__body {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .ef-diagnostic-status__body > span {
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
+    font-size: 0.8125rem;
+  }
+
+  .ef-diagnostic-status[data-ef-state="unavailable"],
+  .ef-diagnostic-status[data-ef-state="last-synchronization-failed"] {
+    border-width: 2px;
+  }
+
+  .ef-fault-details {
+    border-block: 1px solid var(--ef-color-border-functional, #3a403c);
+  }
+
+  .ef-fault-details > summary {
+    min-block-size: 2.75rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .ef-fault-details__content {
+    padding-block-end: var(--ef-primitive-spacing-4, 1rem);
+  }
+
+  .ef-fault-details__list {
+    display: grid;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .ef-fault-details__list > div {
+    display: grid;
+    grid-template-columns: minmax(7rem, auto) minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .ef-fault-details__list dt { font-weight: 700; }
+  .ef-fault-details__list dd { margin: 0; overflow-wrap: anywhere; }
+
+  .ef-fault-details__boundary {
+    margin-block-end: 0;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.8125rem;
+  }
+
+  @media (max-width: 36rem) {
+    .ef-fault,
+    .ef-fault--inline,
+    .ef-fault-notification,
+    .ef-fault-banner {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .ef-fault > .ef-recovery-actions,
+    .ef-fault--inline > .ef-recovery-actions,
+    .ef-fault-banner > .ef-recovery-actions,
+    .ef-fault-notification__dismiss {
+      grid-column: 1 / -1;
+    }
+
+    .ef-fault-notification__dismiss {
+      justify-self: stretch;
+    }
+
+    .ef-recovery-actions {
+      inline-size: 100%;
+    }
+
+    .ef-recovery-actions > button,
+    .ef-fault-notification__dismiss {
+      flex: 1 1 100%;
+      inline-size: 100%;
+    }
+
+    .ef-fault-details__list > div {
+      grid-template-columns: 1fr;
+      gap: 0.1rem;
+    }
+
+    .ef-fault-blocking {
+      inline-size: calc(100vw - 1rem);
+      max-block-size: calc(100dvh - 1rem);
+      margin: auto;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .ef-fault,
+    .ef-fault-notification,
+    .ef-fault-banner,
+    .ef-fault-summary,
+    .ef-diagnostic-status,
+    .ef-fault-details {
+      border-color: CanvasText;
+      background: Canvas;
+      color: CanvasText;
+      box-shadow: none;
+    }
+
+    .ef-fault__marker,
+    .ef-fault-notification__marker,
+    .ef-fault-summary__marker,
+    .ef-fault-blocking__marker {
+      border-color: CanvasText;
+    }
+
+    .ef-fault__severity,
+    .ef-fault-summary__meta,
+    .ef-diagnostic-status__body > span,
+    .ef-fault-details__boundary,
+    .ef-fault-reference {
+      color: CanvasText;
+    }
+  }
 }

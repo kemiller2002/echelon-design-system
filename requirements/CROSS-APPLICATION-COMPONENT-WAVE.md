@@ -142,3 +142,23 @@ Forma must not become a charting/calculation engine. Signal's typed visualizatio
 ## Mobile requirement
 
 Every pattern in this wave is subject to `requirements/MOBILE-COMPONENT-CONTRACT.md`. A component is not complete if it only works at desktop width.
+
+
+## Aegis fault presentation family
+
+Aegis is a cross-application operational dependency, so its user-facing presentation is promoted into Forma rather than reimplemented by Chrona, Signal, Summa, HelixNote, Research Publisher, or other consumers.
+
+Canonical patterns:
+
+- `fault`
+- `fault-inline`
+- `fault-notification`
+- `fault-banner`
+- `fault-blocking`
+- `fault-summary`
+- `recovery-actions`
+- `fault-reference`
+- `diagnostic-status`
+- `fault-details`
+
+The shared contract is intentionally presentation-only. Aegis owns classification/recovery semantics, Ordo/application state owns legal transitions, and Limen maps that state to/from the DOM.
