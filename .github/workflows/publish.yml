@@ -1,0 +1,89 @@
+name: Publish npm package
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-publish-forma-main
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.repository == 'kemiller2002/forma'
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN_BOOTSTRAP: ${{ secrets.NPM_TOKEN_BOOTSTRAP }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Use npm with trusted-publishing support
+        run: npm install --global npm@11
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install browser test dependencies
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Validate Forma before publishing
+        run: |
+          npm run check
+          npm run site:check
+          npm run pack:verify
+
+      - name: Verify package is public
+        run: |
+          node -e "const p=require('./package.json'); if (p.private) { console.error('package.json is private'); process.exit(1); }"
+
+      - name: Configure bootstrap npm authentication when present
+        shell: bash
+        run: |
+          if [[ -n "${NPM_TOKEN_BOOTSTRAP:-}" ]]; then
+            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN_BOOTSTRAP"
+            echo "Using the temporary bootstrap token for npm authentication."
+          else
+            echo "No bootstrap token present. npm will use GitHub OIDC trusted publishing."
+          fi
+
+      - name: Publish committed version when it is new
+        shell: bash
+        run: |
+          set -euo pipefail
+          package_name="$(node -p "require('./package.json').name")"
+          package_version="$(node -p "require('./package.json').version")"
+
+          if npm view "${package_name}@${package_version}" version >/dev/null 2>&1; then
+            echo "${package_name}@${package_version} is already published; leaving latest unchanged."
+          else
+            npm publish --access public --provenance
+            echo "Published ${package_name}@${package_version} with the latest dist-tag."
+          fi
+
+      - name: Publish this main commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          base_version="$(node -p "require('./package.json').version")"
+          snapshot_version="${base_version}-main.${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
+          npm version "$snapshot_version" --no-git-tag-version
+          npm publish --access public --provenance --tag main
+          echo "Published @echelon-foundry/design-system@${snapshot_version} with the main dist-tag."
