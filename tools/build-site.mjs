@@ -7,6 +7,16 @@ const patternDir = path.join(root, "patterns");
 const output = path.join(root, "site-dist");
 
 const meta = {
+  "fault": ["Fault", "Aegis fault presentation", "Aegis / Ordo / Application", "Common safe presentation shell for an Aegis Presentation.T without exposing raw fault diagnostics."],
+  "fault-inline": ["Fault inline", "Aegis fault presentation", "Application / Limen", "Operation-local Aegis fault presentation with reference and legal recovery actions."],
+  "fault-notification": ["Fault notification", "Aegis fault presentation", "Application / Limen", "Persistent, dismissible notification surface for Aegis Notification intent; lifecycle remains application-owned."],
+  "fault-banner": ["Fault banner", "Aegis fault presentation", "Application / Limen", "Persistent page/application banner for degraded or critical Aegis conditions."],
+  "fault-blocking": ["Fault blocking", "Aegis fault presentation", "Application / Limen", "Native-dialog surface for Aegis Blocking intent with only application-supplied recovery actions."],
+  "fault-summary": ["Fault summary", "Aegis fault presentation", "Aegis / Application", "Focusable grouped presentation of unresolved faults after upstream fingerprinting and deduplication."],
+  "recovery-actions": ["Recovery actions", "Aegis fault presentation", "Aegis / Ordo / Application", "Native buttons annotated with Aegis capability identity; current authority is revalidated on activation."],
+  "fault-reference": ["Fault reference", "Aegis fault presentation", "Application / Limen", "Short quotable Aegis reference with an optional application-owned copy action."],
+  "diagnostic-status": ["Diagnostic status", "Aegis fault presentation", "Aegis / Application", "Text-first presentation of synchronized, queued, unavailable, or failed diagnostic persistence state."],
+  "fault-details": ["Fault details", "Aegis fault presentation", "Application / Limen", "Optional disclosure for explicitly approved and already-sanitized diagnostic values only."],
   "allocation": ["Allocation", "Assessment & decision", "Application / Limen", "Distribute a bounded amount across multiple choices while preserving direct numeric entry."],
   "best-worst": ["Best–Worst", "Assessment & decision", "Application / Limen", "Capture distinct strongest and weakest choices without hiding the two-selection constraint."],
   "binary-choice": ["Binary choice", "Assessment & decision", "Native HTML", "A two-option radio-backed answer that preserves Unanswered as distinct from false."],
