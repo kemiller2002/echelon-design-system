@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forma physics motion fixture</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <link rel="stylesheet" href="/dist/components.css">
+  <style>
+    main { max-inline-size: 48rem; margin: 2rem auto; padding: 1rem; }
+    form, section { display: grid; gap: 1rem; }
+    section { padding-block: 1rem; border-block-end: 1px solid currentColor; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Physics-derived motion fixture</h1>
+    <form id="physics-controls">
+      <section aria-labelledby="switches-title">
+        <h2 id="switches-title">Switches</h2>
+        <label class="ef-switch" data-ef-motion-weight="light">
+          <input class="ef-switch__input" type="checkbox" role="switch" aria-label="Light switch">
+          <span class="ef-switch__track" aria-hidden="true"></span>
+          <span class="ef-switch__text"><span class="ef-switch__label">Light switch</span></span>
+        </label>
+        <label class="ef-switch" data-ef-motion-weight="standard">
+          <input id="physics-switch" class="ef-switch__input" type="checkbox" role="switch" name="notifications" value="enabled">
+          <span class="ef-switch__track" aria-hidden="true"></span>
+          <span class="ef-switch__text"><span class="ef-switch__label">Standard switch</span></span>
+        </label>
+        <label class="ef-switch" data-ef-motion-weight="heavy">
+          <input class="ef-switch__input" type="checkbox" role="switch" aria-label="Heavy switch">
+          <span class="ef-switch__track" aria-hidden="true"></span>
+          <span class="ef-switch__text"><span class="ef-switch__label">Heavy switch</span></span>
+        </label>
+      </section>
+
+      <section aria-labelledby="checkboxes-title">
+        <h2 id="checkboxes-title">Checkboxes</h2>
+        <label class="ef-checkbox" data-ef-motion-weight="light">
+          <input class="ef-checkbox__input" type="checkbox" aria-label="Light checkbox">
+          <span class="ef-checkbox__box" aria-hidden="true"></span>
+          <span class="ef-checkbox__text"><span class="ef-checkbox__label">Light checkbox</span></span>
+        </label>
+        <label class="ef-checkbox" data-ef-motion-weight="standard">
+          <input id="physics-checkbox" class="ef-checkbox__input" type="checkbox" name="audit-log" value="enabled">
+          <span class="ef-checkbox__box" aria-hidden="true"></span>
+          <span class="ef-checkbox__text"><span class="ef-checkbox__label">Record audit events</span></span>
+        </label>
+        <label class="ef-checkbox" data-ef-motion-weight="heavy">
+          <input class="ef-checkbox__input" type="checkbox" aria-label="Heavy checkbox">
+          <span class="ef-checkbox__box" aria-hidden="true"></span>
+          <span class="ef-checkbox__text"><span class="ef-checkbox__label">Heavy checkbox</span></span>
+        </label>
+        <label class="ef-checkbox" data-ef-motion-weight="standard">
+          <input class="ef-checkbox__input" type="checkbox" disabled>
+          <span class="ef-checkbox__box" aria-hidden="true"></span>
+          <span class="ef-checkbox__text"><span class="ef-checkbox__label">Disabled checkbox</span></span>
+        </label>
+      </section>
+
+      <section aria-labelledby="selects-title">
+        <h2 id="selects-title">Selects</h2>
+        <label class="ef-select-field">
+          <span class="ef-field__label">Light region</span>
+          <span class="ef-select" data-ef-motion-weight="light">
+            <select class="ef-select__input" aria-label="Light region">
+              <option>One</option><option>Two</option>
+            </select>
+            <span class="ef-select__indicator" aria-hidden="true"></span>
+          </span>
+        </label>
+        <label class="ef-select-field">
+          <span class="ef-field__label">Deployment region</span>
+          <span class="ef-select" data-ef-motion-weight="standard">
+            <select id="physics-select" class="ef-select__input" name="region">
+              <option value="us-east">US East</option>
+              <option value="eu-west">Europe West</option>
+            </select>
+            <span class="ef-select__indicator" aria-hidden="true"></span>
+          </span>
+        </label>
+        <label class="ef-select-field">
+          <span class="ef-field__label">Heavy region</span>
+          <span class="ef-select" data-ef-motion-weight="heavy">
+            <select class="ef-select__input" aria-label="Heavy region">
+              <option>One</option><option>Two</option>
+            </select>
+            <span class="ef-select__indicator" aria-hidden="true"></span>
+          </span>
+        </label>
+        <label class="ef-select-field">
+          <span class="ef-field__label">Disabled region</span>
+          <span class="ef-select" data-ef-motion-weight="standard">
+            <select class="ef-select__input" disabled>
+              <option>Unavailable</option>
+            </select>
+            <span class="ef-select__indicator" aria-hidden="true"></span>
+          </span>
+        </label>
+      </section>
+
+      <button type="reset">Reset physics controls</button>
+    </form>
+  </main>
+</body>
+</html>
