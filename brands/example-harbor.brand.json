@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.0",
+  "id": "example-harbor",
+  "identity": {
+    "name": "Example Harbor",
+    "shortName": "Harbor"
+  },
+  "presentation": {
+    "fontFamily": {
+      "display": ["Georgia", "serif"],
+      "sans": ["Arial", "sans-serif"],
+      "mono": ["Courier New", "monospace"]
+    },
+    "radius": {
+      "small": "8px",
+      "medium": "12px",
+      "pill": "999px"
+    }
+  },
+  "themes": {
+    "light": {
+      "color": {
+        "text": {"primary":"#15212a","heading":"#15212a","secondary":"#43515b","on-secondary-surface":"#24333d","inverse":"#f7f9fb"},
+        "surface": {"primary":"#f7f9fb","secondary":"#e4ebf0","inverse":"#20384a","inverse-secondary":"#31556f"},
+        "accent": {"primary":"#7a4a00","secondary":"#275d6b"},
+        "border": {"subtle":"#b7c5cf","functional":"#43515b"},
+        "focus": {"ring":"#15212a","gap":"#f7f9fb"},
+        "control": {"track":"#5d6d78","thumb":"#f7f9fb","active":"#7a4a00"}
+      }
+    },
+    "dark": {
+      "color": {
+        "text": {"primary":"#f7f9fb","heading":"#f7f9fb","secondary":"#dbe6ec","on-secondary-surface":"#f7f9fb","inverse":"#101820"},
+        "surface": {"primary":"#101820","secondary":"#20303d","inverse":"#f7f9fb","inverse-secondary":"#dbe6ec"},
+        "accent": {"primary":"#d7a85b","secondary":"#6eb3c0"},
+        "border": {"subtle":"#40515f","functional":"#dbe6ec"},
+        "focus": {"ring":"#f7f9fb","gap":"#101820"},
+        "control": {"track":"#60717e","thumb":"#f7f9fb","active":"#d7a85b"}
+      }
+    }
+  },
+  "terms": {
+    "organization": "Workspace",
+    "user": "Member",
+    "project": "Engagement"
+  }
+}
