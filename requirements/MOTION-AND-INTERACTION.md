@@ -56,6 +56,50 @@ Define:
 
 Do not expose arbitrary per-component animation timings without a demonstrated reason.
 
+### MOT-008 Physics-derived response model
+
+Forma may use a deterministic physics-derived model when motion needs to convey perceived mass consistently across controls. This is not a continuous rigid-body simulation and must not be described as one.
+
+The canonical normalized variables are:
+
+- `--ef-motion-mass` (`m`): inertial mass;
+- `--ef-motion-stiffness` (`k`): spring/restoring stiffness;
+- `--ef-motion-damping` (`ζ`): normalized damping ratio in the supported underdamped preset range;
+- `--ef-motion-distance` (`s`): normalized travel distance for gravity-derived movement;
+- `--ef-motion-gravity` (`g`): normalized gravitational acceleration;
+- `--ef-motion-base-duration`: the dimensional scale factor that maps the normalized model to UI time.
+
+For spring/inertial settling, Forma uses the second-order-system scaling relationship:
+
+`T_inertia ∝ sqrt(m / k) / ζ`
+
+The constant and physical units are intentionally normalized into the base duration because UI pixels are not meters and the component is not a literal mechanical body.
+
+For vertical gravity-derived travel, Forma uses:
+
+`T_gravity ∝ sqrt(2s / g)`
+
+Mass must not appear in the gravity-derived duration. In a uniform gravitational field, changing an item's mass does not change its gravitational acceleration.
+
+The shipped weight presets are:
+
+| Weight | Mass | Stiffness | Damping ratio | Intended perception |
+| --- | ---: | ---: | ---: | --- |
+| light | 0.65 | 1.15 | 0.94 | fast, highly damped, little perceived inertia |
+| standard | 1.00 | 1.00 | 0.84 | default control response |
+| heavy | 1.80 | 0.92 | 0.76 | slower, more inertial settling |
+
+Rules:
+
+- presets are presentation parameters, never business or domain semantics;
+- component size does not automatically determine mass;
+- weight may change inertial timing but may not delay the native semantic state change;
+- gravity-derived timing remains independent of mass;
+- CSS math support may be progressively enhanced; unsupported browsers must retain a usable static/fallback timing;
+- motion must remain interruptible;
+- tests must verify the expected ordering `light < standard < heavy` for inertial duration and verify mass independence for gravity timing;
+- reduced motion collapses spatial travel and overshoot while retaining clear final state.
+
 ## 3. Switch polish contract
 
 The switch is a flagship microinteraction and shall feel deliberate.
@@ -79,6 +123,34 @@ Space activation shall produce the same state transition as pointer activation a
 
 ### Reduced motion
 Thumb travel may become immediate or nearly immediate. State differentiation remains clear through position, shape/glyph, text, and color.
+
+## 3.5 Checkbox and native-select physics extensions
+
+### Checkbox
+
+The canonical checkbox remains a native `input[type=checkbox]`. CSS may animate a visible box/check glyph using the same inertia model as the switch.
+
+Requirements:
+
+- checked state changes immediately at the native input;
+- the check glyph is a non-color state cue;
+- press feedback does not change target geometry or semantic state;
+- light/standard/heavy presets use the shared physics variables;
+- reduced motion makes the glyph/state change effectively immediate.
+
+### Native select
+
+The canonical ordinary select remains a native `select`; Forma shall not recreate its option picker in script.
+
+Requirements:
+
+- platform value, keyboard, form, disabled, and picker behavior remain authoritative;
+- the visible indicator may use inertial rotation;
+- a small vertical indicator cue may use gravity-derived timing;
+- mass may alter the inertial indicator duration but not gravity-derived timing;
+- `:open` styling is progressive enhancement only; lack of open-state styling cannot reduce usability;
+- searchable, rich-option, async, and multiselect behavior remains a Limen/application concern;
+- reduced motion removes spatial indicator travel.
 
 ## 4. Slider polish contract
 

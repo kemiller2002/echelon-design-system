@@ -63,6 +63,20 @@ These are primarily CSS and semantic HTML, not custom elements.
 
 ## 2. Form and selection components
 
+### P0: Checkbox
+Pattern: `.ef-checkbox`
+
+Requirements:
+
+- native `input[type=checkbox]` remains semantic and form authority;
+- delegated label target suitable for touch;
+- visible non-color checked cue;
+- required, disabled, reset, keyboard Space, and form behavior remain native;
+- optional physics-derived light/standard/heavy presentation weight;
+- motion never delays the checked state;
+- reduced motion preserves the checked cue without perceptible spatial travel;
+- assessment choice cards continue to use `.ef-choice` when the answer presentation needs richer assessment context.
+
 ### P0: Switch / toggle
 Pattern: `.ef-switch`
 
@@ -75,7 +89,8 @@ Requirements:
 - native form participation;
 - keyboard Space activation;
 - click/touch target includes label when appropriate;
-- thumb translation animation;
+- thumb translation animation using the shared physics-derived inertia model;
+- optional light/standard/heavy presentation weights that never change semantics;
 - track color interpolation;
 - active press feedback;
 - optional on-state glyph for compact contexts;
@@ -135,7 +150,19 @@ Requirements:
 - overflow strategy instead of shrinking targets below usable size.
 
 ### P0: Select / listbox
+Pattern: `.ef-select` around a native `select`
+
 Native select shall remain available and preferred for ordinary selection.
+
+Requirements:
+
+- native select/options remain value, keyboard, form, validity, disabled, and picker authority;
+- visible indicator may use CSS-only inertial rotation and gravity-derived vertical timing;
+- optional light/standard/heavy presentation weight affects inertia only;
+- gravity-derived timing is independent of mass;
+- `:open` presentation is progressive enhancement and cannot be required for operation;
+- reduced motion removes spatial travel;
+- no runtime script is introduced to reproduce ordinary picker behavior.
 
 A custom select is justified only where searchable, rich, or multi-select behavior is needed.
 

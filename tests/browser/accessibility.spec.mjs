@@ -63,3 +63,22 @@ test("new selector families expose accessible native controls", async ({ page })
   await expect(page.getByRole("spinbutton", { name: "Minimum" })).toBeVisible();
   await expect(page.getByRole("radio", { name: "Reliability, Best" })).toBeVisible();
 });
+
+
+test("physics motion controls have no automatically detectable WCAG A/AA violations", async ({ page }) => {
+  await page.goto("/tests/browser/fixture/physics-motion.html");
+
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+
+  expect(results.violations).toEqual([]);
+});
+
+test("physics motion controls preserve native accessible roles and names", async ({ page }) => {
+  await page.goto("/tests/browser/fixture/physics-motion.html");
+
+  await expect(page.getByRole("switch", { name: "Standard switch" })).toBeVisible();
+  await expect(page.getByRole("checkbox", { name: "Record audit events" })).toBeVisible();
+  await expect(page.getByRole("combobox", { name: "Deployment region" })).toBeVisible();
+});
