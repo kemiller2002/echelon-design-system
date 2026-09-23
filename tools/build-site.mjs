@@ -40,8 +40,10 @@ const meta = {
   "alert": ["Alert", "State & feedback", "Application state", "Structured status or warning communication with text, icon, and non-color cues."],
   "collection-toolbar": ["Collection toolbar", "Data & productivity", "Application / Limen", "A responsive composition for search, filters, sort, saved views, and result counts."],
   "combobox": ["Combobox", "Input", "Native baseline / Limen enhancement", "Searchable selection baseline that preserves direct text entry and native semantics."],
+  "composer": ["Composer", "Assisted interaction", "Application / Limen", "Natural-language composition surface for type, dictate, paste, and attach workflows without embedding agent behavior."],
   "command-palette": ["Command palette", "Navigation & commands", "Application / Limen", "Keyboard-first command discovery that can become a full-screen mobile surface."],
   "conflict-review": ["Conflict review", "State & feedback", "Ordo / application", "Explain optimistic-concurrency conflicts and expose application-supplied recovery actions without guessing."],
+  "conversation": ["Conversation", "Assisted interaction", "Application / Limen", "Inspectable user/application turns with explicit speakers and no consumer-chat authority assumptions."],
   "dashboard-grid": ["Dashboard grid", "Layout & workspace", "Application content", "Responsive operational dashboard composition for metrics, status, and attention-first blocks."],
   "data-grid": ["Data grid", "Data & productivity", "Application / Limen", "Semantic tabular records with sortable affordances and a labeled mobile record projection."],
   "date-range": ["Date range", "Input", "Native HTML / application", "Paired direct date entry with reusable preset affordances and mobile stacking."],
@@ -63,6 +65,7 @@ const meta = {
   "status-lozenge": ["Status lozenge", "Content & utility", "Application state", "Compact textual state labels with structural and non-color cues."],
   "tabs": ["Tabs", "Navigation & commands", "Application / Limen", "Focused views with keyboard and deep-link integration hooks plus mobile overflow strategy."],
   "timeline": ["Timeline", "Data & productivity", "Application content", "Chronological or ordered activity with timestamps, state changes, provenance, and single-column mobile flow."],
+  "understanding": ["Understanding review", "Assisted interaction", "Ordo / application", "Review proposed understanding, unknowns, conflicts, and source actions before consequential transitions."],
   "wizard": ["Wizard", "Navigation & commands", "Limen / Ordo", "Step-by-step workflow shell with current-step state, progress, validation hooks, resume, and mobile reduction."],
   "work-queue": ["Work queue", "State & feedback", "Ordo / application", "Attention-first list of unresolved work with reason, context, and application-supplied legal actions."]
 };
