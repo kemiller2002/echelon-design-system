@@ -1219,16 +1219,16 @@
   }
 
   .ef-alert[data-ef-motion-entry] {
-    opacity: 1;
     translate: 0 0;
-    transition:
-      opacity var(--ef-motion-state-duration) linear,
-      translate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing);
+    transition: translate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing);
+  }
+
+  .ef-alert p {
+    color: var(--ef-color-text-primary, #171a18);
   }
 
   @starting-style {
     .ef-alert[data-ef-motion-entry] {
-      opacity: 0;
       translate: 0 -0.5rem;
     }
   }
