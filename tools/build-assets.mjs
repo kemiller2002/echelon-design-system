@@ -3,7 +3,7 @@ import path from "node:path";
 
 fs.mkdirSync("dist/patterns", { recursive: true });
 
-for (const file of ["foundations.css", "components.css", "assessment.css"]) {
+for (const file of ["foundations.css", "components.css", "assessment.css", "skins.css"]) {
   fs.copyFileSync(path.join("src/styles", file), path.join("dist", file));
 }
 

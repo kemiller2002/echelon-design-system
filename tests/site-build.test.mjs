@@ -105,3 +105,25 @@ test("every component page publishes an explicit 320px mobile example", () => {
   assert.match(css, /max-inline-size:\s*320px/);
   assert.match(css, /320px mobile viewport/);
 });
+
+
+test("brand laboratory proves scoped brands and skins without runtime script", () => {
+  const brandPage = path.join(output, "branding", "index.html");
+  assert.ok(fs.existsSync(brandPage), "missing Brand Laboratory page");
+
+  const html = fs.readFileSync(brandPage, "utf8");
+  assert.match(html, /data-ef-brand="echelon"/);
+  assert.match(html, /data-ef-brand="example-harbor"/);
+  assert.match(html, /data-ef-theme="dark"/);
+  assert.match(html, /data-ef-skin="compact"/);
+  assert.match(html, /data-ef-skin="comfortable"/);
+  assert.match(html, /data-ef-skin="square"/);
+  assert.equal(/<script\b/i.test(html), false);
+
+  for (const file of ["echelon.css", "example-harbor.css", "index.json"]) {
+    assert.ok(
+      fs.existsSync(path.join(output, "assets", "brands", file)),
+      "missing published brand artifact " + file
+    );
+  }
+});

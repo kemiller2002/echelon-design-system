@@ -33,7 +33,7 @@ The system exists to make Echelon applications look, communicate, and behave con
 - SIGNAL-COMPONENT-MAP.md
 - SELECTOR-COMPLETENESS.md
 - CROSS-APPLICATION-COMPONENT-WAVE.md
-- MOBILE-COMPONENT-CONTRACT.md
+- MOBILE-COMPONENT-CONTRACT.md\n- WHITE-LABEL-AND-SKINNING.md
 
 ## External standards baseline
 

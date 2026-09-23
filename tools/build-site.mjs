@@ -123,6 +123,7 @@ function header(rootPath) {
     <nav class="site-nav" aria-label="Primary">
       <a href="${rootPath}">Overview</a>
       <a href="${rootPath}#components">Components</a>
+      <a href="${rootPath}branding/">Branding</a>
       <a class="pill-link" href="${rootPath}agents/">Agent use</a>
     </nav>
   </div>
@@ -157,6 +158,8 @@ function page(title, rootPath, body) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,500;6..72,650&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="${rootPath}assets/forma.css">
+  <link rel="stylesheet" href="${rootPath}assets/brands/echelon.css">
+  <link rel="stylesheet" href="${rootPath}assets/brands/example-harbor.css">
   <link rel="stylesheet" href="${rootPath}assets/site.css">
 </head>
 <body>
@@ -231,6 +234,7 @@ fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(path.join(output, "assets"), { recursive: true });
 fs.mkdirSync(path.join(output, "components"), { recursive: true });
 fs.mkdirSync(path.join(output, "agents"), { recursive: true });
+fs.mkdirSync(path.join(output, "branding"), { recursive: true });
 
 if (!fs.existsSync(path.join(root, "dist", "all.css"))) {
   throw new Error("dist/all.css is missing. Run the Forma library build first.");
@@ -238,6 +242,7 @@ if (!fs.existsSync(path.join(root, "dist", "all.css"))) {
 
 fs.copyFileSync(path.join(root, "dist", "all.css"), path.join(output, "assets", "forma.css"));
 fs.copyFileSync(path.join(root, "site", "site.css"), path.join(output, "assets", "site.css"));
+fs.cpSync(path.join(root, "dist", "brands"), path.join(output, "assets", "brands"), { recursive: true });
 fs.writeFileSync(path.join(output, ".nojekyll"), "");
 
 const slugs = fs.readdirSync(patternDir)
@@ -306,6 +311,56 @@ const indexBody = `<main id="main">
 </main>`;
 
 fs.writeFileSync(path.join(output, "index.html"), page("Overview", "./", indexBody));
+
+const brandSample = () => `<div class="brand-demo__content">
+  <span class="brand-demo__eyebrow">Operational review</span>
+  <h2>Release readiness</h2>
+  <p>The same semantic Forma markup inherits identity from its nearest brand scope.</p>
+  <div class="brand-demo__accent">
+    <strong>12 obligations</strong>
+    <span>3 require evidence before release.</span>
+  </div>
+  <button type="button">Review obligations</button>
+</div>`;
+
+const brandingBody = `<main id="main" class="content-section brand-lab">
+  <span class="eyebrow">White label / skin system</span>
+  <h1>Brand Laboratory</h1>
+  <p class="lead">Brand identity enters Forma through a versioned manifest that compiles to scoped semantic tokens. Skins adjust presentation without changing identity, semantics, or application behavior.</p>
+
+  <section class="brand-lab__section">
+    <div class="section-heading">
+      <div><span class="eyebrow">Scoped identity</span><h2>One component contract. Multiple brands.</h2></div>
+      <p>These examples use identical inner markup. Only the brand and theme scopes differ.</p>
+    </div>
+    <div class="brand-demo-grid">
+      <article class="brand-demo-wrap"><p class="category-label">Echelon / light</p><section class="brand-demo" data-ef-brand="echelon">${brandSample()}</section></article>
+      <article class="brand-demo-wrap"><p class="category-label">Example Harbor / light</p><section class="brand-demo" data-ef-brand="example-harbor">${brandSample()}</section></article>
+      <article class="brand-demo-wrap"><p class="category-label">Example Harbor / dark</p><section class="brand-demo" data-ef-brand="example-harbor" data-ef-theme="dark">${brandSample()}</section></article>
+    </div>
+  </section>
+
+  <section class="brand-lab__section">
+    <div class="section-heading">
+      <div><span class="eyebrow">Presentation only</span><h2>Skins are independent of identity.</h2></div>
+      <p>Density and shape can change while the brand's semantic color and typography remain authoritative.</p>
+    </div>
+    <div class="brand-demo-grid">
+      <article class="brand-demo-wrap"><p class="category-label">Compact</p><section class="brand-demo" data-ef-brand="echelon" data-ef-skin="compact">${brandSample()}</section></article>
+      <article class="brand-demo-wrap"><p class="category-label">Comfortable</p><section class="brand-demo" data-ef-brand="echelon" data-ef-skin="comfortable">${brandSample()}</section></article>
+      <article class="brand-demo-wrap"><p class="category-label">Square</p><section class="brand-demo" data-ef-brand="echelon" data-ef-skin="square">${brandSample()}</section></article>
+    </div>
+  </section>
+
+  <section class="brand-lab__section brand-boundary">
+    <span class="eyebrow">Boundary</span>
+    <h2>Presentation changes. Authority does not.</h2>
+    <p>Runtime selection, persistence, remote manifest loading, or an interactive editor belong to the consuming application through Limen. Legal state and transitions remain Ordo/application authority. Forma emits static CSS and preserves its zero-runtime contract.</p>
+    <a class="ef-button" href="../agents/">Read the agent contract</a>
+  </section>
+</main>`;
+
+fs.writeFileSync(path.join(output, "branding", "index.html"), page("Brand Laboratory", "../", brandingBody));
 
 for (const slug of slugs) {
   const [title, category, behavior, summary] = meta[slug];

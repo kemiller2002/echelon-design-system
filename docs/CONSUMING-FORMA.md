@@ -39,10 +39,23 @@ More selective imports are available:
 - `@echelon-foundry/design-system/tokens.css`
 - `@echelon-foundry/design-system/foundations.css`
 - `@echelon-foundry/design-system/components.css`
-- `@echelon-foundry/design-system/assessment.css`
+- `@echelon-foundry/design-system/assessment.css`\n- `@echelon-foundry/design-system/skins.css`\n- `@echelon-foundry/design-system/brands/<brand-id>.css`
 
 Canonical HTML patterns are exported under `patterns/*` and documented at
 https://forma.echelonfoundry.com/.
+
+## Branding and skins
+
+White-label identity is supplied through a versioned Brand Manifest and compiled
+to static scoped CSS. Load a generated brand stylesheet after Forma and apply
+`data-ef-brand="<brand-id>"` at the document root or on a subtree.
+
+Presentation-only skins use `data-ef-skin="compact"`,
+`data-ef-skin="comfortable"`, or `data-ef-skin="square"`.
+
+Do not copy or fork Forma CSS for customer branding. See
+`docs/BRANDING.md` for the manifest, scoping, theme, accessibility, and Limen
+boundary contracts.
 
 ## Ownership boundary
 

@@ -56,7 +56,7 @@ If a required behavior is not supported declaratively by the baseline, it belong
 ## 3. Test layers
 
 ### QD-TEST-001 Build-time logic
-Token parsing, alias resolution, contrast validation, and other build-time logic shall have deterministic tests.
+Token parsing, alias resolution, Brand Manifest compilation, brand-scope generation, contrast validation, and other build-time logic shall have deterministic tests.
 
 ### QD-TEST-002 Native DOM interaction
 Every interactive pattern shall have browser tests covering its applicable native keyboard, pointer, focus, form, state, and declarative behavior.

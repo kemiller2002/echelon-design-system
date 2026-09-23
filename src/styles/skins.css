@@ -1,0 +1,29 @@
+/* Intentionally unlayered: opt-in skins override layered brand/token presentation primitives. */
+  [data-ef-skin="compact"] {
+    --ef-primitive-spacing-1: 3px;
+    --ef-primitive-spacing-2: 6px;
+    --ef-primitive-spacing-3: 9px;
+    --ef-primitive-spacing-4: 12px;
+    --ef-primitive-spacing-5: 18px;
+    --ef-primitive-spacing-6: 24px;
+    --ef-primitive-spacing-7: 36px;
+    --ef-primitive-spacing-8: 48px;
+    --ef-primitive-radius-small: 3px;
+    --ef-primitive-radius-medium: 6px;
+  }
+
+  [data-ef-skin="comfortable"] {
+    --ef-primitive-spacing-1: 5px;
+    --ef-primitive-spacing-2: 10px;
+    --ef-primitive-spacing-3: 15px;
+    --ef-primitive-spacing-4: 20px;
+    --ef-primitive-spacing-5: 30px;
+    --ef-primitive-spacing-6: 40px;
+    --ef-primitive-spacing-7: 60px;
+    --ef-primitive-spacing-8: 80px;
+  }
+
+  [data-ef-skin="square"] {
+    --ef-primitive-radius-small: 0;
+    --ef-primitive-radius-medium: 0;
+  }
