@@ -136,3 +136,31 @@ for (const viewport of viewports) {
     }
   });
 }
+
+test("date range bounding box stays inside a constrained parent", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 568 });
+  const source = fs.readFileSync(path.join(root, "patterns", "date-range.html"), "utf8");
+  await page.setContent(documentFor(`<div id="date-range-boundary" style="inline-size: 14rem; max-inline-size: 100%">${source}</div>`));
+
+  const bounds = await page.evaluate(() => {
+    const parent = document.querySelector("#date-range-boundary").getBoundingClientRect();
+    const fieldset = document.querySelector(".ef-date-range").getBoundingClientRect();
+    const inputs = [...document.querySelectorAll('.ef-date-range input[type="date"]')]
+      .map(input => input.getBoundingClientRect());
+
+    return {
+      parent: { left: parent.left, right: parent.right, width: parent.width },
+      fieldset: { left: fieldset.left, right: fieldset.right, width: fieldset.width },
+      inputs: inputs.map(rect => ({ left: rect.left, right: rect.right, width: rect.width }))
+    };
+  });
+
+  expect(bounds.fieldset.left).toBeGreaterThanOrEqual(bounds.parent.left - 1);
+  expect(bounds.fieldset.right).toBeLessThanOrEqual(bounds.parent.right + 1);
+  expect(bounds.fieldset.width).toBeLessThanOrEqual(bounds.parent.width + 1);
+
+  for (const input of bounds.inputs) {
+    expect(input.left).toBeGreaterThanOrEqual(bounds.fieldset.left - 1);
+    expect(input.right).toBeLessThanOrEqual(bounds.fieldset.right + 1);
+  }
+});
