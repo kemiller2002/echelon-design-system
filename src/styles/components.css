@@ -163,7 +163,7 @@
   .ef-switch__track::after {
     content: "";
     position: absolute;
-    inset-block-start: var(--ef-switch-gap);
+    inset-block-start: 50%;
     inset-inline-start: var(--ef-switch-gap);
     inline-size: var(--ef-switch-thumb);
     block-size: var(--ef-switch-thumb);
@@ -171,7 +171,7 @@
     border-radius: 50%;
     background: var(--ef-color-control-thumb, #f2efe7);
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.18);
-    translate: 0 0;
+    translate: 0 -50%;
     scale: 1;
     transition:
       translate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing),
@@ -184,7 +184,7 @@
   }
 
   .ef-switch__input:checked + .ef-switch__track::after {
-    translate: calc(var(--ef-switch-width) - var(--ef-switch-thumb) - (2 * var(--ef-switch-gap))) 0;
+    translate: calc(var(--ef-switch-width) - var(--ef-switch-thumb) - (2 * var(--ef-switch-gap))) -50%;
   }
 
   .ef-switch__input:active + .ef-switch__track::after { scale: 1.12; }
@@ -1498,6 +1498,12 @@
     gap: 0.5rem;
   }
 
+  .ef-date-range {
+    min-inline-size: 0;
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
   .ef-combobox > label,
   .ef-date-range legend {
     font-size: 0.8125rem;
@@ -1520,7 +1526,18 @@
     align-items: end;
   }
 
-  .ef-date-range__fields label { display: grid; gap: 0.35rem; }
+  .ef-date-range__fields label {
+    min-inline-size: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .ef-date-range__fields input[type="date"] {
+    min-inline-size: 0;
+    inline-size: 100%;
+    max-inline-size: 100%;
+  }
+
   .ef-date-range__separator { padding-block-end: 0.75rem; }
 
   /* Upload -------------------------------------------------------------- */
