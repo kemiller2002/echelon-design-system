@@ -22,8 +22,12 @@ test("every canonical HTML pattern has exactly one Figma contract entry", () => 
 
   for (const component of contract.components) {
     assert.match(component.figmaName, /^Forma \/ /);
-    assert.equal(component.codeConnect.nodeUrl, null);
-    assert.equal(component.codeConnect.status, "requires-published-figma-component");
+    if (component.codeConnect.nodeUrl === null) {
+      assert.equal(component.codeConnect.status, "requires-published-figma-component");
+    } else {
+      assert.match(component.codeConnect.nodeUrl, /^https:\/\/(www\.)?figma\.com\//);
+      assert.equal(component.codeConnect.status, "connected");
+    }
   }
 });
 
