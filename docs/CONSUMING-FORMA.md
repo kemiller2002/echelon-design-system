@@ -4,7 +4,7 @@ Forma is the zero-runtime Echelon Foundry presentation package.
 
 ## Canonical version
 
-The first application baseline is **Forma 0.1.0**.
+The current application baseline is **Forma 0.2.0**.
 
 Applications must pin a concrete Forma version. Do not copy CSS files into an
 application and do not depend on the moving repository branch.
@@ -17,13 +17,13 @@ GitHub release tarball:
 ```json
 {
   "dependencies": {
-    "@echelon-foundry/design-system": "https://github.com/kemiller2002/echelon-design-system/releases/download/v0.1.0/echelon-foundry-design-system-0.1.0.tgz"
+    "@echelon-foundry/design-system": "https://github.com/kemiller2002/echelon-design-system/releases/download/v0.2.0/echelon-foundry-design-system-0.2.0.tgz"
   }
 }
 ```
 
 When the npm package is published, applications may replace the tarball URL
-with the exact version `0.1.0`. Do not use a floating range for the application
+with the exact version `0.2.0`. Do not use a floating range for the application
 baseline.
 
 ## CSS
@@ -39,7 +39,9 @@ More selective imports are available:
 - `@echelon-foundry/design-system/tokens.css`
 - `@echelon-foundry/design-system/foundations.css`
 - `@echelon-foundry/design-system/components.css`
-- `@echelon-foundry/design-system/assessment.css`\n- `@echelon-foundry/design-system/skins.css`\n- `@echelon-foundry/design-system/brands/<brand-id>.css`
+- `@echelon-foundry/design-system/assessment.css`
+- `@echelon-foundry/design-system/skins.css`
+- `@echelon-foundry/design-system/brands/<brand-id>.css`
 
 Canonical HTML patterns are exported under `patterns/*` and documented at
 https://forma.echelonfoundry.com/.
