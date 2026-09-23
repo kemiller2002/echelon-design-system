@@ -191,3 +191,20 @@ When adding a pattern:
 4. confirm the new component page contains at least three meaningful examples, including the explicit Mobile · 320px example;
 5. update requirements/decision records through ROS when the addition changes
    the public design-system contract.
+
+
+## Aegis fault presentation
+
+When presenting a fault produced by Aegis:
+
+1. map the safe `Aegis.Presentation.T` view into Forma; do not bind the raw `Fault`;
+2. map `Silent` to no visible fault surface;
+3. map `Inline`, `Notification`, `Banner`, and `Blocking` to `fault-inline`, `fault-notification`, `fault-banner`, and `fault-blocking`;
+4. render exact Aegis recovery capability identity through `data-ef-aegis-capability`;
+5. treat that DOM attribute as descriptive only and revalidate current capability/Ordo state at activation;
+6. keep `TechnicalDetails`, exception chains, stack traces, raw context, breadcrumbs, snapshots, and secrets out of normal presentation;
+7. use `fault-details` only with an explicitly approved and already-sanitized view model;
+8. let Aegis/application logic own fingerprinting, throttling, lifecycle, resolution, and occurrence counts;
+9. let Limen/application behavior own notification lifetime, copy actions, blocking-dialog policy, focus transitions, and recovery execution.
+
+Read `docs/AEGIS-INTEGRATION.md` and `requirements/AEGIS-FAULT-PRESENTATION.md` before creating a new fault presentation.
