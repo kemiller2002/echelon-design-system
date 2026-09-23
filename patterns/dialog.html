@@ -1,8 +1,13 @@
-<button type="button" commandfor="example-dialog" command="show-modal">Open dialog</button>
-<dialog class="ef-dialog" id="example-dialog">
+<button type="button" commandfor="example-dialog" command="show-modal">Open modal</button>
+<dialog
+  class="ef-dialog"
+  id="example-dialog"
+  data-ef-motion-weight="standard"
+  aria-labelledby="example-dialog-title"
+  aria-describedby="example-dialog-description">
   <div class="ef-dialog__body">
-    <h2>Confirm action</h2>
-    <p>The browser owns modal focus, inertness, and Escape behavior.</p>
+    <h2 id="example-dialog-title">Confirm action</h2>
+    <p id="example-dialog-description">The browser owns modal focus, inertness, Escape behavior, and focus restoration.</p>
   </div>
   <div class="ef-dialog__actions">
     <button type="button" commandfor="example-dialog" command="close">Cancel</button>
