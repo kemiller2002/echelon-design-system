@@ -31,6 +31,19 @@ The Figma library should create variables using the repository hierarchy and
 preserve semantic aliases where possible. Create semantic modes named `Light`
 and `Dark` that correspond to the semantic token branches.
 
+Use this deterministic DTCG-to-Figma type mapping:
+
+| DTCG token type | Figma variable type | Conversion |
+| --- | --- | --- |
+| `color` | `COLOR` | Preserve sRGB value and alpha |
+| `dimension` | `FLOAT` | Store the numeric px value; canonical unit remains in DTCG |
+| `duration` | `TIMING` | Convert milliseconds to seconds |
+| `cubicBezier` | `EASING` | Preserve the four control-point values |
+| `fontFamily` | `STRING` | Use the primary family for Figma binding; DTCG retains the fallback list |
+
+Aliases should remain variable aliases instead of being flattened to copied
+values.
+
 Recommended variable naming examples:
 
 - `primitive/color/foundry-charcoal`
