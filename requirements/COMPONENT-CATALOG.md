@@ -509,10 +509,17 @@ Visual contract: `.ef-context-menu` (Limen behavior required)
 
 Must always have a non-context-menu path to essential actions.
 
+### P0: Flyout
+Pattern: `.ef-flyout` using native `dialog` for modal flyouts
+
+Support left and right edge placement, native modal focus/inertness/Escape behavior, labelled header/body/action regions, scroll containment, safe-area-aware mobile sizing, physics-derived entry/exit, and reduced motion.
+
+The left and right variants are one component contract selected with `data-ef-side="left|right"`, not separate components. Native modal behavior remains browser-owned. Optional swipe-to-close, drag tracking, resizing, or persistent nonmodal state belongs to Limen/application behavior.
+
 ### P1: Drawer / sheet
 Visual contract: `.ef-drawer` (Limen behavior required)
 
-Support modal and nonmodal modes, side and bottom placement, responsive adaptation, focus management, swipe as optional enhancement only, and reduced-motion entry/exit.
+Support persistent/nonmodal modes and bottom-sheet placement beyond the modal flyout baseline, responsive adaptation, focus management, swipe as optional enhancement only, and reduced-motion entry/exit.
 
 ### P1: Toggletip
 Declarative popover pattern where sufficient
