@@ -2124,6 +2124,19 @@
 
 
 @layer echelon.components {
+  /* Aegis notification/banner default perceived weight ----------------- */
+  :where(.ef-fault-notification, .ef-fault-banner):not([data-ef-motion-weight]) {
+    --ef-motion-mass: 1;
+    --ef-motion-stiffness: 1;
+    --ef-motion-damping: 0.84;
+  }
+
+  :where(.ef-fault-blocking):not([data-ef-motion-weight]) {
+    --ef-motion-mass: 1.8;
+    --ef-motion-stiffness: 0.92;
+    --ef-motion-damping: 0.76;
+  }
+
   /* Aegis fault presentation -------------------------------------------- */
   .ef-fault,
   .ef-fault-notification,
