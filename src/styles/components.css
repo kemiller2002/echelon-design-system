@@ -18,7 +18,7 @@
   }
 
   /* Physics-derived motion ---------------------------------------------- */
-  :where(.ef-switch, .ef-checkbox, .ef-select) {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout) {
     /*
      * CSS cannot run a continuous rigid-body simulation. Forma therefore uses
      * a physics-derived response model. The fallback values remain usable in
@@ -34,30 +34,31 @@
     --ef-motion-gravity-duration: 255ms;
     --ef-motion-state-duration: 154ms;
     --ef-motion-press-duration: 107ms;
+    --ef-motion-exit-duration: 150ms;
     --ef-motion-spring-easing: linear(0, 0.42 24%, 0.82 48%, 1.055 70%, 0.988 88%, 1);
     --ef-motion-damped-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select)[data-ef-motion-weight="light"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout)[data-ef-motion-weight="light"] {
     --ef-motion-mass: 0.65;
     --ef-motion-stiffness: 1.15;
     --ef-motion-damping: 0.94;
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select)[data-ef-motion-weight="standard"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout)[data-ef-motion-weight="standard"] {
     --ef-motion-mass: 1;
     --ef-motion-stiffness: 1;
     --ef-motion-damping: 0.84;
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select)[data-ef-motion-weight="heavy"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout)[data-ef-motion-weight="heavy"] {
     --ef-motion-mass: 1.8;
     --ef-motion-stiffness: 0.92;
     --ef-motion-damping: 0.76;
   }
 
   @supports (width: calc(1px * sqrt(1))) {
-    :where(.ef-switch, .ef-checkbox, .ef-select) {
+    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout) {
       /*
        * Response time follows sqrt(mass / stiffness), then is lengthened as
        * damping decreases. Vertical gravity time follows sqrt(2s / g) and is
@@ -89,6 +90,11 @@
         70ms,
         calc(var(--ef-motion-inertia-duration) * 0.5),
         160ms
+      );
+      --ef-motion-exit-duration: clamp(
+        80ms,
+        calc(var(--ef-motion-inertia-duration) * 0.68),
+        220ms
       );
     }
   }
@@ -324,11 +330,12 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :where(.ef-switch, .ef-checkbox, .ef-select) {
+    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout) {
       --ef-motion-inertia-duration: 0.01ms;
       --ef-motion-gravity-duration: 0.01ms;
       --ef-motion-state-duration: 0.01ms;
       --ef-motion-press-duration: 0.01ms;
+      --ef-motion-exit-duration: 0.01ms;
       --ef-motion-spring-easing: linear;
       --ef-motion-damped-easing: linear;
     }
@@ -496,32 +503,54 @@
     }
   }
 
-  /* Dialog -------------------------------------------------------------- */
-  .ef-dialog {
-    inline-size: min(38rem, calc(100vw - 2rem));
-    max-block-size: calc(100dvh - 2rem);
+  /* Dialog and flyout ---------------------------------------------------- */
+  :where(.ef-dialog, .ef-flyout) {
+    --ef-overlay-motion-duration: var(--ef-motion-exit-duration);
+    --ef-overlay-spatial-easing: var(--ef-motion-damped-easing);
     padding: 0;
     border: 1px solid var(--ef-color-border-functional, #3a403c);
     background: var(--ef-color-surface-primary, #f2efe7);
     color: var(--ef-color-text-primary, #171a18);
-    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.28);
-    opacity: 0;
-    transform: translateY(0.75rem) scale(0.985);
-    transition:
-      opacity var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-enter, ease),
-      transform var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-enter, ease),
-      display var(--ef-primitive-motion-duration-standard, 180ms) allow-discrete,
-      overlay var(--ef-primitive-motion-duration-standard, 180ms) allow-discrete;
+    overscroll-behavior: contain;
   }
 
-  .ef-dialog[open] { opacity: 1; transform: translateY(0) scale(1); }
-  .ef-dialog::backdrop {
+  :where(.ef-dialog, .ef-flyout)[open] {
+    --ef-overlay-motion-duration: var(--ef-motion-inertia-duration);
+    --ef-overlay-spatial-easing: var(--ef-motion-spring-easing);
+  }
+
+  :where(.ef-dialog, .ef-flyout)::backdrop {
+    background: rgb(23 26 24 / 0);
+    backdrop-filter: blur(0);
+    transition:
+      background var(--ef-overlay-motion-duration) var(--ef-motion-damped-easing),
+      backdrop-filter var(--ef-overlay-motion-duration) var(--ef-motion-damped-easing),
+      display var(--ef-overlay-motion-duration) allow-discrete,
+      overlay var(--ef-overlay-motion-duration) allow-discrete;
+  }
+
+  :where(.ef-dialog, .ef-flyout)[open]::backdrop {
     background: rgb(23 26 24 / 0.48);
     backdrop-filter: blur(2px);
   }
 
-  @starting-style {
-    .ef-dialog[open] { opacity: 0; transform: translateY(0.75rem) scale(0.985); }
+  /* Centered modal dialog ------------------------------------------------ */
+  .ef-dialog {
+    inline-size: min(38rem, calc(100vw - 2rem));
+    max-block-size: calc(100dvh - 2rem);
+    box-shadow: 0 1.5rem 4rem rgb(0 0 0 / 0.28);
+    translate: 0 0.75rem;
+    scale: 0.985;
+    transition:
+      translate var(--ef-overlay-motion-duration) var(--ef-overlay-spatial-easing),
+      scale var(--ef-overlay-motion-duration) var(--ef-overlay-spatial-easing),
+      display var(--ef-overlay-motion-duration) allow-discrete,
+      overlay var(--ef-overlay-motion-duration) allow-discrete;
+  }
+
+  .ef-dialog[open] {
+    translate: 0 0;
+    scale: 1;
   }
 
   .ef-dialog__body { padding: var(--ef-primitive-spacing-5, 1.5rem); }
@@ -533,6 +562,123 @@
     gap: var(--ef-primitive-spacing-2, 0.5rem);
     padding: 1rem 1.5rem;
     border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  /* Edge flyout --------------------------------------------------------- */
+  .ef-flyout {
+    --ef-flyout-closed-x: 100%;
+    position: fixed;
+    inset-block: 0;
+    inline-size: min(28rem, 90vw);
+    max-inline-size: min(28rem, 90vw);
+    block-size: 100dvh;
+    max-block-size: 100dvh;
+    box-sizing: border-box;
+    margin-block: 0;
+    box-shadow: 0 0 3rem rgb(0 0 0 / 0.24);
+    translate: var(--ef-flyout-closed-x) 0;
+    transition:
+      translate var(--ef-overlay-motion-duration) var(--ef-overlay-spatial-easing),
+      display var(--ef-overlay-motion-duration) allow-discrete,
+      overlay var(--ef-overlay-motion-duration) allow-discrete;
+  }
+
+  .ef-flyout[data-ef-side="left"] {
+    --ef-flyout-closed-x: -100%;
+    inset-inline-start: 0;
+    inset-inline-end: auto;
+    margin-inline: 0;
+    border-inline-start: 0;
+  }
+
+  .ef-flyout[data-ef-side="right"] {
+    --ef-flyout-closed-x: 100%;
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    margin-inline: 0;
+    border-inline-end: 0;
+  }
+
+  .ef-flyout[open] { translate: 0 0; }
+
+  .ef-flyout__surface {
+    min-block-size: 0;
+    block-size: 100%;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+  }
+
+  .ef-flyout__header,
+  .ef-flyout__actions {
+    min-inline-size: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    padding-inline: var(--ef-primitive-spacing-4, 1rem);
+  }
+
+  .ef-flyout__header {
+    justify-content: space-between;
+    padding-block-start: max(var(--ef-primitive-spacing-4, 1rem), env(safe-area-inset-top));
+    padding-block-end: var(--ef-primitive-spacing-4, 1rem);
+    border-block-end: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  .ef-flyout__header > * { min-inline-size: 0; }
+  .ef-flyout__header h2 { margin-block: 0; }
+
+  .ef-flyout__close {
+    flex: 0 0 auto;
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+  }
+
+  .ef-flyout__body {
+    min-block-size: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+    padding: var(--ef-primitive-spacing-4, 1rem);
+  }
+
+  .ef-flyout__actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    padding-block-start: var(--ef-primitive-spacing-4, 1rem);
+    padding-block-end: max(var(--ef-primitive-spacing-4, 1rem), env(safe-area-inset-bottom));
+    border-block-start: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  }
+
+  @starting-style {
+    .ef-dialog[open] {
+      translate: 0 0.75rem;
+      scale: 0.985;
+    }
+
+    .ef-flyout[open] {
+      translate: var(--ef-flyout-closed-x) 0;
+    }
+
+    :where(.ef-dialog, .ef-flyout)[open]::backdrop {
+      background: rgb(23 26 24 / 0);
+      backdrop-filter: blur(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ef-dialog,
+    .ef-dialog[open],
+    .ef-flyout,
+    .ef-flyout[open] {
+      translate: 0 0;
+      scale: 1;
+    }
+
+    .ef-dialog::backdrop,
+    .ef-dialog[open]::backdrop,
+    .ef-flyout::backdrop,
+    .ef-flyout[open]::backdrop {
+      backdrop-filter: none;
+    }
   }
 
 

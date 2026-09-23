@@ -86,7 +86,8 @@ Prefer the most semantic existing primitive.
 - Ordered agreement/frequency/confidence choices: `ordinal-scale`.
 - Ordinary on/off preference: `switch`.
 - Disclosure of optional content: native `details` via `disclosure`.
-- Modal confirmation: native `dialog`.
+- Modal confirmation: native `dialog` via the `dialog` pattern.
+- Edge-attached modal navigation, filters, details, or bounded work: `flyout` with `data-ef-side="left|right"`.
 - Simple single/multi selection: `choice-group` / `multi-choice`.
 - Complex ranking or rule construction: use the Forma visual contract and put
   behavior in Limen/application code.
@@ -106,7 +107,7 @@ Before changing application CSS for customer identity or presentation, read
 
 ## Motion and perceived weight
 
-Forma's switch, checkbox, and native select share a physics-derived CSS motion vocabulary.
+Forma's switch, checkbox, native select, modal dialog, and flyout share a physics-derived CSS motion vocabulary.
 
 - Use `data-ef-motion-weight="standard"` by default.
 - `light`, `standard`, and `heavy` are presentation presets only. Never map them to risk, severity, permission, validation, or domain importance.
@@ -114,6 +115,7 @@ Forma's switch, checkbox, and native select share a physics-derived CSS motion v
 - Do not add JavaScript to compute animation timing. The canonical model is expressed with CSS custom properties and CSS math, with static CSS fallbacks.
 - A consuming application may override the exposed physics variables for a justified branded/interaction treatment, but it must preserve reduced-motion behavior and native semantic state timing.
 - Direct manipulation remains immediate; no physics effect may introduce pointer lag.
+- Modal flyouts use native dialog behavior; swipe/drag/resizing and persistent nonmodal drawers belong to Limen/application code.
 - Read `requirements/MOTION-AND-INTERACTION.md` before adding a new animated pattern.
 
 ## Mobile contract

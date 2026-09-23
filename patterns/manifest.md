@@ -35,10 +35,10 @@ Own the canonical semantic HTML structures consumed by Echelon applications. Pat
 
 ## Local agent instructions
 
-- none
+- Modal flyouts stay on native `dialog`; gesture-driven or persistent drawer behavior belongs to Limen/application code.
 
 ## Maintenance
 
 - Owner: Echelon Foundry design system
-- Last checked against implementation: 2026-09-22
+- Last checked against implementation: 2026-09-23
 - Known gaps: advanced behavioral patterns require separate Limen contracts
