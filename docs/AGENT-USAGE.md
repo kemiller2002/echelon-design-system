@@ -7,8 +7,9 @@ The current package identifier is `@echelon-foundry/design-system`.
 
 Forma is not a JavaScript component framework. It is a zero-runtime collection
 of semantic HTML contracts, CSS, design tokens, accessibility rules, and visual
-patterns. Names beginning with `ef-` are class/pattern contracts and do not
-imply Custom Elements.
+patterns. Public examples use inert `<ef-*>` authoring wrappers, while
+`.ef-*` classes style the canonical inner pattern. The tags are not registered
+Custom Elements and own no hidden behavior.
 
 ## Required decision order
 
