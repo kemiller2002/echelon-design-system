@@ -208,3 +208,17 @@ Advanced components such as combobox, slider, range slider, data grid, tree, tre
 A component may be experimental while accessibility work remains open.
 
 It may not be marked stable if a known keyboard, name/role/value, focus-management, or critical contrast defect remains unresolved.
+
+
+## Aegis fault accessibility
+
+Aegis fault presentation follows `requirements/AEGIS-FAULT-PRESENTATION.md`.
+
+- Severity must be visible as text and structure; color is supplementary.
+- Inline faults should be associated with the affected control/region through `aria-describedby` when appropriate rather than announced globally.
+- Newly inserted notification intent may use `role="status"`; persistent rerenders must not create repeated announcements.
+- Fault summaries are focusable recovery/navigation regions. Applications may focus them after a failed submit or consequential action.
+- Blocking intent uses a properly labelled native dialog. Limen/application code owns modal opening, legal close/cancel policy, initial focus, and focus restoration.
+- Recovery actions remain native buttons and must expose visible focus.
+- Fault references are selectable/readable text even when an optional copy action is provided.
+- Safe diagnostic disclosure must not expose information merely because assistive technology can reach it; authorization/redaction occurs before DOM rendering.
