@@ -40,6 +40,25 @@ The generated GitHub Pages artifact is written to `site-dist/`.
 Agent usage rules are in [docs/AGENT-USAGE.md](docs/AGENT-USAGE.md).
 
 
+Public component examples use readable inert `<ef-*>` authoring tags around
+the canonical native HTML:
+
+```html
+<ef-switch class="ef-component-tag">
+  <label class="ef-switch">
+    <input class="ef-switch__input" type="checkbox" role="switch">
+    <span class="ef-switch__track" aria-hidden="true"></span>
+    <span class="ef-switch__text">
+      <span class="ef-switch__label">Notifications</span>
+    </span>
+  </label>
+</ef-switch>
+```
+
+The wrapper is not registered with `customElements.define()`; Forma remains
+zero-runtime and the native HTML inside the tag owns semantics and interaction.
+
+
 ## Application consumption
 
 Applications must consume a pinned Forma release rather than copying CSS or
