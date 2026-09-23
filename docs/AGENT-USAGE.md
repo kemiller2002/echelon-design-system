@@ -7,8 +7,9 @@ The current package identifier is `@echelon-foundry/design-system`.
 
 Forma is not a JavaScript component framework. It is a zero-runtime collection
 of semantic HTML contracts, CSS, design tokens, accessibility rules, and visual
-patterns. Names beginning with `ef-` are class/pattern contracts and do not
-imply Custom Elements.
+patterns. Public examples use inert `<ef-*>` authoring wrappers, while
+`.ef-*` classes style the canonical inner pattern. The tags are not registered
+Custom Elements and own no hidden behavior.
 
 ## Required decision order
 
@@ -104,6 +105,29 @@ Before changing application CSS for customer identity or presentation, read
 - Runtime brand/theme/skin selection, persistence, remote loading, and interactive preview behavior belong to the consuming application, normally through Limen.
 - Brand terminology and asset references are application/build inputs; they are not hidden CSS content.
 - Brand or skin changes must never alter legal actions, permissions, validation, scoring, obligations, or domain transitions.
+
+## Public component tags
+
+Use Forma's public inert authoring tag around the canonical semantic pattern:
+
+```html
+<ef-switch class="ef-component-tag">
+  <label class="ef-switch">
+    <!-- canonical native switch markup -->
+  </label>
+</ef-switch>
+```
+
+Rules:
+
+- the tag name is `ef-` plus the canonical pattern slug;
+- keep `class="ef-component-tag"` on the wrapper;
+- never register these wrappers with `customElements.define()`;
+- do not move native semantics onto the wrapper;
+- forms, labels, `dialog`, Popover, `details`, ARIA relationships, and application state stay inside the wrapper;
+- Limen/application behavior may compose around the tag but must not assume a hidden Forma runtime.
+
+The wrapper is the public authoring/readability surface. The inner native pattern remains the behavioral and accessibility contract.
 
 ## Motion and perceived weight
 

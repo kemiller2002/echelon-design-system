@@ -35,6 +35,8 @@ Own the canonical semantic HTML structures consumed by Echelon applications. Pat
 
 ## Local agent instructions
 
+- Documentation and consumer examples wrap the canonical pattern in `<ef-{slug} class="ef-component-tag">`.
+- The `ef-*` wrapper is inert and must never replace the native semantic element inside it or be registered with `customElements.define()`.
 - Modal flyouts stay on native `dialog`; gesture-driven or persistent drawer behavior belongs to Limen/application code.
 
 ## Maintenance

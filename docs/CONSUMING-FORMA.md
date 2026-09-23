@@ -46,6 +46,28 @@ More selective imports are available:
 Canonical HTML patterns are exported under `patterns/*` and documented at
 https://forma.echelonfoundry.com/.
 
+
+## Component authoring tags
+
+Consumer markup should use the documented inert `<ef-*>` wrapper around the
+canonical pattern. The tag is `ef-` plus the pattern slug.
+
+```html
+<ef-dialog class="ef-component-tag">
+  <button type="button" commandfor="confirm-dialog" command="show-modal">Open</button>
+  <dialog class="ef-dialog" id="confirm-dialog" aria-labelledby="confirm-title">
+    <div class="ef-dialog__body">
+      <h2 id="confirm-title">Confirm action</h2>
+    </div>
+  </dialog>
+</ef-dialog>
+```
+
+The wrapper has no runtime registration or lifecycle. Do not call
+`customElements.define()` for Forma tags. Native HTML inside the wrapper
+remains the semantic and interaction authority; Limen supplies behavior beyond
+the browser-native baseline.
+
 ## Branding and skins
 
 White-label identity is supplied through a versioned Brand Manifest and compiled

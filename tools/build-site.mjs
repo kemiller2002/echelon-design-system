@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import { componentTag, physicsMotionClasses, physicsMotionExample } from "./site-examples.mjs";
 
 const root = process.cwd();
 const patternDir = path.join(root, "patterns");
@@ -281,7 +282,7 @@ const indexBody = `<main id="main">
   <div class="hero-stats" aria-label="Current Forma facts">
     <div class="hero-stat"><span class="metric-label">Implemented patterns</span><strong>${slugs.length}</strong></div>
     <div class="hero-stat"><span class="metric-label">Runtime JavaScript</span><strong>0 bytes by contract</strong></div>
-    <div class="hero-stat"><span class="metric-label">Rendered examples</span><strong>${slugs.length * 3}+</strong></div>
+    <div class="hero-stat"><span class="metric-label">Rendered examples</span><strong>${slugs.length * 3 + Object.keys(physicsMotionClasses).length}+</strong></div>
   </div>
 </section>
 
@@ -300,7 +301,7 @@ const indexBody = `<main id="main">
 <section class="content-section" id="components">
   <div class="section-heading">
     <div><span class="eyebrow">Component catalog</span><h2>One contract at a time.</h2></div>
-    <p>Every implemented pattern has a dedicated page with canonical, representative-state, and explicit Mobile · 320px examples.</p>
+    <p>Every implemented pattern has a dedicated page showing its public &lt;ef-…&gt; authoring tag, canonical native structure, representative state, and explicit Mobile · 320px example.</p>
   </div>
   ${[...grouped.entries()].map(([category, items]) => `<section class="catalog-group">
     <span class="category-label">${escapeHtml(category)}</span>
@@ -374,9 +375,9 @@ for (const slug of slugs) {
   const [title, category, behavior, summary] = meta[slug];
   const source = fs.readFileSync(path.join(patternDir, slug + ".html"), "utf8").trim();
   const state = representativeState(source);
-  const canonical = namespaceSnippet(source, `ex1-${slug}-`);
-  const stateful = namespaceSnippet(state.html, `ex2-${slug}-`);
-  const mobileMarkup = source;
+  const canonical = namespaceSnippet(componentTag(slug, source), `ex1-${slug}-`);
+  const stateful = namespaceSnippet(componentTag(slug, state.html), `ex2-${slug}-`);
+  const mobileMarkup = componentTag(slug, source);
 
   const body = `<div class="docs-shell">
     ${nav(slug)}
@@ -387,6 +388,7 @@ for (const slug of slugs) {
         <h1>${escapeHtml(title)}</h1>
         <p class="lead">${escapeHtml(summary)}</p>
         <div class="contract-grid">
+          <div class="contract-item"><span class="metric-label">Authoring tag</span><strong><code>&lt;ef-${slug}&gt;</code></strong></div>
           <div class="contract-item"><span class="metric-label">Canonical source</span><strong>patterns/${slug}.html</strong></div>
           <div class="contract-item"><span class="metric-label">Behavior owner</span><strong>${escapeHtml(behavior)}</strong></div>
           <div class="contract-item"><span class="metric-label">Runtime inside Forma</span><strong>None</strong></div>
@@ -394,9 +396,10 @@ for (const slug of slugs) {
       </header>
 
       <div class="examples">
-        ${example(1, "Canonical", "Canonical repository markup, namespaced only to keep examples independent.", canonical)}
+        ${example(1, "Custom tag + canonical pattern", "The public ef-* authoring tag wraps the canonical native HTML. The tag is inert; native HTML or the application still owns behavior.", canonical)}
         ${example(2, state.changed ? "Representative state" : "Secondary surface", state.changed ? "A browser-native state made visible without adding a runtime." : "The same contract demonstrated on a secondary Forma surface.", stateful, "example-canvas--secondary")}
         ${mobileExample(3, "Mobile · 320px", "Rendered inside a true 320px viewport so Forma's mobile media queries execute. Semantic meaning and actions must remain available.", mobileMarkup)}
+        ${physicsMotionClasses[slug] ? physicsMotionExample(4, slug, source, namespaceSnippet, example) : ""}
       </div>
     </main>
   </div>`;
@@ -416,6 +419,7 @@ const agentBody = `<main id="main" class="content-section agent-page">
   <ol>
     <li>Identify the user task and domain state.</li>
     <li>Find the closest canonical pattern under <code>patterns/</code>.</li>
+    <li>Use its public <code>&lt;ef-…&gt;</code> authoring tag around the canonical pattern.</li>
     <li>Preserve its semantic elements, class structure, labels, IDs, and ARIA relationships.</li>
     <li>Supply application content and rendered state.</li>
     <li>Put non-native behavior in the consuming application/Limen.</li>
@@ -439,6 +443,7 @@ const agentBody = `<main id="main" class="content-section agent-page">
 
   <h2>Do not</h2>
   <ul>
+    <li>Register Forma's <code>&lt;ef-…&gt;</code> authoring tags with <code>customElements.define()</code>; they are intentionally inert wrappers.</li>
     <li>Add runtime JavaScript or WebAssembly to Forma.</li>
     <li>Replace native HTML only to obtain a custom appearance.</li>
     <li>Create duplicate components for presets an existing semantic pattern represents.</li>

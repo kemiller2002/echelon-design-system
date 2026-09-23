@@ -17,6 +17,7 @@ Specifically:
 - DTCG token JSON remains the canonical design-token source;
 - the F# token compiler remains build-time tooling only;
 - Custom Elements, Shadow DOM, ElementInternals, Fable browser output, Lit, and component JavaScript are not part of the canonical package;
+- documentation and consuming markup may use inert `<ef-*>` authoring wrappers around the canonical semantic HTML; these wrappers are not registered with `customElements.define()`, have no lifecycle or hidden behavior, and do not change semantic ownership;
 - native browser behavior is preferred wherever it can satisfy the interaction;
 - behavior beyond declarative HTML belongs to Limen/application code;
 - the published `dist/` directory must contain no JavaScript or WebAssembly.
@@ -54,6 +55,7 @@ Ordo = legal domain transitions
 - application behavior has one clear owner: Limen/application code;
 - CSS motion cannot silently become semantic authority;
 - components are usable from any server/framework/language that can emit HTML.
+- public examples can use readable `<ef-switch>`, `<ef-dialog>`, and similar authoring tags without adding a browser runtime.
 
 ## Negative
 
@@ -87,6 +89,8 @@ The capability matrix determines where Limen becomes necessary.
 ## Fable Custom Elements
 
 Superseded. Fable remains useful for application/Limen behavior but not for canonical design-system components.
+
+This rejection concerns **registered behavioral Custom Elements**. It does not prohibit inert `<ef-*>` wrapper tags whose only purpose is a stable authoring/documentation surface around native semantic HTML.
 
 ## Lit or another component runtime
 
