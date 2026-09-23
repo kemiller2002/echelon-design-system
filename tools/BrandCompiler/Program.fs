@@ -5,17 +5,17 @@ open System.Text.Json
 open System.Text.Json.Nodes
 open System.Text.RegularExpressions
 
-let fail message =
+let fail (message: string) =
     eprintfn "ERROR %s" message
     Environment.ExitCode <- 1
     raise (InvalidOperationException message)
 
-let requireObject (parent: JsonObject) name =
+let requireObject (parent: JsonObject) (name: string) =
     match parent[name] with
     | :? JsonObject as value -> value
     | _ -> fail $"missing required object '{name}'"
 
-let requireString (parent: JsonObject) name =
+let requireString (parent: JsonObject) (name: string) =
     match parent[name] with
     | :? JsonValue as value ->
         try
@@ -25,17 +25,17 @@ let requireString (parent: JsonObject) name =
         with _ -> fail $"'{name}' must be a string"
     | _ -> fail $"missing required string '{name}'"
 
-let tryObject (parent: JsonObject) name =
+let tryObject (parent: JsonObject) (name: string) =
     match parent[name] with
     | :? JsonObject as value -> Some value
     | _ -> None
 
-let tryNode (parent: JsonObject) name =
+let tryNode (parent: JsonObject) (name: string) =
     match parent[name] with
     | null -> None
     | value -> Some value
 
-let pathText segments = pathText segments
+let pathText (segments: string list) = String.concat "." segments
 
 let getPath (root: JsonObject) (segments: string list) =
     let mutable current: JsonNode = root
@@ -45,7 +45,7 @@ let getPath (root: JsonObject) (segments: string list) =
         | _ -> fail $"missing required value '{pathText segments}'"
     current
 
-let getStringPath root path =
+let getStringPath (root: JsonObject) (path: string list) =
     match getPath root path with
     | :? JsonValue as value ->
         try value.GetValue<string>()
@@ -59,20 +59,20 @@ let parseHex (hex: string) =
     let part offset = Convert.ToInt32(text.Substring(offset, 2), 16)
     part 0, part 2, part 4
 
-let linearize channel =
+let linearize (channel: int) =
     let c = float channel / 255.0
     if c <= 0.04045 then c / 12.92
     else Math.Pow((c + 0.055) / 1.055, 2.4)
 
-let luminance hex =
+let luminance (hex: string) =
     let r, g, b = parseHex hex
     0.2126 * linearize r + 0.7152 * linearize g + 0.0722 * linearize b
 
-let contrast a b =
+let contrast (a: string) (b: string) =
     let x, y = luminance a, luminance b
     (max x y + 0.05) / (min x y + 0.05)
 
-let ensureContrast name foreground background minimum =
+let ensureContrast (name: string) (foreground: string) (background: string) (minimum: float) =
     let ratio = contrast foreground background
     if ratio + 0.0001 < minimum then
         fail $"{name} contrast {ratio:F2}:1 is below required {minimum:F1}:1"
@@ -99,7 +99,7 @@ let renderFont (node: JsonNode) =
     | :? JsonValue as value -> value.GetValue<string>() |> safeFontName
     | _ -> fail "font-family must be a string or array of strings"
 
-let safeDimension name value =
+let safeDimension (name: string) (value: string) =
     if not (Regex.IsMatch(value, "^(0|[0-9]+(?:\\.[0-9]+)?(?:px|rem|em))$")) then
         fail $"'{name}' must be a non-negative px/rem/em dimension"
     value
@@ -124,9 +124,9 @@ let semanticPaths =
       "color.control.thumb", [ "color"; "control"; "thumb" ]
       "color.control.active", [ "color"; "control"; "active" ] ]
 
-let cssName path = "--ef-" + path.Replace(".", "-")
+let cssName (path: string) = "--ef-" + path.Replace(".", "-")
 
-let readTheme (themes: JsonObject) themeName =
+let readTheme (themes: JsonObject) (themeName: string) : (string * string) list =
     let theme = requireObject themes themeName
     semanticPaths
     |> List.map (fun (name, path) ->
@@ -134,12 +134,12 @@ let readTheme (themes: JsonObject) themeName =
         parseHex value |> ignore
         cssName name, value.ToLowerInvariant())
 
-let valueByCssName name values =
+let valueByCssName (name: string) (values: (string * string) list) =
     match values |> List.tryFind (fun (key, _) -> key = name) with
     | Some (_, value) -> value
     | None -> fail $"missing generated semantic value '{name}'"
 
-let validateTheme themeName values =
+let validateTheme (themeName: string) (values: (string * string) list) =
     let value name = valueByCssName name values
     let surface = value "--ef-color-surface-primary"
     ensureContrast $"{themeName} primary text" (value "--ef-color-text-primary") surface 4.5
@@ -173,13 +173,13 @@ let optionalPresentation (root: JsonObject) =
         | None -> ()
         values |> Seq.toList
 
-let writeBlock (builder: StringBuilder) selector values =
+let writeBlock (builder: StringBuilder) (selector: string) (values: (string * string) list) =
     builder.AppendLine(selector + " {") |> ignore
     for name, value in values do
         builder.AppendLine($"  {name}: {value};") |> ignore
     builder.AppendLine("}") |> ignore
 
-let compileBrand outputDir sourcePath =
+let compileBrand (outputDir: string) (sourcePath: string) =
     let parsed = JsonNode.Parse(File.ReadAllText sourcePath)
     let root =
         match parsed with
