@@ -13,7 +13,9 @@
     "./components.css": "./dist/components.css",
     "./all.css": "./dist/all.css",
     "./patterns/*": "./dist/patterns/*",
-    "./assessment.css": "./dist/assessment.css"
+    "./assessment.css": "./dist/assessment.css",
+    "./skins.css": "./dist/skins.css",
+    "./brands/*": "./dist/brands/*"
   },
   "files": [
     "dist",
@@ -23,18 +25,20 @@
     "clean": "node tools/clean.mjs",
     "tokens:build": "dotnet run --project tools/TokenCompiler/TokenCompiler.fsproj -- tokens/echelon.tokens.json dist/tokens.css",
     "assets:build": "node tools/build-assets.mjs",
-    "build": "npm run clean && npm run tokens:build && npm run assets:build",
+    "build": "npm run clean && npm run tokens:build && npm run brands:build && npm run assets:build",
     "test:tokens": "node --test tests/token-compiler.test.mjs",
     "test:browser": "playwright test",
     "test:a11y": "playwright test tests/browser/accessibility.spec.mjs",
     "test:runtime": "node --test tests/zero-runtime.test.mjs",
-    "check": "npm run build && npm run test:tokens && npm run test:runtime && npm run test:package && npm run test:browser",
+    "check": "npm run build && npm run test:tokens && npm run test:brands && npm run test:runtime && npm run test:package && npm run test:browser",
     "site:build": "npm run build && node tools/build-site.mjs",
     "site:test": "node --test tests/site-build.test.mjs",
     "site:check": "npm run site:build && npm run site:test && npm run site:mobile",
     "site:mobile": "playwright test --config=playwright.site.config.mjs",
     "pack:verify": "npm run build && npm pack --dry-run",
-    "test:package": "node --test tests/package-contract.test.mjs"
+    "test:package": "node --test tests/package-contract.test.mjs",
+    "brands:build": "dotnet run --project tools/BrandCompiler/BrandCompiler.fsproj -- brands dist/brands",
+    "test:brands": "node --test tests/brand-compiler.test.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
