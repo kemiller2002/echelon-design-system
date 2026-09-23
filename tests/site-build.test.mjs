@@ -31,6 +31,43 @@ test("every component page renders at least three examples", () => {
   }
 });
 
+test("physics-enabled surface pages publish explicit light standard heavy examples", () => {
+  const physicsSlugs = [
+    "alert",
+    "command-palette",
+    "dialog",
+    "disclosure",
+    "flyout",
+    "menu",
+    "popover",
+    "tabs",
+    "toast"
+  ];
+
+  for (const slug of physicsSlugs) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    const count = (html.match(/data-example="/g) ?? []).length;
+
+    assert.ok(count >= 4, `${slug} is missing its explicit physics example`);
+    assert.match(html, new RegExp(`data-physics-motion-example="${slug}"`));
+    assert.match(html, /data-motion-weight="light"/);
+    assert.match(html, /data-motion-weight="standard"/);
+    assert.match(html, /data-motion-weight="heavy"/);
+    assert.match(html, /Motion weights/);
+    assert.match(html, /presentation only/i);
+  }
+});
+
+test("physics examples remain zero-runtime and namespaced", () => {
+  for (const slug of ["dialog", "flyout", "menu", "popover", "toast", "command-palette"]) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    assert.equal(/<script\b/i.test(html), false);
+    assert.match(html, new RegExp(`motion-${slug}-light-`));
+    assert.match(html, new RegExp(`motion-${slug}-standard-`));
+    assert.match(html, new RegExp(`motion-${slug}-heavy-`));
+  }
+});
+
 test("published Forma documentation has no runtime script elements", () => {
   const files = [];
   const walk = dir => {
