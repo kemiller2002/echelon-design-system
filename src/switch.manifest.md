@@ -15,11 +15,19 @@ Provide a polished binary on/off control using semantic HTML and CSS only while 
 ## Interfaces
 
 - Inbound: standard checkbox attributes plus required Echelon class structure
+- Motion input: optional `data-ef-motion-weight="light|standard|heavy"`; standard is the canonical default
 - Outbound: native input/change events and native form value
+
+## Motion
+
+- Thumb travel uses Forma's shared physics-derived inertia duration and spring-settling curve.
+- Weight changes mass/stiffness/damping parameters, never the semantic state or activation timing.
+- The model is a deterministic CSS approximation, not a continuous physics simulation.
+- Reduced motion collapses thumb travel to an effectively immediate visual state change.
 
 ## Tests and verification
 
-- Local behavior tests: `tests/browser/switch.spec.mjs`
+- Local behavior tests: `tests/browser/switch.spec.mjs`, `tests/browser/physics-motion.spec.mjs`
 - Boundary/contract tests: form submission/reset, keyboard, role/name, zero-runtime scan
 - Integration/live verification: Playwright Chromium/Firefox/WebKit matrix
 
@@ -35,10 +43,11 @@ Provide a polished binary on/off control using semantic HTML and CSS only while 
 
 ## Local agent instructions
 
-- none
+- Do not assign a motion weight to imply business importance, risk, permission, or state legality.
+- Prefer the standard preset unless a deliberate visual-density or perceived-mass reason is documented.
 
 ## Maintenance
 
 - Owner: Echelon Foundry design system
-- Last checked against implementation: 2026-09-22
+- Last checked against implementation: 2026-09-23
 - Known gaps: pre-commit domain authorization is an application/Limen concern, not a design-system feature
