@@ -366,7 +366,7 @@ const indexBody = `<main id="main">
 <section class="content-section" id="components">
   <div class="section-heading">
     <div><span class="eyebrow">Component catalog</span><h2>One contract at a time.</h2></div>
-    <p>Every implemented pattern has a dedicated page showing its public <ef-…> authoring tag, canonical native structure, representative state, and explicit Mobile · 320px example.</p>
+    <p>Every implemented pattern has a dedicated page showing its public &lt;ef-…&gt; authoring tag, canonical native structure, representative state, and explicit Mobile · 320px example.</p>
   </div>
   ${[...grouped.entries()].map(([category, items]) => `<section class="catalog-group">
     <span class="category-label">${escapeHtml(category)}</span>
