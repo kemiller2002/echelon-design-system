@@ -2407,7 +2407,7 @@
   }
 
   .ef-diagnostic-status__body > span {
-    color: var(--ef-color-text-secondary, #686d68);
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
     font-size: 0.8125rem;
   }
 
