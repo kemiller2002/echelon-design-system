@@ -12,6 +12,7 @@ const meta = {
   "checkbox": ["Checkbox", "Input", "Native HTML", "A native checkbox with a delegated touch target, non-color checked cue, and physics-derived CSS state motion."],
   "choice-group": ["Choice group", "Selection", "Native HTML", "Semantic single-choice options with primary and supporting text."],
   "dialog": ["Dialog", "Overlay & disclosure", "Native HTML", "Modal presentation built on the platform dialog element and declarative commands."],
+  "flyout": ["Flyout", "Overlay & disclosure", "Native HTML", "Left/right edge modal surface built on native dialog semantics with physics-derived motion."],
   "disclosure": ["Disclosure", "Overlay & disclosure", "Native HTML", "Expandable content built on details and summary with no runtime behavior layer."],
   "hierarchical-choice": ["Hierarchical choice", "Selection", "Native baseline / application semantics", "Nested disclosure and choice structure for hierarchy without assigning parent-child domain meaning."],
   "hierarchical-multi-choice": ["Hierarchical multi-choice", "Selection", "Application / Limen", "Multi-selection across a hierarchy with application-owned propagation and selection rules."],
