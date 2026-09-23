@@ -62,6 +62,9 @@ test("physics-enabled surface pages publish explicit light standard heavy exampl
     "dialog",
     "disclosure",
     "flyout",
+    "fault-notification",
+    "fault-banner",
+    "fault-blocking",
     "menu",
     "popover",
     "tabs",
@@ -187,4 +190,27 @@ test("brand laboratory proves scoped brands and skins without runtime script", (
       "missing published brand artifact " + file
     );
   }
+});
+
+
+test("Aegis fault pages publish safe presentation contracts", () => {
+  for (const slug of [
+    "fault",
+    "fault-inline",
+    "fault-notification",
+    "fault-banner",
+    "fault-blocking",
+    "fault-summary",
+    "recovery-actions",
+    "fault-reference",
+    "diagnostic-status",
+    "fault-details"
+  ]) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    assert.match(html, new RegExp(`&lt;ef-${slug}&gt;`));
+    assert.equal(/TechnicalDetails|StackTrace|ExceptionDetail/.test(html), false, `${slug} leaks developer-only Aegis fields`);
+  }
+
+  const actions = fs.readFileSync(path.join(output, "components", "recovery-actions", "index.html"), "utf8");
+  assert.match(actions, /data-ef-aegis-capability/);
 });
