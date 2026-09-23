@@ -36,6 +36,31 @@ test("switch reset and required validity are browser-native", async ({ page }) =
   expect(await page.locator("#required-switch").evaluate(element => element.matches(":invalid"))).toBe(true);
 });
 
+test("switch thumb is vertically centered in the track", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.reload();
+
+  const track = page.locator(".ef-switch__track").first();
+  const geometry = await track.evaluate(element => {
+    const rect = element.getBoundingClientRect();
+    const thumb = getComputedStyle(element, "::after");
+    return {
+      trackHeight: rect.height,
+      thumbTop: parseFloat(thumb.top),
+      translate: thumb.translate
+    };
+  });
+
+  expect(geometry.thumbTop).toBeCloseTo(geometry.trackHeight / 2, 1);
+  expect(geometry.translate).toContain("-50%");
+
+  await page.getByRole("switch", { name: "Notifications" }).click();
+  const checkedTranslate = await track.evaluate(element =>
+    getComputedStyle(element, "::after").translate
+  );
+  expect(checkedTranslate).toContain("-50%");
+});
+
 test("switch animation collapses for reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
