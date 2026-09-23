@@ -455,6 +455,8 @@ Visual contract: `.ef-tabs` (Limen behavior required)
 
 Support manual and automatic activation modes, overflow, deep-link integration hooks, keyboard navigation, and reduced-motion panel transitions.
 
+The visual selected indicator uses Forma's light physics preset. Application/Limen updates tab semantics immediately; Forma only animates the resulting visual state.
+
 ### P0: Breadcrumbs
 Prefer semantic nav/list markup with system styling. A component is optional for overflow collapsing.
 
@@ -505,12 +507,16 @@ Pattern: `.ef-dialog` using native `dialog`
 
 Use native dialog behavior where it satisfies requirements. Provide consistent focus management, labelled structure, destructive variants, scroll containment, responsive full-screen mode, and return-focus behavior.
 
+Modal dialog motion uses the heavy physics preset by default, with a shorter derived exit. Native `[open]`, focus, Escape, inertness, and return focus remain authoritative.
+
 ### P0: Popover
 Pattern: `.ef-popover` using native Popover HTML
 
 Prefer the platform Popover API and CSS anchor positioning when available.
 
 Support auto/light-dismiss and controlled/manual variants, placement fallback, collision handling, focus behavior, and top-layer animation.
+
+Popover motion uses the light physics preset by default and preserves native `:popover-open` authority.
 
 ### P0: Tooltip
 Declarative pattern where browser baseline supports it; otherwise visual contract
@@ -520,9 +526,11 @@ Tooltips are supplemental only. Required information and essential actions shall
 Support hover and keyboard focus, delayed open/close, pointer-safe hover travel, and reduced motion.
 
 ### P0: Menu and menu button
-Visual contracts: `.ef-menu`, `.ef-menu-button` (Limen behavior required for menu keyboard model)
+Pattern: `.ef-menu` for ordinary action lists using native Popover HTML; full ARIA menu behavior remains a Limen visual/behavior contract.
 
-Support actions, checkable items, radio groups, nested submenu only where justified, keyboard typeahead, separators, disabled items, icons, shortcuts, and responsive mobile presentation.
+The declarative baseline supports ordinary buttons/links, native Popover open/close, responsive mobile presentation, and the light physics preset.
+
+When menu semantics require checkable items, radio groups, typeahead, roving focus, nested submenus, or the ARIA `menu` keyboard model, Limen/application behavior owns those semantics.
 
 ### P1: Context menu
 Visual contract: `.ef-context-menu` (Limen behavior required)
@@ -537,9 +545,11 @@ Support left and right edge placement, native modal focus/inertness/Escape behav
 The left and right variants are one component contract selected with `data-ef-side="left|right"`, not separate components. Native modal behavior remains browser-owned. Optional swipe-to-close, drag tracking, resizing, or persistent nonmodal state belongs to Limen/application behavior.
 
 ### P1: Drawer / sheet
-Visual contract: `.ef-drawer` (Limen behavior required)
+Pattern: `.ef-flyout` using native `dialog` for the modal left/right baseline; Limen/application behavior is required for nonmodal or gesture-enhanced variants.
 
-Support persistent/nonmodal modes and bottom-sheet placement beyond the modal flyout baseline, responsive adaptation, focus management, swipe as optional enhancement only, and reduced-motion entry/exit.
+The existing flyout contract is Forma's canonical modal drawer/side-sheet implementation. Support left and right placement, responsive adaptation, native focus/inertness/Escape behavior, and reduced-motion entry/exit.
+
+The modal baseline uses the heavy physics preset and enters from its occupied edge. Swipe is optional enhancement only and may never be the only close path. Bottom-sheet, persistent nonmodal, resizable, and gesture-tracked variants remain application/Limen concerns until separately proven.
 
 ### P1: Toggletip
 Declarative popover pattern where sufficient
@@ -578,6 +588,15 @@ Tours shall never block access to the underlying feature merely because onboardi
 - ef-error-summary
 
 Requirements include semantic live-region policy, duplicate-announcement prevention, determinate/indeterminate distinction, pause/dismiss policy, and unknown outcome support.
+
+Alert and toast motion requirements:
+
+- `.ef-alert[data-ef-motion-entry]` may use a standard-weight entry cue when newly inserted;
+- persistent alerts do not repeatedly animate by default;
+- `.ef-toast` may use the native Popover API as a zero-runtime show/hide baseline;
+- toast dismissal uses the shorter derived exit duration;
+- notification motion never replaces visible status text or live-region semantics;
+- reduced motion removes spatial travel.
 
 ### P1: Async action button pattern
 This may be a pattern around a native button rather than a custom element.

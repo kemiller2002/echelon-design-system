@@ -23,7 +23,9 @@ const operationalPatterns = [
   "diff-viewer",
   "empty-state",
   "file-upload",
+  "flyout",
   "master-detail",
+  "menu",
   "metric-card",
   "mobile-action-bar",
   "operation-status",
@@ -37,6 +39,7 @@ const operationalPatterns = [
   "status-lozenge",
   "tabs",
   "timeline",
+  "toast",
   "wizard",
   "work-queue"
 ];

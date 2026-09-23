@@ -18,7 +18,7 @@
   }
 
   /* Physics-derived motion ---------------------------------------------- */
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout) {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette) {
     /*
      * CSS cannot run a continuous rigid-body simulation. Forma therefore uses
      * a physics-derived response model. The fallback values remain usable in
@@ -39,26 +39,38 @@
     --ef-motion-damped-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout)[data-ef-motion-weight="light"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette)[data-ef-motion-weight="light"] {
     --ef-motion-mass: 0.65;
     --ef-motion-stiffness: 1.15;
     --ef-motion-damping: 0.94;
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout)[data-ef-motion-weight="standard"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette)[data-ef-motion-weight="standard"] {
     --ef-motion-mass: 1;
     --ef-motion-stiffness: 1;
     --ef-motion-damping: 0.84;
   }
 
-  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout)[data-ef-motion-weight="heavy"] {
+  :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette)[data-ef-motion-weight="heavy"] {
+    --ef-motion-mass: 1.8;
+    --ef-motion-stiffness: 0.92;
+    --ef-motion-damping: 0.76;
+  }
+
+  :where(.ef-disclosure, .ef-popover, .ef-menu, .ef-tabs):not([data-ef-motion-weight]) {
+    --ef-motion-mass: 0.65;
+    --ef-motion-stiffness: 1.15;
+    --ef-motion-damping: 0.94;
+  }
+
+  :where(.ef-dialog, .ef-flyout, .ef-command-palette):not([data-ef-motion-weight]) {
     --ef-motion-mass: 1.8;
     --ef-motion-stiffness: 0.92;
     --ef-motion-damping: 0.76;
   }
 
   @supports (width: calc(1px * sqrt(1))) {
-    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout) {
+    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette) {
       /*
        * Response time follows sqrt(mass / stiffness), then is lengthened as
        * damping decreases. Vertical gravity time follows sqrt(2s / g) and is
@@ -330,7 +342,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-dialog, .ef-flyout) {
+    :where(.ef-switch, .ef-checkbox, .ef-select, .ef-disclosure, .ef-popover, .ef-menu, .ef-dialog, .ef-flyout, .ef-tabs, .ef-alert, .ef-toast, .ef-command-palette) {
       --ef-motion-inertia-duration: 0.01ms;
       --ef-motion-gravity-duration: 0.01ms;
       --ef-motion-state-duration: 0.01ms;
@@ -465,13 +477,33 @@
   .ef-disclosure > summary::after {
     content: "+";
     font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
-    transition: rotate var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease);
+    rotate: 0deg;
+    scale: 1;
+    transition:
+      rotate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing),
+      scale var(--ef-motion-press-duration) var(--ef-motion-damped-easing);
   }
+  .ef-disclosure > summary:active::after { scale: 0.86; }
   .ef-disclosure[open] > summary::after { rotate: 45deg; }
-  .ef-disclosure__content { padding: 0 0 1rem; }
+  .ef-disclosure__content {
+    padding: 0 0 1rem;
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity var(--ef-motion-state-duration) linear,
+      translate var(--ef-motion-inertia-duration) var(--ef-motion-damped-easing);
+  }
 
-  /* Popover ------------------------------------------------------------- */
-  .ef-popover {
+  @starting-style {
+    .ef-disclosure[open] .ef-disclosure__content {
+      opacity: 0;
+      translate: 0 -0.25rem;
+    }
+  }
+
+  /* Popover and ordinary action menu ------------------------------------ */
+  .ef-popover,
+  .ef-menu {
     max-inline-size: min(30rem, calc(100vw - 2rem));
     max-block-size: min(80dvh, calc(100dvh - 2rem));
     margin: 0;
@@ -483,24 +515,68 @@
     overflow: auto;
     overscroll-behavior: contain;
     opacity: 0;
-    transform: translateY(-0.35rem) scale(0.985);
+    translate: 0 -0.35rem;
+    scale: 0.985;
     transition:
-      opacity var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-enter, ease),
-      transform var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-enter, ease),
-      display var(--ef-primitive-motion-duration-fast, 120ms) allow-discrete,
-      overlay var(--ef-primitive-motion-duration-fast, 120ms) allow-discrete;
+      opacity var(--ef-motion-exit-duration) linear,
+      translate var(--ef-motion-exit-duration) var(--ef-motion-damped-easing),
+      scale var(--ef-motion-exit-duration) var(--ef-motion-damped-easing),
+      display var(--ef-motion-exit-duration) allow-discrete,
+      overlay var(--ef-motion-exit-duration) allow-discrete;
   }
 
-  .ef-popover:popover-open {
+  .ef-popover:popover-open,
+  .ef-menu:popover-open {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    translate: 0 0;
+    scale: 1;
+    transition-duration:
+      var(--ef-motion-state-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration);
   }
 
   @starting-style {
-    .ef-popover:popover-open {
+    .ef-popover:popover-open,
+    .ef-menu:popover-open {
       opacity: 0;
-      transform: translateY(-0.35rem) scale(0.985);
+      translate: 0 -0.35rem;
+      scale: 0.985;
     }
+  }
+
+  .ef-menu {
+    min-inline-size: min(14rem, calc(100vw - 2rem));
+    padding: 0.4rem;
+  }
+
+  .ef-menu__list {
+    display: grid;
+    gap: 0.2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ef-menu__list :where(button, a) {
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0.75rem;
+    border: 0;
+    background: transparent;
+    color: var(--ef-color-text-primary, #171a18);
+    text-align: start;
+    text-decoration: none;
+  }
+
+  .ef-menu__list :where(button, a):hover {
+    background: var(--ef-color-surface-secondary, #e3e0d7);
   }
 
   /* Dialog and flyout ---------------------------------------------------- */
@@ -909,19 +985,51 @@
   }
 
   .ef-tabs__list [role="tab"] {
+    position: relative;
     flex: 0 0 auto;
     min-block-size: 2.75rem;
     border: 0;
-    border-block-end: 3px solid transparent;
     background: transparent;
+    translate: 0 0.08rem;
+    transition:
+      background var(--ef-motion-state-duration) var(--ef-motion-damped-easing),
+      translate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing);
+  }
+
+  .ef-tabs__list [role="tab"]::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0.6rem;
+    inset-block-end: 0;
+    block-size: 3px;
+    background: var(--ef-color-accent-primary, #905831);
+    scale: 0 1;
+    transition: scale var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing);
   }
 
   .ef-tabs__list [aria-selected="true"] {
-    border-block-end-color: var(--ef-color-accent-primary, #905831);
     background: var(--ef-color-surface-secondary, #e3e0d7);
+    translate: 0 0;
   }
 
+  .ef-tabs__list [aria-selected="true"]::after { scale: 1 1; }
+
   .ef-tabs__panel { padding-block: 1.25rem; }
+
+  .ef-tabs__panel[data-ef-motion-entry] {
+    opacity: 1;
+    translate: 0 0;
+    transition:
+      opacity var(--ef-motion-state-duration) linear,
+      translate var(--ef-motion-inertia-duration) var(--ef-motion-damped-easing);
+  }
+
+  @starting-style {
+    .ef-tabs__panel[data-ef-motion-entry] {
+      opacity: 0;
+      translate: 0 0.25rem;
+    }
+  }
 
   /* Timeline ------------------------------------------------------------ */
   .ef-timeline {
@@ -1110,6 +1218,73 @@
     background: var(--ef-color-surface-primary, #f2efe7);
   }
 
+  .ef-alert[data-ef-motion-entry] {
+    translate: 0 0;
+    transition: translate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing);
+  }
+
+  .ef-alert p {
+    color: var(--ef-color-text-primary, #171a18);
+  }
+
+  @starting-style {
+    .ef-alert[data-ef-motion-entry] {
+      translate: 0 -0.5rem;
+    }
+  }
+
+  .ef-toast {
+    position: fixed;
+    inset: auto max(1rem, env(safe-area-inset-right)) max(1rem, env(safe-area-inset-bottom)) auto;
+    max-inline-size: min(26rem, calc(100vw - 2rem));
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-inline-start: 0.35rem solid var(--ef-color-accent-primary, #905831);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    box-shadow: 0 1rem 3rem rgb(0 0 0 / 0.18);
+    opacity: 0;
+    translate: 0 0.65rem;
+    scale: 0.99;
+    transition:
+      opacity var(--ef-motion-exit-duration) linear,
+      translate var(--ef-motion-exit-duration) var(--ef-motion-damped-easing),
+      scale var(--ef-motion-exit-duration) var(--ef-motion-damped-easing),
+      display var(--ef-motion-exit-duration) allow-discrete,
+      overlay var(--ef-motion-exit-duration) allow-discrete;
+  }
+
+  .ef-toast:popover-open {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    transition-duration:
+      var(--ef-motion-state-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration);
+  }
+
+  @starting-style {
+    .ef-toast:popover-open {
+      opacity: 0;
+      translate: 0 0.65rem;
+      scale: 0.99;
+    }
+  }
+
+  .ef-toast__header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .ef-toast__title { margin: 0; }
+  .ef-toast p { margin-block: 0.35rem 0; }
+
   .ef-alert__icon,
   .ef-operation-status__symbol,
   .ef-empty-state__symbol {
@@ -1248,6 +1423,35 @@
     border: 1px solid var(--ef-color-border-functional, #3a403c);
     background: var(--ef-color-surface-primary, #f2efe7);
     color: var(--ef-color-text-primary, #171a18);
+    opacity: 0;
+    translate: 0 0.75rem;
+    scale: 0.985;
+    transition:
+      opacity var(--ef-motion-exit-duration) linear,
+      translate var(--ef-motion-exit-duration) var(--ef-motion-damped-easing),
+      scale var(--ef-motion-exit-duration) var(--ef-motion-damped-easing),
+      display var(--ef-motion-exit-duration) allow-discrete,
+      overlay var(--ef-motion-exit-duration) allow-discrete;
+  }
+
+  .ef-command-palette[open] {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+    transition-duration:
+      var(--ef-motion-state-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration),
+      var(--ef-motion-inertia-duration);
+  }
+
+  @starting-style {
+    .ef-command-palette[open] {
+      opacity: 0;
+      translate: 0 0.75rem;
+      scale: 0.985;
+    }
   }
 
   .ef-command-palette__header {
@@ -1658,7 +1862,8 @@
       flex: 1 1 min(10rem, 100%);
     }
 
-    .ef-popover {
+    .ef-popover,
+    .ef-menu {
       max-inline-size: calc(100vw - 1rem);
       max-block-size: calc(100dvh - 1rem);
     }
@@ -1688,8 +1893,17 @@
     .ef-slider__input,
     .ef-segment,
     .ef-disclosure > summary::after,
+    .ef-disclosure__content,
     .ef-popover,
-    .ef-dialog {
+    .ef-menu,
+    .ef-dialog,
+    .ef-flyout,
+    .ef-tabs__list [role="tab"],
+    .ef-tabs__list [role="tab"]::after,
+    .ef-tabs__panel[data-ef-motion-entry],
+    .ef-alert[data-ef-motion-entry],
+    .ef-toast,
+    .ef-command-palette {
       transition-duration: 0.01ms;
     }
   }
@@ -1698,7 +1912,10 @@
     .ef-switch__track,
     .ef-segmented,
     .ef-popover,
-    .ef-dialog {
+    .ef-menu,
+    .ef-dialog,
+    .ef-flyout,
+    .ef-toast {
       border-color: CanvasText;
     }
 
