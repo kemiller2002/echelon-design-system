@@ -82,3 +82,33 @@ test("physics motion controls preserve native accessible roles and names", async
   await expect(page.getByRole("checkbox", { name: "Record audit events" })).toBeVisible();
   await expect(page.getByRole("combobox", { name: "Deployment region" })).toBeVisible();
 });
+
+
+test("overlay motion surfaces have no automatically detectable WCAG A/AA violations", async ({ page }) => {
+  await page.goto("/tests/browser/fixture/overlay-motion.html");
+
+  for (const buttonName of ["Open modal", "Open left flyout", "Open right flyout"]) {
+    await page.getByRole("button", { name: buttonName }).click();
+
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+      .analyze();
+
+    expect(results.violations).toEqual([]);
+    await page.keyboard.press("Escape");
+  }
+});
+
+test("modal and flyouts expose native dialog roles and accessible names", async ({ page }) => {
+  await page.goto("/tests/browser/fixture/overlay-motion.html");
+
+  for (const [buttonName, dialogName] of [
+    ["Open modal", "Confirm action"],
+    ["Open left flyout", "Left flyout"],
+    ["Open right flyout", "Right flyout"]
+  ]) {
+    await page.getByRole("button", { name: buttonName }).click();
+    await expect(page.getByRole("dialog", { name: dialogName })).toBeVisible();
+    await page.keyboard.press("Escape");
+  }
+});
