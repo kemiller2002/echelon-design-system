@@ -51,3 +51,13 @@ A version tag builds and validates the exact package archive, exercises it in a
 clean consumer, and attaches the tarball to the GitHub release. npm publishing
 may be enabled through Trusted Publishing without changing the application
 contract.
+
+## Branding and skins
+
+Forma supports versioned, scoped white-label presentation through Brand
+Manifests and zero-runtime skin presets. Brand manifests compile to static CSS
+custom-property scopes; applications retain runtime selection/persistence and
+domain authority.
+
+See [docs/BRANDING.md](docs/BRANDING.md) and
+[requirements/WHITE-LABEL-AND-SKINNING.md](requirements/WHITE-LABEL-AND-SKINNING.md).
