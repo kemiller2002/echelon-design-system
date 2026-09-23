@@ -51,3 +51,16 @@ A version tag builds and validates the exact package archive, exercises it in a
 clean consumer, and attaches the tarball to the GitHub release. npm publishing
 may be enabled through Trusted Publishing without changing the application
 contract.
+
+## Figma
+
+Forma treats Figma as a design and developer-consumption surface, not as a
+second source of truth. Canonical tokens remain in
+`tokens/echelon.tokens.json`, canonical component anatomy remains in
+`patterns/*.html`, and `figma/component-contracts.json` provides complete,
+machine-readable coverage for the Figma library.
+
+See [docs/FIGMA.md](docs/FIGMA.md) for the variable, component, and Code Connect
+workflow. The public package also exposes `./tokens.json` and
+`./figma/components.json` for design tooling.
+
