@@ -7,7 +7,10 @@ export const physicsMotionClasses = {
   "menu": "ef-menu",
   "popover": "ef-popover",
   "tabs": "ef-tabs",
-  "toast": "ef-toast"
+  "toast": "ef-toast",
+  "fault-notification": "ef-fault-notification",
+  "fault-banner": "ef-fault-banner",
+  "fault-blocking": "ef-fault-blocking"
 };
 
 export function componentTag(slug, source) {
