@@ -55,3 +55,21 @@ If the browser can own the interaction correctly with semantic HTML, the design 
 If the interaction requires state coordination, asynchronous data, domain legality, focus orchestration not supplied by HTML, drag geometry, virtualization, or computed synchronization, the design system provides markup/CSS contracts only and Limen/application code owns behavior.
 
 The design-system package must not add JavaScript to erase this boundary.
+
+
+### Aegis fault presentation
+
+| Pattern | Declarative baseline | Behavior required from application/Limen |
+| --- | --- | --- |
+| fault | semantic section, severity/reference/action layout | map Aegis Presentation.T |
+| fault-inline | local semantic message and native buttons | associate with affected operation and execute recovery |
+| fault-notification | status surface and dismiss/recovery buttons | insertion, throttling, dismissal, durable history |
+| fault-banner | persistent in-flow alert/status surface | lifecycle and recovery execution |
+| fault-blocking | native dialog structure | showModal, close/cancel policy, focus, recovery |
+| fault-summary | focusable grouped list and links | fingerprint/deduplicate/group/navigate |
+| recovery-actions | native buttons with capability annotations | capability revalidation and effect execution |
+| fault-reference | readable reference and optional copy button | clipboard action |
+| diagnostic-status | text-first status | map Aegis persistence state |
+| fault-details | native details/summary disclosure | supply explicitly sanitized safe view model |
+
+No row authorizes Forma runtime JavaScript or direct binding of a raw Aegis Fault.
