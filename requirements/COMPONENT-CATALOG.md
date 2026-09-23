@@ -8,7 +8,17 @@ An entry may be:
 - a **visual contract** whose behavior is supplied by Limen/application code;
 - native HTML styled by the foundation layer.
 
-Names beginning with `ef-` describe the Echelon pattern/class contract. They do not imply Custom Elements.
+Every implemented pattern also exposes a public authoring wrapper named `<ef-{slug}>`, for example `<ef-switch>`, `<ef-dialog>`, and `<ef-data-grid>`.
+
+These `ef-*` tags are intentionally **inert custom HTML wrappers**, not registered Custom Elements:
+
+- Forma does not call `customElements.define()`;
+- the wrapper uses `class="ef-component-tag"` and `display: contents` so it does not become a competing layout box;
+- native HTML inside the wrapper remains the semantic, form, keyboard, focus, dialog, popover, and accessibility authority;
+- Limen/application code still owns non-native behavior;
+- the wrapper exists to provide a stable, readable component authoring surface and consistent documentation syntax.
+
+The existing `.ef-*` classes remain the styling/pattern contract used by the canonical inner markup.
 
 Inclusion here does not mean every entry must ship in the first release.
 
