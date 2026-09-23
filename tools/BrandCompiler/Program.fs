@@ -35,20 +35,22 @@ let tryNode (parent: JsonObject) name =
     | null -> None
     | value -> Some value
 
+let pathText segments = pathText segments
+
 let getPath (root: JsonObject) (segments: string list) =
     let mutable current: JsonNode = root
     for segment in segments do
         match current with
         | :? JsonObject as obj when not (isNull obj[segment]) -> current <- obj[segment]
-        | _ -> fail $"missing required value '{String.concat "." segments}'"
+        | _ -> fail $"missing required value '{pathText segments}'"
     current
 
 let getStringPath root path =
     match getPath root path with
     | :? JsonValue as value ->
         try value.GetValue<string>()
-        with _ -> fail $"'{String.concat "." path}' must be a string"
-    | _ -> fail $"'{String.concat "." path}' must be a string"
+        with _ -> fail $"'{pathText path}' must be a string"
+    | _ -> fail $"'{pathText path}' must be a string"
 
 let parseHex (hex: string) =
     if not (Regex.IsMatch(hex, "^#[0-9A-Fa-f]{6}$")) then
