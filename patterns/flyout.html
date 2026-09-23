@@ -1,0 +1,72 @@
+<button type="button" commandfor="left-flyout" command="show-modal">Open left flyout</button>
+<dialog
+  class="ef-flyout"
+  id="left-flyout"
+  data-ef-side="left"
+  data-ef-motion-weight="standard"
+  aria-labelledby="left-flyout-title"
+  aria-describedby="left-flyout-description">
+  <div class="ef-flyout__surface">
+    <header class="ef-flyout__header">
+      <div>
+        <p class="ef-component-kicker">Filters</p>
+        <h2 id="left-flyout-title">Refine results</h2>
+      </div>
+      <button
+        class="ef-flyout__close"
+        type="button"
+        commandfor="left-flyout"
+        command="close"
+        aria-label="Close left flyout">Close</button>
+    </header>
+    <div class="ef-flyout__body">
+      <p id="left-flyout-description">A left-edge modal surface for contextual controls or navigation.</p>
+      <label class="ef-checkbox" data-ef-motion-weight="standard">
+        <input class="ef-checkbox__input" type="checkbox" name="open-only" value="yes">
+        <span class="ef-checkbox__box" aria-hidden="true"></span>
+        <span class="ef-checkbox__text">
+          <span class="ef-checkbox__label">Open items only</span>
+        </span>
+      </label>
+    </div>
+    <footer class="ef-flyout__actions">
+      <button type="button" commandfor="left-flyout" command="close">Apply</button>
+    </footer>
+  </div>
+</dialog>
+
+<button type="button" commandfor="right-flyout" command="show-modal">Open right flyout</button>
+<dialog
+  class="ef-flyout"
+  id="right-flyout"
+  data-ef-side="right"
+  data-ef-motion-weight="standard"
+  aria-labelledby="right-flyout-title"
+  aria-describedby="right-flyout-description">
+  <div class="ef-flyout__surface">
+    <header class="ef-flyout__header">
+      <div>
+        <p class="ef-component-kicker">Details</p>
+        <h2 id="right-flyout-title">Record context</h2>
+      </div>
+      <button
+        class="ef-flyout__close"
+        type="button"
+        commandfor="right-flyout"
+        command="close"
+        aria-label="Close right flyout">Close</button>
+    </header>
+    <div class="ef-flyout__body">
+      <p id="right-flyout-description">A right-edge modal surface for detail, inspection, or contextual work.</p>
+      <dl>
+        <dt>Status</dt>
+        <dd>Needs review</dd>
+        <dt>Owner</dt>
+        <dd>Application supplied</dd>
+      </dl>
+    </div>
+    <footer class="ef-flyout__actions">
+      <button type="button" commandfor="right-flyout" command="close">Done</button>
+    </footer>
+  </div>
+</dialog>
