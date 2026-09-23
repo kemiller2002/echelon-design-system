@@ -31,6 +31,8 @@ test("Forma is a versioned public-consumer package", () => {
     "patterns/select.html",
     "patterns/dialog.html",
     "patterns/flyout.html",
+    "patterns/menu.html",
+    "patterns/toast.html",
     "patterns/data-grid.html",
     "patterns/work-queue.html"
   ]) {
@@ -64,6 +66,8 @@ test("npm package contract contains the expected consumer surface", () => {
     "patterns/select.html",
     "patterns/dialog.html",
     "patterns/flyout.html",
+    "patterns/menu.html",
+    "patterns/toast.html",
     "patterns/data-grid.html",
     "patterns/work-queue.html"
   ]) {
