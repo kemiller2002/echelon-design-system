@@ -161,10 +161,10 @@
         "forma,motion,css,accessibility,transient-surfaces"
       ],
       "priority": "high",
-      "status": "ready",
+      "status": "complete",
       "attachments": [],
       "createdAt": "2026-09-23T08:47:20.704Z",
-      "updatedAt": "2026-09-23T08:47:20.000Z",
+      "updatedAt": "2026-09-23T13:24:57.000Z",
       "createdBy": "agent:chatgpt",
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/forma/issues/29"
