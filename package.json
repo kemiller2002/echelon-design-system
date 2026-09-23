@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Zero-runtime HTML and CSS design system for Echelon Foundry applications.",
   "sideEffects": [
-    "./dist/*.css"
+    "./dist/*.css",
+    "./dist/brands/*.css"
   ],
   "exports": {
     "./tokens.css": "./dist/tokens.css",
