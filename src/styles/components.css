@@ -511,14 +511,12 @@
     border: 1px solid var(--ef-color-border-functional, #3a403c);
     background: var(--ef-color-surface-primary, #f2efe7);
     color: var(--ef-color-text-primary, #171a18);
-    opacity: 0;
     overscroll-behavior: contain;
   }
 
   :where(.ef-dialog, .ef-flyout)[open] {
     --ef-overlay-motion-duration: var(--ef-motion-inertia-duration);
     --ef-overlay-spatial-easing: var(--ef-motion-spring-easing);
-    opacity: 1;
   }
 
   :where(.ef-dialog, .ef-flyout)::backdrop {
@@ -544,7 +542,6 @@
     translate: 0 0.75rem;
     scale: 0.985;
     transition:
-      opacity var(--ef-overlay-motion-duration) var(--ef-motion-damped-easing),
       translate var(--ef-overlay-motion-duration) var(--ef-overlay-spatial-easing),
       scale var(--ef-overlay-motion-duration) var(--ef-overlay-spatial-easing),
       display var(--ef-overlay-motion-duration) allow-discrete,
@@ -581,7 +578,6 @@
     box-shadow: 0 0 3rem rgb(0 0 0 / 0.24);
     translate: var(--ef-flyout-closed-x) 0;
     transition:
-      opacity var(--ef-overlay-motion-duration) var(--ef-motion-damped-easing),
       translate var(--ef-overlay-motion-duration) var(--ef-overlay-spatial-easing),
       display var(--ef-overlay-motion-duration) allow-discrete,
       overlay var(--ef-overlay-motion-duration) allow-discrete;
@@ -654,13 +650,11 @@
 
   @starting-style {
     .ef-dialog[open] {
-      opacity: 0;
       translate: 0 0.75rem;
       scale: 0.985;
     }
 
     .ef-flyout[open] {
-      opacity: 0;
       translate: var(--ef-flyout-closed-x) 0;
     }
 
@@ -671,13 +665,18 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    :where(.ef-dialog, .ef-dialog[open], .ef-flyout, .ef-flyout[open]) {
+    .ef-dialog,
+    .ef-dialog[open],
+    .ef-flyout,
+    .ef-flyout[open] {
       translate: 0 0;
       scale: 1;
     }
 
-    :where(.ef-dialog, .ef-flyout)::backdrop,
-    :where(.ef-dialog, .ef-flyout)[open]::backdrop {
+    .ef-dialog::backdrop,
+    .ef-dialog[open]::backdrop,
+    .ef-flyout::backdrop,
+    .ef-flyout[open]::backdrop {
       backdrop-filter: none;
     }
   }
