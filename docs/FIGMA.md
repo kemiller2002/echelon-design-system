@@ -54,6 +54,41 @@ Recommended variable naming examples:
 The last two names are mode-backed variables: their values change between Light
 and Dark rather than creating separate designer-facing variables for each mode.
 
+## Starter-plan compatibility
+
+The production contract still requires both `Light` and `Dark` semantic
+modes. A Figma Starter file may be used as an incremental authoring surface,
+but Starter limitations must not change the canonical Forma contract.
+
+The verified Starter-compatible layout is:
+
+- exactly three pages: `Cover`, `Foundations`, and `Components`;
+- Getting Started and Utilities are sections within those pages rather than
+  additional pages;
+- the `Forma Semantic Color` collection uses its single available mode named
+  `Light`;
+- all component bindings target the same semantic variables that will later
+  receive a `Dark` value;
+- do not create a separate Dark semantic collection as a workaround.
+
+This keeps a Starter-built library upgrade-safe. After moving the file to a
+plan that supports multiple variable modes, add `Dark` to the existing
+`Forma Semantic Color` collection and populate the dark aliases from
+`tokens/echelon.tokens.json`. Existing components should not need to be
+rebuilt.
+
+The current Starter implementation was validated with:
+
+- 7 local variable collections;
+- 50 canonical variables;
+- 18 semantic Light aliases resolving to primitives;
+- Web code syntax present on every variable;
+- no invalid semantic scopes.
+
+Figma MCP access on Starter is also rate-limited. When that allowance is
+exhausted, stop mutating the Figma file and resume from the recorded integration
+work item rather than recreating state manually.
+
 ## Component workflow
 
 1. Start with an existing `patterns/<name>.html` contract.
@@ -130,4 +165,3 @@ tracked separately because they require the real Figma library.
 - Limen/application code owns behavior beyond native HTML.
 - Ordo/application state owns capabilities, obligations, invariants, and legal
   transitions.
-
