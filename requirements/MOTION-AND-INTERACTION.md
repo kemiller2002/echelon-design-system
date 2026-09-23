@@ -205,22 +205,33 @@ If used:
 - automatic tab activation shall not produce distracting repeated animation during arrow navigation;
 - reduced motion removes translation.
 
-## 7. Dialog, popover, menu, tooltip, drawer
+## 7. Dialog, popover, menu, tooltip, flyout, drawer
 
 ### Entry
 Temporary surfaces may use opacity plus a small spatial cue related to origin.
 
 Popover/menu motion should visually connect to its invoker.
 
-Drawer motion should reflect the edge it occupies.
+Centered modal dialogs shall use a restrained vertical/scale response. Modal flyouts shall travel from the edge they occupy: negative inline travel for the left edge and positive inline travel for the right edge.
+
+Dialog and flyout spatial entry shall use the shared physics-derived inertia model. `data-ef-motion-weight="light|standard|heavy"` may tune perceived mass, but it must never imply domain importance, severity, permission, or risk.
 
 ### Exit
-Exit is normally shorter than entry.
+Exit is shorter than entry and uses a damped response rather than spring overshoot.
 
-Focus restoration shall not wait on decorative animation.
+Focus restoration shall not wait on decorative animation. Native dialog state changes immediately; animation only represents that state.
 
-### Top layer
-Where browser top-layer APIs are used, animation shall account for discrete display/open state transitions and avoid leaving invisible interactive surfaces.
+### Flyout boundary
+Forma owns only the semantic native-dialog structure and CSS presentation for modal flyouts. Swipe tracking, velocity-based release, resize gestures, persistent nonmodal drawers, and other direct manipulation belong to Limen/application code.
+
+A direct-manipulation enhancement must track the pointer without lag and may use a spring only after release. It may not become the only close path.
+
+### Backdrop
+Modal dialog and flyout backdrops may fade and apply a small visual blur. Backdrop animation must remain synchronized with the top-layer surface and must not communicate state that is absent from text or semantics.
+
+### Reduced motion
+Reduced motion removes modal scale/translation and flyout edge travel. The final open/closed distinction remains immediate and unambiguous.
+
 
 ## 8. Reorder and drag
 
