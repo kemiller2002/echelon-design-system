@@ -8,11 +8,6 @@ function seconds(value) {
   return trimmed.endsWith("ms") ? Number.parseFloat(trimmed) / 1000 : Number.parseFloat(trimmed);
 }
 
-async function durationVariable(locator, name) {
-  return locator.evaluate((element, propertyName) =>
-    getComputedStyle(element).getPropertyValue(propertyName).trim(), name);
-}
-
 async function durations(locator, pseudo = null) {
   return locator.evaluate((element, pseudoValue) =>
     getComputedStyle(element, pseudoValue || undefined)
@@ -25,9 +20,19 @@ test.beforeEach(async ({ page }) => {
 });
 
 test("surface mass produces coherent light standard heavy inertial ordering", async ({ page }) => {
-  const light = seconds(await durationVariable(page.locator("#physics-disclosure"), "--ef-motion-inertia-duration"));
-  const standard = seconds(await durationVariable(page.locator("#physics-toast"), "--ef-motion-inertia-duration"));
-  const heavy = seconds(await durationVariable(page.locator("#physics-dialog"), "--ef-motion-inertia-duration"));
+  const disclosure = await durations(page.locator("#physics-disclosure > summary"), "::after");
+
+  await page.locator("#physics-toast-open").click();
+  const toast = await durations(page.locator("#physics-toast"));
+  await page.locator("#physics-toast-close").click();
+
+  await page.locator("#physics-dialog-open").click();
+  const dialog = await durations(page.locator("#physics-dialog"));
+  await page.locator("#physics-dialog-close").click();
+
+  const light = seconds(disclosure[0]);
+  const standard = seconds(toast[1]);
+  const heavy = seconds(dialog[0]);
 
   expect(light).toBeLessThan(standard);
   expect(standard).toBeLessThan(heavy);
