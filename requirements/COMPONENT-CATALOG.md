@@ -236,6 +236,26 @@ Support:
 - per-file error;
 - keyboard accessibility.
 
+### P0: Natural-language composer
+
+Pattern: `.ef-composer`
+
+Support a large plain-language input surface with visible context/help, native textarea semantics, application-supplied attach/dictate affordances, a primary continuation action, and an accessible status region.
+
+Forma owns presentation only. Interpretation, agent invocation, speech recognition, upload behavior, persistence, permissions, and transition legality belong to the consuming application/Limen/Ordo. The composer must remain useful when no AI capability is available and must never imply that submitted text has already been committed.
+
+### P1: Conversation
+
+Pattern: `.ef-conversation` / `.ef-turn`
+
+Render an ordered history of explicitly labeled user/application turns. Support structured content and application-supplied actions inside a turn without forcing consumer-chat bubbles. Speaker styling must not imply truth, authority, confidence, or approval.
+
+### P1: Understanding review
+
+Pattern: `.ef-understanding`
+
+Present the application's proposed interpretation of user input before a consequential operation. Support explicit textual states including understood/accepted, unknown, conflicting, and unresolved; concise summaries; and source, answer, or correction actions supplied by the application. Ordo/application state is authoritative for every state and whether any item blocks a transition.
+
 ### P2: Tag / token input
 Visual contract: `.ef-token-input` (Limen behavior required)
 
