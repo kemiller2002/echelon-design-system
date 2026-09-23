@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forma surface physics fixture</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <link rel="stylesheet" href="/dist/components.css">
+  <style>
+    main { max-inline-size: 52rem; margin: 2rem auto; padding: 1rem; display: grid; gap: 1.5rem; }
+  </style>
+</head>
+<body>
+<main>
+  <details id="physics-disclosure" class="ef-disclosure" data-ef-motion-weight="light">
+    <summary>Advanced options</summary>
+    <div class="ef-disclosure__content"><p>Additional controls.</p></div>
+  </details>
+
+  <div>
+    <button id="physics-popover-open" type="button" popovertarget="physics-popover">Show popover</button>
+    <div class="ef-popover" id="physics-popover" popover data-ef-motion-weight="light">
+      <p>Popover content</p>
+      <button id="physics-popover-close" type="button" popovertarget="physics-popover" popovertargetaction="hide">Close popover</button>
+    </div>
+  </div>
+
+  <div>
+    <button id="physics-menu-open" type="button" popovertarget="physics-menu">More actions</button>
+    <div class="ef-menu" id="physics-menu" popover data-ef-motion-weight="light">
+      <ul class="ef-menu__list">
+        <li><button type="button">Duplicate</button></li>
+        <li><button type="button">Archive</button></li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <button id="physics-dialog-open" type="button" commandfor="physics-dialog" command="show-modal">Open dialog</button>
+    <dialog class="ef-dialog" id="physics-dialog" aria-labelledby="physics-dialog-title" data-ef-motion-weight="heavy">
+      <div class="ef-dialog__body">
+        <h2 id="physics-dialog-title">Confirm action</h2>
+        <p>Dialog content.</p>
+      </div>
+      <div class="ef-dialog__actions">
+        <button id="physics-dialog-close" type="button" commandfor="physics-dialog" command="close">Close dialog</button>
+      </div>
+    </dialog>
+  </div>
+
+  <div>
+    <button id="physics-drawer-open" type="button" commandfor="physics-drawer" command="show-modal">Open drawer</button>
+    <dialog class="ef-drawer" id="physics-drawer" aria-labelledby="physics-drawer-title" data-side="end" data-ef-motion-weight="heavy">
+      <header class="ef-drawer__header">
+        <h2 id="physics-drawer-title">Details</h2>
+        <button id="physics-drawer-close" type="button" commandfor="physics-drawer" command="close">Close drawer</button>
+      </header>
+      <div class="ef-drawer__body"><p>Drawer content.</p></div>
+    </dialog>
+  </div>
+
+  <dialog class="ef-drawer" id="physics-drawer-start" open aria-labelledby="physics-drawer-start-title" data-side="start" data-ef-motion-weight="heavy">
+    <header class="ef-drawer__header"><h2 id="physics-drawer-start-title">Start drawer</h2></header>
+    <div class="ef-drawer__body"><p>Start-side representative state.</p></div>
+  </dialog>
+
+  <section class="ef-tabs" id="physics-tabs" data-ef-motion-weight="light">
+    <div class="ef-tabs__list" role="tablist" aria-label="Physics tabs">
+      <button type="button" role="tab" id="physics-tab-a" aria-selected="true" aria-controls="physics-panel-a">Overview</button>
+      <button type="button" role="tab" id="physics-tab-b" aria-selected="false" aria-controls="physics-panel-b">History</button>
+    </div>
+    <section class="ef-tabs__panel" id="physics-panel-a" role="tabpanel" aria-labelledby="physics-tab-a">
+      <p>Current panel.</p>
+    </section>
+  </section>
+
+  <aside id="physics-alert" class="ef-alert" role="status" data-ef-motion-weight="standard" data-ef-motion-entry>
+    <div class="ef-alert__icon" aria-hidden="true">!</div>
+    <div><h3 class="ef-alert__title">Review required</h3><p>Notification content.</p></div>
+    <button type="button">Review</button>
+  </aside>
+
+  <div>
+    <button id="physics-toast-open" type="button" popovertarget="physics-toast" popovertargetaction="show">Show toast</button>
+    <aside class="ef-toast" id="physics-toast" popover="manual" role="status" data-ef-motion-weight="standard">
+      <div class="ef-toast__header">
+        <div><h3 class="ef-toast__title">Saved</h3><p>Draft stored.</p></div>
+        <button id="physics-toast-close" type="button" popovertarget="physics-toast" popovertargetaction="hide" aria-label="Dismiss toast">Close</button>
+      </div>
+    </aside>
+  </div>
+
+  <dialog class="ef-command-palette" id="physics-command" open aria-labelledby="physics-command-title" data-ef-motion-weight="heavy">
+    <header class="ef-command-palette__header"><h3 id="physics-command-title">Commands</h3></header>
+    <label class="ef-visually-hidden" for="physics-command-search">Find a command</label>
+    <input id="physics-command-search" type="search">
+  </dialog>
+</main>
+</body>
+</html>
