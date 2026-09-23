@@ -1,0 +1,49 @@
+name: Begin Forma physics site examples work
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/forma-physics-site-examples-work.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  begin:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Begin GH-33
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./ros add "Add explicit physics-motion examples to Forma component site" \
+            --id "GH-33" \
+            --tag forma,documentation,motion,examples \
+            --priority high \
+            --source github-issue \
+            --source-reference "https://github.com/kemiller2002/forma/issues/33" \
+            --actor "agent:chatgpt"
+          NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+          ./ros work backlog-transition --action ready --id "GH-33" --occurred-at "$NOW"
+          NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+          ./ros work start --id "GH-33" --occurred-at "$NOW" --type feature
+          ./ros work context "GH-33"
+      - name: Commit active work state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .ros/context .ros/events .ros/work || true
+          if [ -d .ros/telemetry ]; then git add -f .ros/telemetry; fi
+          git commit -m "Begin GH-33 Forma physics site examples work"
+          git pull --rebase origin main
+          git push
