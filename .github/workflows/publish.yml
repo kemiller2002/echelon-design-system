@@ -39,7 +39,7 @@ jobs:
         run: npm install --global npm@11
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --ignore-scripts=false
 
       - name: Install browser test dependencies
         run: npx playwright install --with-deps chromium firefox webkit
