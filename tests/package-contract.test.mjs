@@ -16,6 +16,10 @@ test("Forma is a versioned public-consumer package", () => {
     "dist/foundations.css",
     "dist/components.css",
     "dist/assessment.css",
+    "dist/skins.css",
+    "dist/brands/echelon.css",
+    "dist/brands/example-harbor.css",
+    "dist/brands/index.json",
     "patterns/search.html",
     "patterns/data-grid.html",
     "patterns/work-queue.html"
@@ -39,6 +43,10 @@ test("npm package contract contains the expected consumer surface", () => {
     "dist/foundations.css",
     "dist/components.css",
     "dist/assessment.css",
+    "dist/skins.css",
+    "dist/brands/echelon.css",
+    "dist/brands/example-harbor.css",
+    "dist/brands/index.json",
     "patterns/search.html",
     "patterns/data-grid.html",
     "patterns/work-queue.html"
