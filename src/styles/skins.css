@@ -1,4 +1,4 @@
-@layer echelon.skin {
+/* Intentionally unlayered: opt-in skins override layered brand/token presentation primitives. */
   [data-ef-skin="compact"] {
     --ef-primitive-spacing-1: 3px;
     --ef-primitive-spacing-2: 6px;
@@ -27,4 +27,3 @@
     --ef-primitive-radius-small: 0;
     --ef-primitive-radius-medium: 0;
   }
-}
