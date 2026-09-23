@@ -34,6 +34,7 @@ The system exists to make Echelon applications look, communicate, and behave con
 - SELECTOR-COMPLETENESS.md
 - CROSS-APPLICATION-COMPONENT-WAVE.md
 - MOBILE-COMPONENT-CONTRACT.md
+- FIGMA-INTEGRATION.md
 
 ## External standards baseline
 
