@@ -21,9 +21,11 @@ const operationalPatterns = [
   "data-grid",
   "date-range",
   "diff-viewer",
+  "drawer",
   "empty-state",
   "file-upload",
   "master-detail",
+  "menu",
   "metric-card",
   "mobile-action-bar",
   "operation-status",
@@ -37,6 +39,7 @@ const operationalPatterns = [
   "status-lozenge",
   "tabs",
   "timeline",
+  "toast",
   "wizard",
   "work-queue"
 ];
