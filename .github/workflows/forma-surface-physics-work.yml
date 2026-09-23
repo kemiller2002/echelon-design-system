@@ -1,0 +1,49 @@
+name: Begin Forma surface physics work
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/forma-surface-physics-work.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  begin:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Begin GH-29
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./ros add "Extend physics-derived motion across Forma transient surfaces" \
+            --id "GH-29" \
+            --tag forma,motion,css,accessibility,transient-surfaces \
+            --priority high \
+            --source github-issue \
+            --source-reference "https://github.com/kemiller2002/forma/issues/29" \
+            --actor "agent:chatgpt"
+          NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+          ./ros work backlog-transition --action ready --id "GH-29" --occurred-at "$NOW"
+          NOW="$(date -u +%Y-%m-%dT%H:%M:%S.000Z)"
+          ./ros work start --id "GH-29" --occurred-at "$NOW" --type feature
+          ./ros work context "GH-29"
+      - name: Commit active work state
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .ros/context .ros/events .ros/work || true
+          if [ -d .ros/telemetry ]; then git add -f .ros/telemetry; fi
+          git commit -m "Begin GH-29 Forma surface physics work"
+          git pull --rebase origin main
+          git push
