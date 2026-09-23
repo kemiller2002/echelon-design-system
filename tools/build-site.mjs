@@ -12,6 +12,7 @@ const meta = {
   "checkbox": ["Checkbox", "Input", "Native HTML", "A native checkbox with a delegated touch target, non-color checked cue, and physics-derived CSS state motion."],
   "choice-group": ["Choice group", "Selection", "Native HTML", "Semantic single-choice options with primary and supporting text."],
   "dialog": ["Dialog", "Overlay & disclosure", "Native HTML", "Modal presentation built on the platform dialog element and declarative commands."],
+  "drawer": ["Drawer", "Overlay & disclosure", "Native HTML", "A native-dialog side sheet with start/end placement and heavy physics-derived motion."],
   "disclosure": ["Disclosure", "Overlay & disclosure", "Native HTML", "Expandable content built on details and summary with no runtime behavior layer."],
   "hierarchical-choice": ["Hierarchical choice", "Selection", "Native baseline / application semantics", "Nested disclosure and choice structure for hierarchy without assigning parent-child domain meaning."],
   "hierarchical-multi-choice": ["Hierarchical multi-choice", "Selection", "Application / Limen", "Multi-selection across a hierarchy with application-owned propagation and selection rules."],
@@ -47,6 +48,7 @@ const meta = {
   "diff-viewer": ["Diff viewer", "Data & productivity", "Application content", "Before/after structured differences with explicit changed-field cues and stacked mobile comparison."],
   "empty-state": ["Empty state", "State & feedback", "Application content", "Explain an empty result and provide a useful recovery action without treating absence as failure."],
   "file-upload": ["File upload queue", "Input", "Native HTML / Limen", "Native file selection plus a reusable upload queue for progress, success, cancellation, failure, and unknown outcomes."],
+  "menu": ["Action menu", "Overlay & disclosure", "Native HTML", "A Popover-backed ordinary action list with light physics-derived motion; full ARIA menu behavior remains application-owned."],
   "master-detail": ["Master/detail workspace", "Layout & workspace", "Application / Limen", "List-and-detail composition that collapses cleanly from multi-pane desktop to mobile navigation."],
   "metric-card": ["Metric card", "Content & utility", "Application content", "A compact labeled value with context and optional action, without inventing metric meaning."],
   "mobile-action-bar": ["Mobile action bar", "Navigation & commands", "Application / Limen", "Safe-area-aware mobile action region for critical contextual actions."],
@@ -61,6 +63,7 @@ const meta = {
   "skeleton": ["Skeleton", "State & feedback", "Application state", "Low-information loading placeholder with explicit busy semantics and reduced-motion support."],
   "status-lozenge": ["Status lozenge", "Content & utility", "Application state", "Compact textual state labels with structural and non-color cues."],
   "tabs": ["Tabs", "Navigation & commands", "Application / Limen", "Focused views with keyboard and deep-link integration hooks plus mobile overflow strategy."],
+  "toast": ["Toast", "State & feedback", "Native HTML", "A Popover-backed transient notification with standard perceived weight and a shorter derived dismissal."],
   "timeline": ["Timeline", "Data & productivity", "Application content", "Chronological or ordered activity with timestamps, state changes, provenance, and single-column mobile flow."],
   "wizard": ["Wizard", "Navigation & commands", "Limen / Ordo", "Step-by-step workflow shell with current-step state, progress, validation hooks, resume, and mobile reduction."],
   "work-queue": ["Work queue", "State & feedback", "Ordo / application", "Attention-first list of unresolved work with reason, context, and application-supplied legal actions."]
