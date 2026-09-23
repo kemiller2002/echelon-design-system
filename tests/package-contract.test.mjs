@@ -9,6 +9,10 @@ test("Forma is a versioned public-consumer package", () => {
   assert.equal(pkg.version, "0.1.0");
   assert.equal(pkg.private, false);
   assert.equal(pkg.publishConfig?.access, "public");
+  assert.equal(pkg.exports?.["./skins.css"], "./dist/skins.css");
+  assert.equal(pkg.exports?.["./brands/*"], "./dist/brands/*");
+  assert.equal(pkg.exports?.["./brand-manifest.schema.json"], "./schemas/brand-manifest.schema.json");
+  assert.ok(pkg.sideEffects?.includes("./dist/brands/*.css"));
 
   for (const path of [
     "dist/all.css",
