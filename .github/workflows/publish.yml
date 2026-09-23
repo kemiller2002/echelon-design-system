@@ -18,7 +18,7 @@ jobs:
     if: github.repository == 'kemiller2002/forma'
     runs-on: ubuntu-latest
     env:
-      NPM_TOKEN_BOOTSTRAP: ${{ secrets.NPM_TOKEN_BOOTSTRAP }}
+      NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN || secrets.NPM_TOKEN || secrets.NODE_AUTH_TOKEN }}
 
     steps:
       - name: Check out repository
@@ -57,8 +57,8 @@ jobs:
       - name: Configure bootstrap npm authentication when present
         shell: bash
         run: |
-          if [[ -n "${NPM_TOKEN_BOOTSTRAP:-}" ]]; then
-            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN_BOOTSTRAP"
+          if [[ -n "${NPM_AUTH_TOKEN:-}" ]]; then
+            npm config set //registry.npmjs.org/:_authToken "$NPM_AUTH_TOKEN"
             echo "Using the temporary bootstrap token for npm authentication."
           else
             echo "No bootstrap token present. npm will use GitHub OIDC trusted publishing."
