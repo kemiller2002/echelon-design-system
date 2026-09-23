@@ -238,6 +238,66 @@ function mobileExample(number, title, note, snippet) {
 </section>`;
 }
 
+const physicsMotionClasses = {
+  "alert": "ef-alert",
+  "command-palette": "ef-command-palette",
+  "dialog": "ef-dialog",
+  "disclosure": "ef-disclosure",
+  "flyout": "ef-flyout",
+  "menu": "ef-menu",
+  "popover": "ef-popover",
+  "tabs": "ef-tabs",
+  "toast": "ef-toast"
+};
+
+function setMotionWeight(source, className, weight) {
+  const pattern = new RegExp(`<([a-z][\\w-]*)\\b([^>]*\\bclass="[^"]*\\b${className}\\b[^"]*"[^>]*)>`, "gi");
+  return source.replace(pattern, (match, tag, attrs) => {
+    const nextAttrs = /\\bdata-ef-motion-weight="/.test(attrs)
+      ? attrs.replace(/\\bdata-ef-motion-weight="[^"]*"/, `data-ef-motion-weight="${weight}"`)
+      : `${attrs} data-ef-motion-weight="${weight}"`;
+    return `<${tag}${nextAttrs}>`;
+  });
+}
+
+function preparePhysicsVariant(slug, source, weight) {
+  let html = setMotionWeight(source, physicsMotionClasses[slug], weight);
+
+  if (slug === "command-palette") {
+    html = html
+      .replace(/<dialog\\b([^>]*)\\sopen(?=[\\s>])/i, "<dialog$1")
+      .replace(
+        /<dialog\\b([^>]*)class="ef-command-palette"([^>]*)>/i,
+        `<button type="button" commandfor="physics-command-palette" command="show-modal">Open ${weight} command palette</button>
+<dialog$1class="ef-command-palette"$2 id="physics-command-palette">`
+      );
+  }
+
+  return namespaceSnippet(html, `motion-${slug}-${weight}-`);
+}
+
+function physicsMotionExample(number, slug, source) {
+  const weights = ["light", "standard", "heavy"];
+  const samples = weights.map(weight => {
+    const snippet = preparePhysicsVariant(slug, source, weight);
+    return `<article class="motion-weight-sample" data-motion-weight="${weight}">
+  <div class="motion-weight-label"><strong>${weight}</strong><span>presentation only</span></div>
+  <div class="motion-weight-demo">${snippet}</div>
+</article>`;
+  }).join("");
+
+  const combined = `<div class="motion-weight-grid" data-physics-motion-example="${slug}">
+${samples}
+</div>`;
+
+  return example(
+    number,
+    "Motion weights",
+    "Compare the same semantic contract at light, standard, and heavy perceived mass. Weight changes presentation only; native or application state remains authoritative.",
+    combined
+  );
+}
+
 fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(path.join(output, "assets"), { recursive: true });
 fs.mkdirSync(path.join(output, "components"), { recursive: true });
@@ -281,7 +341,7 @@ const indexBody = `<main id="main">
   <div class="hero-stats" aria-label="Current Forma facts">
     <div class="hero-stat"><span class="metric-label">Implemented patterns</span><strong>${slugs.length}</strong></div>
     <div class="hero-stat"><span class="metric-label">Runtime JavaScript</span><strong>0 bytes by contract</strong></div>
-    <div class="hero-stat"><span class="metric-label">Rendered examples</span><strong>${slugs.length * 3}+</strong></div>
+    <div class="hero-stat"><span class="metric-label">Rendered examples</span><strong>${slugs.length * 3 + Object.keys(physicsMotionClasses).length}+</strong></div>
   </div>
 </section>
 
@@ -397,6 +457,7 @@ for (const slug of slugs) {
         ${example(1, "Canonical", "Canonical repository markup, namespaced only to keep examples independent.", canonical)}
         ${example(2, state.changed ? "Representative state" : "Secondary surface", state.changed ? "A browser-native state made visible without adding a runtime." : "The same contract demonstrated on a secondary Forma surface.", stateful, "example-canvas--secondary")}
         ${mobileExample(3, "Mobile · 320px", "Rendered inside a true 320px viewport so Forma's mobile media queries execute. Semantic meaning and actions must remain available.", mobileMarkup)}
+        ${physicsMotionClasses[slug] ? physicsMotionExample(4, slug, source) : ""}
       </div>
     </main>
   </div>`;
