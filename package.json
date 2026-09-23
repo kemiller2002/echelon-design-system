@@ -15,11 +15,14 @@
     "./patterns/*": "./dist/patterns/*",
     "./assessment.css": "./dist/assessment.css",
     "./skins.css": "./dist/skins.css",
-    "./brands/*": "./dist/brands/*"
+    "./brands/*": "./dist/brands/*",
+    "./brand-manifest.schema.json": "./schemas/brand-manifest.schema.json"
   },
   "files": [
     "dist",
-    "patterns"
+    "patterns",
+    "schemas/brand-manifest.schema.json",
+    "docs/BRANDING.md"
   ],
   "scripts": {
     "clean": "node tools/clean.mjs",
