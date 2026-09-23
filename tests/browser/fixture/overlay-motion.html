@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forma overlay motion fixture</title>
+  <link rel="stylesheet" href="/dist/tokens.css">
+  <link rel="stylesheet" href="/dist/foundations.css">
+  <link rel="stylesheet" href="/dist/components.css">
+  <style>
+    main { max-inline-size: 48rem; margin: 2rem auto; padding: 1rem; }
+    .triggers { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Overlay motion fixture</h1>
+    <div class="triggers">
+      <button id="open-modal" type="button" commandfor="test-modal" command="show-modal">Open modal</button>
+      <button id="open-left" type="button" commandfor="test-left-flyout" command="show-modal">Open left flyout</button>
+      <button id="open-right" type="button" commandfor="test-right-flyout" command="show-modal">Open right flyout</button>
+    </div>
+
+    <dialog class="ef-dialog" id="test-modal" data-ef-motion-weight="standard" aria-labelledby="test-modal-title">
+      <div class="ef-dialog__body">
+        <h2 id="test-modal-title">Confirm action</h2>
+        <p>Native dialog semantics remain authoritative.</p>
+      </div>
+      <div class="ef-dialog__actions">
+        <button type="button" commandfor="test-modal" command="close">Close modal</button>
+      </div>
+    </dialog>
+
+    <dialog class="ef-flyout" id="test-left-flyout" data-ef-side="left" data-ef-motion-weight="standard" aria-labelledby="test-left-title">
+      <div class="ef-flyout__surface">
+        <header class="ef-flyout__header">
+          <h2 id="test-left-title">Left flyout</h2>
+          <button class="ef-flyout__close" type="button" commandfor="test-left-flyout" command="close">Close left flyout</button>
+        </header>
+        <div class="ef-flyout__body"><p>Left-edge content.</p></div>
+      </div>
+    </dialog>
+
+    <dialog class="ef-flyout" id="test-right-flyout" data-ef-side="right" data-ef-motion-weight="standard" aria-labelledby="test-right-title">
+      <div class="ef-flyout__surface">
+        <header class="ef-flyout__header">
+          <h2 id="test-right-title">Right flyout</h2>
+          <button class="ef-flyout__close" type="button" commandfor="test-right-flyout" command="close">Close right flyout</button>
+        </header>
+        <div class="ef-flyout__body"><p>Right-edge content.</p></div>
+      </div>
+    </dialog>
+  </main>
+</body>
+</html>
