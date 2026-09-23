@@ -2263,6 +2263,9 @@
     background: var(--ef-color-surface-primary, #f2efe7);
     color: var(--ef-color-text-primary, #171a18);
     box-shadow: 0 0.8rem 2.2rem rgb(0 0 0 / 0.18);
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
   }
 
   .ef-fault-notification[data-ef-motion-entry] {
