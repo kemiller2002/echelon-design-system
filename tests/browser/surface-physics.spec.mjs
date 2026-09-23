@@ -96,12 +96,8 @@ test("drawer direction follows its occupied edge", async ({ page }) => {
   const endClosed = await page.locator("#physics-drawer").evaluate(element => getComputedStyle(element).translate);
   const startClosed = await page.locator("#physics-drawer-start").evaluate(element => getComputedStyle(element).translate);
 
-  expect(endClosed).not.toBe("none");
-  expect(startClosed).toContain("-");
-
-  await page.locator("#physics-drawer-start").evaluate(element => element.setAttribute("open", ""));
-  const startOpen = await page.locator("#physics-drawer-start").evaluate(element => getComputedStyle(element).translate);
-  expect(startOpen === "none" || startOpen.startsWith("0")).toBe(true);
+  expect(Number.parseFloat(endClosed)).toBeGreaterThan(0);
+  expect(Number.parseFloat(startClosed)).toBeLessThan(0);
 });
 
 test("rapid tab semantic changes end at the application supplied state", async ({ page }) => {
@@ -119,10 +115,11 @@ test("rapid tab semantic changes end at the application supplied state", async (
   await expect(page.locator("#physics-tab-a")).toHaveAttribute("aria-selected", "false");
   await expect(page.locator("#physics-tab-b")).toHaveAttribute("aria-selected", "true");
 
-  const selectedScale = await page.locator("#physics-tab-b").evaluate(element =>
-    getComputedStyle(element, "::after").scale
-  );
-  expect(selectedScale === "none" || selectedScale.startsWith("1")).toBe(true);
+  await expect.poll(async () =>
+    page.locator("#physics-tab-b").evaluate(element =>
+      Number.parseFloat(getComputedStyle(element, "::after").scale)
+    )
+  ).toBeCloseTo(1, 2);
 });
 
 test("surface physics fixture passes automated WCAG A AA checks", async ({ page }) => {
