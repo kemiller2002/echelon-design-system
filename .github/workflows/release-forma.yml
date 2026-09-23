@@ -66,7 +66,8 @@ jobs:
             exit 0
           fi
 
-          legacy_workspace="$(mktemp -d)"
+          legacy_parent="$(mktemp -d)"
+          legacy_workspace="$legacy_parent/worktree"
           legacy_release="$GITHUB_WORKSPACE/legacy-release"
           mkdir -p "$legacy_release"
           git worktree add --detach "$legacy_workspace" v0.1.0
@@ -81,6 +82,7 @@ jobs:
           test -f "$legacy_archive"
           gh release upload v0.1.0 "$legacy_archive" --clobber
           git worktree remove --force "$legacy_workspace"
+          rm -rf "$legacy_parent"
 
       - name: Validate package and site
         run: |
