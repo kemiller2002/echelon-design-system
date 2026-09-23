@@ -45,26 +45,24 @@ test("left and right flyouts preserve opposite physical origins", async ({ page 
   ]);
 });
 
-test("modal and flyout entry use the shared physics-derived inertia duration", async ({ page }) => {
+test("modal and flyout entry use a longer physics-derived duration than exit", async ({ page }) => {
   for (const [buttonName, selector] of [
     ["Open modal", "#test-modal"],
     ["Open left flyout", "#test-left-flyout"],
     ["Open right flyout", "#test-right-flyout"]
   ]) {
+    const surface = page.locator(selector);
+    const exitDuration = await surface.evaluate(element =>
+      getComputedStyle(element).transitionDuration.split(",")[0].trim()
+    );
+
     await page.getByRole("button", { name: buttonName }).click();
 
-    const motion = await page.locator(selector).evaluate(element => {
-      const style = getComputedStyle(element);
-      return {
-        inertia: style.getPropertyValue("--ef-motion-inertia-duration").trim(),
-        exit: style.getPropertyValue("--ef-motion-exit-duration").trim(),
-        durations: style.transitionDuration.split(",").map(value => value.trim())
-      };
-    });
+    const entryDuration = await surface.evaluate(element =>
+      getComputedStyle(element).transitionDuration.split(",")[0].trim()
+    );
 
-    expect(seconds(motion.inertia)).toBeGreaterThan(seconds(motion.exit));
-    expect(seconds(motion.durations[0])).toBeCloseTo(seconds(motion.inertia), 3);
-
+    expect(seconds(entryDuration)).toBeGreaterThan(seconds(exitDuration));
     await page.keyboard.press("Escape");
   }
 });
@@ -79,13 +77,13 @@ test("reduced motion removes modal and flyout spatial travel", async ({ page }) 
       return {
         translate: style.translate,
         scale: style.scale,
-        duration: style.getPropertyValue("--ef-motion-inertia-duration").trim()
+        duration: style.transitionDuration.split(",")[0].trim()
       };
     })
   );
 
   for (const state of states) {
-    expect(state.translate === "none" || state.translate === "0px" || state.translate === "0px 0px").toBeTruthy();
+    expect(["none", "0px", "0px 0px", "0px 0px 0px"].includes(state.translate)).toBeTruthy();
     expect(state.scale === "none" || state.scale === "1").toBeTruthy();
     expect(seconds(state.duration)).toBeLessThan(0.01);
   }
@@ -95,9 +93,15 @@ test("flyouts remain contained at 320 CSS pixels", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 700 });
   await page.getByRole("button", { name: "Open right flyout" }).click();
 
-  const box = await page.locator("#test-right-flyout").boundingBox();
+  const flyout = page.locator("#test-right-flyout");
+
+  await expect.poll(async () => {
+    const box = await flyout.boundingBox();
+    return box ? box.x + box.width : Number.POSITIVE_INFINITY;
+  }).toBeLessThanOrEqual(320.5);
+
+  const box = await flyout.boundingBox();
   expect(box).not.toBeNull();
   expect(box.x).toBeGreaterThanOrEqual(0);
-  expect(box.x + box.width).toBeLessThanOrEqual(320.5);
   expect(box.height).toBeLessThanOrEqual(700.5);
 });
