@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "1.0",
+  "id": "echelon",
+  "identity": {
+    "name": "Echelon Foundry",
+    "shortName": "Echelon",
+    "assets": {
+      "logo": "/brand/echelon-logo.svg",
+      "logoDark": "/brand/echelon-logo-dark.svg",
+      "favicon": "/brand/favicon.svg"
+    }
+  },
+  "presentation": {
+    "fontFamily": {
+      "display": ["Newsreader", "Georgia", "serif"],
+      "sans": ["Manrope", "system-ui", "sans-serif"],
+      "mono": ["IBM Plex Mono", "ui-monospace", "monospace"]
+    },
+    "radius": {
+      "small": "4px",
+      "medium": "8px",
+      "pill": "999px"
+    }
+  },
+  "themes": {
+    "light": {
+      "color": {
+        "text": {"primary":"#171a18","heading":"#202421","secondary":"#686d68","on-secondary-surface":"#3a403c","inverse":"#f2efe7"},
+        "surface": {"primary":"#f2efe7","secondary":"#e3e0d7","inverse":"#202421","inverse-secondary":"#3a403c"},
+        "accent": {"primary":"#905831","secondary":"#47756b"},
+        "border": {"subtle":"#e3e0d7","functional":"#3a403c"},
+        "focus": {"ring":"#171a18","gap":"#f2efe7"},
+        "control": {"track":"#686d68","thumb":"#f2efe7","active":"#905831"}
+      }
+    },
+    "dark": {
+      "color": {
+        "text": {"primary":"#f2efe7","heading":"#f2efe7","secondary":"#e3e0d7","on-secondary-surface":"#f2efe7","inverse":"#171a18"},
+        "surface": {"primary":"#171a18","secondary":"#202421","inverse":"#f2efe7","inverse-secondary":"#e3e0d7"},
+        "accent": {"primary":"#a87e5e","secondary":"#698d84"},
+        "border": {"subtle":"#3a403c","functional":"#e3e0d7"},
+        "focus": {"ring":"#f2efe7","gap":"#171a18"},
+        "control": {"track":"#686d68","thumb":"#f2efe7","active":"#a87e5e"}
+      }
+    }
+  },
+  "terms": {
+    "organization": "Organization",
+    "user": "User",
+    "project": "Project"
+  }
+}
