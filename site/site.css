@@ -767,7 +767,7 @@
     .site-nav {
       inline-size: 100%;
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: .25rem;
     }
 
@@ -855,6 +855,156 @@
     .component-card,
     .principle {
       border: 1px solid CanvasText;
+    }
+  }
+}
+
+
+@layer echelon.site {
+  .brand-lab {
+    max-inline-size: var(--site-max);
+    margin-inline: auto;
+    padding-block: clamp(4rem, 9vw, 8rem) 6rem;
+  }
+
+  .brand-lab > h1 {
+    max-inline-size: 12ch;
+    margin: 1rem 0 2rem;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+  }
+
+  .brand-lab > .lead {
+    max-inline-size: 68ch;
+    font-size: clamp(1.1rem, 2vw, 1.45rem);
+    line-height: 1.55;
+  }
+
+  .brand-lab__section {
+    margin-block-start: clamp(4rem, 8vw, 8rem);
+  }
+
+  .brand-demo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--ef-primitive-spacing-4, 1rem);
+  }
+
+  .brand-demo-wrap {
+    min-inline-size: 0;
+  }
+
+  .brand-demo-wrap > .category-label {
+    margin-block-end: .6rem;
+  }
+
+  .brand-demo {
+    min-inline-size: 0;
+    block-size: 100%;
+    padding: var(--ef-primitive-spacing-5, 1.5rem);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: var(--ef-primitive-radius-medium, 8px);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    color: var(--ef-color-text-primary, #171a18);
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+  }
+
+  .brand-demo__content {
+    display: grid;
+    gap: var(--ef-primitive-spacing-4, 1rem);
+  }
+
+  .brand-demo__eyebrow {
+    color: var(--ef-color-accent-secondary, #47756b);
+    font-family: var(--ef-primitive-font-family-mono, ui-monospace, monospace);
+    font-size: .72rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .brand-demo h2 {
+    margin: 0;
+    color: var(--ef-color-text-heading, #202421);
+    font-family: var(--ef-primitive-font-family-display, Georgia, serif);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    line-height: 1;
+  }
+
+  .brand-demo p,
+  .brand-demo span {
+    color: var(--ef-color-text-secondary, #686d68);
+  }
+
+  .brand-demo__accent {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, .5rem);
+    padding: var(--ef-primitive-spacing-4, 1rem);
+    border-inline-start: .35rem solid var(--ef-color-accent-primary, #905831);
+    background: var(--ef-color-surface-secondary, #e3e0d7);
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
+  }
+
+  .brand-demo__accent strong,
+  .brand-demo__accent span {
+    color: var(--ef-color-text-on-secondary-surface, #3a403c);
+  }
+
+  .brand-demo button {
+    min-block-size: 2.75rem;
+    justify-self: start;
+    padding-inline: var(--ef-primitive-spacing-4, 1rem);
+    border: 1px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: var(--ef-primitive-radius-small, 4px);
+    background: var(--ef-color-surface-inverse, #202421);
+    color: var(--ef-color-text-inverse, #f2efe7);
+    font: inherit;
+    font-weight: 700;
+  }
+
+  .brand-demo button:focus-visible {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  .brand-boundary {
+    padding: clamp(1.5rem, 4vw, 3rem);
+    border: 1px solid var(--ef-forged-iron);
+  }
+
+  .brand-boundary h2 {
+    max-inline-size: 18ch;
+    margin-block: .75rem 1.25rem;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  @media (max-width: 960px) {
+    .brand-demo-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .brand-lab {
+      padding-inline: 1rem;
+    }
+
+    .brand-lab > h1 {
+      font-size: clamp(2.75rem, 14vw, 3.5rem);
+    }
+
+    .brand-demo {
+      padding: var(--ef-primitive-spacing-4, 1rem);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .brand-demo,
+    .brand-boundary {
+      border-color: CanvasText;
+    }
+
+    .brand-demo__accent {
+      border-inline-start-color: Highlight;
     }
   }
 }
