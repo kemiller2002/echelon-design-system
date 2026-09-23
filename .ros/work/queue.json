@@ -152,6 +152,22 @@
       "createdBy": "agent:chatgpt",
       "source": "github-issue",
       "sourceReference": "https://github.com/kemiller2002/echelon-design-system/issues/25"
+    },
+    {
+      "id": "GH-29",
+      "title": "Extend physics-derived motion across Forma transient surfaces",
+      "description": null,
+      "tags": [
+        "forma,motion,css,accessibility,transient-surfaces"
+      ],
+      "priority": "high",
+      "status": "ready",
+      "attachments": [],
+      "createdAt": "2026-09-23T08:47:20.704Z",
+      "updatedAt": "2026-09-23T08:47:20.000Z",
+      "createdBy": "agent:chatgpt",
+      "source": "github-issue",
+      "sourceReference": "https://github.com/kemiller2002/forma/issues/29"
     }
   ]
 }
