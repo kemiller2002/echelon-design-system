@@ -26,6 +26,7 @@ When an agent creates or changes UI:
 7. Keep transition legality, obligations, scoring, permissions, and domain
    invariants in Ordo/application state, never in Forma.
 8. Validate the result with repository and accessibility tests.
+9. For Figma/library work, read `docs/FIGMA.md` and use `figma/component-contracts.json`; never invent Figma node URLs or a second token source.
 
 ## How to consume Forma
 
@@ -105,6 +106,19 @@ Every Forma component must have a usable 320 CSS px presentation. Agents must:
 - use the documented Mobile · 320px example as a minimum baseline, not a device-specific fork.
 
 Read `requirements/MOBILE-COMPONENT-CONTRACT.md` before adding or modifying a component.
+
+## Figma contract
+
+Figma mirrors Forma; it does not own Forma. For Figma-facing changes:
+
+- keep `tokens/echelon.tokens.json` authoritative for token values;
+- keep `patterns/*.html` authoritative for semantic anatomy;
+- preserve the shared Figma property vocabulary in `figma/component-contracts.json`;
+- use real published library node URLs before adding Code Connect templates;
+- use the current template-file Code Connect workflow rather than legacy framework parsers;
+- run `npm run test:figma` before claiming coverage complete.
+
+A complete local Figma contract does not imply that the external Figma library or Code Connect publication has been verified.
 
 ## Verification
 

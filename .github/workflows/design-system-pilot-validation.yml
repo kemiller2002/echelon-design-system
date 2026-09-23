@@ -42,6 +42,9 @@ jobs:
       - name: Test token compiler
         run: npm run test:tokens
 
+      - name: Validate Figma contract
+        run: npm run test:figma
+
       - name: Show artifact metrics
         run: cat dist/build-metrics.json
 

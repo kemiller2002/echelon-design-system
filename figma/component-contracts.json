@@ -1,0 +1,594 @@
+{
+  "schemaVersion": 1,
+  "product": "Forma",
+  "sourceOfTruth": {
+    "components": "patterns/*.html",
+    "tokens": "tokens/echelon.tokens.json"
+  },
+  "figma": {
+    "libraryName": "Forma",
+    "propertyVocabulary": [
+      "State",
+      "Size",
+      "Tone",
+      "Density",
+      "Disabled",
+      "Read only",
+      "Selected",
+      "Checked",
+      "Expanded",
+      "Loading",
+      "Label",
+      "Supporting text",
+      "Leading icon",
+      "Trailing icon"
+    ],
+    "modes": [
+      "Light",
+      "Dark"
+    ],
+    "note": "Use only properties applicable to the pattern. Figma mirrors Forma presentation and must not invent application or domain state."
+  },
+  "components": [
+    {
+      "id": "alert",
+      "figmaName": "Forma / Alert",
+      "source": "patterns/alert.html",
+      "codeConnect": {
+        "id": "Forma/alert",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "allocation",
+      "figmaName": "Forma / Allocation",
+      "source": "patterns/allocation.html",
+      "codeConnect": {
+        "id": "Forma/allocation",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "best-worst",
+      "figmaName": "Forma / Best Worst",
+      "source": "patterns/best-worst.html",
+      "codeConnect": {
+        "id": "Forma/best-worst",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "binary-choice",
+      "figmaName": "Forma / Binary Choice",
+      "source": "patterns/binary-choice.html",
+      "codeConnect": {
+        "id": "Forma/binary-choice",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "choice-group",
+      "figmaName": "Forma / Choice Group",
+      "source": "patterns/choice-group.html",
+      "codeConnect": {
+        "id": "Forma/choice-group",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "collection-toolbar",
+      "figmaName": "Forma / Collection Toolbar",
+      "source": "patterns/collection-toolbar.html",
+      "codeConnect": {
+        "id": "Forma/collection-toolbar",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "combobox",
+      "figmaName": "Forma / Combobox",
+      "source": "patterns/combobox.html",
+      "codeConnect": {
+        "id": "Forma/combobox",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "command-palette",
+      "figmaName": "Forma / Command Palette",
+      "source": "patterns/command-palette.html",
+      "codeConnect": {
+        "id": "Forma/command-palette",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "conflict-review",
+      "figmaName": "Forma / Conflict Review",
+      "source": "patterns/conflict-review.html",
+      "codeConnect": {
+        "id": "Forma/conflict-review",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "dashboard-grid",
+      "figmaName": "Forma / Dashboard Grid",
+      "source": "patterns/dashboard-grid.html",
+      "codeConnect": {
+        "id": "Forma/dashboard-grid",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "data-grid",
+      "figmaName": "Forma / Data Grid",
+      "source": "patterns/data-grid.html",
+      "codeConnect": {
+        "id": "Forma/data-grid",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "date-range",
+      "figmaName": "Forma / Date Range",
+      "source": "patterns/date-range.html",
+      "codeConnect": {
+        "id": "Forma/date-range",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "dialog",
+      "figmaName": "Forma / Dialog",
+      "source": "patterns/dialog.html",
+      "codeConnect": {
+        "id": "Forma/dialog",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "diff-viewer",
+      "figmaName": "Forma / Diff Viewer",
+      "source": "patterns/diff-viewer.html",
+      "codeConnect": {
+        "id": "Forma/diff-viewer",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "disclosure",
+      "figmaName": "Forma / Disclosure",
+      "source": "patterns/disclosure.html",
+      "codeConnect": {
+        "id": "Forma/disclosure",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "empty-state",
+      "figmaName": "Forma / Empty State",
+      "source": "patterns/empty-state.html",
+      "codeConnect": {
+        "id": "Forma/empty-state",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "file-upload",
+      "figmaName": "Forma / File Upload",
+      "source": "patterns/file-upload.html",
+      "codeConnect": {
+        "id": "Forma/file-upload",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "hierarchical-choice",
+      "figmaName": "Forma / Hierarchical Choice",
+      "source": "patterns/hierarchical-choice.html",
+      "codeConnect": {
+        "id": "Forma/hierarchical-choice",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "hierarchical-multi-choice",
+      "figmaName": "Forma / Hierarchical Multi Choice",
+      "source": "patterns/hierarchical-multi-choice.html",
+      "codeConnect": {
+        "id": "Forma/hierarchical-multi-choice",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "image-choice",
+      "figmaName": "Forma / Image Choice",
+      "source": "patterns/image-choice.html",
+      "codeConnect": {
+        "id": "Forma/image-choice",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "master-detail",
+      "figmaName": "Forma / Master Detail",
+      "source": "patterns/master-detail.html",
+      "codeConnect": {
+        "id": "Forma/master-detail",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "matrix-single",
+      "figmaName": "Forma / Matrix Single",
+      "source": "patterns/matrix-single.html",
+      "codeConnect": {
+        "id": "Forma/matrix-single",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "metric-card",
+      "figmaName": "Forma / Metric Card",
+      "source": "patterns/metric-card.html",
+      "codeConnect": {
+        "id": "Forma/metric-card",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "mobile-action-bar",
+      "figmaName": "Forma / Mobile Action Bar",
+      "source": "patterns/mobile-action-bar.html",
+      "codeConnect": {
+        "id": "Forma/mobile-action-bar",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "multi-choice",
+      "figmaName": "Forma / Multi Choice",
+      "source": "patterns/multi-choice.html",
+      "codeConnect": {
+        "id": "Forma/multi-choice",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "numeric-stepper",
+      "figmaName": "Forma / Numeric Stepper",
+      "source": "patterns/numeric-stepper.html",
+      "codeConnect": {
+        "id": "Forma/numeric-stepper",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "obligation-panel",
+      "figmaName": "Forma / Obligation Panel",
+      "source": "patterns/obligation-panel.html",
+      "codeConnect": {
+        "id": "Forma/obligation-panel",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "operation-status",
+      "figmaName": "Forma / Operation Status",
+      "source": "patterns/operation-status.html",
+      "codeConnect": {
+        "id": "Forma/operation-status",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "ordinal-scale",
+      "figmaName": "Forma / Ordinal Scale",
+      "source": "patterns/ordinal-scale.html",
+      "codeConnect": {
+        "id": "Forma/ordinal-scale",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "pagination",
+      "figmaName": "Forma / Pagination",
+      "source": "patterns/pagination.html",
+      "codeConnect": {
+        "id": "Forma/pagination",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "pairwise-choice",
+      "figmaName": "Forma / Pairwise Choice",
+      "source": "patterns/pairwise-choice.html",
+      "codeConnect": {
+        "id": "Forma/pairwise-choice",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "popover",
+      "figmaName": "Forma / Popover",
+      "source": "patterns/popover.html",
+      "codeConnect": {
+        "id": "Forma/popover",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "preview-surface",
+      "figmaName": "Forma / Preview Surface",
+      "source": "patterns/preview-surface.html",
+      "codeConnect": {
+        "id": "Forma/preview-surface",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "provenance-trail",
+      "figmaName": "Forma / Provenance Trail",
+      "source": "patterns/provenance-trail.html",
+      "codeConnect": {
+        "id": "Forma/provenance-trail",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "question",
+      "figmaName": "Forma / Question",
+      "source": "patterns/question.html",
+      "codeConnect": {
+        "id": "Forma/question",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "range-entry",
+      "figmaName": "Forma / Range Entry",
+      "source": "patterns/range-entry.html",
+      "codeConnect": {
+        "id": "Forma/range-entry",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "ranking",
+      "figmaName": "Forma / Ranking",
+      "source": "patterns/ranking.html",
+      "codeConnect": {
+        "id": "Forma/ranking",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "readiness-checklist",
+      "figmaName": "Forma / Readiness Checklist",
+      "source": "patterns/readiness-checklist.html",
+      "codeConnect": {
+        "id": "Forma/readiness-checklist",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "record-header",
+      "figmaName": "Forma / Record Header",
+      "source": "patterns/record-header.html",
+      "codeConnect": {
+        "id": "Forma/record-header",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "rule-builder",
+      "figmaName": "Forma / Rule Builder",
+      "source": "patterns/rule-builder.html",
+      "codeConnect": {
+        "id": "Forma/rule-builder",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "search",
+      "figmaName": "Forma / Search",
+      "source": "patterns/search.html",
+      "codeConnect": {
+        "id": "Forma/search",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "segmented-control",
+      "figmaName": "Forma / Segmented Control",
+      "source": "patterns/segmented-control.html",
+      "codeConnect": {
+        "id": "Forma/segmented-control",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "semantic-differential",
+      "figmaName": "Forma / Semantic Differential",
+      "source": "patterns/semantic-differential.html",
+      "codeConnect": {
+        "id": "Forma/semantic-differential",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "skeleton",
+      "figmaName": "Forma / Skeleton",
+      "source": "patterns/skeleton.html",
+      "codeConnect": {
+        "id": "Forma/skeleton",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "slider",
+      "figmaName": "Forma / Slider",
+      "source": "patterns/slider.html",
+      "codeConnect": {
+        "id": "Forma/slider",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "special-choice",
+      "figmaName": "Forma / Special Choice",
+      "source": "patterns/special-choice.html",
+      "codeConnect": {
+        "id": "Forma/special-choice",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "status-lozenge",
+      "figmaName": "Forma / Status Lozenge",
+      "source": "patterns/status-lozenge.html",
+      "codeConnect": {
+        "id": "Forma/status-lozenge",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "survey-progress",
+      "figmaName": "Forma / Survey Progress",
+      "source": "patterns/survey-progress.html",
+      "codeConnect": {
+        "id": "Forma/survey-progress",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "switch",
+      "figmaName": "Forma / Switch",
+      "source": "patterns/switch.html",
+      "codeConnect": {
+        "id": "Forma/switch",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "symbol-rating",
+      "figmaName": "Forma / Symbol Rating",
+      "source": "patterns/symbol-rating.html",
+      "codeConnect": {
+        "id": "Forma/symbol-rating",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "tabs",
+      "figmaName": "Forma / Tabs",
+      "source": "patterns/tabs.html",
+      "codeConnect": {
+        "id": "Forma/tabs",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "timeline",
+      "figmaName": "Forma / Timeline",
+      "source": "patterns/timeline.html",
+      "codeConnect": {
+        "id": "Forma/timeline",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "validation-message",
+      "figmaName": "Forma / Validation Message",
+      "source": "patterns/validation-message.html",
+      "codeConnect": {
+        "id": "Forma/validation-message",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "validation-summary",
+      "figmaName": "Forma / Validation Summary",
+      "source": "patterns/validation-summary.html",
+      "codeConnect": {
+        "id": "Forma/validation-summary",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "wizard",
+      "figmaName": "Forma / Wizard",
+      "source": "patterns/wizard.html",
+      "codeConnect": {
+        "id": "Forma/wizard",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    },
+    {
+      "id": "work-queue",
+      "figmaName": "Forma / Work Queue",
+      "source": "patterns/work-queue.html",
+      "codeConnect": {
+        "id": "Forma/work-queue",
+        "nodeUrl": null,
+        "status": "requires-published-figma-component"
+      }
+    }
+  ]
+}
