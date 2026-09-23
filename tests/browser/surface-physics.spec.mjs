@@ -94,14 +94,14 @@ test("native disclosure popover menu dialog drawer and toast states remain autho
 
 test("drawer direction follows its occupied edge", async ({ page }) => {
   const endClosed = await page.locator("#physics-drawer").evaluate(element => getComputedStyle(element).translate);
-  const startOpen = await page.locator("#physics-drawer-start").evaluate(element => getComputedStyle(element).translate);
+  const startClosed = await page.locator("#physics-drawer-start").evaluate(element => getComputedStyle(element).translate);
 
   expect(endClosed).not.toBe("none");
-  expect(startOpen === "none" || startOpen.startsWith("0")).toBe(true);
-
-  await page.locator("#physics-drawer-start").evaluate(element => element.removeAttribute("open"));
-  const startClosed = await page.locator("#physics-drawer-start").evaluate(element => getComputedStyle(element).translate);
   expect(startClosed).toContain("-");
+
+  await page.locator("#physics-drawer-start").evaluate(element => element.setAttribute("open", ""));
+  const startOpen = await page.locator("#physics-drawer-start").evaluate(element => getComputedStyle(element).translate);
+  expect(startOpen === "none" || startOpen.startsWith("0")).toBe(true);
 });
 
 test("rapid tab semantic changes end at the application supplied state", async ({ page }) => {
@@ -126,9 +126,6 @@ test("rapid tab semantic changes end at the application supplied state", async (
 });
 
 test("surface physics fixture passes automated WCAG A AA checks", async ({ page }) => {
-  // The start-side representative drawer is nonmodal and visible only for direction testing.
-  await page.locator("#physics-drawer-start").evaluate(element => element.removeAttribute("open"));
-
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();
