@@ -60,7 +60,7 @@
     :where(.ef-switch, .ef-checkbox, .ef-select) {
       /*
        * Response time follows sqrt(mass / stiffness), then is lengthened as
-       * damping decreases. Vertical gravity time follows sqrt(2d / g) and is
+       * damping decreases. Vertical gravity time follows sqrt(2s / g) and is
        * deliberately independent of mass.
        */
       --ef-motion-inertia-duration: clamp(
