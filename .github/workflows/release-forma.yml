@@ -21,11 +21,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
           package-manager-cache: false
+
       - uses: actions/setup-dotnet@v6
         with:
           dotnet-version: "10.0.x"
@@ -40,7 +44,43 @@ jobs:
         shell: bash
         run: |
           package_version="$(node -p "require('./package.json').version")"
-          echo "RELEASE_TAG=v$package_version" >> "$GITHUB_ENV"
+          release_tag="v$package_version"
+          git fetch --force --tags origin
+
+          if git show-ref --verify --quiet "refs/tags/$release_tag"; then
+            tag_commit="$(git rev-list -n 1 "$release_tag")"
+            if [[ "$tag_commit" != "$GITHUB_SHA" ]]; then
+              echo "::error title=Forma version already released::$release_tag points to $tag_commit, not $GITHUB_SHA. Bump package.json before releasing new package contents."
+              exit 1
+            fi
+          fi
+
+          echo "RELEASE_TAG=$release_tag" >> "$GITHUB_ENV"
+
+      - name: Repair legacy v0.1.0 release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if [[ "$RELEASE_TAG" != "v0.2.0" ]]; then
+            exit 0
+          fi
+
+          legacy_workspace="$(mktemp -d)"
+          legacy_release="$GITHUB_WORKSPACE/legacy-release"
+          mkdir -p "$legacy_release"
+          git worktree add --detach "$legacy_workspace" v0.1.0
+
+          (
+            cd "$legacy_workspace"
+            npm run build
+            npm pack --pack-destination "$legacy_release"
+          )
+
+          legacy_archive="$legacy_release/echelon-foundry-design-system-0.1.0.tgz"
+          test -f "$legacy_archive"
+          gh release upload v0.1.0 "$legacy_archive" --clobber
+          git worktree remove --force "$legacy_workspace"
 
       - name: Validate package and site
         run: |
@@ -59,7 +99,24 @@ jobs:
         shell: bash
         run: |
           contents="$(tar -tzf "$ARCHIVE")"
-          for required in             package/dist/all.css             package/dist/tokens.css             package/dist/foundations.css             package/dist/components.css             package/dist/assessment.css             package/patterns/search.html             package/patterns/data-grid.html             package/patterns/work-queue.html; do
+          required_files=(
+            package/dist/all.css
+            package/dist/tokens.css
+            package/dist/foundations.css
+            package/dist/components.css
+            package/dist/assessment.css
+            package/dist/skins.css
+            package/dist/brands/echelon.css
+            package/dist/brands/example-harbor.css
+            package/dist/brands/index.json
+            package/schemas/brand-manifest.schema.json
+            package/docs/BRANDING.md
+            package/patterns/search.html
+            package/patterns/data-grid.html
+            package/patterns/work-queue.html
+          )
+
+          for required in "${required_files[@]}"; do
             grep -qx "$required" <<<"$contents" || {
               echo "missing $required from release package"
               exit 1
@@ -75,6 +132,10 @@ jobs:
           npm init -y >/dev/null
           npm install --no-audit --no-fund ./forma.tgz
           test -f node_modules/@echelon-foundry/design-system/dist/all.css
+          test -f node_modules/@echelon-foundry/design-system/dist/skins.css
+          test -f node_modules/@echelon-foundry/design-system/dist/brands/echelon.css
+          test -f node_modules/@echelon-foundry/design-system/dist/brands/index.json
+          test -f node_modules/@echelon-foundry/design-system/schemas/brand-manifest.schema.json
           test -f node_modules/@echelon-foundry/design-system/patterns/data-grid.html
 
       - name: Create GitHub release
@@ -85,7 +146,9 @@ jobs:
           if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
             gh release upload "$RELEASE_TAG" "$ARCHIVE" --clobber
           else
-            gh release create "$RELEASE_TAG" "$ARCHIVE" --target "$GITHUB_SHA"               --title "$RELEASE_TAG"               --notes "Forma ${RELEASE_TAG#v}: zero-runtime Echelon Foundry design system."
+            gh release create "$RELEASE_TAG" "$ARCHIVE" --target "$GITHUB_SHA" \
+              --title "$RELEASE_TAG" \
+              --notes "Forma ${RELEASE_TAG#v}: zero-runtime Echelon Foundry design system."
           fi
 
       - name: Publish to npm when trusted publishing is enabled
