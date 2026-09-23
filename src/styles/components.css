@@ -1,4 +1,13 @@
 @layer echelon.components {
+  /*
+   * Public ef-* authoring tags are inert wrappers, not registered Custom
+   * Elements. display: contents keeps layout and semantics owned by the
+   * canonical native HTML inside the tag.
+   */
+  .ef-component-tag {
+    display: contents;
+  }
+
   .ef-field {
     display: grid;
     gap: var(--ef-primitive-spacing-2, 0.5rem);
