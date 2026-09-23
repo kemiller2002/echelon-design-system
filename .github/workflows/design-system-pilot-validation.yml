@@ -30,8 +30,10 @@ jobs:
       - name: Install test tooling
         run: npm install --ignore-scripts=false
 
-      - name: Restore token compiler
-        run: dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
+      - name: Restore build-time compilers
+        run: |
+          dotnet restore tools/TokenCompiler/TokenCompiler.fsproj
+          dotnet restore tools/BrandCompiler/BrandCompiler.fsproj
 
       - name: Build HTML/CSS package
         run: npm run build
@@ -39,8 +41,11 @@ jobs:
       - name: Enforce zero-runtime boundary
         run: npm run test:runtime
 
-      - name: Test token compiler
-        run: npm run test:tokens
+      - name: Test build-time compilers and package contract
+        run: |
+          npm run test:tokens
+          npm run test:brands
+          npm run test:package
 
       - name: Show artifact metrics
         run: cat dist/build-metrics.json
