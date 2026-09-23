@@ -1,0 +1,19 @@
+<aside
+  class="ef-alert ef-fault-banner"
+  role="status"
+  data-ef-intent="banner"
+  data-ef-severity="critical"
+  data-ef-motion-weight="standard"
+  data-ef-motion-entry
+  aria-labelledby="fault-banner-title">
+  <div class="ef-alert__icon ef-fault-banner__marker" aria-hidden="true">!!</div>
+  <div class="ef-fault-banner__body">
+    <p class="ef-fault__severity">Critical</p>
+    <h2 class="ef-alert__title" id="fault-banner-title">Diagnostics storage is unavailable</h2>
+    <p>The application is running in a degraded state. New diagnostics are queued locally.</p>
+    <p class="ef-fault-reference">Reference <code>AG-22K8M</code></p>
+  </div>
+  <div class="ef-recovery-actions" role="group" aria-label="Recovery actions">
+    <button type="button" data-ef-aegis-capability="CanRestoreSink">Reconnect diagnostics</button>
+  </div>
+</aside>
