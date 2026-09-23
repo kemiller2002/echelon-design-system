@@ -31,6 +31,30 @@ test("every component page renders at least three examples", () => {
   }
 });
 
+test("every component page documents and renders its ef custom authoring tag", () => {
+  for (const slug of patterns) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    const mobile = fs.readFileSync(path.join(output, "components", slug, "mobile.html"), "utf8");
+    const escapedTag = `&lt;ef-${slug}&gt;`;
+    const openingTag = new RegExp(`<ef-${slug}\\b[^>]*class="[^"]*ef-component-tag[^"]*"`);
+
+    assert.match(html, new RegExp(escapedTag), `${slug} does not publish its authoring tag label`);
+    assert.match(html, openingTag, `${slug} examples do not render the ef custom authoring tag`);
+    assert.match(mobile, openingTag, `${slug} mobile example does not render the ef custom authoring tag`);
+  }
+});
+
+test("ef authoring tags remain inert and zero-runtime", () => {
+  const css = fs.readFileSync(path.join(output, "assets", "forma.css"), "utf8");
+  assert.match(css, /\.ef-component-tag\s*\{[^}]*display:\s*contents/s);
+
+  for (const slug of patterns) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    assert.equal(/customElements\.define\s*\(/.test(html), false, `${slug} attempts to register an ef tag`);
+    assert.equal(/<script\b/i.test(html), false, `${slug} added runtime script`);
+  }
+});
+
 test("physics-enabled surface pages publish explicit light standard heavy examples", () => {
   const physicsSlugs = [
     "alert",
