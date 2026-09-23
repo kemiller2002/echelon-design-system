@@ -106,13 +106,15 @@ Before changing application CSS for customer identity or presentation, read
 
 ## Motion and perceived weight
 
-Forma's switch, checkbox, and native select share a physics-derived CSS motion vocabulary.
+Forma's controls and transient surfaces share one physics-derived CSS motion vocabulary.
 
-- Use `data-ef-motion-weight="standard"` by default.
-- `light`, `standard`, and `heavy` are presentation presets only. Never map them to risk, severity, permission, validation, or domain importance.
+- Use the canonical component default unless there is a documented visual-mass reason to override it: light for local disclosure/popover/menu/tab cues, standard for notifications, heavy for modal dialog/drawer/command-palette surfaces.
+- `light`, `standard`, and `heavy` are presentation presets only. Never map them to risk, severity, permission, validation, destructive intent, or domain importance.
 - Mass affects inertial/spring response. It does not affect the gravity-derived timing used for vertical cues.
 - Do not add JavaScript to compute animation timing. The canonical model is expressed with CSS custom properties and CSS math, with static CSS fallbacks.
 - A consuming application may override the exposed physics variables for a justified branded/interaction treatment, but it must preserve reduced-motion behavior and native semantic state timing.
+- Entry and exit come from the same model; transient-surface exit is deliberately shorter and more damped.
+- Native `details`, `popover`, and `dialog` state remains authoritative. Never create a second CSS-only semantic state machine.
 - Direct manipulation remains immediate; no physics effect may introduce pointer lag.
 - Read `requirements/MOTION-AND-INTERACTION.md` before adding a new animated pattern.
 
