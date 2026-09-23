@@ -17,6 +17,82 @@
     line-height: 1.4;
   }
 
+  /* Physics-derived motion ---------------------------------------------- */
+  :where(.ef-switch, .ef-checkbox, .ef-select) {
+    /*
+     * CSS cannot run a continuous rigid-body simulation. Forma therefore uses
+     * a physics-derived response model. The fallback values remain usable in
+     * browsers that do not support CSS sqrt()/typed multiplication.
+     */
+    --ef-motion-mass: 1;
+    --ef-motion-stiffness: 1;
+    --ef-motion-damping: 0.84;
+    --ef-motion-distance: 1;
+    --ef-motion-gravity: 1;
+    --ef-motion-base-duration: 180ms;
+    --ef-motion-inertia-duration: 214ms;
+    --ef-motion-gravity-duration: 255ms;
+    --ef-motion-state-duration: 154ms;
+    --ef-motion-press-duration: 107ms;
+    --ef-motion-spring-easing: linear(0, 0.42 24%, 0.82 48%, 1.055 70%, 0.988 88%, 1);
+    --ef-motion-damped-easing: cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  :where(.ef-switch, .ef-checkbox, .ef-select)[data-ef-motion-weight="light"] {
+    --ef-motion-mass: 0.65;
+    --ef-motion-stiffness: 1.15;
+    --ef-motion-damping: 0.94;
+  }
+
+  :where(.ef-switch, .ef-checkbox, .ef-select)[data-ef-motion-weight="standard"] {
+    --ef-motion-mass: 1;
+    --ef-motion-stiffness: 1;
+    --ef-motion-damping: 0.84;
+  }
+
+  :where(.ef-switch, .ef-checkbox, .ef-select)[data-ef-motion-weight="heavy"] {
+    --ef-motion-mass: 1.8;
+    --ef-motion-stiffness: 0.92;
+    --ef-motion-damping: 0.76;
+  }
+
+  @supports (width: calc(1px * sqrt(1))) {
+    :where(.ef-switch, .ef-checkbox, .ef-select) {
+      /*
+       * Response time follows sqrt(mass / stiffness), then is lengthened as
+       * damping decreases. Vertical gravity time follows sqrt(2d / g) and is
+       * deliberately independent of mass.
+       */
+      --ef-motion-inertia-duration: clamp(
+        110ms,
+        calc(
+          var(--ef-motion-base-duration)
+          * sqrt(var(--ef-motion-mass) / var(--ef-motion-stiffness))
+          / var(--ef-motion-damping)
+        ),
+        420ms
+      );
+      --ef-motion-gravity-duration: clamp(
+        100ms,
+        calc(
+          var(--ef-motion-base-duration)
+          * sqrt((2 * var(--ef-motion-distance)) / var(--ef-motion-gravity))
+        ),
+        420ms
+      );
+      --ef-motion-state-duration: clamp(
+        90ms,
+        calc(var(--ef-motion-inertia-duration) * 0.72),
+        240ms
+      );
+      --ef-motion-press-duration: clamp(
+        70ms,
+        calc(var(--ef-motion-inertia-duration) * 0.5),
+        160ms
+      );
+    }
+  }
+
   /* Switch -------------------------------------------------------------- */
   .ef-switch {
     --ef-switch-width: 2.75rem;
@@ -53,8 +129,8 @@
     border-radius: var(--ef-primitive-radius-pill, 999px);
     background: var(--ef-color-control-track, #686d68);
     transition:
-      background var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease),
-      border-color var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease);
+      background var(--ef-motion-state-duration) var(--ef-motion-damped-easing),
+      border-color var(--ef-motion-state-duration) var(--ef-motion-damped-easing);
   }
 
   .ef-switch__track::after {
@@ -68,10 +144,12 @@
     border-radius: 50%;
     background: var(--ef-color-control-thumb, #f2efe7);
     box-shadow: 0 1px 2px rgb(0 0 0 / 0.18);
-    transform: translateX(0);
+    translate: 0 0;
+    scale: 1;
     transition:
-      transform var(--ef-primitive-motion-duration-standard, 180ms) var(--ef-primitive-motion-easing-standard, ease),
-      scale var(--ef-primitive-motion-duration-fast, 120ms) var(--ef-primitive-motion-easing-standard, ease);
+      translate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing),
+      scale var(--ef-motion-press-duration) var(--ef-motion-damped-easing),
+      border-color var(--ef-motion-state-duration) var(--ef-motion-damped-easing);
   }
 
   .ef-switch__input:checked + .ef-switch__track {
@@ -79,7 +157,7 @@
   }
 
   .ef-switch__input:checked + .ef-switch__track::after {
-    transform: translateX(calc(var(--ef-switch-width) - var(--ef-switch-thumb) - (2 * var(--ef-switch-gap))));
+    translate: calc(var(--ef-switch-width) - var(--ef-switch-thumb) - (2 * var(--ef-switch-gap))) 0;
   }
 
   .ef-switch__input:active + .ef-switch__track::after { scale: 1.12; }
@@ -103,7 +181,171 @@
     line-height: 1.35;
   }
 
+  /* Checkbox ------------------------------------------------------------ */
+  .ef-checkbox {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1.25rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--ef-primitive-spacing-3, 0.75rem);
+    min-block-size: 2.75rem;
+    max-inline-size: 100%;
+    color: var(--ef-color-text-primary, #171a18);
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .ef-checkbox__input {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    margin: 0;
+    opacity: 0;
+    cursor: inherit;
+  }
+
+  .ef-checkbox__box {
+    position: relative;
+    inline-size: 1.25rem;
+    block-size: 1.25rem;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--ef-color-border-functional, #3a403c);
+    border-radius: var(--ef-primitive-radius-small, 4px);
+    background: var(--ef-color-surface-primary, #f2efe7);
+    scale: 1;
+    transition:
+      background var(--ef-motion-state-duration) var(--ef-motion-damped-easing),
+      border-color var(--ef-motion-state-duration) var(--ef-motion-damped-easing),
+      scale var(--ef-motion-press-duration) var(--ef-motion-damped-easing);
+  }
+
+  .ef-checkbox__box::after {
+    content: "✓";
+    color: var(--ef-color-text-inverse, #f2efe7);
+    font-family: var(--ef-primitive-font-family-sans, system-ui, sans-serif);
+    font-size: 0.9rem;
+    font-weight: 800;
+    line-height: 1;
+    opacity: 0;
+    rotate: -12deg;
+    scale: 0.35;
+    transition:
+      opacity var(--ef-motion-state-duration) linear,
+      rotate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing),
+      scale var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing);
+  }
+
+  .ef-checkbox__input:checked + .ef-checkbox__box {
+    border-color: var(--ef-color-control-active, #905831);
+    background: var(--ef-color-control-active, #905831);
+  }
+
+  .ef-checkbox__input:checked + .ef-checkbox__box::after {
+    opacity: 1;
+    rotate: 0deg;
+    scale: 1;
+  }
+
+  .ef-checkbox__input:active + .ef-checkbox__box { scale: 0.92; }
+
+  .ef-checkbox__input:focus-visible + .ef-checkbox__box {
+    outline: 3px solid var(--ef-color-focus-gap, #f2efe7);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--ef-color-focus-ring, #171a18);
+  }
+
+  .ef-checkbox:has(.ef-checkbox__input:disabled) {
+    cursor: not-allowed;
+    opacity: 0.62;
+  }
+
+  .ef-checkbox__text { min-inline-size: 0; }
+  .ef-checkbox__label { display: block; font-size: 0.9375rem; font-weight: 650; line-height: 1.25; }
+  .ef-checkbox__description {
+    display: block;
+    margin-block-start: 0.2rem;
+    color: var(--ef-color-text-secondary, #686d68);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  /* Select -------------------------------------------------------------- */
+  .ef-select-field {
+    display: grid;
+    gap: var(--ef-primitive-spacing-2, 0.5rem);
+    max-inline-size: 100%;
+  }
+
+  .ef-select {
+    --ef-motion-distance: 0.35;
+    position: relative;
+    display: grid;
+    align-items: center;
+    max-inline-size: 100%;
+  }
+
+  .ef-select__input {
+    inline-size: 100%;
+    min-block-size: 2.75rem;
+    padding-inline-end: 2.75rem;
+    appearance: none;
+    cursor: pointer;
+    transition:
+      background var(--ef-motion-state-duration) var(--ef-motion-damped-easing),
+      border-color var(--ef-motion-state-duration) var(--ef-motion-damped-easing);
+  }
+
+  .ef-select__indicator {
+    position: absolute;
+    inset-inline-end: 1rem;
+    inline-size: 0.55rem;
+    block-size: 0.55rem;
+    border-inline-end: 2px solid currentColor;
+    border-block-end: 2px solid currentColor;
+    color: var(--ef-color-text-primary, #171a18);
+    pointer-events: none;
+    rotate: 45deg;
+    translate: 0 -0.12rem;
+    transition:
+      rotate var(--ef-motion-inertia-duration) var(--ef-motion-spring-easing),
+      translate var(--ef-motion-gravity-duration) var(--ef-motion-damped-easing);
+  }
+
+  .ef-select__input:open + .ef-select__indicator {
+    rotate: 225deg;
+    translate: 0 0.08rem;
+  }
+
+  .ef-select__input:disabled {
+    cursor: not-allowed;
+    opacity: 0.62;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :where(.ef-switch, .ef-checkbox, .ef-select) {
+      --ef-motion-inertia-duration: 0.01ms;
+      --ef-motion-gravity-duration: 0.01ms;
+      --ef-motion-state-duration: 0.01ms;
+      --ef-motion-press-duration: 0.01ms;
+      --ef-motion-spring-easing: linear;
+      --ef-motion-damped-easing: linear;
+    }
+
+    .ef-switch__input:active + .ef-switch__track::after,
+    .ef-checkbox__input:active + .ef-checkbox__box {
+      scale: 1;
+    }
+
+    .ef-select__indicator,
+    .ef-select__input:open + .ef-select__indicator {
+      translate: 0 0;
+    }
+  }
+
   /* Slider -------------------------------------------------------------- */
+
   .ef-slider {
     display: grid;
     gap: var(--ef-primitive-spacing-2, 0.5rem);
