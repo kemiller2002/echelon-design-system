@@ -10,7 +10,7 @@ const patternNames = new Set(fs.readdirSync(path.join(root, "patterns")).filter(
 const compositionPrimitives = new Set(["stack", "cluster", "sidebar", "frame", "measure", "split-pane", "landmark-region", "comparison-grid"]);
 
 function doc(source) {
-  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style><style>html,body{margin:0}body{padding:1rem}</style></head><body>${source}</body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Forma layout conformance specimen</title><style>${css}</style><style>html,body{margin:0}body{padding:1rem}</style></head><body>${source}</body></html>`;
 }
 
 test("catalog references only public Forma composition contracts", () => {
