@@ -2679,4 +2679,78 @@
     .ef-landmark-region { position: static; }
   }
 
+
+  .ef-command-group {
+    --ef-command-space: var(--ef-primitive-spacing-2, 0.5rem);
+    display: grid;
+    gap: var(--ef-command-space);
+    align-content: start;
+  }
+  .ef-command-group__label { margin: 0; font-size: 0.875rem; }
+  .ef-command-group__commands,
+  .ef-overflow-commands__panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ef-command-space, var(--ef-primitive-spacing-2, 0.5rem));
+  }
+  .ef-overflow-commands { position: relative; }
+  .ef-overflow-commands__panel {
+    padding-block-start: var(--ef-primitive-spacing-2, 0.5rem);
+  }
+
+  .ef-switcher {
+    --ef-switcher-threshold: 42rem;
+    --ef-switcher-space: var(--ef-primitive-spacing-5, 1.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ef-switcher-space);
+    align-items: start;
+  }
+  .ef-switcher__primary { flex: 999 1 28rem; min-inline-size: min(100%, 20rem); }
+  .ef-switcher__secondary { flex: 1 1 16rem; min-inline-size: min(100%, 16rem); }
+
+  .ef-workspace-shell {
+    --ef-workspace-nav: minmax(10rem, 14rem);
+    --ef-workspace-inspector: minmax(14rem, 20rem);
+    --ef-workspace-space: var(--ef-primitive-spacing-4, 1rem);
+    display: grid;
+    grid-template:
+      "landmark landmark landmark" auto
+      "navigation primary inspector" minmax(0, 1fr)
+      / var(--ef-workspace-nav) minmax(0, 1fr) var(--ef-workspace-inspector);
+    gap: var(--ef-workspace-space);
+    align-items: start;
+  }
+  .ef-workspace-shell__landmark { grid-area: landmark; }
+  .ef-workspace-shell__navigation { grid-area: navigation; display: grid; gap: var(--ef-primitive-spacing-2, 0.5rem); }
+  .ef-workspace-shell__primary { grid-area: primary; min-inline-size: 0; }
+  .ef-workspace-shell__inspector { grid-area: inspector; min-inline-size: 0; }
+
+  .ef-navigation-shell {
+    --ef-navigation-width: minmax(11rem, 16rem);
+    --ef-navigation-space: var(--ef-primitive-spacing-4, 1rem);
+    display: grid;
+    grid-template-columns: var(--ef-navigation-width) minmax(0, 1fr);
+    gap: var(--ef-navigation-space);
+    align-items: start;
+  }
+  .ef-navigation-shell__persistent { display: grid; gap: var(--ef-primitive-spacing-2, 0.5rem); }
+  .ef-navigation-shell__compact { display: none; }
+  .ef-navigation-shell__content { min-inline-size: 0; }
+
+  @media (max-width: 48rem) {
+    .ef-workspace-shell {
+      grid-template:
+        "landmark" auto
+        "navigation" auto
+        "primary" auto
+        "inspector" auto
+        / minmax(0, 1fr);
+    }
+    .ef-navigation-shell { grid-template-columns: minmax(0, 1fr); }
+    .ef-navigation-shell__persistent { display: none; }
+    .ef-navigation-shell__compact { display: block; }
+    .ef-navigation-shell__compact nav { display: grid; gap: var(--ef-primitive-spacing-2, 0.5rem); padding-block-start: var(--ef-primitive-spacing-2, 0.5rem); }
+  }
+
 }
