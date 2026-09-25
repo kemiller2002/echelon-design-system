@@ -2558,4 +2558,73 @@
   :where(.ef-evidence-age,.ef-security-trend) ul { display:grid; gap:.5rem; margin:0; padding:0; list-style:none; }
   :where(.ef-evidence-age,.ef-security-trend) li { display:grid; gap:.2rem; border-inline-start:.3rem solid currentColor; padding:.65rem .75rem; background:var(--ef-color-surface-secondary,#e3e0d7); }
   :where(.ef-evidence-age,.ef-security-trend) li span { overflow-wrap:anywhere; }
+
+  /* Composition primitives ---------------------------------------------- */
+  .ef-stack {
+    --ef-stack-space: var(--ef-primitive-spacing-4, 1rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .ef-stack > * { margin-block: 0; }
+  .ef-stack > * + * { margin-block-start: var(--ef-stack-space); }
+
+  .ef-cluster {
+    --ef-cluster-space: var(--ef-primitive-spacing-3, 0.75rem);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--ef-cluster-space);
+  }
+
+  .ef-sidebar {
+    --ef-sidebar-width: 18rem;
+    --ef-sidebar-content-min: 60%;
+    --ef-sidebar-space: var(--ef-primitive-spacing-5, 1.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ef-sidebar-space);
+    align-items: stretch;
+  }
+  .ef-sidebar__side {
+    flex-basis: var(--ef-sidebar-width);
+    flex-grow: 1;
+  }
+  .ef-sidebar__content {
+    flex-basis: 0;
+    flex-grow: 999;
+    min-inline-size: min(100%, var(--ef-sidebar-content-min));
+  }
+
+  .ef-frame {
+    --ef-frame-ratio: 16 / 9;
+    margin: 0;
+  }
+  .ef-frame__media {
+    aspect-ratio: var(--ef-frame-ratio);
+    overflow: hidden;
+  }
+  .ef-frame__media > :is(img, video, iframe, svg) {
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .ef-measure {
+    --ef-measure: 65ch;
+    inline-size: min(100%, var(--ef-measure));
+  }
+
+  @media (max-width: 30rem) {
+    .ef-sidebar {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .ef-sidebar__side,
+    .ef-sidebar__content {
+      min-inline-size: 0;
+      inline-size: 100%;
+    }
+  }
+
 }
