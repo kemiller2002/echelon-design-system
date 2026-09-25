@@ -382,7 +382,10 @@
       "composition": [
         "stack",
         "cluster",
-        "landmark-region"
+        "landmark-region",
+        "command-group",
+        "overflow-command-disclosure",
+        "measure"
       ],
       "preservedRelationships": [
         "task-group ownership",
@@ -391,16 +394,13 @@
         "stable command location"
       ],
       "narrowRecomposition": "reduce exposed commands by explicit priority while retaining group labels and access to hidden commands; do not merely shrink targets",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "Project Atlas Ribbon Comparative Study",
         "Recognition Exposure Tradeoff",
         "Contextual Disclosure"
       ],
-      "gaps": [
-        "command-group",
-        "overflow-command-disclosure"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-ASYMMETRIC-EDITORIAL",
@@ -423,7 +423,8 @@
       "composition": [
         "measure",
         "stack",
-        "frame"
+        "frame",
+        "switcher"
       ],
       "preservedRelationships": [
         "primary-secondary hierarchy",
@@ -431,14 +432,12 @@
         "narrative order"
       ],
       "narrowRecomposition": "linearize supporting material adjacent to its owning narrative section while preserving source order",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "Architecture Genome: asymmetry",
         "EX-COMP-012"
       ],
-      "gaps": [
-        "switcher"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-MULTI-REGION-WORKSPACE",
@@ -461,9 +460,8 @@
         "status/effects"
       ],
       "composition": [
+        "workspace-shell",
         "landmark-region",
-        "split-pane",
-        "sidebar",
         "stack",
         "cluster"
       ],
@@ -473,14 +471,12 @@
         "status visibility"
       ],
       "narrowRecomposition": "preserve primary work and convert secondary regions into explicit, labeled access points without duplicating authoritative content",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "Architecture Genome: scale and navigation",
         "Externalized Cognition Hypothesis"
       ],
-      "gaps": [
-        "workspace-shell"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-ADAPTIVE-NAVIGATION",
@@ -500,8 +496,7 @@
         "navigation scope"
       ],
       "composition": [
-        "landmark-region",
-        "sidebar",
+        "navigation-shell",
         "stack"
       ],
       "preservedRelationships": [
@@ -510,15 +505,13 @@
         "navigation hierarchy"
       ],
       "narrowRecomposition": "replace persistent spatial navigation with an explicit compact access point while preserving labels, hierarchy, and current-location feedback",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "Decision-Point Landmark Law",
         "Strategic Visibility Law",
         "Externalized Memory Law"
       ],
-      "gaps": [
-        "navigation-shell"
-      ]
+      "gaps": []
     }
   ]
 }
