@@ -2,6 +2,12 @@
 // Kept separate from the site renderer so catalog growth does not turn
 // tools/build-site.mjs into a structural monolith.
 export const componentMeta = {
+  "dense-ledger": ["Dense ledger", "Data & productivity", "Application content", "Compact expert-work table with bounded overflow, stable relationships, and explicit text state."],
+  "focus-stage": ["Focus stage", "Layout & workspace", "Application content", "Dominant primary work surface with subordinate supporting context that stacks without semantic reordering."],
+  "mosaic": ["Mosaic", "Layout & workspace", "Application content", "Asymmetric editorial composition using explicit spans and deterministic narrow-screen reflow."],
+  "priority-stack": ["Priority stack", "Layout & workspace", "Application content", "Responsive composition where priority changes space allocation but never DOM or semantic order."],
+  "rail": ["Rail", "Layout & workspace", "Application content", "Supporting rail plus flexible primary region with start/end placement and single-column reflow."],
+  "responsive-grid": ["Responsive grid", "Layout & workspace", "Application content", "Auto-fitting composition grid with optional visual spans that collapse without changing source order."],
   "fault": ["Fault", "Aegis fault presentation", "Aegis / Ordo / Application", "Common safe presentation shell for an Aegis Presentation.T without exposing raw fault diagnostics."],
   "fault-inline": ["Fault inline", "Aegis fault presentation", "Application / Limen", "Operation-local Aegis fault presentation with reference and legal recovery actions."],
   "fault-notification": ["Fault notification", "Aegis fault presentation", "Application / Limen", "Persistent, dismissible notification surface for Aegis Notification intent; lifecycle remains application-owned."],
