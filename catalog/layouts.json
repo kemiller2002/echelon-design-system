@@ -512,6 +512,319 @@
         "Externalized Memory Law"
       ],
       "gaps": []
+    },
+    {
+      "id": "LAY-SPATIAL-CANVAS",
+      "name": "Spatial canvas",
+      "tasks": [
+        "explore spatial relationships",
+        "inspect nodes",
+        "navigate a large visual field"
+      ],
+      "recognitionPath": [
+        "canvas extent",
+        "focal object",
+        "local controls",
+        "orientation cues"
+      ],
+      "verificationRegions": [
+        "selected identity",
+        "position/scale",
+        "legend or map"
+      ],
+      "composition": [
+        "landmark-region",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "spatial adjacency",
+        "selection identity",
+        "orientation",
+        "control-canvas ownership"
+      ],
+      "narrowRecomposition": "retain a bounded pan/zoom surface and expose orientation plus non-spatial access to consequential objects",
+      "status": "observed",
+      "evidence": [
+        "RP-COMP-005 active sampling",
+        "Architecture Genome: movement, scale, landmarks"
+      ],
+      "gaps": [
+        "spatial-canvas",
+        "viewport-orientation",
+        "nonspatial-object-index"
+      ]
+    },
+    {
+      "id": "LAY-TIMELINE-SEQUENCE",
+      "name": "Timeline / sequential evidence",
+      "tasks": [
+        "understand sequence",
+        "locate current point",
+        "compare events"
+      ],
+      "recognitionPath": [
+        "sequence direction",
+        "current point",
+        "major events"
+      ],
+      "verificationRegions": [
+        "event details",
+        "timestamps",
+        "causal or evidentiary links"
+      ],
+      "composition": [
+        "stack",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "event order",
+        "current position",
+        "event-detail ownership"
+      ],
+      "narrowRecomposition": "linearize without changing chronological or causal order; keep current-position cue visible",
+      "status": "observed",
+      "evidence": [
+        "Architecture Genome: movement and sequential progression",
+        "Externalized Memory Law"
+      ],
+      "gaps": [
+        "timeline",
+        "sequence-landmark"
+      ]
+    },
+    {
+      "id": "LAY-BOARD",
+      "name": "Board / lane workspace",
+      "tasks": [
+        "scan work by state",
+        "move focus between groups",
+        "inspect work item"
+      ],
+      "recognitionPath": [
+        "lane identities",
+        "exception counts",
+        "priority items"
+      ],
+      "verificationRegions": [
+        "item state",
+        "item owner",
+        "transition consequence"
+      ],
+      "composition": [
+        "cluster",
+        "stack"
+      ],
+      "preservedRelationships": [
+        "item-lane membership",
+        "lane order when meaningful",
+        "item identity"
+      ],
+      "narrowRecomposition": "convert lanes to labeled sequential groups or bounded horizontal model without duplicating items",
+      "status": "observed",
+      "evidence": [
+        "relative separation and grouping",
+        "task-relative hierarchy"
+      ],
+      "gaps": [
+        "lane-board",
+        "lane-summary"
+      ]
+    },
+    {
+      "id": "LAY-SEARCH-RESULTS",
+      "name": "Search and results",
+      "tasks": [
+        "form query",
+        "scan matches",
+        "refine",
+        "inspect result"
+      ],
+      "recognitionPath": [
+        "query state",
+        "result count/status",
+        "matches",
+        "refinements"
+      ],
+      "verificationRegions": [
+        "active filters",
+        "result provenance",
+        "selected result"
+      ],
+      "composition": [
+        "stack",
+        "cluster",
+        "sidebar",
+        "measure"
+      ],
+      "preservedRelationships": [
+        "query-results relationship",
+        "filter scope",
+        "result identity",
+        "empty/loading/error distinctions"
+      ],
+      "narrowRecomposition": "place query and active refinements before results; collapse optional filter controls without hiding active scope",
+      "status": "partial",
+      "evidence": [
+        "Strategic Visibility Law",
+        "recognition over recall",
+        "semantic state projection"
+      ],
+      "gaps": [
+        "active-filter-summary"
+      ]
+    },
+    {
+      "id": "LAY-INBOX-FEED",
+      "name": "Inbox / activity feed",
+      "tasks": [
+        "scan new items",
+        "triage",
+        "resume",
+        "inspect"
+      ],
+      "recognitionPath": [
+        "new/exception state",
+        "sender/source",
+        "subject/event",
+        "time"
+      ],
+      "verificationRegions": [
+        "read state",
+        "item detail",
+        "available action"
+      ],
+      "composition": [
+        "stack",
+        "cluster",
+        "work-queue"
+      ],
+      "preservedRelationships": [
+        "item chronology",
+        "unread/exception distinction",
+        "item-action ownership"
+      ],
+      "narrowRecomposition": "retain scan order and visible state labels while moving secondary metadata below the primary identifier",
+      "status": "partial",
+      "evidence": [
+        "attention priority",
+        "controlled density",
+        "first-glance vs verification"
+      ],
+      "gaps": [
+        "feed-item"
+      ]
+    },
+    {
+      "id": "LAY-STICKY-ACTION-FRAME",
+      "name": "Sticky action frame",
+      "tasks": [
+        "edit long content",
+        "retain access to consequential action",
+        "review state"
+      ],
+      "recognitionPath": [
+        "content context",
+        "current state",
+        "primary action"
+      ],
+      "verificationRegions": [
+        "unsaved/validation state",
+        "action consequence"
+      ],
+      "composition": [
+        "stack",
+        "measure",
+        "landmark-region"
+      ],
+      "preservedRelationships": [
+        "action-content scope",
+        "status-action relationship",
+        "reading order"
+      ],
+      "narrowRecomposition": "keep actions reachable without obscuring content or virtual keyboard; do not detach validation from owning fields",
+      "status": "observed",
+      "evidence": [
+        "Strategic Visibility Law",
+        "action consequence visibility"
+      ],
+      "gaps": [
+        "sticky-action-region"
+      ]
+    },
+    {
+      "id": "LAY-FOCAL-OVERLAY",
+      "name": "Focal overlay / drawer",
+      "tasks": [
+        "inspect or act without losing parent context",
+        "confirm consequential action"
+      ],
+      "recognitionPath": [
+        "overlay purpose",
+        "parent context boundary",
+        "primary action"
+      ],
+      "verificationRegions": [
+        "overlay identity",
+        "consequence",
+        "dismiss/recovery path"
+      ],
+      "composition": [
+        "stack"
+      ],
+      "preservedRelationships": [
+        "parent-overlay context",
+        "focus containment",
+        "dismissal semantics"
+      ],
+      "narrowRecomposition": "fit dynamic viewport and preserve accessible dialog semantics; use full-height composition when necessary",
+      "status": "partial",
+      "evidence": [
+        "common region and containment",
+        "strategic visibility"
+      ],
+      "gaps": [
+        "overlay-layout-contract"
+      ]
+    },
+    {
+      "id": "LAY-IMMERSIVE-PREVIEW",
+      "name": "Immersive preview / editor-preview",
+      "tasks": [
+        "create",
+        "preview output",
+        "compare source to rendered result"
+      ],
+      "recognitionPath": [
+        "authoring surface",
+        "rendered result",
+        "mode/context"
+      ],
+      "verificationRegions": [
+        "source-result correspondence",
+        "preview state",
+        "errors"
+      ],
+      "composition": [
+        "split-pane",
+        "preview-surface",
+        "stack",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "source-preview pairing",
+        "current document identity",
+        "preview status"
+      ],
+      "narrowRecomposition": "switch between explicitly labeled authoring and preview views while preserving shared document identity",
+      "status": "partial",
+      "evidence": [
+        "active sampling",
+        "comparison preservation",
+        "first-glance vs verification"
+      ],
+      "gaps": [
+        "view-mode-switcher"
+      ]
     }
   ]
 }
