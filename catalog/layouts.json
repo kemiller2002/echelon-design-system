@@ -573,6 +573,7 @@
         "causal or evidentiary links"
       ],
       "composition": [
+        "timeline",
         "stack",
         "cluster"
       ],
@@ -582,15 +583,13 @@
         "event-detail ownership"
       ],
       "narrowRecomposition": "linearize without changing chronological or causal order; keep current-position cue visible",
-      "status": "observed",
+      "status": "supported",
       "evidence": [
         "Architecture Genome: movement and sequential progression",
-        "Externalized Memory Law"
+        "Externalized Memory Law",
+        "Forma timeline sequence rail"
       ],
-      "gaps": [
-        "timeline",
-        "sequence-landmark"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-BOARD",
@@ -651,10 +650,11 @@
         "selected result"
       ],
       "composition": [
+        "search",
         "stack",
         "cluster",
         "sidebar",
-        "measure"
+        "status-lozenge"
       ],
       "preservedRelationships": [
         "query-results relationship",
@@ -667,7 +667,8 @@
       "evidence": [
         "Strategic Visibility Law",
         "recognition over recall",
-        "semantic state projection"
+        "semantic state projection",
+        "Forma search contract"
       ],
       "gaps": [
         "active-filter-summary"
@@ -734,7 +735,8 @@
       "composition": [
         "stack",
         "measure",
-        "landmark-region"
+        "landmark-region",
+        "mobile-action-bar"
       ],
       "preservedRelationships": [
         "action-content scope",
@@ -742,14 +744,13 @@
         "reading order"
       ],
       "narrowRecomposition": "keep actions reachable without obscuring content or virtual keyboard; do not detach validation from owning fields",
-      "status": "observed",
+      "status": "supported",
       "evidence": [
         "Strategic Visibility Law",
-        "action consequence visibility"
+        "action consequence visibility",
+        "Forma mobile action bar"
       ],
-      "gaps": [
-        "sticky-action-region"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-FOCAL-OVERLAY",
@@ -769,6 +770,8 @@
         "dismiss/recovery path"
       ],
       "composition": [
+        "flyout",
+        "dialog",
         "stack"
       ],
       "preservedRelationships": [
@@ -777,14 +780,13 @@
         "dismissal semantics"
       ],
       "narrowRecomposition": "fit dynamic viewport and preserve accessible dialog semantics; use full-height composition when necessary",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "common region and containment",
-        "strategic visibility"
+        "strategic visibility",
+        "Forma native dialog and flyout contracts"
       ],
-      "gaps": [
-        "overlay-layout-contract"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-IMMERSIVE-PREVIEW",
@@ -805,8 +807,9 @@
         "errors"
       ],
       "composition": [
-        "split-pane",
+        "focus-stage",
         "preview-surface",
+        "tabs",
         "stack",
         "cluster"
       ],
@@ -816,15 +819,14 @@
         "preview status"
       ],
       "narrowRecomposition": "switch between explicitly labeled authoring and preview views while preserving shared document identity",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "active sampling",
         "comparison preservation",
-        "first-glance vs verification"
+        "first-glance vs verification",
+        "Forma focus stage and native tabs"
       ],
-      "gaps": [
-        "view-mode-switcher"
-      ]
+      "gaps": []
     }
   ]
 }
