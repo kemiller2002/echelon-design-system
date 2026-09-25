@@ -533,7 +533,7 @@
         "legend or map"
       ],
       "composition": [
-        "landmark-region",
+        "spatial-canvas",
         "cluster"
       ],
       "preservedRelationships": [
@@ -543,16 +543,13 @@
         "control-canvas ownership"
       ],
       "narrowRecomposition": "retain a bounded pan/zoom surface and expose orientation plus non-spatial access to consequential objects",
-      "status": "observed",
+      "status": "supported",
       "evidence": [
         "RP-COMP-005 active sampling",
-        "Architecture Genome: movement, scale, landmarks"
+        "Architecture Genome: movement, scale, landmarks",
+        "Forma spatial canvas with orientation and non-spatial index"
       ],
-      "gaps": [
-        "spatial-canvas",
-        "viewport-orientation",
-        "nonspatial-object-index"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-TIMELINE-SEQUENCE",
@@ -610,8 +607,9 @@
         "transition consequence"
       ],
       "composition": [
-        "cluster",
-        "stack"
+        "lane-board",
+        "stack",
+        "cluster"
       ],
       "preservedRelationships": [
         "item-lane membership",
@@ -619,15 +617,13 @@
         "item identity"
       ],
       "narrowRecomposition": "convert lanes to labeled sequential groups or bounded horizontal model without duplicating items",
-      "status": "observed",
+      "status": "supported",
       "evidence": [
         "relative separation and grouping",
-        "task-relative hierarchy"
+        "task-relative hierarchy",
+        "Forma lane board"
       ],
-      "gaps": [
-        "lane-board",
-        "lane-summary"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-SEARCH-RESULTS",
@@ -651,6 +647,7 @@
       ],
       "composition": [
         "search",
+        "active-filter-summary",
         "stack",
         "cluster",
         "sidebar",
@@ -663,16 +660,15 @@
         "empty/loading/error distinctions"
       ],
       "narrowRecomposition": "place query and active refinements before results; collapse optional filter controls without hiding active scope",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "Strategic Visibility Law",
         "recognition over recall",
         "semantic state projection",
-        "Forma search contract"
+        "Forma search contract",
+        "Forma active filter summary"
       ],
-      "gaps": [
-        "active-filter-summary"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-INBOX-FEED",
@@ -697,7 +693,8 @@
       "composition": [
         "stack",
         "cluster",
-        "work-queue"
+        "work-queue",
+        "feed-item"
       ],
       "preservedRelationships": [
         "item chronology",
@@ -705,15 +702,14 @@
         "item-action ownership"
       ],
       "narrowRecomposition": "retain scan order and visible state labels while moving secondary metadata below the primary identifier",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "attention priority",
         "controlled density",
-        "first-glance vs verification"
+        "first-glance vs verification",
+        "Forma feed item"
       ],
-      "gaps": [
-        "feed-item"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-STICKY-ACTION-FRAME",
