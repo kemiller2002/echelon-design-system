@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -47,5 +48,16 @@ for (const family of catalog.families) {
       if (wideOrder === undefined) wideOrder = result.order;
       else expect(result.order, `${family.id} changes semantic source order at ${width}px`).toEqual(wideOrder);
     }
+  });
+}
+
+
+for (const family of catalog.families) {
+  test(`${family.id} specimen has no automatically detectable accessibility violations`, async ({ page }) => {
+    const source = fs.readFileSync(path.join(root, "catalog", "specimens", `${family.id}.html`), "utf8");
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.setContent(doc(source));
+    const results = await new AxeBuilder({ page }).analyze();
+    expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
   });
 }
