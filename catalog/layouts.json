@@ -1,123 +1,363 @@
 {
   "version": "1.0",
   "source": "Visual Engineering Composition Science",
-  "supportStates": ["observed", "partial", "supported", "verified"],
+  "supportStates": [
+    "observed",
+    "partial",
+    "supported",
+    "verified"
+  ],
   "families": [
     {
       "id": "LAY-FORM-SECTIONED",
       "name": "Sectioned form",
-      "tasks": ["data entry", "settings", "configuration"],
-      "recognitionPath": ["page purpose", "current section", "fields", "actions"],
-      "verificationRegions": ["field values", "validation", "consequential action"],
-      "composition": ["measure", "stack", "cluster"],
-      "preservedRelationships": ["label-input ownership", "section boundaries", "content-action boundary", "primary-secondary action hierarchy"],
+      "tasks": [
+        "data entry",
+        "settings",
+        "configuration"
+      ],
+      "recognitionPath": [
+        "page purpose",
+        "current section",
+        "fields",
+        "actions"
+      ],
+      "verificationRegions": [
+        "field values",
+        "validation",
+        "consequential action"
+      ],
+      "composition": [
+        "measure",
+        "stack",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "label-input ownership",
+        "section boundaries",
+        "content-action boundary",
+        "primary-secondary action hierarchy"
+      ],
       "narrowRecomposition": "single column, source order unchanged",
       "status": "supported",
-      "evidence": ["Project Atlas Applied Case Study 001", "LAW-COMP-004", "LAW-COMP-005"],
+      "evidence": [
+        "Project Atlas Applied Case Study 001",
+        "LAW-COMP-004",
+        "LAW-COMP-005"
+      ],
       "gaps": []
     },
     {
       "id": "LAY-ANALYTICAL-DASHBOARD",
       "name": "Analytical dashboard",
-      "tasks": ["monitor", "compare", "triage"],
-      "recognitionPath": ["system status", "exceptions", "primary metrics", "detail"],
-      "verificationRegions": ["metric provenance", "trend/context", "exceptions"],
-      "composition": ["dashboard-grid", "stack", "cluster", "measure"],
-      "preservedRelationships": ["metric-label pairing", "comparison groups", "exception salience"],
+      "tasks": [
+        "monitor",
+        "compare",
+        "triage"
+      ],
+      "recognitionPath": [
+        "system status",
+        "exceptions",
+        "primary metrics",
+        "detail"
+      ],
+      "verificationRegions": [
+        "metric provenance",
+        "trend/context",
+        "exceptions"
+      ],
+      "composition": [
+        "dashboard-grid",
+        "stack",
+        "cluster",
+        "measure"
+      ],
+      "preservedRelationships": [
+        "metric-label pairing",
+        "comparison groups",
+        "exception salience"
+      ],
       "narrowRecomposition": "grid reduces columns while preserving metric sequence and grouping",
       "status": "supported",
-      "evidence": ["Externalized Cognition Hypothesis", "LAW-COMP-004", "LAW-COMP-006"],
+      "evidence": [
+        "Externalized Cognition Hypothesis",
+        "LAW-COMP-004",
+        "LAW-COMP-006"
+      ],
       "gaps": []
     },
     {
       "id": "LAY-MASTER-DETAIL",
       "name": "Master-detail workspace",
-      "tasks": ["select", "inspect", "act"],
-      "recognitionPath": ["collection", "current selection", "record state", "available action"],
-      "verificationRegions": ["selected identity", "record details", "consequential action"],
-      "composition": ["master-detail", "stack", "cluster"],
-      "preservedRelationships": ["selection-detail identity", "current location", "record state"],
+      "tasks": [
+        "select",
+        "inspect",
+        "act"
+      ],
+      "recognitionPath": [
+        "collection",
+        "current selection",
+        "record state",
+        "available action"
+      ],
+      "verificationRegions": [
+        "selected identity",
+        "record details",
+        "consequential action"
+      ],
+      "composition": [
+        "master-detail",
+        "stack",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "selection-detail identity",
+        "current location",
+        "record state"
+      ],
       "narrowRecomposition": "master precedes detail; selection context remains visible",
       "status": "supported",
-      "evidence": ["LAW-COMP-002", "LAW-COMP-005", "LAW-COMP-007"],
+      "evidence": [
+        "LAW-COMP-002",
+        "LAW-COMP-005",
+        "LAW-COMP-007"
+      ],
       "gaps": []
     },
     {
       "id": "LAY-EDITORIAL-NARRATIVE",
       "name": "Editorial narrative",
-      "tasks": ["read", "learn", "review"],
-      "recognitionPath": ["title", "summary", "section sequence", "supporting evidence"],
-      "verificationRegions": ["figures", "citations", "notes", "source detail"],
-      "composition": ["measure", "stack", "frame"],
-      "preservedRelationships": ["narrative order", "figure-caption ownership", "evidence proximity"],
+      "tasks": [
+        "read",
+        "learn",
+        "review"
+      ],
+      "recognitionPath": [
+        "title",
+        "summary",
+        "section sequence",
+        "supporting evidence"
+      ],
+      "verificationRegions": [
+        "figures",
+        "citations",
+        "notes",
+        "source detail"
+      ],
+      "composition": [
+        "measure",
+        "stack",
+        "frame"
+      ],
+      "preservedRelationships": [
+        "narrative order",
+        "figure-caption ownership",
+        "evidence proximity"
+      ],
       "narrowRecomposition": "same narrative order with media contained to available measure",
       "status": "supported",
-      "evidence": ["EX-COMP-012", "LAW-COMP-005"],
+      "evidence": [
+        "EX-COMP-012",
+        "LAW-COMP-005"
+      ],
       "gaps": []
     },
     {
       "id": "LAY-COMMAND-WORKSPACE",
       "name": "Command workspace",
-      "tasks": ["operate", "monitor", "respond"],
-      "recognitionPath": ["global status", "active work", "exceptions", "commands"],
-      "verificationRegions": ["target identity", "effect preview", "system response"],
-      "composition": ["sidebar", "stack", "cluster", "work-queue", "operation-status"],
-      "preservedRelationships": ["status-command context", "work priority", "persistent orientation"],
+      "tasks": [
+        "operate",
+        "monitor",
+        "respond"
+      ],
+      "recognitionPath": [
+        "global status",
+        "active work",
+        "exceptions",
+        "commands"
+      ],
+      "verificationRegions": [
+        "target identity",
+        "effect preview",
+        "system response"
+      ],
+      "composition": [
+        "sidebar",
+        "stack",
+        "cluster",
+        "work-queue",
+        "operation-status",
+        "landmark-region"
+      ],
+      "preservedRelationships": [
+        "status-command context",
+        "work priority",
+        "persistent orientation"
+      ],
       "narrowRecomposition": "navigation/status region precedes active work; commands remain adjacent to their target",
-      "status": "partial",
-      "evidence": ["LAW-COMP-002", "LAW-COMP-005", "LAW-COMP-007"],
-      "gaps": ["persistent-landmark-region"]
+      "status": "supported",
+      "evidence": [
+        "LAW-COMP-002",
+        "LAW-COMP-005",
+        "LAW-COMP-007"
+      ],
+      "gaps": []
     },
     {
       "id": "LAY-INSPECTOR-WORKSPACE",
       "name": "Inspector workspace",
-      "tasks": ["create", "inspect", "adjust", "preview"],
-      "recognitionPath": ["working object", "selection", "properties", "result"],
-      "verificationRegions": ["selected target", "property values", "preview state"],
-      "composition": ["sidebar", "preview-surface", "stack", "cluster"],
-      "preservedRelationships": ["selection-inspector identity", "preview-target identity"],
+      "tasks": [
+        "create",
+        "inspect",
+        "adjust",
+        "preview"
+      ],
+      "recognitionPath": [
+        "working object",
+        "selection",
+        "properties",
+        "result"
+      ],
+      "verificationRegions": [
+        "selected target",
+        "property values",
+        "preview state"
+      ],
+      "composition": [
+        "sidebar",
+        "preview-surface",
+        "stack",
+        "cluster",
+        "split-pane"
+      ],
+      "preservedRelationships": [
+        "selection-inspector identity",
+        "preview-target identity"
+      ],
       "narrowRecomposition": "preview remains primary; inspector moves after or into explicit disclosure without changing semantic ownership",
-      "status": "partial",
-      "evidence": ["LAW-COMP-005", "LAW-COMP-007", "EX-COMP-012"],
-      "gaps": ["split-pane"]
+      "status": "supported",
+      "evidence": [
+        "LAW-COMP-005",
+        "LAW-COMP-007",
+        "EX-COMP-012"
+      ],
+      "gaps": []
     },
     {
       "id": "LAY-COMPARISON",
       "name": "Comparison",
-      "tasks": ["compare", "differentiate", "decide"],
-      "recognitionPath": ["comparison scope", "shared dimensions", "differences", "evidence"],
-      "verificationRegions": ["exact values", "source/provenance", "exceptions"],
-      "composition": ["stack", "cluster", "measure"],
-      "preservedRelationships": ["row/attribute alignment", "item identity", "shared scale"],
+      "tasks": [
+        "compare",
+        "differentiate",
+        "decide"
+      ],
+      "recognitionPath": [
+        "comparison scope",
+        "shared dimensions",
+        "differences",
+        "evidence"
+      ],
+      "verificationRegions": [
+        "exact values",
+        "source/provenance",
+        "exceptions"
+      ],
+      "composition": [
+        "stack",
+        "cluster",
+        "measure",
+        "comparison-grid"
+      ],
+      "preservedRelationships": [
+        "row/attribute alignment",
+        "item identity",
+        "shared scale"
+      ],
       "narrowRecomposition": "must preserve cross-item comparability rather than blindly stack independent cards",
-      "status": "partial",
-      "evidence": ["LAW-COMP-004", "LAW-COMP-005", "EX-COMP-012"],
-      "gaps": ["comparison-grid"]
+      "status": "supported",
+      "evidence": [
+        "LAW-COMP-004",
+        "LAW-COMP-005",
+        "EX-COMP-012"
+      ],
+      "gaps": []
     },
     {
       "id": "LAY-DENSE-OPERATIONS",
       "name": "Dense operations console",
-      "tasks": ["scan", "triage", "operate"],
-      "recognitionPath": ["exceptions", "queue state", "selected work", "commands"],
-      "verificationRegions": ["exact state", "timestamps", "dependencies", "effect outcome"],
-      "composition": ["data-grid", "work-queue", "sidebar", "cluster"],
-      "preservedRelationships": ["row-column association", "priority cues", "selection-command context"],
+      "tasks": [
+        "scan",
+        "triage",
+        "operate"
+      ],
+      "recognitionPath": [
+        "exceptions",
+        "queue state",
+        "selected work",
+        "commands"
+      ],
+      "verificationRegions": [
+        "exact state",
+        "timestamps",
+        "dependencies",
+        "effect outcome"
+      ],
+      "composition": [
+        "data-grid",
+        "work-queue",
+        "sidebar",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "row-column association",
+        "priority cues",
+        "selection-command context"
+      ],
       "narrowRecomposition": "retain bounded horizontal continuum where necessary; move secondary detail outside the table rather than destroy associations",
-      "status": "partial",
-      "evidence": ["Perceptual Separation Envelope", "LAW-COMP-006", "LAW-COMP-005"],
-      "gaps": ["density-contract"]
+      "status": "supported",
+      "evidence": [
+        "Perceptual Separation Envelope",
+        "LAW-COMP-006",
+        "LAW-COMP-005",
+        "Forma layout density contract"
+      ],
+      "gaps": []
     },
     {
       "id": "LAY-PROGRESSIVE-DISCLOSURE",
       "name": "Progressive disclosure workflow",
-      "tasks": ["orient", "reveal", "complete"],
-      "recognitionPath": ["current state", "available next action", "revealed detail"],
-      "verificationRegions": ["constraints", "entered values", "completion state"],
-      "composition": ["stack", "disclosure", "wizard", "measure"],
-      "preservedRelationships": ["current-step context", "revealed-content ownership", "progress visibility"],
+      "tasks": [
+        "orient",
+        "reveal",
+        "complete"
+      ],
+      "recognitionPath": [
+        "current state",
+        "available next action",
+        "revealed detail"
+      ],
+      "verificationRegions": [
+        "constraints",
+        "entered values",
+        "completion state"
+      ],
+      "composition": [
+        "stack",
+        "disclosure",
+        "wizard",
+        "measure"
+      ],
+      "preservedRelationships": [
+        "current-step context",
+        "revealed-content ownership",
+        "progress visibility"
+      ],
       "narrowRecomposition": "single flow with progress and current context kept visible",
       "status": "supported",
-      "evidence": ["LAW-COMP-005", "LAW-COMP-007"],
+      "evidence": [
+        "LAW-COMP-005",
+        "LAW-COMP-007"
+      ],
       "gaps": []
     }
   ]
