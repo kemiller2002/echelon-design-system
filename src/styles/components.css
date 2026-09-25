@@ -2627,4 +2627,56 @@
     }
   }
 
+
+  .ef-landmark-region {
+    --ef-landmark-space: var(--ef-primitive-spacing-3, 0.75rem);
+    position: sticky;
+    inset-block-start: 0;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ef-landmark-space);
+    padding-block: var(--ef-landmark-space);
+    background: var(--ef-color-surface-primary, Canvas);
+  }
+  .ef-landmark-region nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ef-landmark-space);
+  }
+
+  .ef-split-pane {
+    --ef-split-primary: minmax(0, 2fr);
+    --ef-split-secondary: minmax(16rem, 1fr);
+    --ef-split-space: var(--ef-primitive-spacing-5, 1.5rem);
+    display: grid;
+    grid-template-columns: var(--ef-split-primary) var(--ef-split-secondary);
+    gap: var(--ef-split-space);
+    align-items: start;
+  }
+  .ef-split-pane > * { min-inline-size: 0; }
+
+  .ef-comparison-grid {
+    max-inline-size: 100%;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+  .ef-comparison-grid table {
+    inline-size: 100%;
+    min-inline-size: max-content;
+    border-collapse: collapse;
+  }
+  .ef-comparison-grid :is(th, td) {
+    padding: var(--ef-primitive-spacing-3, 0.75rem);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  @media (max-width: 48rem) {
+    .ef-split-pane { grid-template-columns: minmax(0, 1fr); }
+    .ef-landmark-region { position: static; }
+  }
+
 }
