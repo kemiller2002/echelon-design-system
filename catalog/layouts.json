@@ -359,6 +359,166 @@
         "LAW-COMP-007"
       ],
       "gaps": []
+    },
+    {
+      "id": "LAY-COMMAND-RIBBON",
+      "name": "Command ribbon",
+      "tasks": [
+        "discover commands",
+        "execute frequent actions",
+        "switch task context"
+      ],
+      "recognitionPath": [
+        "task context",
+        "command groups",
+        "priority commands",
+        "secondary commands"
+      ],
+      "verificationRegions": [
+        "current context",
+        "command label",
+        "command consequence"
+      ],
+      "composition": [
+        "stack",
+        "cluster",
+        "landmark-region"
+      ],
+      "preservedRelationships": [
+        "task-group ownership",
+        "command-group ownership",
+        "priority hierarchy",
+        "stable command location"
+      ],
+      "narrowRecomposition": "reduce exposed commands by explicit priority while retaining group labels and access to hidden commands; do not merely shrink targets",
+      "status": "partial",
+      "evidence": [
+        "Project Atlas Ribbon Comparative Study",
+        "Recognition Exposure Tradeoff",
+        "Contextual Disclosure"
+      ],
+      "gaps": [
+        "command-group",
+        "overflow-command-disclosure"
+      ]
+    },
+    {
+      "id": "LAY-ASYMMETRIC-EDITORIAL",
+      "name": "Asymmetric editorial composition",
+      "tasks": [
+        "read",
+        "explore",
+        "associate supporting material"
+      ],
+      "recognitionPath": [
+        "primary narrative",
+        "supporting material",
+        "continuation"
+      ],
+      "verificationRegions": [
+        "captions",
+        "notes",
+        "sources"
+      ],
+      "composition": [
+        "measure",
+        "stack",
+        "frame"
+      ],
+      "preservedRelationships": [
+        "primary-secondary hierarchy",
+        "supporting-content ownership",
+        "narrative order"
+      ],
+      "narrowRecomposition": "linearize supporting material adjacent to its owning narrative section while preserving source order",
+      "status": "partial",
+      "evidence": [
+        "Architecture Genome: asymmetry",
+        "EX-COMP-012"
+      ],
+      "gaps": [
+        "switcher"
+      ]
+    },
+    {
+      "id": "LAY-MULTI-REGION-WORKSPACE",
+      "name": "Multi-region workspace",
+      "tasks": [
+        "navigate",
+        "operate",
+        "inspect",
+        "monitor"
+      ],
+      "recognitionPath": [
+        "orientation",
+        "primary work",
+        "contextual inspector",
+        "system status"
+      ],
+      "verificationRegions": [
+        "selected identity",
+        "inspector values",
+        "status/effects"
+      ],
+      "composition": [
+        "landmark-region",
+        "split-pane",
+        "sidebar",
+        "stack",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "navigation-work context",
+        "selection-inspector identity",
+        "status visibility"
+      ],
+      "narrowRecomposition": "preserve primary work and convert secondary regions into explicit, labeled access points without duplicating authoritative content",
+      "status": "partial",
+      "evidence": [
+        "Architecture Genome: scale and navigation",
+        "Externalized Cognition Hypothesis"
+      ],
+      "gaps": [
+        "workspace-shell"
+      ]
+    },
+    {
+      "id": "LAY-ADAPTIVE-NAVIGATION",
+      "name": "Adaptive navigation shell",
+      "tasks": [
+        "orient",
+        "navigate",
+        "resume work"
+      ],
+      "recognitionPath": [
+        "current location",
+        "destinations",
+        "current work"
+      ],
+      "verificationRegions": [
+        "current location",
+        "navigation scope"
+      ],
+      "composition": [
+        "landmark-region",
+        "sidebar",
+        "stack"
+      ],
+      "preservedRelationships": [
+        "current-location cue",
+        "destination identity",
+        "navigation hierarchy"
+      ],
+      "narrowRecomposition": "replace persistent spatial navigation with an explicit compact access point while preserving labels, hierarchy, and current-location feedback",
+      "status": "partial",
+      "evidence": [
+        "Decision-Point Landmark Law",
+        "Strategic Visibility Law",
+        "Externalized Memory Law"
+      ],
+      "gaps": [
+        "navigation-shell"
+      ]
     }
   ]
 }
