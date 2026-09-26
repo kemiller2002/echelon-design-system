@@ -1067,3 +1067,33 @@
     }
   }
 }
+
+
+/* Visual Engineering generated stress screens */
+.ve-stress-grid { display: grid; gap: 1rem; }
+.ve-stress {
+  min-inline-size: 0;
+  padding: 1rem;
+  border: 1px solid var(--ef-color-border-subtle, #e3e0d7);
+  overflow-wrap: anywhere;
+}
+.ve-stress__demo { min-inline-size: 0; margin-block-start: 0.75rem; }
+.ve-stress--text-spacing .ve-stress__demo {
+  line-height: 1.5 !important;
+  letter-spacing: 0.12em !important;
+  word-spacing: 0.16em !important;
+}
+.ve-stress--text-spacing .ve-stress__demo * {
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  word-spacing: inherit !important;
+}
+.ve-stress--grayscale .ve-stress__demo { filter: grayscale(1); }
+.ve-stress--reduced-contrast .ve-stress__demo {
+  filter: grayscale(0.45) contrast(0.78) brightness(0.82);
+}
+@media (forced-colors: active) {
+  .ve-stress { border-color: CanvasText; }
+  .ve-stress--grayscale .ve-stress__demo,
+  .ve-stress--reduced-contrast .ve-stress__demo { filter: none; }
+}
