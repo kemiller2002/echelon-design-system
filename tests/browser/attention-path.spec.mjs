@@ -5,7 +5,7 @@ import path from "node:path";
 const root = process.cwd();
 const css = fs.readFileSync(path.join(root, "dist", "all.css"), "utf8");
 const source = fs.readFileSync(path.join(root, "patterns", "attention-path.html"), "utf8");
-const doc = (body, extra = "") => `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style><style>html,body{margin:0}body{padding:1rem}${extra}</style></head><body>${body}</body></html>`;
+const doc = (body, extra = "") => `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Attention path conformance</title><style>${css}</style><style>html,body{margin:0}body{padding:1rem}${extra}</style></head><body>${body}</body></html>`;
 
 async function snapshot(page) {
   return page.evaluate(() => ({
@@ -54,7 +54,7 @@ test("attention path remains intelligible in forced colors and reduced motion", 
   await page.setViewportSize({ width: 390, height: 900 });
   await page.setContent(doc(source));
   expect((await snapshot(page)).steps).toEqual(["1", "2", "3", "4"]);
-  await expect(page.getByText("Priority 1")).toBeVisible();
+  const priority = await page.locator('[data-attention-step="1"]').evaluate(el => getComputedStyle(el, "::before").content);\n  expect(priority).toContain("Priority 1");
 });
 
 test("keyboard reaches consequential actions before supporting interactive content", async ({ page }) => {
