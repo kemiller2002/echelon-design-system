@@ -847,6 +847,8 @@
       "composition": [
         "spatial-canvas",
         "scope-trail",
+        "relationship-index",
+        "path-summary",
         "evidence-relationship",
         "cluster"
       ],
@@ -858,15 +860,13 @@
         "provenance"
       ],
       "narrowRecomposition": "retain bounded graph exploration but provide an equivalent semantic relationship list and path summary",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "Visual Engineering knowledge graph",
-        "DF-COMP-002 evidence continuity"
+        "DF-COMP-002 evidence continuity",
+        "Forma relationship index and path summary"
       ],
-      "gaps": [
-        "relationship-index",
-        "path-summary"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-SEMANTIC-ZOOM",
@@ -889,6 +889,7 @@
       "composition": [
         "spatial-canvas",
         "scope-trail",
+        "relationship-index",
         "landmark-region"
       ],
       "preservedRelationships": [
@@ -898,14 +899,13 @@
         "orientation"
       ],
       "narrowRecomposition": "replace simultaneous spatial scale cues with explicit scope trail and level controls",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "RP-COMP-005 active sampling",
-        "Architecture Genome scale"
+        "Architecture Genome scale",
+        "Forma semantic zoom composition contract"
       ],
-      "gaps": [
-        "semantic-zoom-contract"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-EVIDENCE-PATH",
@@ -1008,9 +1008,10 @@
         "child count"
       ],
       "composition": [
+        "hierarchy-tree",
+        "scope-trail",
         "stack",
-        "disclosure",
-        "scope-trail"
+        "disclosure"
       ],
       "preservedRelationships": [
         "parent-child identity",
@@ -1019,14 +1020,13 @@
         "selection"
       ],
       "narrowRecomposition": "preserve semantic nesting while limiting visual indentation and exposing ancestry explicitly",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "hierarchical grouping",
-        "recognition over recall"
+        "recognition over recall",
+        "Forma hierarchy tree"
       ],
-      "gaps": [
-        "hierarchy-tree"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-LIVE-OPERATIONS",
