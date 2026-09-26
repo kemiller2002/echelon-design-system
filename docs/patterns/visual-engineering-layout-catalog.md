@@ -224,3 +224,23 @@ A layout capability is shipped only when:
 - mobile/reflow and accessibility checks pass;
 - no hidden application semantics were moved into the design system;
 - the originating Visual Engineering principle or research question is traceable.
+
+
+### 15. Attention competition / first-glance path
+
+A composition for consequential screens where one state, exception, question, or action path must remain perceptually primary despite realistic competing information.
+
+Primitive contract:
+- the intended priority path is explicit and inspectable through `data-attention-step`;
+- priority order follows semantic/source order rather than CSS reordering;
+- the primary consequential state and action remain textual and programmatically available;
+- supporting content may be visually rich but cannot erase or precede the required consequential path in keyboard order;
+- declared priority must survive narrow reflow, 200% text, text-spacing overrides, grayscale, border/background dropout, forced colors, and reduced motion;
+- application content determines what deserves priority. Forma does not infer urgency, consequence, or authority.
+
+Validation boundary:
+- automated tests can prove declared order, source/focus order, containment, semantic presence, and survival when presentation channels are removed;
+- automated CSS/browser tests do **not** prove human first fixation, comprehension, salience magnitude, task performance, or universal perceptual ordering;
+- claims about actual human attention require Visual Engineering measurement or human-subject evidence.
+
+Reference specimen: `catalog/specimens/LAY-ATTENTION-COMPETITION.html`.
