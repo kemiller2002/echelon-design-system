@@ -2901,4 +2901,15 @@
     .ef-hierarchy-tree ul { padding-inline-start:var(--ef-primitive-spacing-2,.5rem); }
   }
 
+  /* Composition stress hardening */
+  .ef-navigation-shell__compact > summary { min-block-size:2.75rem; display:flex; align-items:center; cursor:pointer; }
+  .ef-lane-board { max-inline-size:100%; }
+  .ef-lane-board:focus-visible,.ef-comparison-grid:focus-visible,.ef-spatial-canvas__viewport:focus-visible { outline:2px solid currentColor; outline-offset:2px; }
+  .ef-search,.ef-search__control,.ef-active-filter-summary,.ef-active-filter-summary__items,.ef-active-filter-summary__items li { min-inline-size:0; }
+  .ef-search input { min-inline-size:0; max-inline-size:100%; }
+  @media (max-width:30rem) {
+    .ef-search__control { display:grid; grid-template-columns:minmax(0,1fr); }
+    .ef-active-filter-summary__items li { flex-wrap:wrap; }
+  }
+
 }
