@@ -3051,4 +3051,34 @@
     .ef-attention-path__support > * { border-color: CanvasText; }
   }
 
+  /* Attention and spatial resilience from conformance evidence */
+  .ef-spatial-canvas__index > summary {
+    min-block-size:2.75rem;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+  }
+  .ef-attention-path,
+  .ef-attention-path > *,
+  .ef-attention-path__primary,
+  .ef-attention-path__support,
+  .ef-attention-path__support > * {
+    min-inline-size:0;
+    max-inline-size:100%;
+  }
+  .ef-attention-path :is(h2,h3,p,button,.ef-status-lozenge) { overflow-wrap:anywhere; }
+  @media (max-width:30rem) {
+    .ef-attention-path__primary .ef-cluster {
+      display:grid;
+      grid-template-columns:minmax(0,1fr);
+    }
+    .ef-attention-path__primary .ef-cluster > button {
+      inline-size:100%;
+      min-inline-size:0;
+      white-space:normal;
+      block-size:auto;
+      min-block-size:2.75rem;
+    }
+  }
+
 }
