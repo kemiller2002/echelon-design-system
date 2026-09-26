@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import { componentTag, physicsMotionClasses, physicsMotionExample } from "./site-examples.mjs";
+import { componentTag, physicsMotionClasses, physicsMotionExample, verificationStressExample } from "./site-examples.mjs";
 import { componentMeta as meta } from "./component-meta.mjs";
 
 const root = process.cwd();
@@ -334,6 +334,7 @@ for (const slug of slugs) {
         ${example(2, state.changed ? "Representative state" : "Secondary surface", state.changed ? "A browser-native state made visible without adding a runtime." : "The same contract demonstrated on a secondary Forma surface.", stateful, "example-canvas--secondary")}
         ${mobileExample(3, "Mobile · 320px", "Rendered inside a true 320px viewport so Forma's mobile media queries execute. Semantic meaning and actions must remain available.", mobileMarkup)}
         ${physicsMotionClasses[slug] ? physicsMotionExample(4, slug, source, namespaceSnippet, example) : ""}
+        ${verificationStressExample(physicsMotionClasses[slug] ? 5 : 4, slug, source, namespaceSnippet, example)}
       </div>
     </main>
   </div>`;
