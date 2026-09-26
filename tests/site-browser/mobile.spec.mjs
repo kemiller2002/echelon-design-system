@@ -86,3 +86,21 @@ for (const viewport of viewports) {
     }
   });
 }
+
+
+test("generated Visual Engineering stress specimens remain contained on phones", async ({ page }) => {
+  for (const width of [320, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const component of manifest.components) {
+      await page.goto(`/site-dist/components/${component.slug}/index.html`);
+      const screens = page.locator("[data-ve-stress]");
+      await expect(screens).toHaveCount(4);
+      for (let i = 0; i < 4; i++) {
+        const box = await screens.nth(i).boundingBox();
+        expect(box, `${component.slug} stress screen ${i} is not rendered`).not.toBeNull();
+        expect(box.x, `${component.slug} stress screen escapes left at ${width}px`).toBeGreaterThanOrEqual(-1);
+        expect(box.x + box.width, `${component.slug} stress screen escapes right at ${width}px`).toBeLessThanOrEqual(width + 1);
+      }
+    }
+  }
+});
