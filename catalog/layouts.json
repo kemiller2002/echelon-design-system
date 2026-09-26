@@ -846,6 +846,8 @@
       ],
       "composition": [
         "spatial-canvas",
+        "scope-trail",
+        "evidence-relationship",
         "cluster"
       ],
       "preservedRelationships": [
@@ -856,7 +858,7 @@
         "provenance"
       ],
       "narrowRecomposition": "retain bounded graph exploration but provide an equivalent semantic relationship list and path summary",
-      "status": "observed",
+      "status": "partial",
       "evidence": [
         "Visual Engineering knowledge graph",
         "DF-COMP-002 evidence continuity"
@@ -886,6 +888,7 @@
       ],
       "composition": [
         "spatial-canvas",
+        "scope-trail",
         "landmark-region"
       ],
       "preservedRelationships": [
@@ -895,13 +898,12 @@
         "orientation"
       ],
       "narrowRecomposition": "replace simultaneous spatial scale cues with explicit scope trail and level controls",
-      "status": "observed",
+      "status": "partial",
       "evidence": [
         "RP-COMP-005 active sampling",
         "Architecture Genome scale"
       ],
       "gaps": [
-        "scope-trail",
         "semantic-zoom-contract"
       ]
     },
@@ -928,6 +930,7 @@
       "composition": [
         "stack",
         "provenance-trail",
+        "evidence-relationship",
         "status-lozenge"
       ],
       "preservedRelationships": [
@@ -937,14 +940,12 @@
         "uncertainty scope"
       ],
       "narrowRecomposition": "linearize the path while retaining explicit relationship labels and scope at every step",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "DF-COMP-002 Perceptual Evidence Path Review",
         "Human-Agent Communication roadmap"
       ],
-      "gaps": [
-        "evidence-relationship"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-MULTI-HIERARCHY-TRIAGE",
@@ -1008,7 +1009,8 @@
       ],
       "composition": [
         "stack",
-        "disclosure"
+        "disclosure",
+        "scope-trail"
       ],
       "preservedRelationships": [
         "parent-child identity",
@@ -1017,14 +1019,13 @@
         "selection"
       ],
       "narrowRecomposition": "preserve semantic nesting while limiting visual indentation and exposing ancestry explicitly",
-      "status": "observed",
+      "status": "partial",
       "evidence": [
         "hierarchical grouping",
         "recognition over recall"
       ],
       "gaps": [
-        "hierarchy-tree",
-        "scope-trail"
+        "hierarchy-tree"
       ]
     },
     {
@@ -1052,7 +1053,8 @@
         "dashboard-grid",
         "operation-status",
         "fault-banner",
-        "timeline"
+        "timeline",
+        "freshness"
       ],
       "preservedRelationships": [
         "freshness",
@@ -1061,15 +1063,13 @@
         "system-to-incident relationship"
       ],
       "narrowRecomposition": "prioritize exceptions and freshness without silently dropping monitored systems; provide explicit remaining-system access",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "semantic projection",
         "Strategic Visibility Law",
         "domain-safety roadmap"
       ],
-      "gaps": [
-        "freshness-contract"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-BIDIRECTIONAL-COMPARISON",
@@ -1098,14 +1098,13 @@
         "cell semantics"
       ],
       "narrowRecomposition": "prefer contained two-dimensional navigation; any linear alternative must repeat both scopes for each relationship",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "comparison preservation",
-        "relational legibility"
+        "relational legibility",
+        "Forma matrix navigation contract"
       ],
-      "gaps": [
-        "matrix-navigation-contract"
-      ]
+      "gaps": []
     },
     {
       "id": "LAY-HUMAN-AGENT-HANDOFF",
@@ -1131,6 +1130,7 @@
       ],
       "composition": [
         "workspace-shell",
+        "handoff-summary",
         "provenance-trail",
         "obligation-panel",
         "operation-status"
@@ -1143,14 +1143,12 @@
         "uncertainty scope"
       ],
       "narrowRecomposition": "keep agent identity, proposed consequence, evidence, and human authority visible before consequential action",
-      "status": "partial",
+      "status": "supported",
       "evidence": [
         "Human-Agent Communication roadmap",
         "domain-safety roadmap"
       ],
-      "gaps": [
-        "handoff-summary"
-      ]
+      "gaps": []
     }
   ]
 }
