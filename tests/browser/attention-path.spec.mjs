@@ -66,3 +66,20 @@ test("keyboard reaches consequential actions before supporting interactive conte
   await page.keyboard.press("Tab");
   expect((await page.locator(":focus").textContent()).trim()).toBe("Open CI run");
 });
+
+
+test("realistic competition specimen keeps consequential path ahead of distractors", async ({ page }) => {
+  const specimen = fs.readFileSync(path.join(root, "catalog", "specimens", "LAY-ATTENTION-COMPETITION.html"), "utf8");
+  await page.setViewportSize({ width: 390, height: 1000 });
+  await page.setContent(doc(specimen));
+  const sequence = await page.evaluate(() => [...document.querySelectorAll("h1,h2,[data-attention-step],button")].map(el => ({
+    tag: el.tagName,
+    text: (el.textContent || "").trim().replace(/\s+/g, " "),
+    step: el.getAttribute("data-attention-step")
+  })));
+  const reconcileHeading = sequence.findIndex(x => x.text === "Reconciliation required before publish");
+  const activityHeading = sequence.findIndex(x => x.text === "Repository activity");
+  expect(reconcileHeading).toBeGreaterThanOrEqual(0);
+  expect(activityHeading).toBeGreaterThan(reconcileHeading);
+  expect((await snapshot(page)).width).toBeLessThanOrEqual((await snapshot(page)).viewport + 1);
+});
