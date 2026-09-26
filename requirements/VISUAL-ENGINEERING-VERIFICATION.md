@@ -65,3 +65,17 @@ A diagnosis or demographic category must not silently select a semantic mode. Pr
 Passing this contract demonstrates survival of defined engineering screens. It does not prove universal human performance, clinical benefit, preference, or independent empirical validation.
 
 Consequential UI handoff records the Visual Engineering context/source commit, principles applied, screens performed, material deviations, unresolved evidence questions, and authoritative semantic-state source when not obvious.
+
+
+## Implemented reusable contracts
+
+The following Forma patterns operationalize this contract:
+- `identifier`: low-context identifiers and deliberately verified critical values;
+- `verification-frame`: recognize -> verify -> act composition;
+- `comparison-pairs`: repeated-label comparison projection for narrow screens;
+- `overview-disclosure`: consequential overview remains visible while secondary evidence is disclosed;
+- `state-survivability`: explicit textual projection of distinct authoritative semantic states.
+
+Generated component documentation also includes content stress, text-spacing, grayscale cue-dropout, and reduced-effective-contrast screens for every canonical pattern.
+
+These patterns are presentation contracts. None may infer authoritative state, completeness, freshness, legality, or available actions.
