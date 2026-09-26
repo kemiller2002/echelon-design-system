@@ -823,6 +823,334 @@
         "Forma focus stage and native tabs"
       ],
       "gaps": []
+    },
+    {
+      "id": "LAY-KNOWLEDGE-GRAPH",
+      "name": "Knowledge graph / relationship explorer",
+      "tasks": [
+        "trace relationships",
+        "inspect entities",
+        "follow evidence paths"
+      ],
+      "recognitionPath": [
+        "focal entity",
+        "relationship direction",
+        "neighbor classes",
+        "orientation"
+      ],
+      "verificationRegions": [
+        "edge meaning",
+        "entity identity",
+        "provenance",
+        "path scope"
+      ],
+      "composition": [
+        "spatial-canvas",
+        "cluster"
+      ],
+      "preservedRelationships": [
+        "node identity",
+        "edge direction",
+        "relationship semantics",
+        "selected path",
+        "provenance"
+      ],
+      "narrowRecomposition": "retain bounded graph exploration but provide an equivalent semantic relationship list and path summary",
+      "status": "observed",
+      "evidence": [
+        "Visual Engineering knowledge graph",
+        "DF-COMP-002 evidence continuity"
+      ],
+      "gaps": [
+        "relationship-index",
+        "path-summary"
+      ]
+    },
+    {
+      "id": "LAY-SEMANTIC-ZOOM",
+      "name": "Semantic zoom workspace",
+      "tasks": [
+        "orient at overview",
+        "drill into detail",
+        "retain context across scale"
+      ],
+      "recognitionPath": [
+        "current scale",
+        "focal region",
+        "available deeper evidence"
+      ],
+      "verificationRegions": [
+        "scope",
+        "parent context",
+        "detail identity"
+      ],
+      "composition": [
+        "spatial-canvas",
+        "landmark-region"
+      ],
+      "preservedRelationships": [
+        "object identity across scale",
+        "parent-child scope",
+        "current scale",
+        "orientation"
+      ],
+      "narrowRecomposition": "replace simultaneous spatial scale cues with explicit scope trail and level controls",
+      "status": "observed",
+      "evidence": [
+        "RP-COMP-005 active sampling",
+        "Architecture Genome scale"
+      ],
+      "gaps": [
+        "scope-trail",
+        "semantic-zoom-contract"
+      ]
+    },
+    {
+      "id": "LAY-EVIDENCE-PATH",
+      "name": "Evidence path / provenance explorer",
+      "tasks": [
+        "trace claim support",
+        "inspect provenance",
+        "find contradiction or uncertainty"
+      ],
+      "recognitionPath": [
+        "claim",
+        "supporting evidence",
+        "exceptions",
+        "provenance"
+      ],
+      "verificationRegions": [
+        "source identity",
+        "evidence age",
+        "confidence/strength",
+        "contradictions"
+      ],
+      "composition": [
+        "stack",
+        "provenance-trail",
+        "status-lozenge"
+      ],
+      "preservedRelationships": [
+        "claim-evidence ownership",
+        "evidence-source identity",
+        "contradiction visibility",
+        "uncertainty scope"
+      ],
+      "narrowRecomposition": "linearize the path while retaining explicit relationship labels and scope at every step",
+      "status": "partial",
+      "evidence": [
+        "DF-COMP-002 Perceptual Evidence Path Review",
+        "Human-Agent Communication roadmap"
+      ],
+      "gaps": [
+        "evidence-relationship"
+      ]
+    },
+    {
+      "id": "LAY-MULTI-HIERARCHY-TRIAGE",
+      "name": "Multi-hierarchy triage",
+      "tasks": [
+        "triage by urgency",
+        "respect consequence",
+        "track workflow state",
+        "inspect evidence"
+      ],
+      "recognitionPath": [
+        "critical exception",
+        "urgency",
+        "workflow state",
+        "owner"
+      ],
+      "verificationRegions": [
+        "consequence",
+        "evidence",
+        "legal action",
+        "unresolved obligation"
+      ],
+      "composition": [
+        "priority-stack",
+        "work-queue",
+        "status-lozenge",
+        "obligation-panel"
+      ],
+      "preservedRelationships": [
+        "urgency vs consequence distinction",
+        "workflow state",
+        "item ownership",
+        "legal-action scope"
+      ],
+      "narrowRecomposition": "do not collapse competing hierarchies into one score; expose each decision dimension explicitly",
+      "status": "supported",
+      "evidence": [
+        "Visual Engineering multiple task-relative hierarchies rival",
+        "domain-safety roadmap"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "LAY-RECURSIVE-OUTLINE",
+      "name": "Recursive outline / hierarchy explorer",
+      "tasks": [
+        "understand nested structure",
+        "expand local detail",
+        "navigate parent-child scope"
+      ],
+      "recognitionPath": [
+        "current branch",
+        "depth",
+        "siblings",
+        "selected node"
+      ],
+      "verificationRegions": [
+        "ancestor path",
+        "node state",
+        "child count"
+      ],
+      "composition": [
+        "stack",
+        "disclosure"
+      ],
+      "preservedRelationships": [
+        "parent-child identity",
+        "depth",
+        "sibling grouping",
+        "selection"
+      ],
+      "narrowRecomposition": "preserve semantic nesting while limiting visual indentation and exposing ancestry explicitly",
+      "status": "observed",
+      "evidence": [
+        "hierarchical grouping",
+        "recognition over recall"
+      ],
+      "gaps": [
+        "hierarchy-tree",
+        "scope-trail"
+      ]
+    },
+    {
+      "id": "LAY-LIVE-OPERATIONS",
+      "name": "Live operations wall",
+      "tasks": [
+        "monitor changing state",
+        "detect anomaly",
+        "drill into incident",
+        "retain situational awareness"
+      ],
+      "recognitionPath": [
+        "exceptions",
+        "system health",
+        "change",
+        "affected scope"
+      ],
+      "verificationRegions": [
+        "timestamp/freshness",
+        "source",
+        "incident detail",
+        "unknown state"
+      ],
+      "composition": [
+        "dashboard-grid",
+        "operation-status",
+        "fault-banner",
+        "timeline"
+      ],
+      "preservedRelationships": [
+        "freshness",
+        "exception scope",
+        "unknown vs failure",
+        "system-to-incident relationship"
+      ],
+      "narrowRecomposition": "prioritize exceptions and freshness without silently dropping monitored systems; provide explicit remaining-system access",
+      "status": "partial",
+      "evidence": [
+        "semantic projection",
+        "Strategic Visibility Law",
+        "domain-safety roadmap"
+      ],
+      "gaps": [
+        "freshness-contract"
+      ]
+    },
+    {
+      "id": "LAY-BIDIRECTIONAL-COMPARISON",
+      "name": "Bidirectional relationship matrix",
+      "tasks": [
+        "compare entities across two dimensions",
+        "find intersections",
+        "inspect cell relationship"
+      ],
+      "recognitionPath": [
+        "row identity",
+        "column identity",
+        "exception intersections"
+      ],
+      "verificationRegions": [
+        "cell meaning",
+        "row/column scope",
+        "legend"
+      ],
+      "composition": [
+        "comparison-grid"
+      ],
+      "preservedRelationships": [
+        "row-column intersection",
+        "headers",
+        "cell semantics"
+      ],
+      "narrowRecomposition": "prefer contained two-dimensional navigation; any linear alternative must repeat both scopes for each relationship",
+      "status": "partial",
+      "evidence": [
+        "comparison preservation",
+        "relational legibility"
+      ],
+      "gaps": [
+        "matrix-navigation-contract"
+      ]
+    },
+    {
+      "id": "LAY-HUMAN-AGENT-HANDOFF",
+      "name": "Human-agent handoff workspace",
+      "tasks": [
+        "review agent work",
+        "verify evidence",
+        "approve/reject/redirect",
+        "retain accountability"
+      ],
+      "recognitionPath": [
+        "agent identity",
+        "proposed action",
+        "uncertainty",
+        "required human decision"
+      ],
+      "verificationRegions": [
+        "provenance",
+        "evidence",
+        "capability",
+        "consequence",
+        "agent identity"
+      ],
+      "composition": [
+        "workspace-shell",
+        "provenance-trail",
+        "obligation-panel",
+        "operation-status"
+      ],
+      "preservedRelationships": [
+        "agent-action attribution",
+        "proposal-evidence link",
+        "human authority",
+        "unresolved obligation",
+        "uncertainty scope"
+      ],
+      "narrowRecomposition": "keep agent identity, proposed consequence, evidence, and human authority visible before consequential action",
+      "status": "partial",
+      "evidence": [
+        "Human-Agent Communication roadmap",
+        "domain-safety roadmap"
+      ],
+      "gaps": [
+        "handoff-summary"
+      ]
     }
   ]
 }
