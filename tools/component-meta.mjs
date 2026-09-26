@@ -2,6 +2,9 @@
 // Kept separate from the site renderer so catalog growth does not turn
 // tools/build-site.mjs into a structural monolith.
 export const componentMeta = {
+  "comparison-pairs": ["Comparison pairs", "Data & productivity", "Application content", "Before/after or peer comparison that repeats labels and preserves the comparison task when columns collapse on narrow screens."],
+  "overview-disclosure": ["Overview disclosure", "Content & utility", "Application content", "Keeps consequential state, scope, uncertainty, and unresolved work visible while secondary evidence uses native disclosure."],
+  "state-survivability": ["State survivability", "Status & feedback", "Ordo / application", "Projects explicit authoritative states with text and structural cues so unknown, stale, partial, and unavailable do not collapse into one generic status."],
   "identifier": ["Identifier & critical value", "Content & utility", "Application content", "Low-context identifiers, codes, numeric values, and consequential values with stronger glyph distinction and verification cues."],
   "verification-frame": ["Verification frame", "Assessment & decision", "Ordo / application", "Recognize, deliberately verify, then act without letting presentation invent authority, certainty, or legal actions."],
   "dense-ledger": ["Dense ledger", "Data & productivity", "Application content", "Compact expert-work table with bounded overflow, stable relationships, and explicit text state."],
