@@ -2,6 +2,7 @@
 // Kept separate from the site renderer so catalog growth does not turn
 // tools/build-site.mjs into a structural monolith.
 export const componentMeta = {
+  "attention-path": ["Attention path", "Layout & composition", "Application content", "Declares an intended first-glance priority path while preserving semantic source order and explicit text when visual emphasis channels are removed."],
   "comparison-pairs": ["Comparison pairs", "Data & productivity", "Application content", "Before/after or peer comparison that repeats labels and preserves the comparison task when columns collapse on narrow screens."],
   "overview-disclosure": ["Overview disclosure", "Content & utility", "Application content", "Keeps consequential state, scope, uncertainty, and unresolved work visible while secondary evidence uses native disclosure."],
   "state-survivability": ["State survivability", "Status & feedback", "Ordo / application", "Projects explicit authoritative states with text and structural cues so unknown, stale, partial, and unavailable do not collapse into one generic status."],
