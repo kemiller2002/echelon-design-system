@@ -2,6 +2,8 @@
 // Kept separate from the site renderer so catalog growth does not turn
 // tools/build-site.mjs into a structural monolith.
 export const componentMeta = {
+  "identifier": ["Identifier & critical value", "Content & utility", "Application content", "Low-context identifiers, codes, numeric values, and consequential values with stronger glyph distinction and verification cues."],
+  "verification-frame": ["Verification frame", "Assessment & decision", "Ordo / application", "Recognize, deliberately verify, then act without letting presentation invent authority, certainty, or legal actions."],
   "dense-ledger": ["Dense ledger", "Data & productivity", "Application content", "Compact expert-work table with bounded overflow, stable relationships, and explicit text state."],
   "focus-stage": ["Focus stage", "Layout & workspace", "Application content", "Dominant primary work surface with subordinate supporting context that stacks without semantic reordering."],
   "mosaic": ["Mosaic", "Layout & workspace", "Application content", "Asymmetric editorial composition using explicit spans and deterministic narrow-screen reflow."],
