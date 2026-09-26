@@ -66,3 +66,59 @@ ${samples}
     combined
   );
 }
+
+
+export const verificationStressCases = [
+  {
+    id: "content-stress",
+    title: "Content stress",
+    note: "Long prose, localization expansion, and an unbroken identifier exercise wrapping and containment without changing semantic order.",
+    className: "ve-stress ve-stress--content"
+  },
+  {
+    id: "text-spacing",
+    title: "Text spacing",
+    note: "WCAG-style spacing overrides screen clipping, overlap, and fixed-height assumptions.",
+    className: "ve-stress ve-stress--text-spacing"
+  },
+  {
+    id: "grayscale",
+    title: "Cue dropout · grayscale",
+    note: "Color is removed as a screening condition. Text and structure must still carry consequential meaning.",
+    className: "ve-stress ve-stress--grayscale"
+  },
+  {
+    id: "reduced-contrast",
+    title: "Reduced effective contrast",
+    note: "A glare and low-brightness proxy screens whether hierarchy depends on subtle surface differences. This is fault injection, not human-subject validation.",
+    className: "ve-stress ve-stress--reduced-contrast"
+  }
+];
+
+function stressSource(source, id) {
+  if (id !== "content-stress") return source;
+  const longId = "VERIFICATION-0123456789ABCDEF0123456789ABCDEF0123456789ABCDEF";
+  return source
+    .replace(/(<(?:h[1-6]|p|dt|dd|label|button|summary)\b[^>]*>)([^<]{2,})(<\/)/i, (_, a, value, c) =>
+      a + value.trim() + " · Extended localized content for verification and layout resilience" + c)
+    .replace(/(<(?:section|article|div)\b[^>]*>)/i, `$1<p class="ef-identifier">${longId}</p>`);
+}
+
+export function verificationStressExample(number, slug, source, namespaceSnippet, example) {
+  const samples = verificationStressCases.map(item => {
+    const snippet = namespaceSnippet(componentTag(slug, stressSource(source, item.id)), `ve-${slug}-${item.id}-`);
+    return `<article class="${item.className}" data-ve-stress="${item.id}">
+  <div class="motion-weight-label"><strong>${item.title}</strong><span>engineering screen</span></div>
+  <div class="ve-stress__demo">${snippet}</div>
+</article>`;
+  }).join("");
+
+  return example(
+    number,
+    "Visual Engineering stress screens",
+    "Generated fault-injection specimens expose content, spacing, color-cue, and reduced-effective-contrast risks. They screen presentation robustness without claiming human-subject validation.",
+    `<div class="ve-stress-grid" data-ve-verification="${slug}">
+${samples}
+</div>`
+  );
+}
