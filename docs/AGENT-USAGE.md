@@ -159,6 +159,17 @@ Every Forma component must have a usable 320 CSS px presentation. Agents must:
 
 Read `requirements/MOBILE-COMPONENT-CONTRACT.md` before adding or modifying a component.
 
+## Visual Engineering verification
+
+Before claiming consequential UI complete, apply `requirements/VISUAL-ENGINEERING-VERIFICATION.md`.
+
+- Separate first-glance recognition from deliberate verification.
+- Use `.ef-identifier` and `.ef-critical-value` for low-context values when appropriate.
+- Use `verification-frame` when the task explicitly requires recognize -> verify -> act.
+- Preserve unknown, partial, stale, reconciling, unavailable, and other application states without strengthening them.
+- Exercise semantic-channel dropout, content stress, text spacing, grayscale/CVD screening, low-brightness/glare screening, zoom/reflow, forced colors, and reduced motion as applicable.
+- Treat these as engineering screens, not proof of universal human performance.
+
 ## Verification
 
 Before claiming a Forma UI change complete:
