@@ -1,0 +1,19 @@
+<section class="ef-state-survivability" aria-labelledby="state-survivability-title">
+  <h3 id="state-survivability-title">Authoritative state projection</h3>
+  <div class="ef-state-survivability__state">
+    <span class="ef-status-lozenge" data-state="unknown">Unknown</span>
+    <p>Outcome has not been confirmed. Reconcile before retrying.</p>
+  </div>
+  <div class="ef-state-survivability__state">
+    <span class="ef-status-lozenge" data-state="attention">Stale</span>
+    <p>The displayed evidence is older than the application freshness policy permits.</p>
+  </div>
+  <div class="ef-state-survivability__state">
+    <span class="ef-status-lozenge" data-state="attention">Partial</span>
+    <p>Only the stated scope is complete. Omitted scope remains unresolved.</p>
+  </div>
+  <div class="ef-state-survivability__state">
+    <span class="ef-status-lozenge" data-state="blocked">Unavailable</span>
+    <p>The application reports this capability is currently unavailable.</p>
+  </div>
+</section>
