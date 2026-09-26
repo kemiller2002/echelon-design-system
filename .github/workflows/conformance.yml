@@ -1,0 +1,44 @@
+name: Forma conformance
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: forma-conformance-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  conformance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          package-manager-cache: false
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts=false
+
+      - name: Install browser test dependencies
+        run: npx playwright install --with-deps chromium firefox webkit
+
+      - name: Build Forma
+        run: npm run build
+
+      - name: Run browser conformance
+        run: npm run test:browser
