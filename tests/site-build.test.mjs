@@ -214,3 +214,25 @@ test("Aegis fault pages publish safe presentation contracts", () => {
   const actions = fs.readFileSync(path.join(output, "components", "recovery-actions", "index.html"), "utf8");
   assert.match(actions, /data-ef-aegis-capability/);
 });
+
+
+test("every component page publishes Visual Engineering stress screens", () => {
+  for (const slug of patterns) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    assert.match(html, new RegExp(`data-ve-verification="${slug}"`), `${slug} is missing VE verification specimens`);
+    for (const screen of ["content-stress", "text-spacing", "grayscale", "reduced-contrast"]) {
+      assert.match(html, new RegExp(`data-ve-stress="${screen}"`), `${slug} is missing ${screen}`);
+    }
+    assert.match(html, /engineering screen/i);
+    assert.match(html, /human-subject validation/i);
+  }
+});
+
+test("Visual Engineering stress screens remain zero-runtime and preserve custom tags", () => {
+  for (const slug of patterns) {
+    const html = fs.readFileSync(path.join(output, "components", slug, "index.html"), "utf8");
+    assert.equal(/<script\b/i.test(html), false);
+    const stress = html.match(new RegExp(`<div class="ve-stress-grid"[\\s\\S]*?<\\/div>\\s*<\\/div>\\s*<details>`))?.[0] ?? "";
+    assert.match(stress, new RegExp(`<ef-${slug}\\b`), `${slug} stress specimens lost the public authoring tag`);
+  }
+});
