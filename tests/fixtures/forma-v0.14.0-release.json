@@ -1,0 +1,17 @@
+{
+  "$comment": "Forma v0.14.0 release assets the theme must reproduce. Hashes were taken from the GitHub release (the three CSS hashes also match the release's own forma-marketing.sha256). tools/forma_parity.py refuses to compare against files with other hashes.",
+  "ref": "v0.14.0",
+  "commit": "7372886ed7e5ae101df26515279abc6b34d28a69",
+  "brandAttribute": "data-ef-brand",
+  "downloadBase": "https://github.com/kemiller2002/forma/releases/download/v0.14.0/",
+  "files": {
+    "echelon-foundry-design-system-0.14.0.tgz": "01c0dcba663254ba1553afb67e66cf0fe21d6846de5672e9f5fbe7978738adfd",
+    "forma-marketing.css": "adf7929b6dc6b28a7d96bab6df4098f4613441ff3180d08d1d00a20ee7c236a6",
+    "forma-marketing-theme-echelon.css": "b0e8f65850a1c8011e02889fc782e31cd19547365683caa69c507408fd51fea3",
+    "forma-echelon-marketing.css": "014019380de8f8b8095166185ef6df6700f9bb2d3fecfaea2e50607ccdbe9e76"
+  },
+  "brandCss": {
+    "tarballMember": "package/dist/brands/echelon.css",
+    "sha256": "e56dd7d97228168105b8c2a8114e46d1d6b06403c201a315d23db801ea9319e4"
+  }
+}

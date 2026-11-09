@@ -1,0 +1,346 @@
+{
+  "$description": "Echelon marketing theme, moved from Forma 0.14.0 themes/echelon/marketing.tokens.json (EDS-ADR-002). Values carried from Forma 0.14.0, not a frozen v1 palette. Applies Echelon Foundry brand decisions to Forma's generic marketing role tokens. Every value aliases a primitive in theme/echelon-primitives.tokens.json (compiled with --reference); this file owns choices, not raw values.",
+  "semantic": {
+    "light": {
+      "color": {
+        "text": {
+          "primary": {
+            "$value": "{primitive.color.carbon}"
+          },
+          "heading": {
+            "$value": "{primitive.color.foundry-charcoal}"
+          },
+          "secondary": {
+            "$value": "{primitive.color.graphite}"
+          },
+          "muted": {
+            "$value": "{primitive.color.graphite}"
+          },
+          "on-secondary-surface": {
+            "$value": "{primitive.color.forged-iron}"
+          },
+          "inverse": {
+            "$value": "{primitive.color.parchment}"
+          }
+        },
+        "surface": {
+          "primary": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "secondary": {
+            "$value": "{primitive.color.stone}"
+          },
+          "elevated": {
+            "$value": "{primitive.color.parchment-light}"
+          },
+          "inverse": {
+            "$value": "{primitive.color.foundry-charcoal}"
+          },
+          "inverse-secondary": {
+            "$value": "{primitive.color.forged-iron}"
+          }
+        },
+        "accent": {
+          "primary": {
+            "$value": "{primitive.color.oxide-bronze}"
+          },
+          "hover": {
+            "$value": "{primitive.color.oxide-bronze-deep}"
+          },
+          "secondary": {
+            "$value": "{primitive.color.verdigris}"
+          }
+        },
+        "border": {
+          "subtle": {
+            "$value": "{primitive.color.stone}"
+          },
+          "functional": {
+            "$value": "{primitive.color.forged-iron}"
+          }
+        },
+        "focus": {
+          "ring": {
+            "$value": "{primitive.color.carbon}"
+          },
+          "gap": {
+            "$value": "{primitive.color.parchment}"
+          }
+        },
+        "control": {
+          "track": {
+            "$value": "{primitive.color.graphite}"
+          },
+          "thumb": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "active": {
+            "$value": "{primitive.color.oxide-bronze}"
+          }
+        },
+        "status": {
+          "success": {
+            "$value": "{primitive.color.status-success}"
+          },
+          "warning": {
+            "$value": "{primitive.color.status-warning}"
+          },
+          "danger": {
+            "$value": "{primitive.color.status-danger}"
+          },
+          "info": {
+            "$value": "{primitive.color.status-info}"
+          }
+        }
+      }
+    },
+    "dark": {
+      "color": {
+        "text": {
+          "primary": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "heading": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "secondary": {
+            "$value": "{primitive.color.stone}"
+          },
+          "muted": {
+            "$value": "{primitive.color.stone}"
+          },
+          "on-secondary-surface": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "inverse": {
+            "$value": "{primitive.color.carbon}"
+          }
+        },
+        "surface": {
+          "primary": {
+            "$value": "{primitive.color.carbon}"
+          },
+          "secondary": {
+            "$value": "{primitive.color.foundry-charcoal}"
+          },
+          "elevated": {
+            "$value": "{primitive.color.forged-iron}"
+          },
+          "inverse": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "inverse-secondary": {
+            "$value": "{primitive.color.stone}"
+          }
+        },
+        "accent": {
+          "primary": {
+            "$value": "{primitive.color.oxide-bronze-light}"
+          },
+          "hover": {
+            "$value": "{primitive.color.oxide-bronze-pale}"
+          },
+          "secondary": {
+            "$value": "{primitive.color.verdigris-light}"
+          }
+        },
+        "border": {
+          "subtle": {
+            "$value": "{primitive.color.forged-iron}"
+          },
+          "functional": {
+            "$value": "{primitive.color.stone}"
+          }
+        },
+        "focus": {
+          "ring": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "gap": {
+            "$value": "{primitive.color.carbon}"
+          }
+        },
+        "control": {
+          "track": {
+            "$value": "{primitive.color.graphite}"
+          },
+          "thumb": {
+            "$value": "{primitive.color.parchment}"
+          },
+          "active": {
+            "$value": "{primitive.color.oxide-bronze-light}"
+          }
+        },
+        "status": {
+          "success": {
+            "$value": "{primitive.color.status-success-light}"
+          },
+          "warning": {
+            "$value": "{primitive.color.status-warning-light}"
+          },
+          "danger": {
+            "$value": "{primitive.color.status-danger-light}"
+          },
+          "info": {
+            "$value": "{primitive.color.status-info-light}"
+          }
+        }
+      }
+    }
+  },
+  "type": {
+    "family": {
+      "body": {
+        "$value": "{primitive.font-family.sans}"
+      },
+      "display": {
+        "$value": "{primitive.font-family.display}"
+      },
+      "mono": {
+        "$value": "{primitive.font-family.mono}"
+      }
+    },
+    "size": {
+      "label": {
+        "$value": "{primitive.font-size.xs}"
+      },
+      "small": {
+        "$value": "{primitive.font-size.sm}"
+      },
+      "body": {
+        "$value": "{primitive.font-size.md}"
+      },
+      "lead": {
+        "$value": "{primitive.font-size-fluid.lead}"
+      },
+      "h1": {
+        "$value": "{primitive.font-size-fluid.display-1}"
+      },
+      "h2": {
+        "$value": "{primitive.font-size-fluid.display-2}"
+      },
+      "h3": {
+        "$value": "{primitive.font-size.lg}"
+      },
+      "h4": {
+        "$value": "{primitive.font-size.md}"
+      },
+      "statement": {
+        "$value": "{primitive.font-size-fluid.display-3}"
+      }
+    },
+    "leading": {
+      "body": {
+        "$value": "{primitive.line-height.relaxed}"
+      },
+      "lead": {
+        "$value": "{primitive.line-height.normal}"
+      },
+      "heading": {
+        "$value": "{primitive.line-height.display}"
+      },
+      "snug": {
+        "$value": "{primitive.line-height.snug}"
+      }
+    },
+    "weight": {
+      "body": {
+        "$value": "{primitive.font-weight.regular}"
+      },
+      "strong": {
+        "$value": "{primitive.font-weight.bold}"
+      },
+      "heading": {
+        "$value": "{primitive.font-weight.medium}"
+      },
+      "label": {
+        "$value": "{primitive.font-weight.medium}"
+      },
+      "nav": {
+        "$value": "{primitive.font-weight.semibold}"
+      }
+    },
+    "tracking": {
+      "display": {
+        "$value": "{primitive.letter-spacing.tight}"
+      },
+      "label": {
+        "$value": "{primitive.letter-spacing.wide}"
+      },
+      "body": {
+        "$value": "{primitive.letter-spacing.normal}"
+      }
+    }
+  },
+  "layout": {
+    "measure": {
+      "$value": "{primitive.size.measure}"
+    },
+    "measure-narrow": {
+      "$value": "{primitive.size.measure-narrow}"
+    },
+    "width-narrow": {
+      "$value": "{primitive.size.container-narrow}"
+    },
+    "width-standard": {
+      "$value": "{primitive.size.container-standard}"
+    },
+    "width-wide": {
+      "$value": "{primitive.size.container-wide}"
+    },
+    "width-max": {
+      "$value": "{primitive.size.container-max}"
+    },
+    "gutter": {
+      "$value": "{primitive.size-fluid.gutter}"
+    },
+    "section-space": {
+      "$value": "{primitive.size-fluid.section-space}"
+    },
+    "block-space": {
+      "$value": "{primitive.size-fluid.block-space}"
+    },
+    "grid-gap": {
+      "$value": "{primitive.space.6}"
+    },
+    "stack-space": {
+      "$value": "{primitive.space.6}"
+    },
+    "target-min": {
+      "$value": "{primitive.size.target-min}"
+    }
+  },
+  "shape": {
+    "radius": {
+      "$value": "{primitive.radius.none}"
+    },
+    "border-width": {
+      "$value": "{primitive.border-width.thin}"
+    },
+    "border-width-accent": {
+      "$value": "{primitive.border-width.accent}"
+    }
+  },
+  "effect": {
+    "shadow-raised": {
+      "$value": "{primitive.shadow.raised}"
+    },
+    "transition-duration": {
+      "$value": "{primitive.motion-duration.fast}"
+    },
+    "transition-easing": {
+      "$value": "{primitive.motion-easing.standard}"
+    }
+  },
+  "focus": {
+    "ring-width": {
+      "$value": "{primitive.focus.ring-width}"
+    },
+    "ring-offset": {
+      "$value": "{primitive.focus.ring-offset}"
+    },
+    "halo-width": {
+      "$value": "{primitive.focus.halo-width}"
+    }
+  }
+}

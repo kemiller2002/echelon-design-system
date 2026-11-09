@@ -1,0 +1,87 @@
+name: Release Echelon theme
+# Publishes @echelon-foundry/echelon-theme as GitHub release assets when a v* tag is pushed.
+# Theme 1.0.0 is released only after Forma 1.0.0 exists: the guard below refuses a
+# release unless forma-pin.json points at Forma >= 1.0.0 with data-forma-brand, and
+# the tag equals the non-prerelease version in package.json.
+on:
+  push:
+    tags:
+      - 'v*'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+      NuGetAudit: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Release guard (tag, version, Forma pin)
+        run: |
+          python - <<'EOF'
+          import json, os, re, sys
+          tag = os.environ["GITHUB_REF_NAME"]
+          version = json.load(open("package.json"))["version"]
+          pin = json.load(open("forma-pin.json"))
+          problems = []
+          if tag != f"v{version}":
+              problems.append(f"tag {tag} does not match package.json version {version}")
+          if not re.fullmatch(r"\d+\.\d+\.\d+", version):
+              problems.append(f"package.json version {version} is not a release version")
+          major = re.match(r"v?(\d+)\.", pin["ref"])
+          if not major or int(major.group(1)) < 1:
+              problems.append(f"forma-pin.json ref {pin['ref']} is not Forma 1.0.0 or later")
+          if pin["brandAttribute"] != "data-forma-brand":
+              problems.append(f"forma-pin.json brandAttribute {pin['brandAttribute']} is not data-forma-brand")
+          for p in problems:
+              print(f"::error::{p}")
+          sys.exit(1 if problems else 0)
+          EOF
+      - name: Clone the pinned Forma source and check its commit
+        run: |
+          repo=$(python -c "import json; print(json.load(open('forma-pin.json'))['repository'])")
+          ref=$(python -c "import json; print(json.load(open('forma-pin.json'))['ref'])")
+          commit=$(python -c "import json; print(json.load(open('forma-pin.json'))['commit'])")
+          attribute=$(python -c "import json; print(json.load(open('forma-pin.json'))['brandAttribute'])")
+          git clone --depth 1 --branch "$ref" "$repo" "$RUNNER_TEMP/forma"
+          test "$(git -C "$RUNNER_TEMP/forma" rev-parse HEAD)" = "$commit"
+          echo "FORMA_SRC=$RUNNER_TEMP/forma" >> "$GITHUB_ENV"
+          echo "FORMA_REF=$ref" >> "$GITHUB_ENV"
+          echo "FORMA_BRAND_ATTRIBUTE=$attribute" >> "$GITHUB_ENV"
+      - name: Committed outputs match a fresh build
+        run: python tools/build_theme.py --forma "$FORMA_SRC" --forma-ref "$FORMA_REF" --brand-attribute "$FORMA_BRAND_ATTRIBUTE" --check
+      - name: Validate and test
+        env:
+          REQUIRE_FORMA: '1'
+        run: |
+          python tools/theme_validator.py --brand-attribute "$FORMA_BRAND_ATTRIBUTE"
+          python -m unittest tests.test_theme_package -v
+      - name: Pack and checksum
+        run: |
+          mkdir -p "$RUNNER_TEMP/out"
+          tgz=$(npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/out" | tail -n 1)
+          cp dist/asset-manifest.json "$RUNNER_TEMP/out/asset-manifest.json"
+          # Release checksums: the package's own dist/checksums.txt plus the tarball.
+          cp dist/checksums.txt "$RUNNER_TEMP/out/checksums.txt"
+          (cd "$RUNNER_TEMP/out" && sha256sum "$tgz" >> checksums.txt)
+          echo "TGZ=$tgz" >> "$GITHUB_ENV"
+          cat "$RUNNER_TEMP/out/checksums.txt"
+      - name: Publish GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" --verify-tag \
+            --title "@echelon-foundry/echelon-theme $GITHUB_REF_NAME" \
+            --notes "Built against Forma $FORMA_REF with $FORMA_BRAND_ATTRIBUTE. Verify the tarball against checksums.txt before installing; see docs/CONSUMING-THE-ECHELON-THEME.md." \
+            "$RUNNER_TEMP/out/$TGZ" "$RUNNER_TEMP/out/checksums.txt" "$RUNNER_TEMP/out/asset-manifest.json"

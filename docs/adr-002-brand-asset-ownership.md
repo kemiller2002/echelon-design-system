@@ -32,3 +32,5 @@ Fail verification for missing logo assets, broken paths, unapproved placeholders
 ## Implementation status
 
 This decision records the required architecture. It does not assert that the existing Forma file has been moved, that logo assets have been located, or that the consumers have been migrated.
+
+Progress: the Echelon theme package (brand manifest, marketing theme, approved corporate marks, asset manifest, validation and release workflow) now lives in this repository; see [`CONSUMING-THE-ECHELON-THEME.md`](CONSUMING-THE-ECHELON-THEME.md). It is unreleased until Forma 1.0.0 exists. Removing Echelon from Forma and migrating consumers are separate steps and are not claimed here.

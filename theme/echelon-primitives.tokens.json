@@ -1,0 +1,704 @@
+{
+  "$description": "Echelon primitives referenced by echelon-marketing.tokens.json, copied unchanged from Forma 0.14.0 tokens/echelon.tokens.json (commit 7372886ed7e5ae101df26515279abc6b34d28a69). Carried from Forma 0.14.0, not a frozen v1 palette. Used only as a --reference source for Forma's TokenCompiler, so none of these is emitted as CSS.",
+  "primitive": {
+    "color": {
+      "$type": "color",
+      "foundry-charcoal": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.12549,
+            0.141176,
+            0.129412
+          ],
+          "alpha": 1,
+          "hex": "#202421"
+        }
+      },
+      "forged-iron": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.227451,
+            0.25098,
+            0.235294
+          ],
+          "alpha": 1,
+          "hex": "#3a403c"
+        }
+      },
+      "parchment": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.94902,
+            0.937255,
+            0.905882
+          ],
+          "alpha": 1,
+          "hex": "#f2efe7"
+        }
+      },
+      "oxide-bronze": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.564706,
+            0.345098,
+            0.192157
+          ],
+          "alpha": 1,
+          "hex": "#905831"
+        }
+      },
+      "oxide-bronze-light": {
+        "$description": "Accessible dark-surface accent derived from oxide bronze.",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.658824,
+            0.494118,
+            0.368627
+          ],
+          "alpha": 1,
+          "hex": "#a87e5e"
+        }
+      },
+      "verdigris": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.278431,
+            0.458824,
+            0.419608
+          ],
+          "alpha": 1,
+          "hex": "#47756b"
+        }
+      },
+      "verdigris-light": {
+        "$description": "Accessible dark-surface accent derived from verdigris.",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.411765,
+            0.552941,
+            0.517647
+          ],
+          "alpha": 1,
+          "hex": "#698d84"
+        }
+      },
+      "carbon": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.090196,
+            0.101961,
+            0.094118
+          ],
+          "alpha": 1,
+          "hex": "#171a18"
+        }
+      },
+      "graphite": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.407843,
+            0.427451,
+            0.407843
+          ],
+          "alpha": 1,
+          "hex": "#686d68"
+        }
+      },
+      "stone": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.890196,
+            0.878431,
+            0.843137
+          ],
+          "alpha": 1,
+          "hex": "#e3e0d7"
+        }
+      },
+      "parchment-light": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.972549,
+            0.964706,
+            0.945098
+          ],
+          "alpha": 1,
+          "hex": "#f8f6f1"
+        }
+      },
+      "oxide-bronze-deep": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.454902,
+            0.27451,
+            0.121569
+          ],
+          "alpha": 1,
+          "hex": "#74461f"
+        }
+      },
+      "oxide-bronze-pale": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.788235,
+            0.627451,
+            0.498039
+          ],
+          "alpha": 1,
+          "hex": "#c9a07f"
+        }
+      },
+      "status-success": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.180392,
+            0.415686,
+            0.270588
+          ],
+          "alpha": 1,
+          "hex": "#2e6a45"
+        }
+      },
+      "status-warning": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.52549,
+            0.337255,
+            0.058824
+          ],
+          "alpha": 1,
+          "hex": "#86560f"
+        }
+      },
+      "status-danger": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.631373,
+            0.227451,
+            0.172549
+          ],
+          "alpha": 1,
+          "hex": "#a13a2c"
+        }
+      },
+      "status-info": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.176471,
+            0.372549,
+            0.52549
+          ],
+          "alpha": 1,
+          "hex": "#2d5f86"
+        }
+      },
+      "status-success-light": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.54902,
+            0.768627,
+            0.623529
+          ],
+          "alpha": 1,
+          "hex": "#8cc49f"
+        }
+      },
+      "status-warning-light": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.866667,
+            0.698039,
+            0.4
+          ],
+          "alpha": 1,
+          "hex": "#ddb266"
+        }
+      },
+      "status-danger-light": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.937255,
+            0.603922,
+            0.545098
+          ],
+          "alpha": 1,
+          "hex": "#ef9a8b"
+        }
+      },
+      "status-info-light": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            0.564706,
+            0.72549,
+            0.862745
+          ],
+          "alpha": 1,
+          "hex": "#90b9dc"
+        }
+      }
+    },
+    "radius": {
+      "$type": "dimension",
+      "none": {
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        }
+      }
+    },
+    "motion-duration": {
+      "$type": "duration",
+      "fast": {
+        "$value": {
+          "value": 120,
+          "unit": "ms"
+        }
+      }
+    },
+    "motion-easing": {
+      "$type": "cubicBezier",
+      "standard": {
+        "$value": [
+          0.2,
+          0,
+          0,
+          1
+        ]
+      }
+    },
+    "font-family": {
+      "$type": "fontFamily",
+      "display": {
+        "$value": [
+          "Newsreader",
+          "Georgia",
+          "serif"
+        ]
+      },
+      "sans": {
+        "$value": [
+          "Manrope",
+          "system-ui",
+          "sans-serif"
+        ]
+      },
+      "mono": {
+        "$value": [
+          "IBM Plex Mono",
+          "ui-monospace",
+          "monospace"
+        ]
+      }
+    },
+    "font-size": {
+      "$type": "dimension",
+      "$description": "Static type scale in rem so text follows user font-size preferences.",
+      "xs": {
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      },
+      "sm": {
+        "$value": {
+          "value": 0.875,
+          "unit": "rem"
+        }
+      },
+      "md": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "lg": {
+        "$value": {
+          "value": 1.25,
+          "unit": "rem"
+        }
+      }
+    },
+    "font-size-fluid": {
+      "$type": "fluidDimension",
+      "$description": "Fluid display sizes. Every preferred value keeps a rem term so zoom and user font-size still scale text (WCAG 1.4.4).",
+      "lead": {
+        "$value": {
+          "min": {
+            "value": 1.125,
+            "unit": "rem"
+          },
+          "preferred": [
+            {
+              "value": 0.875,
+              "unit": "rem"
+            },
+            {
+              "value": 0.85,
+              "unit": "vw"
+            }
+          ],
+          "max": {
+            "value": 1.5,
+            "unit": "rem"
+          }
+        }
+      },
+      "display-3": {
+        "$value": {
+          "min": {
+            "value": 1.5,
+            "unit": "rem"
+          },
+          "preferred": [
+            {
+              "value": 1,
+              "unit": "rem"
+            },
+            {
+              "value": 1.6,
+              "unit": "vw"
+            }
+          ],
+          "max": {
+            "value": 2.4,
+            "unit": "rem"
+          }
+        }
+      },
+      "display-2": {
+        "$value": {
+          "min": {
+            "value": 2,
+            "unit": "rem"
+          },
+          "preferred": [
+            {
+              "value": 1.25,
+              "unit": "rem"
+            },
+            {
+              "value": 3.6,
+              "unit": "vw"
+            }
+          ],
+          "max": {
+            "value": 4.5,
+            "unit": "rem"
+          }
+        }
+      },
+      "display-1": {
+        "$value": {
+          "min": {
+            "value": 2.5,
+            "unit": "rem"
+          },
+          "preferred": [
+            {
+              "value": 1.75,
+              "unit": "rem"
+            },
+            {
+              "value": 6,
+              "unit": "vw"
+            }
+          ],
+          "max": {
+            "value": 7.25,
+            "unit": "rem"
+          }
+        }
+      }
+    },
+    "line-height": {
+      "$type": "number",
+      "display": {
+        "$value": 1
+      },
+      "snug": {
+        "$value": 1.25
+      },
+      "normal": {
+        "$value": 1.5
+      },
+      "relaxed": {
+        "$value": 1.65
+      }
+    },
+    "font-weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": 600
+      },
+      "bold": {
+        "$value": 700
+      }
+    },
+    "letter-spacing": {
+      "$type": "dimension",
+      "tight": {
+        "$value": {
+          "value": -0.035,
+          "unit": "em"
+        }
+      },
+      "normal": {
+        "$value": {
+          "value": 0,
+          "unit": "em"
+        }
+      },
+      "wide": {
+        "$value": {
+          "value": 0.09,
+          "unit": "em"
+        }
+      }
+    },
+    "size": {
+      "$type": "dimension",
+      "$description": "Layout measures and containers. ch measures follow the active font; rem containers follow user font size.",
+      "measure-narrow": {
+        "$value": {
+          "value": 62,
+          "unit": "ch"
+        }
+      },
+      "measure": {
+        "$value": {
+          "value": 72,
+          "unit": "ch"
+        }
+      },
+      "container-narrow": {
+        "$value": {
+          "value": 45,
+          "unit": "rem"
+        }
+      },
+      "container-standard": {
+        "$value": {
+          "value": 64,
+          "unit": "rem"
+        }
+      },
+      "container-wide": {
+        "$value": {
+          "value": 75,
+          "unit": "rem"
+        }
+      },
+      "container-max": {
+        "$value": {
+          "value": 90,
+          "unit": "rem"
+        }
+      },
+      "target-min": {
+        "$value": {
+          "value": 2.75,
+          "unit": "rem"
+        }
+      }
+    },
+    "size-fluid": {
+      "$type": "fluidDimension",
+      "gutter": {
+        "$value": {
+          "min": {
+            "value": 1,
+            "unit": "rem"
+          },
+          "preferred": [
+            {
+              "value": 4,
+              "unit": "vw"
+            }
+          ],
+          "max": {
+            "value": 4.5,
+            "unit": "rem"
+          }
+        }
+      },
+      "section-space": {
+        "$value": {
+          "min": {
+            "value": 4,
+            "unit": "rem"
+          },
+          "preferred": [
+            {
+              "value": 2,
+              "unit": "rem"
+            },
+            {
+              "value": 6,
+              "unit": "vw"
+            }
+          ],
+          "max": {
+            "value": 10,
+            "unit": "rem"
+          }
+        }
+      },
+      "block-space": {
+        "$value": {
+          "min": {
+            "value": 1.25,
+            "unit": "rem"
+          },
+          "preferred": [
+            {
+              "value": 0.75,
+              "unit": "rem"
+            },
+            {
+              "value": 1.5,
+              "unit": "vw"
+            }
+          ],
+          "max": {
+            "value": 2.25,
+            "unit": "rem"
+          }
+        }
+      }
+    },
+    "border-width": {
+      "$type": "dimension",
+      "thin": {
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        }
+      },
+      "accent": {
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      }
+    },
+    "focus": {
+      "$type": "dimension",
+      "ring-width": {
+        "$value": {
+          "value": 3,
+          "unit": "px"
+        }
+      },
+      "ring-offset": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      },
+      "halo-width": {
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        }
+      }
+    },
+    "shadow": {
+      "$type": "shadow",
+      "raised": {
+        "$value": [
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.090196,
+                0.101961,
+                0.094118
+              ],
+              "alpha": 0.08
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 1,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 2,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          },
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [
+                0.090196,
+                0.101961,
+                0.094118
+              ],
+              "alpha": 0.08
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 8,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 24,
+              "unit": "px"
+            },
+            "spread": {
+              "value": -8,
+              "unit": "px"
+            }
+          }
+        ]
+      }
+    },
+    "space": {
+      "$type": "dimension",
+      "$description": "Relational spacing scale in rem so spacing grows with user font size (VE LAW-COMP-031). Marketing components use it through --ef-space-* roles.",
+      "6": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      }
+    }
+  }
+}
