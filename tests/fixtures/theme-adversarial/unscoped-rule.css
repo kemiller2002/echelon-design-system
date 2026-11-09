@@ -1,9 +1,9 @@
 /* Generated from echelon.brand.json. Do not edit directly. */
-@layer echelon.brand {
-  [data-ef-brand="echelon"] {
-  --ef-color-text-primary: #171a18;
+@layer forma.brand {
+  [data-forma-brand="echelon"] {
+  --forma-color-text-primary: #171a18;
 }
   :root {
-  --ef-color-accent-primary: #905831;
+  --forma-color-accent-primary: #905831;
 }
 }

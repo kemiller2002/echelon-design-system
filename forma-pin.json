@@ -1,7 +1,7 @@
 {
-  "$comment": "Forma source the theme is built against. CI clones this ref, checks the commit, and builds with tools/build_theme.py. Move to Forma 1.0.0 (brand attribute data-forma-brand) before releasing theme 1.0.0.",
+  "$comment": "Forma source the theme is built against. CI clones this ref, checks the commit, and builds with tools/build_theme.py.",
   "repository": "https://github.com/kemiller2002/forma",
-  "ref": "v0.14.0",
-  "commit": "7372886ed7e5ae101df26515279abc6b34d28a69",
-  "brandAttribute": "data-ef-brand"
+  "ref": "v1.0.0",
+  "commit": "97ea2206973ea98f3b5e684ec14feb0ed32e06d5",
+  "brandAttribute": "data-forma-brand"
 }

@@ -2,7 +2,7 @@
 
 **Package:** `@echelon-foundry/echelon-theme`
 **Decision:** EDS-ADR-002 (Echelon branding moves out of Forma into this repository)
-**Status:** not released. The repository builds `0.0.0-dev` against Forma v0.14.0 to prove parity. Theme `1.0.0` will be built and released only after Forma 1.0.0 exists. It will use `data-forma-brand` and `--forma-*`.
+**Status:** `1.0.0`, built against Forma v1.0.0 (`97ea220`). It uses `data-forma-brand` and `--forma-*`. CI separately proves that the same sources built against Forma v0.14.0 reproduce that release's Echelon output byte for byte.
 
 The colors are **carried from Forma 0.14.0, not a frozen v1 palette**. They are the verified values in [`brand/AUDIT.md`](../brand/AUDIT.md), unchanged.
 
@@ -48,7 +48,7 @@ The colors are **carried from Forma 0.14.0, not a frozen v1 palette**. They are 
    <link rel="stylesheet" href="/assets/echelon/echelon.css">     <!-- this package: dist/echelon.css -->
    ```
 
-   For a marketing site, load Forma's `forma-marketing.css`, then `dist/echelon-marketing.css`. Together they reproduce Forma 0.14.0's single-file `forma-echelon-marketing.css`.
+   For a marketing site, load Forma's `forma-marketing.css`, then `dist/echelon.css`, then `dist/echelon-marketing.css`, and set `data-forma-brand="echelon"` on `<html>` (step 4). The brand file is required: Forma 1.0's own primitives are neutral (system fonts, neutral tints), so without it page text outside `.forma-site`, and any nested `data-forma-theme` or `data-forma-brand` subtree, falls back to Forma's defaults.
 4. **Brand attribute.** Set `data-forma-brand="echelon"` on `<html>`. The brand CSS applies only inside that attribute. Control light and dark with Forma's `data-forma-theme`, or leave it unset to follow `prefers-color-scheme`.
 
    ```html
@@ -94,11 +94,11 @@ python tools/build_theme.py --forma /tmp/forma-<forma-tag> --forma-ref <forma-ta
     --brand-attribute <data-ef-brand|data-forma-brand>
 ```
 
-To move to Forma 1.0.0:
+To release against a newer Forma:
 
-1. Update `forma-pin.json` (ref, commit, `brandAttribute: data-forma-brand`).
+1. Update `forma-pin.json` (ref, commit, `brandAttribute`).
 2. Rebuild, then commit `dist/` and `logos/`.
-3. Set `package.json` to `1.0.0` and tag `v1.0.0`.
+3. Set the version in `package.json` and tag `v<version>` on the merge commit.
 
 The release workflow refuses a tag unless the pin is Forma 1.0.0 or later with `data-forma-brand`, and the tag matches the version.
 
