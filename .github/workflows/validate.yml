@@ -11,3 +11,7 @@ jobs:
         with:
           python-version: '3.12'
       - run: python tests/validate_theme.py
+      - name: Contrast tool unit tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Brand audit contrast block is current
+        run: python tools/contrast.py --check

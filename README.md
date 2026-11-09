@@ -17,7 +17,7 @@ Applications consume immutable, versioned artifacts, not the moving `main` branc
 
 ## Status
 
-**Bootstrap / brand audit pending.** Balanced Charcoal and Bronze is the selected direction, but the precise brand colors have not yet been verified against the source of https://echelonfoundry.com/ and approved logo assets. Do not publish candidate values as final brand tokens.
+**Bootstrap / brand source audit recorded, owner approval pending.** Balanced Charcoal and Bronze is the selected direction. [`brand/AUDIT.md`](brand/AUDIT.md) records the verified values from Forma, the echelonfoundry.com source repository, Folio and Forma Studio. None of the candidate brand hex values below appears in any verified source, and no approved EF logo exists. Do not publish candidate values as final brand tokens.
 
 ### Candidate palette (unverified)
 
