@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "1.0",
+  "package": "@echelon-foundry/echelon-theme",
+  "version": "0.0.0-dev",
+  "brand": "echelon",
+  "brandAttribute": "data-ef-brand",
+  "namespace": "ef",
+  "palette": "carried from Forma 0.14.0, not a frozen v1 palette",
+  "forma": {
+    "repository": "https://github.com/kemiller2002/forma",
+    "ref": "v0.14.0",
+    "commit": "7372886ed7e5ae101df26515279abc6b34d28a69",
+    "compilerSources": {
+      "tools/BrandCompiler/BrandCompiler.fsproj": "5535479aa53bc64a466d4ed680ca392380930372db18e76023008a0e72ebe749",
+      "tools/BrandCompiler/Program.fs": "44c84722261f3ec4ce5c3e40b22c93ab43598d7b68caedbf3c99d714ea16beac",
+      "tools/TokenCompiler/TokenCompiler.fsproj": "7b6fad9919c74fff6648464957e2c253a158d6d63c7e1d576c9c8740c160930d",
+      "tools/TokenCompiler/Program.fs": "74924e9c0c75c8b6b00ef9317ecd84a975412a9063226c9158fbd2cc13f41584"
+    }
+  },
+  "approval": {
+    "catalog": "brand/logos/catalog.json",
+    "mark": "echelon-foundry",
+    "by": "Kevin (owner)",
+    "on": "2026-11-09",
+    "record": "Owner reply \"Approve\" at 2026-11-09 07:45 America/Indiana/Indianapolis to the request to approve both proposed marks (echelon-design-system PR #2)."
+  },
+  "brandManifest": {
+    "path": "theme/echelon.brand.json",
+    "identityAssets": {
+      "logo": "logos/echelon-foundry/mark.svg",
+      "logoDark": "logos/echelon-foundry/mark-dark.svg",
+      "mark": "logos/echelon-foundry/mark.svg",
+      "favicon": "logos/echelon-foundry/mark.svg"
+    }
+  },
+  "assets": [
+    {
+      "role": "mark",
+      "path": "logos/echelon-foundry/mark.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 578,
+      "sha256": "243556cf40eaacb62a35ec7d0648797ccdcc321ee4374a513a47956990b270d6",
+      "source": "brand/logos/echelon-foundry/mark.svg"
+    },
+    {
+      "role": "markDark",
+      "path": "logos/echelon-foundry/mark-dark.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 578,
+      "sha256": "f27bf44d2ef2c7d4092a15c2987e7a03c00e84fbc9b995548219598ff994f9a6",
+      "source": "brand/logos/echelon-foundry/mark-dark.svg"
+    },
+    {
+      "role": "monochrome",
+      "path": "logos/echelon-foundry/mark-mono.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 537,
+      "sha256": "1c3e1ea5abca9c15440f1fdcd1856d785d22536ab66dda73620aab1397b0d071",
+      "source": "brand/logos/echelon-foundry/mark-mono.svg"
+    },
+    {
+      "role": "lockup",
+      "path": "logos/echelon-foundry/lockup.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 844,
+      "sha256": "6bd7afe6c236a05ec0330397b5af900d9f7f479bf3d309ab1797fbd33b3e0f1a",
+      "source": "brand/logos/echelon-foundry/lockup.svg"
+    },
+    {
+      "role": "favicon",
+      "path": "logos/echelon-foundry/mark.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 578,
+      "sha256": "243556cf40eaacb62a35ec7d0648797ccdcc321ee4374a513a47956990b270d6",
+      "source": "brand/logos/echelon-foundry/mark.svg",
+      "sameFileAs": "mark",
+      "note": "No separate favicon artwork exists; the approved square mark serves as the favicon."
+    },
+    {
+      "role": "startup",
+      "path": "logos/echelon-foundry/mark.svg",
+      "mediaType": "image/svg+xml",
+      "bytes": 578,
+      "sha256": "243556cf40eaacb62a35ec7d0648797ccdcc321ee4374a513a47956990b270d6",
+      "source": "brand/logos/echelon-foundry/mark.svg",
+      "sameFileAs": "mark",
+      "note": "No separate start-up (pre-WASM) artwork exists; the approved square mark serves the start-up screen."
+    }
+  ],
+  "stylesheets": [
+    {
+      "path": "dist/echelon.css",
+      "mediaType": "text/css",
+      "bytes": 4213,
+      "sha256": "e56dd7d97228168105b8c2a8114e46d1d6b06403c201a315d23db801ea9319e4"
+    },
+    {
+      "path": "dist/echelon-marketing.css",
+      "mediaType": "text/css",
+      "bytes": 6431,
+      "sha256": "29c9646d35a44ecfac4614c8abfb0043a04ec60cdafffc5afe7726981a49ade8"
+    }
+  ]
+}

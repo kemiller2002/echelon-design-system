@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Echelon Foundry">
+  <title>Echelon Foundry</title>
+  <rect width="64" height="64" rx="12" fill="#f2efe7"/>
+  <path d="M14 50V31L46 14V50Z" fill="none" stroke="#905831" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M14 41L37 28.5V50" fill="none" stroke="#905831" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M14 50L25 44V50" fill="none" stroke="#905831" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+</svg>

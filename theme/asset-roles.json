@@ -1,0 +1,12 @@
+{
+  "$comment": "Asset roles packaged with the Echelon theme (EDS-ADR-002). Every source is an owner-approved mark in brand/logos/catalog.json; nothing here is drawn or altered. No separate favicon or startup artwork exists, so those roles reuse the approved square mark (mark.svg). tools/build_theme.py copies each source to its package path and records the sha256 in dist/asset-manifest.json.",
+  "catalogMark": "echelon-foundry",
+  "roles": [
+    {"role": "mark", "catalogAsset": "mark", "path": "logos/echelon-foundry/mark.svg"},
+    {"role": "markDark", "catalogAsset": "markDark", "path": "logos/echelon-foundry/mark-dark.svg"},
+    {"role": "monochrome", "catalogAsset": "monochrome", "path": "logos/echelon-foundry/mark-mono.svg"},
+    {"role": "lockup", "catalogAsset": "lockup", "path": "logos/echelon-foundry/lockup.svg"},
+    {"role": "favicon", "catalogAsset": "mark", "path": "logos/echelon-foundry/mark.svg", "sameFileAs": "mark", "note": "No separate favicon artwork exists; the approved square mark serves as the favicon."},
+    {"role": "startup", "catalogAsset": "mark", "path": "logos/echelon-foundry/mark.svg", "sameFileAs": "mark", "note": "No separate start-up (pre-WASM) artwork exists; the approved square mark serves the start-up screen."}
+  ]
+}

@@ -17,3 +17,69 @@ jobs:
         run: python tools/contrast.py --check
       - name: Logo SVGs match their generator
         run: python tools/logos.py brand/logos --check
+  theme:
+    name: Echelon theme package
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+      NuGetAudit: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Clone the pinned Forma source and check its commit
+        run: |
+          repo=$(python -c "import json; print(json.load(open('forma-pin.json'))['repository'])")
+          ref=$(python -c "import json; print(json.load(open('forma-pin.json'))['ref'])")
+          commit=$(python -c "import json; print(json.load(open('forma-pin.json'))['commit'])")
+          attribute=$(python -c "import json; print(json.load(open('forma-pin.json'))['brandAttribute'])")
+          git clone --depth 1 --branch "$ref" "$repo" "$RUNNER_TEMP/forma"
+          test "$(git -C "$RUNNER_TEMP/forma" rev-parse HEAD)" = "$commit"
+          echo "FORMA_SRC=$RUNNER_TEMP/forma" >> "$GITHUB_ENV"
+          echo "FORMA_REF=$ref" >> "$GITHUB_ENV"
+          echo "FORMA_BRAND_ATTRIBUTE=$attribute" >> "$GITHUB_ENV"
+      - name: Committed dist/ and logos/ match a fresh build
+        run: python tools/build_theme.py --forma "$FORMA_SRC" --forma-ref "$FORMA_REF" --brand-attribute "$FORMA_BRAND_ATTRIBUTE" --check
+      - name: Validate the package (assets, sha256, SVG safety, roles, brand scope, checksums)
+        run: python tools/theme_validator.py --brand-attribute "$FORMA_BRAND_ATTRIBUTE"
+      - name: Theme tests (reproducible build, adversarial fixtures, npm layout)
+        env:
+          REQUIRE_FORMA: '1'
+        run: python -m unittest tests.test_theme_package -v
+  forma-parity:
+    name: Parity with Forma v0.14.0 release
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: '1'
+      DOTNET_NOLOGO: '1'
+      NuGetAudit: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - name: Clone Forma v0.14.0 and download its release assets
+        run: |
+          fixture=tests/fixtures/forma-v0.14.0-release.json
+          ref=$(python -c "import json; print(json.load(open('$fixture'))['ref'])")
+          commit=$(python -c "import json; print(json.load(open('$fixture'))['commit'])")
+          base=$(python -c "import json; print(json.load(open('$fixture'))['downloadBase'])")
+          git clone --depth 1 --branch "$ref" https://github.com/kemiller2002/forma "$RUNNER_TEMP/forma-0.14.0"
+          test "$(git -C "$RUNNER_TEMP/forma-0.14.0" rev-parse HEAD)" = "$commit"
+          mkdir -p "$RUNNER_TEMP/release"
+          for name in $(python -c "import json; print(' '.join(json.load(open('$fixture'))['files']))"); do
+            curl -fsSL --retry 3 -o "$RUNNER_TEMP/release/$name" "$base$name"
+          done
+      - name: Byte-level parity (echelon.css) and marketing reconstruction
+        run: python tools/forma_parity.py --forma "$RUNNER_TEMP/forma-0.14.0" --release "$RUNNER_TEMP/release"

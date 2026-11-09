@@ -1,0 +1,9 @@
+/* Selectors that mention the brand attribute but are not limited to it. */
+@layer echelon.brand {
+  :not([data-ef-brand="echelon"]) {
+  --ef-color-text-primary: #171a18;
+}
+  [data-ef-brand="echelon"] ~ main {
+  --ef-color-accent-primary: #905831;
+}
+}

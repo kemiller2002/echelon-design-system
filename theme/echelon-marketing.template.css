@@ -1,0 +1,29 @@
+/*
+  Template for dist/echelon-marketing.css, moved from Forma 0.14.0 themes/echelon/marketing.css
+  (EDS-ADR-002). tools/build_theme.py drops this comment, replaces the ns placeholder with the
+  Forma namespace taken from the brand attribute (data-<ns>-brand) and the layer placeholder with
+  the layer prefix that Forma's compilers emit. Everything after this comment is copied unchanged.
+*/
+/*
+  Echelon Marketing Theme: brand decisions that are not scalar tokens.
+
+  Color, type, layout, shape, and effect values come from the compiled
+  marketing.tokens.json. This file only fills generic Forma hooks with
+  Echelon's composition choices, and derives every color from tokens so the
+  choices hold in light and dark schemes.
+*/
+@layer {{layer}}.theme {
+  /* Foundry drafting grid. Kept at a very low effective alpha (6% at 18%
+     opacity) so it never changes text contrast (VE REP-VE-COL-001). */
+  .{{ns}}-site {
+    --{{ns}}-site-backdrop:
+      linear-gradient(color-mix(in srgb, var(--{{ns}}-color-text-primary) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--{{ns}}-color-text-primary) 6%, transparent) 1px, transparent 1px);
+    --{{ns}}-site-backdrop-size: 48px 48px;
+    --{{ns}}-site-backdrop-opacity: 0.18;
+  }
+
+  @media (forced-colors: active) {
+    .{{ns}}-site { --{{ns}}-site-backdrop: none; }
+  }
+}

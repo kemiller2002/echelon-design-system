@@ -1,0 +1,164 @@
+/*! @echelon-foundry/echelon-theme 0.0.0-dev | echelon-marketing.css
+    Echelon marketing theme. Load after Forma's forma-marketing.css.
+    Built by tools/build_theme.py with Forma v0.14.0 (7372886ed7e5ae101df26515279abc6b34d28a69), brand attribute data-ef-brand.
+    Palette carried from Forma 0.14.0, not a frozen v1 palette. Do not edit; pin by version and sha256. */
+
+/* --- source: theme/echelon-marketing.tokens.json (Forma TokenCompiler) --- */
+/* Generated from echelon-marketing.tokens.json. Do not edit directly. */
+@layer echelon.tokens {
+  :root {
+  --ef-effect-shadow-raised: 0px 1px 2px 0px rgb(23 26 24 / 0.08), 0px 8px 24px -8px rgb(23 26 24 / 0.08);
+  --ef-effect-transition-duration: 120ms;
+  --ef-effect-transition-easing: cubic-bezier(0.2, 0, 0, 1);
+  --ef-focus-halo-width: 5px;
+  --ef-focus-ring-offset: 2px;
+  --ef-focus-ring-width: 3px;
+  --ef-layout-block-space: clamp(1.25rem, 0.75rem + 1.5vw, 2.25rem);
+  --ef-layout-grid-gap: 1.5rem;
+  --ef-layout-gutter: clamp(1rem, 4vw, 4.5rem);
+  --ef-layout-measure: 72ch;
+  --ef-layout-measure-narrow: 62ch;
+  --ef-layout-section-space: clamp(4rem, 2rem + 6vw, 10rem);
+  --ef-layout-stack-space: 1.5rem;
+  --ef-layout-target-min: 2.75rem;
+  --ef-layout-width-max: 90rem;
+  --ef-layout-width-narrow: 45rem;
+  --ef-layout-width-standard: 64rem;
+  --ef-layout-width-wide: 75rem;
+  --ef-shape-border-width: 1px;
+  --ef-shape-border-width-accent: 4px;
+  --ef-shape-radius: 0px;
+  --ef-type-family-body: Manrope, system-ui, sans-serif;
+  --ef-type-family-display: Newsreader, Georgia, serif;
+  --ef-type-family-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --ef-type-leading-body: 1.65;
+  --ef-type-leading-heading: 1;
+  --ef-type-leading-lead: 1.5;
+  --ef-type-leading-snug: 1.25;
+  --ef-type-size-body: 1rem;
+  --ef-type-size-h1: clamp(2.5rem, 1.75rem + 6vw, 7.25rem);
+  --ef-type-size-h2: clamp(2rem, 1.25rem + 3.6vw, 4.5rem);
+  --ef-type-size-h3: 1.25rem;
+  --ef-type-size-h4: 1rem;
+  --ef-type-size-label: 0.75rem;
+  --ef-type-size-lead: clamp(1.125rem, 0.875rem + 0.85vw, 1.5rem);
+  --ef-type-size-small: 0.875rem;
+  --ef-type-size-statement: clamp(1.5rem, 1rem + 1.6vw, 2.4rem);
+  --ef-type-tracking-body: 0em;
+  --ef-type-tracking-display: -0.035em;
+  --ef-type-tracking-label: 0.09em;
+  --ef-type-weight-body: 400;
+  --ef-type-weight-heading: 500;
+  --ef-type-weight-label: 500;
+  --ef-type-weight-nav: 600;
+  --ef-type-weight-strong: 700;
+}
+  :root, [data-ef-theme="light"] {
+  --ef-color-accent-hover: #74461f;
+  --ef-color-accent-primary: #905831;
+  --ef-color-accent-secondary: #47756b;
+  --ef-color-border-functional: #3a403c;
+  --ef-color-border-subtle: #e3e0d7;
+  --ef-color-control-active: #905831;
+  --ef-color-control-thumb: #f2efe7;
+  --ef-color-control-track: #686d68;
+  --ef-color-focus-gap: #f2efe7;
+  --ef-color-focus-ring: #171a18;
+  --ef-color-status-danger: #a13a2c;
+  --ef-color-status-info: #2d5f86;
+  --ef-color-status-success: #2e6a45;
+  --ef-color-status-warning: #86560f;
+  --ef-color-surface-elevated: #f8f6f1;
+  --ef-color-surface-inverse: #202421;
+  --ef-color-surface-inverse-secondary: #3a403c;
+  --ef-color-surface-primary: #f2efe7;
+  --ef-color-surface-secondary: #e3e0d7;
+  --ef-color-text-heading: #202421;
+  --ef-color-text-inverse: #f2efe7;
+  --ef-color-text-muted: #686d68;
+  --ef-color-text-on-secondary-surface: #3a403c;
+  --ef-color-text-primary: #171a18;
+  --ef-color-text-secondary: #686d68;
+}
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-ef-theme]) {
+  --ef-color-accent-hover: #c9a07f;
+  --ef-color-accent-primary: #a87e5e;
+  --ef-color-accent-secondary: #698d84;
+  --ef-color-border-functional: #e3e0d7;
+  --ef-color-border-subtle: #3a403c;
+  --ef-color-control-active: #a87e5e;
+  --ef-color-control-thumb: #f2efe7;
+  --ef-color-control-track: #686d68;
+  --ef-color-focus-gap: #171a18;
+  --ef-color-focus-ring: #f2efe7;
+  --ef-color-status-danger: #ef9a8b;
+  --ef-color-status-info: #90b9dc;
+  --ef-color-status-success: #8cc49f;
+  --ef-color-status-warning: #ddb266;
+  --ef-color-surface-elevated: #3a403c;
+  --ef-color-surface-inverse: #f2efe7;
+  --ef-color-surface-inverse-secondary: #e3e0d7;
+  --ef-color-surface-primary: #171a18;
+  --ef-color-surface-secondary: #202421;
+  --ef-color-text-heading: #f2efe7;
+  --ef-color-text-inverse: #171a18;
+  --ef-color-text-muted: #e3e0d7;
+  --ef-color-text-on-secondary-surface: #f2efe7;
+  --ef-color-text-primary: #f2efe7;
+  --ef-color-text-secondary: #e3e0d7;
+}
+  }
+  [data-ef-theme="dark"] {
+  --ef-color-accent-hover: #c9a07f;
+  --ef-color-accent-primary: #a87e5e;
+  --ef-color-accent-secondary: #698d84;
+  --ef-color-border-functional: #e3e0d7;
+  --ef-color-border-subtle: #3a403c;
+  --ef-color-control-active: #a87e5e;
+  --ef-color-control-thumb: #f2efe7;
+  --ef-color-control-track: #686d68;
+  --ef-color-focus-gap: #171a18;
+  --ef-color-focus-ring: #f2efe7;
+  --ef-color-status-danger: #ef9a8b;
+  --ef-color-status-info: #90b9dc;
+  --ef-color-status-success: #8cc49f;
+  --ef-color-status-warning: #ddb266;
+  --ef-color-surface-elevated: #3a403c;
+  --ef-color-surface-inverse: #f2efe7;
+  --ef-color-surface-inverse-secondary: #e3e0d7;
+  --ef-color-surface-primary: #171a18;
+  --ef-color-surface-secondary: #202421;
+  --ef-color-text-heading: #f2efe7;
+  --ef-color-text-inverse: #171a18;
+  --ef-color-text-muted: #e3e0d7;
+  --ef-color-text-on-secondary-surface: #f2efe7;
+  --ef-color-text-primary: #f2efe7;
+  --ef-color-text-secondary: #e3e0d7;
+}
+}
+
+/* --- source: theme/echelon-marketing.template.css --- */
+/*
+  Echelon Marketing Theme: brand decisions that are not scalar tokens.
+
+  Color, type, layout, shape, and effect values come from the compiled
+  marketing.tokens.json. This file only fills generic Forma hooks with
+  Echelon's composition choices, and derives every color from tokens so the
+  choices hold in light and dark schemes.
+*/
+@layer echelon.theme {
+  /* Foundry drafting grid. Kept at a very low effective alpha (6% at 18%
+     opacity) so it never changes text contrast (VE REP-VE-COL-001). */
+  .ef-site {
+    --ef-site-backdrop:
+      linear-gradient(color-mix(in srgb, var(--ef-color-text-primary) 6%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--ef-color-text-primary) 6%, transparent) 1px, transparent 1px);
+    --ef-site-backdrop-size: 48px 48px;
+    --ef-site-backdrop-opacity: 0.18;
+  }
+
+  @media (forced-colors: active) {
+    .ef-site { --ef-site-backdrop: none; }
+  }
+}

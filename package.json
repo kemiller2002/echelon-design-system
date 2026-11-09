@@ -1,0 +1,27 @@
+{
+  "name": "@echelon-foundry/echelon-theme",
+  "version": "0.0.0-dev",
+  "description": "Echelon Foundry theme for Forma: compiled brand CSS, marketing theme CSS, approved corporate marks and an integrity manifest.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kemiller2002/echelon-design-system.git"
+  },
+  "files": [
+    "dist",
+    "theme",
+    "logos"
+  ],
+  "exports": {
+    "./echelon.css": "./dist/echelon.css",
+    "./echelon-marketing.css": "./dist/echelon-marketing.css",
+    "./asset-manifest.json": "./dist/asset-manifest.json",
+    "./checksums.txt": "./dist/checksums.txt",
+    "./brand.json": "./theme/echelon.brand.json",
+    "./logos/*": "./logos/*",
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./dist/*.css"
+  ]
+}
