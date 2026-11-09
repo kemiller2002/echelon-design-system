@@ -121,7 +121,7 @@ The print foundation is a neutral and navy palette that shares no values with th
 - The live site header and the Forma marketing fixture both use a text "EF" mark, not a logo file.
 - Raster logo colours were not sampled. No hex is inferred from them.
 - **No EF logo is approved.** No document in any audited source approves a logo.
-- **Proposed (2026-11-09), not approved:** `brand/logos/` holds a vector Echelon Foundry mark redrawn from the website's raster concept in the verified palette, and a Signal application mark in the shared family grammar. See `brand/logos/catalog.json`; each stays `proposed` until the owner approves it.
+- **Approved 2026-11-09 by the owner:** `brand/logos/` holds a vector Echelon Foundry mark redrawn from the website's raster concept in the verified palette, and a Signal application mark in the shared family grammar. The approval record is in `brand/logos/catalog.json`. The earlier raster files remain unapproved explorations.
 
 ## 6. Candidate versus verified comparison and contrast (generated)
 
@@ -259,7 +259,7 @@ Candidate pairs failing their requirement: 8 of 22. Forma pairs failing their re
 
 1. **Palette authority.** Confirm the verified Forma/website palette as v1 (recommended by the evidence), or approve candidate changes C1–C7 explicitly. Choosing the candidates would change the shipping site, Forma and Studio, and needs fixes for the failures in C1, C6 and C7.
 2. **Approval record.** Decide whether `prompts/color-change.md` in the website repository counts as approval of the 8 core colours, or record a formal approval in this repository.
-3. **Logo.** No approved EF logo exists. Approve one (the 1D SVG, the JPEG/PNG rasters, or new artwork), or commission one. Decide its palette relative to C9, and supply the files that Forma's brand file references.
+3. **Logo.** Resolved 2026-11-09: the owner approved the vector marks in `brand/logos/`. Still open: whether Forma's `brands/echelon.brand.json` keeps declaring `/brand/echelon-logo.svg` paths that no repository serves.
 4. **White surface.** Decide whether v1 includes a white surface role (C4).
 5. **Print.** Decide whether Folio print adopts brand colours or keeps its neutral palette (C8).
 6. **Deployed-site verification.** Someone with unrestricted network access should confirm that the deployed CSS at https://echelonfoundry.com/ matches `assets/css/style.css` at `8c6b453`.

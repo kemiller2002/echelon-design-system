@@ -63,10 +63,14 @@ class LogoSafety(unittest.TestCase):
             with self.subTest(fg=fg, bg=bg):
                 self.assertGreaterEqual(contrast.contrast_ratio(fg, bg), 3.0)
 
-    def test_nothing_is_approved_without_the_owner(self):
+    def test_approval_is_recorded_not_assumed(self):
         for mark in CATALOG["marks"]:
             with self.subTest(mark=mark["id"]):
-                self.assertEqual((mark["status"], mark["approved"]), ("proposed", False))
+                self.assertIn(mark["status"], {"proposed", "approved"})
+                self.assertEqual(mark["approved"], mark["status"] == "approved")
+                if mark["approved"]:
+                    approval = mark.get("approval", {})
+                    self.assertTrue(approval.get("by") and approval.get("on") and approval.get("record"))
 
     def test_committed_svgs_match_the_generator(self):
         self.assertEqual(logos.stale(ROOT / "brand/logos"), [])

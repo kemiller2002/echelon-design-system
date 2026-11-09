@@ -11,8 +11,8 @@
     {
       "id": "echelon-foundry",
       "kind": "parent",
-      "status": "proposed",
-      "approved": false,
+      "status": "approved",
+      "approved": true,
       "proposed": "2026-11-09",
       "derivedFrom": "kemiller2002/echelon-foundry@8c6b453 assets/images/echelonfoundrylogo.jpeg and logo.png (unapproved raster concept: ascending tiered outline), redrawn as vector geometry in the verified palette",
       "assets": {
@@ -21,13 +21,18 @@
         "monochrome": "brand/logos/echelon-foundry/mark-mono.svg",
         "lockup": "brand/logos/echelon-foundry/lockup.svg"
       },
-      "notes": "The lockup's wordmark is SVG text in Manrope with a system fallback; outline it before print or external use."
+      "notes": "The lockup's wordmark is SVG text in Manrope with a system fallback; outline it before print or external use.",
+      "approval": {
+        "by": "Kevin (owner)",
+        "on": "2026-11-09",
+        "record": "Owner reply \"Approve\" at 2026-11-09 07:45 America/Indiana/Indianapolis to the request to approve both proposed marks (echelon-design-system PR #2)."
+      }
     },
     {
       "id": "signal",
       "kind": "application",
-      "status": "proposed",
-      "approved": false,
+      "status": "approved",
+      "approved": true,
       "proposed": "2026-11-09",
       "grammar": "Shared rounded tile, the echelon step in the top-left corner as the family signature, and the application's own glyph (a signal waveform).",
       "assets": {
@@ -35,7 +40,12 @@
         "markDark": "brand/logos/signal/mark-dark.svg",
         "monochrome": "brand/logos/signal/mark-mono.svg"
       },
-      "replaces": "kemiller2002/signal web/brand/signal-mark.svg (provisional, unapproved, 2026-11-09)"
+      "replaces": "kemiller2002/signal web/brand/signal-mark.svg (provisional, unapproved, 2026-11-09)",
+      "approval": {
+        "by": "Kevin (owner)",
+        "on": "2026-11-09",
+        "record": "Owner reply \"Approve\" at 2026-11-09 07:45 America/Indiana/Indianapolis to the request to approve both proposed marks (echelon-design-system PR #2)."
+      }
     }
   ]
 }
