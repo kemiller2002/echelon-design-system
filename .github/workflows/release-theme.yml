@@ -16,6 +16,9 @@ on:
       - 'v*'
 permissions:
   contents: write
+concurrency:
+  group: release-theme
+  cancel-in-progress: false
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -42,6 +45,9 @@ jobs:
             echo "Release $tag already exists; nothing to publish."
             echo "publish=false" >> "$GITHUB_OUTPUT"
           else
+            if [ "$GITHUB_REF_TYPE" != tag ] && git ls-remote --exit-code origin "refs/tags/$tag" >/dev/null; then
+              echo "::error::tag $tag already exists without a release; refusing to attach a release to a commit this run did not build"; exit 1
+            fi
             echo "publish=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Release guard (commit is on main)
