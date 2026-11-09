@@ -1,0 +1,41 @@
+{
+  "$comment": "Inventory of Echelon marks (EDS-BRAND-APP-001). A mark is approved only when the owner approves it; a file existing proves nothing. Generated SVGs come from tools/logos.py.",
+  "palette": {
+    "source": "brand/AUDIT.md (verified Forma/website values, not frozen tokens)",
+    "foundry-charcoal": "#202421",
+    "parchment": "#f2efe7",
+    "bronze-light": "#c9a07f",
+    "oxide-bronze": "#905831"
+  },
+  "marks": [
+    {
+      "id": "echelon-foundry",
+      "kind": "parent",
+      "status": "proposed",
+      "approved": false,
+      "proposed": "2026-11-09",
+      "derivedFrom": "kemiller2002/echelon-foundry@8c6b453 assets/images/echelonfoundrylogo.jpeg and logo.png (unapproved raster concept: ascending tiered outline), redrawn as vector geometry in the verified palette",
+      "assets": {
+        "mark": "brand/logos/echelon-foundry/mark.svg",
+        "markDark": "brand/logos/echelon-foundry/mark-dark.svg",
+        "monochrome": "brand/logos/echelon-foundry/mark-mono.svg",
+        "lockup": "brand/logos/echelon-foundry/lockup.svg"
+      },
+      "notes": "The lockup's wordmark is SVG text in Manrope with a system fallback; outline it before print or external use."
+    },
+    {
+      "id": "signal",
+      "kind": "application",
+      "status": "proposed",
+      "approved": false,
+      "proposed": "2026-11-09",
+      "grammar": "Shared rounded tile, the echelon step in the top-left corner as the family signature, and the application's own glyph (a signal waveform).",
+      "assets": {
+        "mark": "brand/logos/signal/mark.svg",
+        "markDark": "brand/logos/signal/mark-dark.svg",
+        "monochrome": "brand/logos/signal/mark-mono.svg"
+      },
+      "replaces": "kemiller2002/signal web/brand/signal-mark.svg (provisional, unapproved, 2026-11-09)"
+    }
+  ]
+}
