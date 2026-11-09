@@ -121,12 +121,15 @@ The print foundation is a neutral and navy palette that shares no values with th
 - The live site header and the Forma marketing fixture both use a text "EF" mark, not a logo file.
 - Raster logo colours were not sampled. No hex is inferred from them.
 - **No EF logo is approved.** No document in any audited source approves a logo.
+- **Approved 2026-11-09 by the owner:** `brand/logos/` holds a vector Echelon Foundry mark redrawn from the website's raster concept in the verified palette, and a Signal application mark in the shared family grammar. The approval record is in `brand/logos/catalog.json`. The earlier raster files remain unapproved explorations.
 
 ## 6. Candidate versus verified comparison and contrast (generated)
 
 Distance is CIE76 ΔE\*ab. Under 2.3 is roughly a just-noticeable difference, and over 5 is a clearly different colour. Ratios are WCAG 2.2 and are truncated, never rounded up. "Used by a verified source" means an exact hex match.
 
-Read the Forma FAIL rows as **prohibited combinations, not shipping defects**. Forma provides `text.on-secondary-surface` for text on `surface.secondary`. The website's own contrast suite already prohibits bronze or verdigris text on stone. This audit did not verify whether any Forma component actually renders a failing pair.
+Read the Forma FAIL rows as **prohibited combinations, not shipping defects**. Forma provides `text.on-secondary-surface` for text on `surface.secondary`. The website's own contrast suite already prohibits bronze or verdigris text on stone.
+
+**Rendered usage of the failing Forma pairs (checked 2026-11-09): none found.** A Playwright scan read the computed text color and nearest opaque background of every visible text element. It covered every live example on the 195 component and composition pages of the Forma 0.14.0 documentation site, in light and dark, and all 12 HTML pages of the website source at `8c6b453`. No element draws `text.secondary`, `accent.primary` or `accent.secondary` on `surface.secondary` in either mode. On the Forma pages, 1,091 text elements sit on `surface.secondary`. Every one uses primary text, inverse text or `text.on-secondary-surface` (`#3a403c`), because Forma re-pairs accent text there through `--ef-surface-accent-text-color`. The scanner was checked against a planted fixture: it flags bronze and secondary text on stone. Limits: it does not see backgrounds painted by pseudo-elements. Ten selected segmented-control labels appeared as parchment on stone and were checked by hand: the selected-segment indicator puts them on charcoal. Application-rendered screens such as Signal's WebAssembly pages were not scanned. The candidates' 8 failing pairs are not used anywhere, because no verified source uses the candidate colours at all.
 
 <!-- generated:contrast:begin (python tools/contrast.py) -->
 
@@ -256,7 +259,7 @@ Candidate pairs failing their requirement: 8 of 22. Forma pairs failing their re
 
 1. **Palette authority.** Confirm the verified Forma/website palette as v1 (recommended by the evidence), or approve candidate changes C1–C7 explicitly. Choosing the candidates would change the shipping site, Forma and Studio, and needs fixes for the failures in C1, C6 and C7.
 2. **Approval record.** Decide whether `prompts/color-change.md` in the website repository counts as approval of the 8 core colours, or record a formal approval in this repository.
-3. **Logo.** No approved EF logo exists. Approve one (the 1D SVG, the JPEG/PNG rasters, or new artwork), or commission one. Decide its palette relative to C9, and supply the files that Forma's brand file references.
+3. **Logo.** Resolved 2026-11-09: the owner approved the vector marks in `brand/logos/`. Still open: whether Forma's `brands/echelon.brand.json` keeps declaring `/brand/echelon-logo.svg` paths that no repository serves.
 4. **White surface.** Decide whether v1 includes a white surface role (C4).
 5. **Print.** Decide whether Folio print adopts brand colours or keeps its neutral palette (C8).
 6. **Deployed-site verification.** Someone with unrestricted network access should confirm that the deployed CSS at https://echelonfoundry.com/ matches `assets/css/style.css` at `8c6b453`.
