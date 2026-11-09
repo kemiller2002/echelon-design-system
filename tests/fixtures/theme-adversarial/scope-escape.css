@@ -1,5 +1,5 @@
 /* Selectors that mention the brand attribute but are not limited to it. */
-@layer echelon.brand {
+@layer forma.brand {
   :not([data-forma-brand="echelon"]) {
   --forma-color-text-primary: #171a18;
 }

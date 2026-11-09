@@ -8,6 +8,7 @@
     {"name": "unscoped-theme-rule", "replaceFile": {"path": "dist/echelon.css", "with": "unscoped-rule.css", "refreshDigest": true}, "expect": "rule not scoped to [data-forma-brand=\"echelon\"]: :root"},
     {"name": "scope-escape-selectors", "replaceFile": {"path": "dist/echelon.css", "with": "scope-escape.css", "refreshDigest": true}, "expect": "rule not scoped to [data-forma-brand=\"echelon\"]: [data-forma-brand=\"echelon\"] ~ main"},
     {"name": "legacy-forma-0x-namespace", "replaceFile": {"path": "dist/echelon.css", "with": "legacy-namespace.css", "refreshDigest": true}, "expect": "rule not scoped to [data-forma-brand=\"echelon\"]: [data-ef-brand=\"echelon\"]"},
+    {"name": "legacy-forma-0x-properties", "replaceFile": {"path": "dist/echelon.css", "with": "legacy-properties.css", "refreshDigest": true}, "expect": "custom properties outside the data-forma-brand namespace: --ef-*"},
     {"name": "asset-on-raw-githubusercontent", "assetPatch": {"role": "lockup", "set": {"path": "https://raw.githubusercontent.com/kemiller2002/echelon-design-system/v1.0.0/brand/logos/echelon-foundry/lockup.svg"}}, "expect": "points at GitHub"},
     {"name": "asset-on-main-ref", "assetPatch": {"role": "favicon", "set": {"path": "https://cdn.jsdelivr.net/npm/@echelon-foundry/echelon-theme@main/logos/echelon-foundry/mark.svg"}}, "expect": "moving branch"},
     {"name": "brand-manifest-forma-phantom-path", "brandAssetsPatch": {"favicon": "/brand/favicon.svg"}, "expect": "is not package-relative"}

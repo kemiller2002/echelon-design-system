@@ -48,7 +48,7 @@ The colors are **carried from Forma 0.14.0, not a frozen v1 palette**. They are 
    <link rel="stylesheet" href="/assets/echelon/echelon.css">     <!-- this package: dist/echelon.css -->
    ```
 
-   For a marketing site, load Forma's `forma-marketing.css`, then `dist/echelon-marketing.css`. Together they reproduce Forma 0.14.0's single-file `forma-echelon-marketing.css`.
+   For a marketing site, load Forma's `forma-marketing.css`, then `dist/echelon.css`, then `dist/echelon-marketing.css`, and set `data-forma-brand="echelon"` on `<html>` (step 4). The brand file is required: Forma 1.0's own primitives are neutral (system fonts, neutral tints), so without it page text outside `.forma-site`, and any nested `data-forma-theme` or `data-forma-brand` subtree, falls back to Forma's defaults.
 4. **Brand attribute.** Set `data-forma-brand="echelon"` on `<html>`. The brand CSS applies only inside that attribute. Control light and dark with Forma's `data-forma-theme`, or leave it unset to follow `prefers-color-scheme`.
 
    ```html

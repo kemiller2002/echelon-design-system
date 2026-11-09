@@ -160,6 +160,14 @@ def unscoped_selectors(css: str, attribute: str, brand_id: str) -> list[str]:
     return bad
 
 
+def foreign_properties(css: str, attribute: str) -> list[str]:
+    """Custom properties declared or read outside the Forma namespace that the
+    brand attribute implies (data-forma-brand -> --forma-*, data-ef-brand -> --ef-*)."""
+    namespace = attribute.removeprefix("data-").removesuffix("-brand")
+    names = re.findall(r"(?<![\w-])--([a-z][a-z0-9]*)-[a-z0-9-]+", css)
+    return sorted({f"--{prefix}-*" for prefix in names if prefix != namespace})
+
+
 def validate(root: pathlib.Path, attribute: str | None = None) -> list[str]:
     errors: list[str] = []
     manifest_path = root / "dist/asset-manifest.json"
@@ -229,6 +237,13 @@ def validate(root: pathlib.Path, attribute: str | None = None) -> list[str]:
         errors += [f"dist/echelon.css: rule not scoped to [{attribute}=\"{brand_id}\"]: {s}" for s in bad]
     except OSError as error:
         errors.append(f"dist/echelon.css unreadable: {error}")
+
+    for name in ("dist/echelon.css", "dist/echelon-marketing.css"):
+        try:
+            errors += [f"{name}: custom properties outside the {attribute} namespace: {p}"
+                       for p in foreign_properties((root / name).read_text(), attribute)]
+        except OSError as error:
+            errors.append(f"{name} unreadable: {error}")
 
     try:
         for line in (root / "dist/checksums.txt").read_text().splitlines():
