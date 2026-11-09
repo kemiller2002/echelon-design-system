@@ -1,10 +1,17 @@
 name: Release Echelon theme
-# Publishes @echelon-foundry/echelon-theme as GitHub release assets when a v* tag is pushed.
-# Theme 1.0.0 is released only after Forma 1.0.0 exists: the guard below refuses a
-# release unless forma-pin.json points at Forma >= 1.0.0 with data-forma-brand, and
-# the tag equals the non-prerelease version in package.json.
+# Publishes @echelon-foundry/echelon-theme as GitHub release assets, either when a
+# v* tag is pushed or when package.json changes on main and no release exists yet
+# for its version (the workflow then creates tag v<version> on that main commit,
+# the way Forma's release-forma.yml does). The guards refuse a release unless the
+# commit is on main, forma-pin.json points at Forma >= 1.0.0 with data-forma-brand,
+# and the tag equals the non-prerelease version in package.json.
 on:
   push:
+    branches:
+      - main
+    paths:
+      - package.json
+      - .github/workflows/release-theme.yml
     tags:
       - 'v*'
 permissions:
@@ -20,26 +27,48 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Release guard (tag is on main)
+      - name: Release tag for this run
+        id: tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            tag="$GITHUB_REF_NAME"
+          else
+            tag="v$(python3 -c "import json; print(json.load(open('package.json'))['version'])")"
+          fi
+          echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
+          if gh release view "$tag" >/dev/null 2>&1; then
+            echo "Release $tag already exists; nothing to publish."
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "publish=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Release guard (commit is on main)
+        if: steps.tag.outputs.publish == 'true'
         run: |
           git fetch --no-tags origin main
           if ! git merge-base --is-ancestor "$GITHUB_SHA" origin/main; then
-            echo "::error::tag $GITHUB_REF_NAME ($GITHUB_SHA) is not on main"; exit 1
+            echo "::error::$RELEASE_TAG ($GITHUB_SHA) is not on main"; exit 1
           fi
       - uses: actions/setup-python@v5
+        if: steps.tag.outputs.publish == 'true'
         with:
           python-version: '3.12'
       - uses: actions/setup-dotnet@v4
+        if: steps.tag.outputs.publish == 'true'
         with:
           dotnet-version: '10.0.x'
       - uses: actions/setup-node@v4
+        if: steps.tag.outputs.publish == 'true'
         with:
           node-version: '22'
       - name: Release guard (tag, version, Forma pin)
+        if: steps.tag.outputs.publish == 'true'
         run: |
           python - <<'EOF'
           import json, os, re, sys
-          tag = os.environ["GITHUB_REF_NAME"]
+          tag = os.environ["RELEASE_TAG"]
           version = json.load(open("package.json"))["version"]
           pin = json.load(open("forma-pin.json"))
           problems = []
@@ -57,6 +86,7 @@ jobs:
           sys.exit(1 if problems else 0)
           EOF
       - name: Clone the pinned Forma source and check its commit
+        if: steps.tag.outputs.publish == 'true'
         run: |
           repo=$(python -c "import json; print(json.load(open('forma-pin.json'))['repository'])")
           ref=$(python -c "import json; print(json.load(open('forma-pin.json'))['ref'])")
@@ -68,14 +98,17 @@ jobs:
           echo "FORMA_REF=$ref" >> "$GITHUB_ENV"
           echo "FORMA_BRAND_ATTRIBUTE=$attribute" >> "$GITHUB_ENV"
       - name: Committed outputs match a fresh build
+        if: steps.tag.outputs.publish == 'true'
         run: python tools/build_theme.py --forma "$FORMA_SRC" --forma-ref "$FORMA_REF" --brand-attribute "$FORMA_BRAND_ATTRIBUTE" --check
       - name: Validate and test
+        if: steps.tag.outputs.publish == 'true'
         env:
           REQUIRE_FORMA: '1'
         run: |
           python tools/theme_validator.py --brand-attribute "$FORMA_BRAND_ATTRIBUTE"
           python -m unittest tests.test_theme_package -v
       - name: Pack and checksum
+        if: steps.tag.outputs.publish == 'true'
         run: |
           mkdir -p "$RUNNER_TEMP/out"
           tgz=$(npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP/out" | tail -n 1)
@@ -86,10 +119,12 @@ jobs:
           echo "TGZ=$tgz" >> "$GITHUB_ENV"
           cat "$RUNNER_TEMP/out/checksums.txt"
       - name: Publish GitHub release
+        if: steps.tag.outputs.publish == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" --verify-tag \
-            --title "@echelon-foundry/echelon-theme $GITHUB_REF_NAME" \
+          if [ "$GITHUB_REF_TYPE" = tag ]; then target=(--verify-tag); else target=(--target "$GITHUB_SHA"); fi
+          gh release create "$RELEASE_TAG" "${target[@]}" \
+            --title "@echelon-foundry/echelon-theme $RELEASE_TAG" \
             --notes "Built against Forma $FORMA_REF with $FORMA_BRAND_ATTRIBUTE. Verify the tarball against checksums.txt before installing; see docs/CONSUMING-THE-ECHELON-THEME.md." \
             "$RUNNER_TEMP/out/$TGZ" "$RUNNER_TEMP/out/checksums.txt" "$RUNNER_TEMP/out/asset-manifest.json"
