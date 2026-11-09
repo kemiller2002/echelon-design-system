@@ -1,6 +1,6 @@
 {
   "name": "@echelon-foundry/echelon-theme",
-  "version": "0.0.0-dev",
+  "version": "1.0.0",
   "description": "Echelon Foundry theme for Forma: compiled brand CSS, marketing theme CSS, approved corporate marks and an integrity manifest.",
   "license": "UNLICENSED",
   "repository": {

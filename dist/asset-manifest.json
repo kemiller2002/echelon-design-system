@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.0",
   "package": "@echelon-foundry/echelon-theme",
-  "version": "0.0.0-dev",
+  "version": "1.0.0",
   "brand": "echelon",
-  "brandAttribute": "data-ef-brand",
-  "namespace": "ef",
+  "brandAttribute": "data-forma-brand",
+  "namespace": "forma",
   "palette": "carried from Forma 0.14.0, not a frozen v1 palette",
   "forma": {
     "repository": "https://github.com/kemiller2002/forma",
-    "ref": "v0.14.0",
-    "commit": "7372886ed7e5ae101df26515279abc6b34d28a69",
+    "ref": "v1.0.0",
+    "commit": "97ea2206973ea98f3b5e684ec14feb0ed32e06d5",
     "compilerSources": {
       "tools/BrandCompiler/BrandCompiler.fsproj": "5535479aa53bc64a466d4ed680ca392380930372db18e76023008a0e72ebe749",
-      "tools/BrandCompiler/Program.fs": "44c84722261f3ec4ce5c3e40b22c93ab43598d7b68caedbf3c99d714ea16beac",
+      "tools/BrandCompiler/Program.fs": "2f4c5afe3e72d2e9f33e75db1703cfba2edc4b9110bda7af06f70a80b449e6ce",
       "tools/TokenCompiler/TokenCompiler.fsproj": "7b6fad9919c74fff6648464957e2c253a158d6d63c7e1d576c9c8740c160930d",
-      "tools/TokenCompiler/Program.fs": "74924e9c0c75c8b6b00ef9317ecd84a975412a9063226c9158fbd2cc13f41584"
+      "tools/TokenCompiler/Program.fs": "4c1bc907cd3e3930703c642d7d3d0bfcb159255f307bab294424c9980541573c"
     }
   },
   "approval": {
@@ -91,14 +91,14 @@
     {
       "path": "dist/echelon.css",
       "mediaType": "text/css",
-      "bytes": 4213,
-      "sha256": "e56dd7d97228168105b8c2a8114e46d1d6b06403c201a315d23db801ea9319e4"
+      "bytes": 4535,
+      "sha256": "4ccb9dd28cab52d0225a1d0b40599b195f5e636b5bcfe9c5faa5f47195663d92"
     },
     {
       "path": "dist/echelon-marketing.css",
       "mediaType": "text/css",
-      "bytes": 6431,
-      "sha256": "29c9646d35a44ecfac4614c8abfb0043a04ec60cdafffc5afe7726981a49ade8"
+      "bytes": 6818,
+      "sha256": "f83f6afaf385014facdcd161099471794f9493844c58295c97e81ff701ce652c"
     }
   ]
 }

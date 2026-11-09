@@ -36,7 +36,7 @@ These are proposals, **not** frozen or accessibility-approved tokens.
 
 ## Echelon theme package (EDS-ADR-002)
 
-This repository owns the Echelon brand for Forma: `theme/` holds the brand manifest, the marketing tokens and the theme CSS; `logos/` holds the owner-approved corporate marks; `dist/` holds the compiled CSS, `asset-manifest.json` and `checksums.txt`, packaged as `@echelon-foundry/echelon-theme` (`0.0.0-dev`, unreleased). `tools/build_theme.py` compiles it with Forma's own F# compilers from a pinned Forma checkout (`forma-pin.json`, currently v0.14.0); CI checks the committed output, validates assets and scope, runs adversarial fixtures, and proves parity with the Forma v0.14.0 release. Colors are carried from Forma 0.14.0, not a frozen v1 palette. Consumers: [`docs/CONSUMING-THE-ECHELON-THEME.md`](docs/CONSUMING-THE-ECHELON-THEME.md). Theme 1.0.0 is released only after Forma 1.0.0 exists.
+This repository owns the Echelon brand for Forma: `theme/` holds the brand manifest, the marketing tokens and the theme CSS; `logos/` holds the owner-approved corporate marks; `dist/` holds the compiled CSS, `asset-manifest.json` and `checksums.txt`, packaged as `@echelon-foundry/echelon-theme` (`1.0.0`, released as GitHub release assets). `tools/build_theme.py` compiles it with Forma's own F# compilers from a pinned Forma checkout (`forma-pin.json`, currently v1.0.0 with `data-forma-brand`); CI checks the committed output, validates assets and scope, runs adversarial fixtures, and proves parity with the Forma v0.14.0 release. Colors are carried from Forma 0.14.0, not a frozen v1 palette. Consumers: [`docs/CONSUMING-THE-ECHELON-THEME.md`](docs/CONSUMING-THE-ECHELON-THEME.md).
 
 ## Required first implementation gates
 
