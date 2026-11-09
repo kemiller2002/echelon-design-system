@@ -98,8 +98,8 @@ To release against a newer Forma:
 
 1. Update `forma-pin.json` (ref, commit, `brandAttribute`).
 2. Rebuild, then commit `dist/` and `logos/`.
-3. Set the version in `package.json` and tag `v<version>` on the merge commit.
+3. Set the version in `package.json` and merge to `main`.
 
-The release workflow refuses a tag unless the pin is Forma 1.0.0 or later with `data-forma-brand`, and the tag matches the version.
+On that merge, `release-theme.yml` creates tag `v<version>` on the main commit and publishes the GitHub release, unless a release for that version already exists. A pushed `v*` tag also works. Either way the workflow refuses a release unless the commit is on `main`, the pin is Forma 1.0.0 or later with `data-forma-brand`, and the tag matches the version. If an asset upload fails, GitHub leaves a draft release behind and re-runs skip it as already released: delete the draft, then re-run the workflow.
 
 Requirements: .NET 10 SDK (Forma's compilers need no NuGet packages), Python 3.10 or later, and git.
