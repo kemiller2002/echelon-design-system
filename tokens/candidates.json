@@ -1,0 +1,23 @@
+{
+  "$schema": "../schemas/theme.schema.json",
+  "id": "echelon-balanced",
+  "status": "provisional",
+  "version": "0.0.0-draft",
+  "light": {
+    "background": "#F8F7F4",
+    "surface": "#FFFFFF",
+    "text": "#20252A",
+    "muted": "#64717D",
+    "border": "#DDDAD4",
+    "accent": "#B7844B"
+  },
+  "dark": {
+    "background": "#171B1F",
+    "surface": "#252B30",
+    "text": "#FFFFFF",
+    "muted": "#D3D6D8",
+    "border": "#3A4147",
+    "accent": "#D4A66C"
+  },
+  "notes": "Candidate palette only. Do not publish as final or assume contrast compliance."
+}
