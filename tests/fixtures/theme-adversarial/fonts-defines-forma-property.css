@@ -1,0 +1,2 @@
+@font-face { font-family: "Manrope"; font-weight: 200 800; font-display: swap; src: url("fonts/manrope-latin-wght-normal.woff2") format("woff2"); }
+[data-forma-brand="echelon"] { --forma-primitive-font-family-sans: "Manrope", sans-serif; }

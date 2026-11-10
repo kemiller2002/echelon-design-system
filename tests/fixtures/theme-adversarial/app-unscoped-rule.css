@@ -1,0 +1,5 @@
+/* Application layer with a rule that is not limited to the brand. */
+@layer echelon.app {
+  [data-forma-brand="echelon"] .echelon-panel { border-radius: 10px; }
+  .echelon-chip { border-radius: 999px; }
+}

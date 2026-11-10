@@ -1,5 +1,5 @@
 {
-  "$comment": "Adversarial theme packages. tests/test_theme_package.py copies the built package, applies each mutation and requires tools/theme_validator.py to fail with the expected message.",
+  "$comment": "Adversarial theme packages. tests/test_theme_package.py copies the built package, applies each mutation and requires tools/theme_validator.py to fail with the expected message. Cases may also patch or remove a manifest entry (manifestPatch), delete a file (deleteFile), add an unlisted file (addFile) or drop a checksum line (dropChecksum).",
   "cases": [
     {"name": "manifest-missing-logo", "assetPatch": {"role": "mark", "set": {"path": "logos/echelon-foundry/echelon-logo.svg"}}, "expect": "does not exist in the package"},
     {"name": "manifest-sha-mismatch", "assetPatch": {"role": "markDark", "set": {"sha256": "0000000000000000000000000000000000000000000000000000000000000000"}}, "expect": "sha256 mismatch"},
@@ -11,6 +11,30 @@
     {"name": "legacy-forma-0x-properties", "replaceFile": {"path": "dist/echelon.css", "with": "legacy-properties.css", "refreshDigest": true}, "expect": "custom properties outside the data-forma-brand namespace: --ef-*"},
     {"name": "asset-on-raw-githubusercontent", "assetPatch": {"role": "lockup", "set": {"path": "https://raw.githubusercontent.com/kemiller2002/echelon-design-system/v1.0.0/brand/logos/echelon-foundry/lockup.svg"}}, "expect": "points at GitHub"},
     {"name": "asset-on-main-ref", "assetPatch": {"role": "favicon", "set": {"path": "https://cdn.jsdelivr.net/npm/@echelon-foundry/echelon-theme@main/logos/echelon-foundry/mark.svg"}}, "expect": "moving branch"},
-    {"name": "brand-manifest-forma-phantom-path", "brandAssetsPatch": {"favicon": "/brand/favicon.svg"}, "expect": "is not package-relative"}
+    {"name": "brand-manifest-forma-phantom-path", "brandAssetsPatch": {"favicon": "/brand/favicon.svg"}, "expect": "is not package-relative"},
+    {"name": "app-unscoped-rule", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-unscoped-rule.css", "refreshDigest": true}, "expect": "dist/echelon-app.css: rule not scoped to [data-forma-brand=\"echelon\"]: .echelon-chip"},
+    {"name": "app-scope-hidden-in-is", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-scope-escape.css", "refreshDigest": true}, "expect": "rule not scoped to [data-forma-brand=\"echelon\"]: :is([data-forma-brand=\"echelon\"], main) .echelon-panel"},
+    {"name": "app-scope-sibling-escape", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-scope-escape.css", "refreshDigest": true}, "expect": "rule not scoped to [data-forma-brand=\"echelon\"]: [data-forma-brand=\"echelon\"] ~ main .echelon-chip"},
+    {"name": "app-scope-negated", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-scope-escape.css", "refreshDigest": true}, "expect": "rule not scoped to [data-forma-brand=\"echelon\"]: :not([data-forma-brand=\"echelon\"]) .echelon-lead"},
+    {"name": "app-rule-outside-layer", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-outside-layer.css", "refreshDigest": true}, "expect": "rule outside @layer echelon.app: [data-forma-brand=\"echelon\"] .echelon-chip"},
+    {"name": "app-declares-forma-property", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-defines-forma-property.css", "refreshDigest": true}, "expect": "declares Forma custom property --forma-color-surface-canvas"},
+    {"name": "app-defines-forma-class", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-defines-forma-class.css", "refreshDigest": true}, "expect": "defines Forma class .forma-panel"},
+    {"name": "app-defines-forma-attribute", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-defines-forma-attribute.css", "refreshDigest": true}, "expect": "defines Forma attribute data-forma-tone"},
+    {"name": "app-uses-ef-namespace", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-ef-property.css", "refreshDigest": true}, "expect": "uses the retired --ef-* namespace"},
+    {"name": "app-infinite-animation-without-reduced-motion", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-infinite-animation.css", "refreshDigest": true}, "expect": "infinite animation not stopped under prefers-reduced-motion"},
+    {"name": "app-brand-colour-under-forced-colors", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-forced-brand-colour.css", "refreshDigest": true}, "expect": "brand colour under forced-colors"},
+    {"name": "fonts-absolute-url", "replaceFile": {"path": "dist/echelon-fonts.css", "with": "fonts-absolute-url.css", "refreshDigest": true}, "expect": "is absolute, not relative"},
+    {"name": "fonts-url-leaves-package", "replaceFile": {"path": "dist/echelon-fonts.css", "with": "fonts-escape-url.css", "refreshDigest": true}, "expect": "leaves the package's dist/fonts/"},
+    {"name": "fonts-remote-url", "replaceFile": {"path": "dist/echelon-fonts.css", "with": "fonts-remote-url.css", "refreshDigest": true}, "expect": "is not relative"},
+    {"name": "fonts-unscoped-rule", "replaceFile": {"path": "dist/echelon-fonts.css", "with": "fonts-unscoped-rule.css", "refreshDigest": true}, "expect": "dist/echelon-fonts.css: rule not scoped to [data-forma-brand=\"echelon\"]: body"},
+    {"name": "fonts-declares-forma-property", "replaceFile": {"path": "dist/echelon-fonts.css", "with": "fonts-defines-forma-property.css", "refreshDigest": true}, "expect": "declares Forma custom property --forma-primitive-font-family-sans"},
+    {"name": "font-not-woff2", "replaceFile": {"path": "dist/fonts/manrope-latin-wght-normal.woff2", "with": "not-a-font.woff2", "refreshDigest": true}, "expect": "is not WOFF2"},
+    {"name": "font-sha-mismatch", "manifestPatch": {"section": "fonts", "path": "dist/fonts/newsreader-latin-wght-italic.woff2", "set": {"sha256": "0000000000000000000000000000000000000000000000000000000000000000"}}, "expect": "sha256 mismatch for 'dist/fonts/newsreader-latin-wght-italic.woff2'"},
+    {"name": "font-package-version-not-recorded", "manifestPatch": {"section": "fonts", "path": "dist/fonts/manrope-latin-wght-normal.woff2", "set": {"version": "9.9.9"}}, "expect": "its npm package, version and integrity are not recorded"},
+    {"name": "font-licence-missing", "deleteFile": "dist/fonts/licenses/ibm-plex-mono-OFL.txt", "expect": "'dist/fonts/licenses/ibm-plex-mono-OFL.txt' does not exist in the package"},
+    {"name": "font-licence-not-in-manifest", "manifestPatch": {"section": "licenses", "path": "dist/fonts/licenses/newsreader-OFL.txt", "remove": true}, "expect": "no OFL licence packaged for @fontsource-variable/newsreader"},
+    {"name": "file-not-in-manifest", "addFile": {"path": "dist/fonts/extra-latin-400-normal.woff2", "with": "not-a-font.woff2", "checksum": true}, "expect": "'dist/fonts/extra-latin-400-normal.woff2' is not in the asset manifest"},
+    {"name": "file-not-in-checksums", "dropChecksum": "dist/echelon-app.css", "expect": "'dist/echelon-app.css' is not listed in checksums.txt"},
+    {"name": "stylesheet-not-in-manifest", "manifestPatch": {"section": "stylesheets", "path": "dist/echelon-fonts.css", "remove": true}, "expect": "'dist/echelon-fonts.css' is not in the asset manifest"}
   ]
 }

@@ -1,0 +1,409 @@
+/*! @echelon-foundry/echelon-theme 1.1.0 | echelon-app.css
+    Echelon application layer (owner-approved 2026-11-09): tokens, app bar, nav tabs,
+    panels, type roles, button emphasis, chips and loading, in @layer echelon.app.
+    Load after Forma's all.css, dist/echelon.css and dist/echelon-fonts.css.
+    Source theme/echelon-app.css; built with Forma v1.0.0 (97ea2206973ea98f3b5e684ec14feb0ed32e06d5). Do not edit; pin by version and sha256. */
+
+/*
+ * Echelon application layer (source for dist/echelon-app.css).
+ *
+ * Owner-approved "foundry ledger" direction (2026-11-09). These capabilities are
+ * Echelon branding, not Forma: Forma is unchanged and stays brand-neutral.
+ *
+ * Rules for this file (enforced by tools/theme_validator.py):
+ *   - every rule sits in @layer echelon.app;
+ *   - every selector is scoped to [data-forma-brand="echelon"] (same element or
+ *     descendant; no sibling combinators, no scope hidden inside :is/:not/:has);
+ *   - only --echelon-* custom properties are declared; Forma's classes,
+ *     data-forma-* attributes and --forma-* tokens are only used, never defined;
+ *   - every infinite animation stops under prefers-reduced-motion: reduce;
+ *   - forced-colors rules use system colours only, never brand colours.
+ *
+ * Load order: Forma all.css -> echelon.css -> echelon-fonts.css -> echelon-app.css.
+ */
+@layer echelon.app {
+  /* ---- Tokens (light) -------------------------------------------------- */
+  [data-forma-brand="echelon"] {
+    --echelon-elevation-1: 0 1px 2px rgb(23 26 24 / 0.06), 0 6px 18px -8px rgb(23 26 24 / 0.16);
+    --echelon-elevation-2: 0 2px 4px rgb(23 26 24 / 0.06), 0 16px 32px -12px rgb(23 26 24 / 0.22);
+    --echelon-surface-canvas: #f2efe7;   /* parchment */
+    --echelon-surface-raised: #f8f6f1;   /* parchment light */
+    --echelon-surface-sunken: #ebe7dd;   /* between parchment and stone */
+    --echelon-surface-accent: #efe5da;   /* faint bronze wash */
+    --echelon-surface-chrome: #202421;   /* foundry charcoal */
+    --echelon-text-on-chrome: #f2efe7;
+    --echelon-accent-rule: #905831;      /* oxide bronze */
+    --echelon-text-on-accent: #f8f6f1;
+    --echelon-action-primary: #905831;
+    --echelon-chip-settled-bg: #dde7e3;
+    --echelon-chip-settled-text: #2f544b;
+    --echelon-border-subtle: var(--forma-color-border-subtle);
+    --echelon-radius-control: 4px;
+    --echelon-radius-container: 10px;
+    --echelon-weight-heading: 500;
+    --echelon-weight-label: 650;
+    --echelon-tracking-display: -0.02em;
+    --echelon-tracking-label: 0.08em;
+    /* Secondary text used by this layer. Re-paired to Forma's
+       --forma-color-text-on-secondary-surface on sunken and accent panels
+       (Echelon AUDIT §6: no secondary text on stone-family surfaces). */
+    --echelon-text-secondary: var(--forma-color-text-secondary);
+    background: var(--echelon-surface-canvas);
+  }
+
+  /* Explicit light theme. Same selectors and order as dist/echelon.css, so the
+     Echelon tokens switch exactly where Forma's Echelon colours switch. */
+  [data-forma-theme="light"] [data-forma-brand="echelon"], [data-forma-brand="echelon"][data-forma-theme="light"] {
+    --echelon-elevation-1: 0 1px 2px rgb(23 26 24 / 0.06), 0 6px 18px -8px rgb(23 26 24 / 0.16);
+    --echelon-elevation-2: 0 2px 4px rgb(23 26 24 / 0.06), 0 16px 32px -12px rgb(23 26 24 / 0.22);
+    --echelon-surface-canvas: #f2efe7;
+    --echelon-surface-raised: #f8f6f1;
+    --echelon-surface-sunken: #ebe7dd;
+    --echelon-surface-accent: #efe5da;
+    --echelon-surface-chrome: #202421;
+    --echelon-text-on-chrome: #f2efe7;
+    --echelon-accent-rule: #905831;
+    --echelon-text-on-accent: #f8f6f1;
+    --echelon-action-primary: #905831;
+    --echelon-chip-settled-bg: #dde7e3;
+    --echelon-chip-settled-text: #2f544b;
+    --echelon-border-subtle: var(--forma-color-border-subtle);
+  }
+
+  /* ---- Tokens (dark) --------------------------------------------------- */
+  [data-forma-theme="dark"] [data-forma-brand="echelon"], [data-forma-brand="echelon"][data-forma-theme="dark"] {
+    --echelon-elevation-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -10px rgb(0 0 0 / 0.6);
+    --echelon-elevation-2: 0 2px 6px rgb(0 0 0 / 0.45), 0 18px 40px -12px rgb(0 0 0 / 0.7);
+    --echelon-surface-canvas: #171a18;   /* carbon */
+    --echelon-surface-raised: #202421;   /* charcoal */
+    --echelon-surface-sunken: #121412;
+    --echelon-surface-accent: #2a2520;
+    --echelon-surface-chrome: #0f110f;
+    --echelon-text-on-chrome: #f2efe7;
+    --echelon-accent-rule: #a87e5e;      /* bronze light */
+    --echelon-text-on-accent: #171a18;
+    --echelon-action-primary: #c9a07f;   /* bronze pale */
+    --echelon-chip-settled-bg: #23332f;
+    --echelon-chip-settled-text: #a8c7bf;
+    --echelon-border-subtle: #33392f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-forma-theme]) [data-forma-brand="echelon"]:not([data-forma-theme]), :root[data-forma-brand="echelon"]:not([data-forma-theme]) {
+      --echelon-elevation-1: 0 1px 2px rgb(0 0 0 / 0.4), 0 8px 24px -10px rgb(0 0 0 / 0.6);
+      --echelon-elevation-2: 0 2px 6px rgb(0 0 0 / 0.45), 0 18px 40px -12px rgb(0 0 0 / 0.7);
+      --echelon-surface-canvas: #171a18;
+      --echelon-surface-raised: #202421;
+      --echelon-surface-sunken: #121412;
+      --echelon-surface-accent: #2a2520;
+      --echelon-surface-chrome: #0f110f;
+      --echelon-text-on-chrome: #f2efe7;
+      --echelon-accent-rule: #a87e5e;
+      --echelon-text-on-accent: #171a18;
+      --echelon-action-primary: #c9a07f;
+      --echelon-chip-settled-bg: #23332f;
+      --echelon-chip-settled-text: #a8c7bf;
+      --echelon-border-subtle: #33392f;
+    }
+  }
+
+  /* ---- App bar: branded application chrome ----------------------------- */
+  [data-forma-brand="echelon"] .echelon-app-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--forma-space-4, 1rem);
+    padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
+    background: var(--echelon-surface-chrome);
+    color: var(--echelon-text-on-chrome);
+    border-bottom: 3px solid var(--echelon-accent-rule);
+  }
+  [data-forma-brand="echelon"] .echelon-app-bar .forma-app-identity { color: inherit; }
+  /* The bar is dark chrome in every scheme, so it always shows the mark's
+     dark-scheme (light tile) variant. */
+  [data-forma-brand="echelon"] .echelon-app-bar .forma-app-identity__variant[data-forma-scheme="light"] { display: none; }
+  [data-forma-brand="echelon"] .echelon-app-bar .forma-app-identity__variant[data-forma-scheme="dark"] { display: grid; }
+  [data-forma-brand="echelon"] .echelon-app-bar__context {
+    font: 500 0.75rem/1 var(--forma-primitive-font-family-mono);
+    letter-spacing: var(--echelon-tracking-label);
+    text-transform: uppercase;
+    opacity: 0.8;
+    padding-inline-start: 1rem;
+    border-inline-start: 1px solid currentColor;
+  }
+  [data-forma-brand="echelon"] .echelon-app-bar__end {
+    margin-inline-start: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    font-size: 0.875rem;
+  }
+  /* Quiet controls and chips in the bar take the chrome's text colour (the
+     review mockups did this with inline styles, which Signal's CSP forbids). */
+  [data-forma-brand="echelon"] .echelon-app-bar .forma-button[data-echelon-emphasis="tertiary"] { color: inherit; }
+  [data-forma-brand="echelon"] .echelon-app-bar .echelon-chip { background: transparent; color: inherit; border-color: currentColor; }
+
+  /* ---- Route-link tabs ------------------------------------------------- */
+  [data-forma-brand="echelon"] .echelon-nav-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--echelon-border-subtle);
+  }
+  [data-forma-brand="echelon"] .echelon-nav-tabs a {
+    padding: 0.65rem 0.9rem;
+    color: var(--echelon-text-secondary);
+    text-decoration: none;
+    font-weight: var(--echelon-weight-label);
+    font-size: 0.9375rem;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+  }
+  [data-forma-brand="echelon"] .echelon-nav-tabs a:hover { color: var(--forma-color-text-primary); }
+  [data-forma-brand="echelon"] .echelon-nav-tabs a[aria-current="page"] {
+    color: var(--forma-color-text-heading);
+    border-bottom-color: var(--echelon-accent-rule);
+  }
+  [data-forma-brand="echelon"] .echelon-nav-tabs a:focus-visible {
+    outline: 2px solid var(--forma-color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* ---- Panel ----------------------------------------------------------- */
+  [data-forma-brand="echelon"] .echelon-panel {
+    display: grid;
+    align-content: start;
+    padding: 0;
+    background: var(--echelon-surface-raised);
+    border: 1px solid var(--echelon-border-subtle);
+    border-radius: var(--echelon-radius-container);
+    box-shadow: var(--echelon-elevation-1);
+  }
+  [data-forma-brand="echelon"] .echelon-panel > * { min-inline-size: 0; }
+  [data-forma-brand="echelon"] .echelon-panel[data-echelon-surface="sunken"] {
+    background: var(--echelon-surface-sunken);
+    box-shadow: none;
+  }
+  [data-forma-brand="echelon"] .echelon-panel[data-echelon-surface="accent"] { background: var(--echelon-surface-accent); }
+  /* Secondary text is re-paired on tinted surfaces so it keeps AA contrast. */
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) {
+    --echelon-text-secondary: var(--forma-color-text-on-secondary-surface);
+  }
+  [data-forma-brand="echelon"] .echelon-panel[data-echelon-attention="true"] {
+    border-inline-start: 4px solid var(--forma-color-status-warning);
+  }
+  /* Busy: the panel recedes onto the canvas (no raised surface, no
+     elevation) and shows a progress cursor. Text keeps its full colour, so
+     every text pair stays at WCAG AA while the region is busy. */
+  [data-forma-brand="echelon"] .echelon-panel[aria-busy="true"] {
+    background: var(--echelon-surface-canvas);
+    box-shadow: none;
+  }
+  [data-forma-brand="echelon"] .echelon-panel[aria-busy="true"] .echelon-panel__body { cursor: progress; }
+  [data-forma-brand="echelon"] .echelon-panel__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem;
+    min-inline-size: 0;
+    padding: 1rem 1.25rem 0;
+  }
+  [data-forma-brand="echelon"] .echelon-panel__header > :is(h2, h3, h4) { margin: 0; }
+  [data-forma-brand="echelon"] .echelon-panel__header .forma-actions { margin-inline-start: auto; }
+  [data-forma-brand="echelon"] .echelon-panel__body {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem 1.25rem;
+  }
+  [data-forma-brand="echelon"] .echelon-panel__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid var(--echelon-border-subtle);
+  }
+  /* A data grid on a panel uses the panel's edge. */
+  [data-forma-brand="echelon"] .echelon-panel .forma-data-grid { border: 0; }
+
+  /* ---- Type roles ------------------------------------------------------ */
+  [data-forma-brand="echelon"] :is(.echelon-display, .echelon-heading) {
+    font-family: var(--forma-primitive-font-family-display);
+    font-weight: var(--echelon-weight-heading);
+    letter-spacing: var(--echelon-tracking-display);
+    color: var(--forma-color-text-heading);
+    text-wrap: balance;
+  }
+  [data-forma-brand="echelon"] .echelon-display {
+    margin: 0;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.05;
+  }
+  [data-forma-brand="echelon"] .echelon-eyebrow {
+    font: var(--echelon-weight-label) 0.75rem/1.2 var(--forma-primitive-font-family-mono);
+    letter-spacing: var(--echelon-tracking-label);
+    text-transform: uppercase;
+    color: var(--echelon-text-secondary);
+    overflow-wrap: anywhere;
+  }
+  [data-forma-brand="echelon"] .echelon-lead {
+    max-width: 38rem;
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    color: var(--echelon-text-secondary);
+  }
+  [data-forma-brand="echelon"] .echelon-figure {
+    font: 500 2rem/1 var(--forma-primitive-font-family-display);
+    font-variant-numeric: tabular-nums;
+    color: var(--forma-color-text-heading);
+  }
+
+  /* ---- Action emphasis on Forma buttons (unmarked = secondary, unchanged) */
+  [data-forma-brand="echelon"] .forma-button { border-radius: var(--echelon-radius-control); }
+  [data-forma-brand="echelon"] .forma-button[data-echelon-emphasis="primary"] {
+    background: var(--echelon-action-primary);
+    color: var(--echelon-text-on-accent);
+    border-color: var(--echelon-action-primary);
+    box-shadow: var(--echelon-elevation-1);
+  }
+  [data-forma-brand="echelon"] .forma-button[data-echelon-emphasis="primary"]:hover { filter: brightness(1.08); }
+  [data-forma-brand="echelon"] .forma-button[data-echelon-emphasis="tertiary"] {
+    background: transparent;
+    border-color: transparent;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+  [data-forma-brand="echelon"] .forma-button[data-echelon-emphasis="danger"] {
+    background: transparent;
+    color: var(--forma-color-status-danger);
+    border-color: currentColor;
+  }
+
+  /* ---- Lifecycle and phase chips --------------------------------------- */
+  /* Every chip carries a text label; the marker shape is a second channel
+     that does not depend on hue. */
+  [data-forma-brand="echelon"] .echelon-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    max-inline-size: 100%;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid var(--forma-color-border-functional);
+    border-radius: var(--forma-primitive-radius-pill, 999px);
+    font: 600 0.75rem/1.2 var(--forma-primitive-font-family-sans);
+    letter-spacing: 0.02em;
+  }
+  [data-forma-brand="echelon"] .echelon-chip::before {
+    content: "";
+    flex: 0 0 auto;
+    inline-size: 0.5rem;
+    block-size: 0.5rem;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  /* Template lifecycle: draft (dashed, hollow), review (diamond), published (settled fill). */
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="draft"] {
+    border-style: dashed;
+    color: var(--echelon-text-secondary);
+  }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="draft"]::before {
+    background: transparent;
+    border: 1.5px solid currentColor;
+  }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="review"] {
+    color: var(--forma-color-status-warning);
+    border-color: currentColor;
+  }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="review"]::before {
+    border-radius: 0;
+    transform: rotate(45deg) scale(0.85);
+  }
+  [data-forma-brand="echelon"] .echelon-chip:is([data-echelon-tone="published"], [data-echelon-tone="sealed"]) {
+    background: var(--echelon-chip-settled-bg);
+    color: var(--echelon-chip-settled-text);
+    border-color: transparent;
+  }
+  /* Group phases (Signal GroupPhase): ready (hollow), progress (half),
+     review (diamond, above), complete (filled), sealed (square, settled fill),
+     closed (muted bar). */
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="ready"] { color: var(--echelon-text-secondary); }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="ready"]::before {
+    background: transparent;
+    border: 1.5px solid currentColor;
+  }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="progress"] { color: var(--forma-color-status-info); }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="progress"]::before {
+    background: linear-gradient(90deg, currentColor 50%, transparent 50%);
+    border: 1.5px solid currentColor;
+  }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="complete"] { color: var(--forma-color-status-success); }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="sealed"]::before { border-radius: 2px; }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="closed"] {
+    color: var(--echelon-text-secondary);
+    border-color: var(--echelon-border-subtle);
+  }
+  [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="closed"]::before {
+    block-size: 0.125rem;
+    border-radius: 1px;
+  }
+
+  /* ---- Loading --------------------------------------------------------- */
+  /* .echelon-loading wraps a Forma spinner and a visible text label, with
+     role="status". Skeleton lines always sit beside a text label, in a region
+     marked aria-busy="true"; they shimmer only while that region is busy. */
+  [data-forma-brand="echelon"] .echelon-loading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--echelon-text-secondary);
+  }
+  [data-forma-brand="echelon"] .echelon-loading .forma-spinner { color: inherit; }
+  [data-forma-brand="echelon"] .echelon-skeleton {
+    display: grid;
+    gap: 0.6rem;
+  }
+  [data-forma-brand="echelon"] .echelon-skeleton-line {
+    block-size: 0.8rem;
+    border-radius: 4px;
+    background-color: var(--echelon-surface-sunken);
+  }
+  [data-forma-brand="echelon"] :is([aria-busy="true"] .echelon-skeleton, .echelon-skeleton[aria-busy="true"]) .echelon-skeleton-line {
+    background-image: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.45), transparent);
+    background-size: 200% 100%;
+    animation: echelon-shimmer 1.4s linear infinite;
+  }
+  @keyframes echelon-shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+
+  /* ---- Reduced motion: no shimmer, no infinite animation ---------------- */
+  @media (prefers-reduced-motion: reduce) {
+    [data-forma-brand="echelon"] :is([aria-busy="true"] .echelon-skeleton, .echelon-skeleton[aria-busy="true"]) .echelon-skeleton-line {
+      animation: none;
+      background-image: none;
+    }
+  }
+
+  /* ---- Forced colours: system colours only; borders and focus stay ------- */
+  @media (forced-colors: active) {
+    [data-forma-brand="echelon"] :is(.echelon-app-bar, .echelon-panel, .echelon-panel__footer, .echelon-nav-tabs) { border-color: CanvasText; }
+    [data-forma-brand="echelon"] .echelon-chip { border-color: CanvasText; }
+    /* Markers keep their shape: fills resolve to the text colour, not Canvas. */
+    [data-forma-brand="echelon"] .echelon-chip::before {
+      forced-color-adjust: none;
+      color: CanvasText;
+      border-color: CanvasText;
+    }
+    /* Forced colours paint transparent borders, so only the current tab keeps
+       its rule: the cue is the rule's presence, not its colour. */
+    [data-forma-brand="echelon"] .echelon-nav-tabs a:not([aria-current="page"]) { border-bottom-style: hidden; }
+    [data-forma-brand="echelon"] .echelon-nav-tabs a[aria-current="page"] { border-bottom-color: Highlight; }
+    [data-forma-brand="echelon"] .echelon-nav-tabs a:focus-visible { outline-color: Highlight; }
+    [data-forma-brand="echelon"] .echelon-skeleton-line {
+      background-image: none;
+      border: 1px solid CanvasText;
+    }
+  }
+}

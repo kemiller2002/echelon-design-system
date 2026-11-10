@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" data-forma-brand="echelon">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Echelon application layer: render fixture</title>
+<!-- Load order (docs/CONSUMING-THE-ECHELON-THEME.md): Forma all.css, echelon.css, echelon-fonts.css, echelon-app.css. -->
+<link rel="stylesheet" href="/forma/forma-all.css">
+<link rel="stylesheet" href="/dist/echelon.css">
+<link rel="stylesheet" href="/dist/echelon-fonts.css">
+<link rel="stylesheet" href="/dist/echelon-app.css">
+<!-- Page composition only (the consumer's own CSS); no echelon- or forma- rules. -->
+<link rel="stylesheet" href="/tests/visual/fixture.css">
+</head>
+<body>
+<header class="echelon-app-bar">
+  <a class="forma-app-identity" href="#top">
+    <span class="forma-app-identity__mark">
+      <img class="forma-app-identity__variant" data-forma-scheme="light" src="/logos/echelon-foundry/mark.svg" alt="" width="32" height="32">
+      <img class="forma-app-identity__variant" data-forma-scheme="dark" src="/logos/echelon-foundry/mark-dark.svg" alt="" width="32" height="32">
+    </span>
+    <span class="forma-app-identity__name">Fixture</span>
+  </a>
+  <span class="echelon-app-bar__context">Administration</span>
+  <span class="echelon-app-bar__end">
+    <span class="echelon-chip" data-echelon-tone="published">Signed in</span>
+    <button class="forma-button" type="button" data-echelon-emphasis="tertiary">Sign out</button>
+  </span>
+</header>
+
+<main id="top" class="fx-main">
+  <div class="fx-title">
+    <span class="echelon-eyebrow">Dataset</span>
+    <h1 class="echelon-display">Engagement survey</h1>
+    <p class="echelon-lead">Every class of the Echelon application layer, rendered on Forma 1.0.1 with the Echelon brand, in light and dark.</p>
+  </div>
+
+  <nav class="echelon-nav-tabs" aria-label="Administration">
+    <a href="#top" aria-current="page">Overview</a>
+    <a href="#groups">Groups</a>
+    <a href="#templates">Templates</a>
+    <a href="#loading">Reports</a>
+  </nav>
+
+  <section class="echelon-panel" aria-labelledby="actions-title">
+    <div class="echelon-panel__header">
+      <h2 id="actions-title" class="echelon-heading">Actions</h2>
+      <div class="forma-actions">
+        <button class="forma-button" type="button" data-echelon-emphasis="primary">Publish</button>
+        <button class="forma-button" type="button">Preview</button>
+        <button class="forma-button" type="button" data-echelon-emphasis="tertiary">Copy link</button>
+        <button class="forma-button" type="button" data-echelon-emphasis="danger">Close group</button>
+      </div>
+    </div>
+    <div class="echelon-panel__body">
+      <p>A raised panel with a heading, body text and a figure.</p>
+      <div class="fx-kpis">
+        <div><span class="echelon-eyebrow">Accepted</span> <span class="echelon-figure">31</span></div>
+        <div><span class="echelon-eyebrow">Invited</span> <span class="echelon-figure">48</span></div>
+      </div>
+      <div class="forma-data-grid">
+        <table>
+          <caption>Groups</caption>
+          <thead><tr><th scope="col">Group</th><th scope="col">Accepted</th><th scope="col">State</th></tr></thead>
+          <tbody>
+            <tr><td><a href="#groups">engineering-q4</a></td><td>31 of 48</td><td><span class="echelon-chip" data-echelon-tone="review">Reconciling</span></td></tr>
+            <tr><td><a href="#groups">support-q4</a></td><td>16 of 16</td><td><span class="echelon-chip" data-echelon-tone="complete">Complete</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="echelon-panel__footer">
+      <button class="forma-button" type="button">Previous</button>
+      <span>Page 1 of 3</span>
+    </div>
+  </section>
+
+  <section id="groups" class="echelon-panel" aria-labelledby="groups-title" data-echelon-attention="true">
+    <div class="echelon-panel__header">
+      <h2 id="groups-title" class="echelon-heading">Group phases</h2>
+      <span class="echelon-chip" data-echelon-tone="review">2 need attention</span>
+    </div>
+    <div class="echelon-panel__body">
+      <ul class="fx-chips" data-fx-family="group">
+        <li><span class="echelon-chip" data-echelon-tone="ready">Ready</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="progress">Partial</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="review">Reconciling</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="complete">Complete</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="sealed">Sealed</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="closed">Closed incomplete</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="templates" class="echelon-panel" data-echelon-surface="sunken" aria-labelledby="templates-title">
+    <div class="echelon-panel__header">
+      <h2 id="templates-title" class="echelon-heading">Template lifecycle (sunken)</h2>
+    </div>
+    <div class="echelon-panel__body">
+      <span class="echelon-eyebrow">Secondary text re-paired on a sunken surface</span>
+      <p class="echelon-lead">Lead text on the sunken surface.</p>
+      <ul class="fx-chips" data-fx-family="lifecycle">
+        <li><span class="echelon-chip" data-echelon-tone="draft">Draft</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="review">In review</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="published">Published</span></li>
+      </ul>
+      <ul class="fx-chips">
+        <li><span class="echelon-chip" data-echelon-tone="ready">Ready</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="progress">Importing</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="complete">Complete</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="sealed">Finalized</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="closed">Superseded</span></li>
+      </ul>
+      <div class="echelon-loading" role="status"><span class="forma-spinner" data-forma-state="idle"><span class="forma-spinner__indicator" aria-hidden="true"></span></span><span>Saved</span></div>
+    </div>
+  </section>
+
+  <section class="echelon-panel forma-surface" data-echelon-surface="accent" aria-labelledby="accent-title">
+    <div class="echelon-panel__header">
+      <h2 id="accent-title" class="echelon-heading">Accent surface</h2>
+    </div>
+    <div class="echelon-panel__body">
+      <span class="echelon-eyebrow">For respondents</span>
+      <p class="echelon-lead">Lead text on the accent surface.</p>
+      <span class="forma-app-identity__context">Forma secondary text, re-paired by composing forma-surface</span>
+      <ul class="fx-chips">
+        <li><span class="echelon-chip" data-echelon-tone="draft">Draft</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="ready">Ready</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="closed">Closed</span></li>
+        <li><span class="echelon-chip" data-echelon-tone="review">Review</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="loading" class="echelon-panel" aria-busy="true" aria-labelledby="loading-title">
+    <div class="echelon-panel__header">
+      <h2 id="loading-title" class="echelon-heading">Busy panel</h2>
+    </div>
+    <div class="echelon-panel__body">
+      <div class="echelon-loading" role="status"><span class="forma-spinner"><span class="forma-spinner__indicator" aria-hidden="true"></span></span><span>Loading groups…</span></div>
+      <div class="echelon-skeleton" aria-hidden="true">
+        <div class="echelon-skeleton-line"></div>
+        <div class="echelon-skeleton-line"></div>
+        <div class="echelon-skeleton-line"></div>
+      </div>
+      <p>Stale content stays readable while the panel is busy.</p>
+      <span class="echelon-eyebrow">Last refreshed 2 minutes ago</span>
+    </div>
+  </section>
+</main>
+</body>
+</html>

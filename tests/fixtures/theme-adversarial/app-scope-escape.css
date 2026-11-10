@@ -1,0 +1,6 @@
+/* Selectors that mention the brand attribute but escape it. */
+@layer echelon.app {
+  :is([data-forma-brand="echelon"], main) .echelon-panel { border-radius: 10px; }
+  [data-forma-brand="echelon"] ~ main .echelon-chip { border-radius: 999px; }
+  :not([data-forma-brand="echelon"]) .echelon-lead { color: red; }
+}

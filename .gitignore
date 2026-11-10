@@ -1,2 +1,4 @@
 __pycache__/
 *.pyc
+tests/visual/out/
+tests/visual/node_modules/

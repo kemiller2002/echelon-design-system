@@ -1,0 +1,5 @@
+/* An infinite animation with no prefers-reduced-motion stop. */
+@layer echelon.app {
+  [data-forma-brand="echelon"] .echelon-skeleton-line { animation: echelon-shimmer 1.4s linear infinite; }
+  @keyframes echelon-shimmer { from { opacity: 1; } to { opacity: 0.5; } }
+}

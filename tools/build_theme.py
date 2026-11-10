@@ -14,10 +14,22 @@ Outputs (under --out, default: the repository root):
 
     dist/echelon.css             BrandCompiler output for theme/echelon.brand.json
     dist/echelon-marketing.css   TokenCompiler output for the marketing tokens + theme CSS
-    dist/asset-manifest.json     role, path, media type, bytes and sha256 per asset;
-                                 the Forma ref/commit and brand attribute used
+    dist/echelon-fonts.css       @font-face rules for the self-hosted fonts (Forma 1.x only)
+    dist/echelon-app.css         theme/echelon-app.css, the application layer (Forma 1.x only)
+    dist/fonts/*.woff2           latin WOFF2 subsets from the npm packages pinned in
+                                 theme/echelon-fonts.json (fetched by tools/fonts.py)
+    dist/fonts/licenses/*.txt    each font package's SIL OFL 1.1 text
+    dist/asset-manifest.json     role, path, media type, bytes and sha256 per asset,
+                                 stylesheet, font and licence; the font packages'
+                                 versions and integrity; the Forma ref/commit and
+                                 brand attribute used
     dist/checksums.txt           sha256sum format, package-relative paths
     logos/echelon-foundry/*.svg  approved marks copied from brand/logos
+
+The application layer and fonts use Forma 1.x's data-forma-brand and Forma
+1.x hooks, so a build with another brand attribute (the Forma 0.14.0 parity
+build) leaves them out. Fonts are fetched from npm on every build and must
+match the integrity and sha256 recorded in theme/echelon-fonts.json.
 
 Nothing time- or machine-dependent is written, so two builds from the same
 inputs are byte-identical. --check builds into a temporary directory and fails
@@ -40,7 +52,7 @@ import xml.etree.ElementTree as ET
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BRAND_ID = "echelon"
 PALETTE_LABEL = "carried from Forma 0.14.0, not a frozen v1 palette"
-OUTPUTS = ("dist/echelon.css", "dist/echelon-marketing.css", "dist/asset-manifest.json", "dist/checksums.txt")
+APP_BRAND_ATTRIBUTE = "data-forma-brand"
 
 
 class BuildError(Exception):
@@ -128,14 +140,63 @@ def render_template(template: str, ns: str, layer: str) -> str:
     return rendered
 
 
-def self_contained(name: str, css: str) -> None:
+def self_contained(name: str, css: str, allowed_urls: frozenset = frozenset()) -> None:
     lower = css.lower()
     for needle in ("@import", "<script", "javascript:", "expression("):
         if needle in lower:
             raise BuildError(f"{name} contains '{needle}'; release CSS must be self-contained")
-    urls = [u for u in re.findall(r"url\(\s*['\"]?([^'\")\s]+)", css) if not u.lower().startswith("data:")]
+    urls = [u for u in re.findall(r"url\(\s*['\"]?([^'\")\s]+)", css)
+            if not u.lower().startswith("data:") and u not in allowed_urls]
     if urls:
         raise BuildError(f"{name} references external files: {urls}")
+
+
+def banner(package: dict, name: str, lines: list[str]) -> str:
+    body = "".join(f"    {line}\n" for line in lines)
+    return f"/*! {package['name']} {package['version']} | {name}\n{body.rstrip()} */\n"
+
+
+def app_layer(package: dict, ref: str, commit: str, attribute: str) -> str:
+    """dist/echelon-app.css: the source under a release banner, validated."""
+    from theme_validator import app_css_problems, load_hooks
+    source = (ROOT / "theme/echelon-app.css").read_text()
+    css = banner(package, "echelon-app.css", [
+        "Echelon application layer (owner-approved 2026-11-09): tokens, app bar, nav tabs,",
+        "panels, type roles, button emphasis, chips and loading, in @layer echelon.app.",
+        "Load after Forma's all.css, dist/echelon.css and dist/echelon-fonts.css.",
+        f"Source theme/echelon-app.css; built with Forma {ref} ({commit}). Do not edit; pin by version and sha256.",
+    ]) + "\n" + normalize(source)
+    problems = app_css_problems(css, attribute, BRAND_ID, load_hooks())
+    if problems:
+        raise BuildError("theme/echelon-app.css is not a valid application layer:\n  " + "\n  ".join(problems))
+    self_contained("dist/echelon-app.css", css)
+    return css
+
+
+def font_layer(package: dict) -> tuple[str, dict, dict]:
+    """dist/echelon-fonts.css, the font and licence files, and their manifest entries."""
+    import fonts
+    from theme_validator import fonts_css_problems, load_hooks
+    try:
+        spec = fonts.load_spec()
+        resolved = fonts.resolve(spec, fonts.fetch_tarballs(spec))
+    except fonts.FontError as error:
+        raise BuildError(str(error)) from error
+    sources = ", ".join(f"{p['name']} {p['version']}" for p in spec["packages"])
+    css = fonts.render_css(resolved.faces, banner(package, "echelon-fonts.css", [
+        "Self-hosted Echelon fonts: Newsreader, Manrope and IBM Plex Mono, latin WOFF2 subsets",
+        "under fonts/, SIL Open Font License 1.1 (texts in fonts/licenses/).",
+        "Load after dist/echelon.css and before dist/echelon-app.css.",
+        f"From {sources} via theme/echelon-fonts.json. Do not edit; pin by version and sha256.",
+    ]))
+    paths = {f.path for f in resolved.faces}
+    problems = fonts_css_problems(css, APP_BRAND_ATTRIBUTE, BRAND_ID, load_hooks(), paths)
+    if problems:
+        raise BuildError("dist/echelon-fonts.css is not valid:\n  " + "\n  ".join(problems))
+    self_contained("dist/echelon-fonts.css", css, frozenset(p.removeprefix("dist/") for p in paths))
+    entries = {"fontPackages": fonts.manifest_packages(spec), "fonts": fonts.manifest_fonts(resolved),
+               "licenses": fonts.manifest_licenses(resolved)}
+    return css, resolved.files, entries
 
 
 def build(forma: pathlib.Path, ref: str, attribute: str, out: pathlib.Path) -> None:
@@ -186,6 +247,11 @@ def build(forma: pathlib.Path, ref: str, attribute: str, out: pathlib.Path) -> N
         self_contained("dist/echelon-marketing.css", marketing_css)
         self_contained("dist/echelon.css", echelon_css)
 
+    # Application layer and self-hosted fonts (Forma 1.x only).
+    application = attribute == APP_BRAND_ATTRIBUTE
+    app_css = app_layer(package, ref, pin["commit"], attribute) if application else None
+    fonts_css, font_files, font_entries = font_layer(package) if application else (None, {}, {})
+
     # Approved marks, copied unchanged into the package path the manifest names.
     roles = json.loads((ROOT / "theme/asset-roles.json").read_text())
     catalog = json.loads((ROOT / "brand/logos/catalog.json").read_text())
@@ -219,6 +285,12 @@ def build(forma: pathlib.Path, ref: str, attribute: str, out: pathlib.Path) -> N
 
     files["dist/echelon.css"] = echelon_css.encode()
     files["dist/echelon-marketing.css"] = marketing_css.encode()
+    stylesheets = ["dist/echelon.css", "dist/echelon-marketing.css"]
+    if application:
+        files["dist/echelon-fonts.css"] = fonts_css.encode()
+        files["dist/echelon-app.css"] = app_css.encode()
+        files.update(font_files)
+        stylesheets += ["dist/echelon-fonts.css", "dist/echelon-app.css"]
     manifest = {
         "schemaVersion": "1.0",
         "package": package["name"],
@@ -233,8 +305,9 @@ def build(forma: pathlib.Path, ref: str, attribute: str, out: pathlib.Path) -> N
         "assets": assets,
         "stylesheets": [
             {"path": p, "mediaType": "text/css", "bytes": len(files[p]), "sha256": sha256(files[p])}
-            for p in ("dist/echelon.css", "dist/echelon-marketing.css")
+            for p in stylesheets
         ],
+        **font_entries,
     }
     files["dist/asset-manifest.json"] = (json.dumps(manifest, indent=2) + "\n").encode()
     theme_files = sorted(p.relative_to(ROOT).as_posix() for p in (ROOT / "theme").iterdir() if p.is_file())
@@ -243,9 +316,10 @@ def build(forma: pathlib.Path, ref: str, attribute: str, out: pathlib.Path) -> N
         f"{sha256(files[p] if p in files else (ROOT / p).read_bytes())}  {p}\n" for p in listed)
     files["dist/checksums.txt"] = checksums.encode()
 
-    for stale in (out / "logos").rglob("*") if (out / "logos").exists() else []:
-        if stale.is_file() and stale.relative_to(out).as_posix() not in files:
-            stale.unlink()
+    for directory in ("logos", "dist/fonts"):
+        for stale in (out / directory).rglob("*") if (out / directory).exists() else []:
+            if stale.is_file() and stale.relative_to(out).as_posix() not in files:
+                stale.unlink()
     for path, data in files.items():
         target = out / path
         target.parent.mkdir(parents=True, exist_ok=True)

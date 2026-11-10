@@ -46,6 +46,8 @@ jobs:
           echo "FORMA_SRC=$RUNNER_TEMP/forma" >> "$GITHUB_ENV"
           echo "FORMA_REF=$ref" >> "$GITHUB_ENV"
           echo "FORMA_BRAND_ATTRIBUTE=$attribute" >> "$GITHUB_ENV"
+      - name: Font packages match theme/echelon-fonts.json (npm integrity and sha256)
+        run: python tools/fonts.py --check
       - name: Committed dist/ and logos/ match a fresh build
         run: python tools/build_theme.py --forma "$FORMA_SRC" --forma-ref "$FORMA_REF" --brand-attribute "$FORMA_BRAND_ATTRIBUTE" --check
       - name: Validate the package (assets, sha256, SVG safety, roles, brand scope, checksums)
@@ -54,6 +56,46 @@ jobs:
         env:
           REQUIRE_FORMA: '1'
         run: python -m unittest tests.test_theme_package -v
+  render:
+    name: Render and accessibility (Playwright Chromium, Forma 1.0.1)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Download Forma 1.0.1 forma-all.css and check its sha256
+        run: |
+          ref=$(python -c "import json; print(json.load(open('tools/forma-hooks.json'))['forma']['ref'])")
+          file=$(python -c "import json; print(json.load(open('tools/forma-hooks.json'))['forma']['file'])")
+          sum=$(python -c "import json; print(json.load(open('tools/forma-hooks.json'))['forma']['sha256'])")
+          mkdir -p "$RUNNER_TEMP/forma"
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/forma/$file" "https://github.com/kemiller2002/forma/releases/download/$ref/$file"
+          echo "$sum  $RUNNER_TEMP/forma/$file" | sha256sum -c -
+          echo "FORMA_ALL_CSS=$RUNNER_TEMP/forma/$file" >> "$GITHUB_ENV"
+      - name: Forma hooks used by the Echelon layer exist in Forma 1.0.1
+        run: |
+          python tools/theme_validator.py --brand-attribute data-forma-brand --forma-css "$FORMA_ALL_CSS"
+          python -m unittest tests.test_theme_package.ApplicationLayer -v
+      - name: Install Playwright Chromium
+        working-directory: tests/visual
+        run: |
+          npm ci --ignore-scripts
+          npx playwright install --with-deps chromium
+      - name: Render tests (contrast, focus, reflow, motion, chips, fonts, forced colours)
+        env:
+          NODE_PATH: ${{ github.workspace }}/tests/visual/node_modules
+        run: node tests/visual/run.cjs --forma-css "$FORMA_ALL_CSS" --out "$RUNNER_TEMP/render"
+      - name: Upload screenshots and results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: echelon-render
+          path: ${{ runner.temp }}/render
+          if-no-files-found: warn
   forma-parity:
     name: Parity with Forma v0.14.0 release
     runs-on: ubuntu-latest

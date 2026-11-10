@@ -1,0 +1,4 @@
+/* Uses the retired Forma 0.x namespace. */
+@layer echelon.app {
+  [data-forma-brand="echelon"] .echelon-panel { border-color: var(--ef-color-border-subtle); }
+}

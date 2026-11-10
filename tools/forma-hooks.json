@@ -1,0 +1,39 @@
+{
+  "$comment": "The Forma vocabulary that dist/echelon-app.css and dist/echelon-fonts.css may USE. These files define nothing in Forma's namespace: a .forma-* class, data-forma-* attribute or --forma-* property they mention must be listed here, and every entry here must exist in Forma's own CSS (CI checks this list against the Forma release below with `tools/theme_validator.py --forma-css`). Declaring any --forma-* property is always rejected.",
+  "forma": {
+    "ref": "v1.0.1",
+    "file": "forma-all.css",
+    "sha256": "ade034ce29920ace89eb49cd17dc431a2b971e3e9225889585a34bb279e82c52"
+  },
+  "classes": [
+    "forma-actions",
+    "forma-app-identity",
+    "forma-app-identity__variant",
+    "forma-button",
+    "forma-data-grid",
+    "forma-spinner"
+  ],
+  "attributes": [
+    "data-forma-brand",
+    "data-forma-scheme",
+    "data-forma-theme"
+  ],
+  "properties": [
+    "--forma-color-border-functional",
+    "--forma-color-border-subtle",
+    "--forma-color-focus-ring",
+    "--forma-color-status-danger",
+    "--forma-color-status-info",
+    "--forma-color-status-success",
+    "--forma-color-status-warning",
+    "--forma-color-text-heading",
+    "--forma-color-text-on-secondary-surface",
+    "--forma-color-text-primary",
+    "--forma-color-text-secondary",
+    "--forma-primitive-font-family-display",
+    "--forma-primitive-font-family-mono",
+    "--forma-primitive-font-family-sans",
+    "--forma-primitive-radius-pill",
+    "--forma-space-4"
+  ]
+}
