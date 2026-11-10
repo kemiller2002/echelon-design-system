@@ -21,3 +21,5 @@ body { margin: 0; }
   list-style: none;
 }
 .fx-chips > li { min-inline-size: 0; max-inline-size: 100%; }
+.fx-components { display: grid; gap: 1rem; }
+.fx-components > * { min-inline-size: 0; }

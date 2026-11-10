@@ -127,7 +127,9 @@ const probeContrast = () => {
   const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const textNodes = [];
   for (let n = walker.nextNode(); n; n = walker.nextNode()) if (n.textContent.trim()) textNodes.push(n);
-  const fromText = textNodes.filter((n) => visible(n.parentElement)).map((n) =>
+  const rendered = textNodes.filter((n) => visible(n.parentElement));
+  const hidden = textNodes.filter((n) => !visible(n.parentElement)).map((n) => n.textContent.trim().slice(0, 40));
+  const fromText = rendered.map((n) =>
     measure(n.parentElement, getComputedStyle(n.parentElement), n.textContent.trim(), null, backdrop(n.parentElement)));
   const fromPseudo = [...document.querySelectorAll('body *')].filter(visible).flatMap((el) =>
     ['::before', '::after'].flatMap((pseudo) => {
@@ -135,7 +137,8 @@ const probeContrast = () => {
       const text = /^["']/.test(s.content) ? s.content.slice(1, -1).trim() : '';
       return text && s.display !== 'none' ? [measure(el, s, text, pseudo, backdrop(el))] : [];
     }));
-  return { textNodes: textNodes.length, measured: [...fromText, ...fromPseudo] };
+  return { textNodes: textNodes.length, hidden, measuredText: fromText.length, measuredPseudo: fromPseudo.length,
+           measured: [...fromText, ...fromPseudo] };
 };
 
 const probeChips = () => {
@@ -182,11 +185,40 @@ const probeCoverage = ({ classes, attributes, tones }) => {
       accent: linksOutsideGrids('.echelon-panel[data-echelon-surface="accent"] a[href]:not(.forma-button)'),
     },
     barDanger: Boolean(document.querySelector('.echelon-app-bar .forma-button[data-echelon-emphasis="danger"]')),
+    // Link-bearing components inside raised, sunken and accent panels.
+    missingComponents: ['raised', 'sunken', 'accent'].flatMap((surface) => {
+      const panel = surface === 'raised' ? '.echelon-panel:not([data-echelon-surface])' : `.echelon-panel[data-echelon-surface="${surface}"]`;
+      return ['.forma-pagination a[aria-current="page"]', '.forma-validation-summary a', '.echelon-nav-tabs a[aria-current="page"]',
+              '.forma-menu__list a', '.forma-master-detail__master a']
+        .filter((c) => !document.querySelector(`${panel} ${c}`)).map((c) => `${surface}: ${c}`);
+    }),
     missingClasses: classes.filter((c) => !document.querySelector('.' + c)),
     missingAttributes: attributes.filter(([a, v]) => !document.querySelector(`[${a}="${v}"]`)).map(([a, v]) => `${a}="${v}"`),
     missingBarTones: tones.filter((t) => !document.querySelector(`.echelon-app-bar .echelon-chip[data-echelon-tone="${t}"]`)),
     surfaces: [...new Set(interactive.map(surfaceOf))].sort(),
   };
+};
+
+// Current and inactive tabs must differ by colour (>= 1.5:1 between the two
+// text colours) or weight (>= 100), not only by the underline.
+const probeTabs = () => {
+  const rgb = (c) => (/rgba?\(([^)]+)\)/.exec(c) || [0, '0,0,0'])[1].split(/[\s,/]+/).slice(0, 3).map(Number);
+  const lum = ([r, g, b]) => {
+    const f = (v) => { const s = v / 255; return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
+    return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+  };
+  return [...document.querySelectorAll('.echelon-nav-tabs')].flatMap((nav) => {
+    const current = nav.querySelector('a[aria-current="page"]');
+    const where = nav.closest('.echelon-panel') ? (nav.closest('.echelon-panel').dataset.echelonSurface || 'raised') : 'canvas';
+    return [...nav.querySelectorAll('a:not([aria-current="page"])')].map((other) => {
+      const a = getComputedStyle(current);
+      const b = getComputedStyle(other);
+      const [hi, lo] = [lum(rgb(a.color)), lum(rgb(b.color))].sort((x, y) => y - x);
+      const colourRatio = Math.floor(((hi + 0.05) / (lo + 0.05)) * 100) / 100;
+      const weightDiff = Number(a.fontWeight) - Number(b.fontWeight);
+      return { where, tab: other.textContent.trim(), colourRatio, weightDiff, pass: colourRatio >= 1.5 || weightDiff >= 100 };
+    });
+  });
 };
 
 const probeFonts = async (faces) => {
@@ -353,8 +385,12 @@ const focusVisual = async (browser, colorScheme, url, out) => {
 const contrastVerdict = (name, probe) => {
   const unique = [...new Map(probe.measured.map((p) => [`${p.fg}|${p.bg}|${p.need}`, p])).values()];
   const fails = probe.measured.filter((p) => p.exact < p.need || p.image);
-  return { name: `contrast (${name})`, pass: fails.length === 0 && probe.measured.length >= probe.textNodes,
-           detail: { textNodes: probe.textNodes, measured: probe.measured.length, uniquePairs: unique.length,
+  // Every rendered text node is measured; text that is not rendered (e.g.
+  // Forma hiding pagination pages at narrow widths) is listed, not measured.
+  return { name: `contrast (${name})`,
+           pass: fails.length === 0 && probe.measuredText + probe.hidden.length === probe.textNodes && probe.measuredText > 0,
+           detail: { textNodes: probe.textNodes, hidden: probe.hidden, measuredText: probe.measuredText,
+                     measuredPseudo: probe.measuredPseudo, uniquePairs: unique.length,
                      minRatio: Math.min(...probe.measured.map((p) => p.ratio)),
                      fails: fails.map(({ exact, ...p }) => p) },
            pairs: unique.map(({ exact, ...p }) => p) };
@@ -387,8 +423,9 @@ async function main() {
     const coverage = await page.evaluate(probeCoverage, vocabulary(appCss));
     const chips = await page.evaluate(probeChips);
     const fonts = await page.evaluate(probeFonts, FONT_FACES);
+    const tabs = await page.evaluate(probeTabs);
     await context.close();
-    return { scheme: scheme.name, contrast, coverage, chips, fonts };
+    return { scheme: scheme.name, contrast, coverage, chips, fonts, tabs };
   };
   const schemes = await Promise.all(SCHEMES.map(perScheme));
 
@@ -449,7 +486,10 @@ async function main() {
     ...schemes.map((s) => ({ name: `coverage (${s.scheme})`,
       pass: !s.coverage.missingClasses.length && !s.coverage.missingAttributes.length && !s.coverage.missingBarTones.length
         && SURFACES.every((x) => s.coverage.surfaces.includes(x))
-        && Object.values(s.coverage.panelLinks).every(Boolean) && s.coverage.barDanger, detail: s.coverage })),
+        && Object.values(s.coverage.panelLinks).every(Boolean) && s.coverage.barDanger
+        && s.coverage.missingComponents.length === 0, detail: s.coverage })),
+    ...schemes.map((s) => ({ name: `nav tabs: current differs from inactive by more than the rule (${s.scheme})`,
+      pass: s.tabs.length >= 4 && s.tabs.every((x) => x.pass), detail: s.tabs.filter((x) => !x.pass) })),
     ...schemes.map((s) => ({ name: `busy panels show a loading status (${s.scheme})`,
       pass: s.coverage.busyPanels > 0 && s.coverage.busyWithoutStatus.length === 0,
       detail: { busyPanels: s.coverage.busyPanels, withoutStatus: s.coverage.busyWithoutStatus } })),
@@ -485,7 +525,7 @@ async function main() {
   const contrast = contrastChecks.map((c) => ({ check: c.name, pairs: c.pairs }));
   fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({ checks, contrast, focus }, null, 2) + '\n');
   checks.forEach((c) => console.log(`${c.pass ? 'PASS' : 'FAIL'}: ${c.name}${c.pass ? '' : '\n      ' + JSON.stringify(c.detail)}`));
-  contrastChecks.forEach((c) => console.log(`${c.name}: ${c.detail.textNodes} text nodes, ${c.detail.measured} measured, ${c.detail.uniquePairs} unique pairs, min ${c.detail.minRatio}:1`));
+  contrastChecks.forEach((c) => console.log(`${c.name}: ${c.detail.textNodes} text nodes (${c.detail.measuredText} rendered and measured, ${c.detail.hidden.length} not rendered), ${c.detail.measuredPseudo} text pseudo-elements, ${c.detail.uniquePairs} unique pairs, min ${c.detail.minRatio}:1`));
   ['light', 'dark'].forEach((scheme) => {
     const rows = focus.filter((f) => f.colorScheme === scheme);
     console.log(`focus ${scheme}: ${rows.length} elements on ${focusSurfaces(scheme).join(', ')}; weakest has ${Math.min(...rows.map((f) => f.strong))} px at >= 3:1 (needs one perimeter)`);

@@ -109,8 +109,8 @@
     {
       "path": "dist/echelon-app.css",
       "mediaType": "text/css",
-      "bytes": 28138,
-      "sha256": "a7159a1f56d306dac31e26dc580d092cb1f95d757389d9f7824e4c38235b60f7"
+      "bytes": 28860,
+      "sha256": "a372c0d4849b4088006972c8d728697ecf880ae780a1a983ece5abaa0c6f20e8"
     }
   ],
   "fontPackages": [

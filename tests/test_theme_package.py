@@ -404,6 +404,46 @@ class ApplicationLayer(unittest.TestCase):
         self.assertGreaterEqual(len(uses), 40)
         self.assertEqual(sorted(uses - self.repaired_selectors()), [])
 
+    PANEL_LINK_PREFIX = '[data-forma-brand="echelon"] .echelon-panel a:not('
+
+    def panel_link_exclusions(self) -> set:
+        nodes, _ = theme_validator.parse_css(self.css)
+        rules = [n for n in nodes if n.kind == "style" and n.prelude.startswith(self.PANEL_LINK_PREFIX)]
+        self.assertEqual(len(rules), 1)
+        return set(re.findall(r"\.((?:forma|echelon)-[\w-]+)", rules[0].prelude.removeprefix(self.PANEL_LINK_PREFIX)))
+
+    @staticmethod
+    def forma_link_colourers(forma_css: str) -> set:
+        """Classes Forma uses to colour a link: the link's own class, or else the
+        component class the link sits in. Forma's base `:where(a)` is not one."""
+        nodes, _ = theme_validator.parse_css(forma_css)
+        link = re.compile(r"(^|[\s>+~(,])a(?![\w-])")
+        found = set()
+        for node in nodes:
+            if node.kind != "style" or not any(p == "color" for p, _ in node.declarations):
+                continue
+            for selector in (" ".join(s.split()) for s in theme_validator._split_top(node.prelude, ",")):
+                if not link.search(selector) or selector == ":where(a)":
+                    continue
+                own = re.search(r"(?:^|[\s>+~(,])a((?:[.:\[][^\s>+~,()]*)*)", selector)
+                own_class = re.search(r"\.(forma-[\w-]+)", own.group(1)) if own else None
+                found.add(own_class.group(1) if own_class else re.search(r"\.(forma-[\w-]+)", selector).group(1))
+        return found
+
+    def test_panel_links_leave_component_links_alone(self):
+        exclusions = self.panel_link_exclusions()
+        self.assertLessEqual({"forma-button", "forma-pagination", "forma-validation-summary", "forma-menu__list",
+                              "forma-master-detail__master", "echelon-nav-tabs"}, exclusions)
+
+    @unittest.skipUnless(FORMA_ALL_CSS, "set FORMA_ALL_CSS to a Forma release's forma-all.css")
+    def test_panel_link_exclusions_match_every_forma_link_colouring_class(self):
+        forma = self.forma_link_colourers(pathlib.Path(FORMA_ALL_CSS).read_text())
+        self.assertGreaterEqual(len(forma), 9)
+        ours = self.panel_link_exclusions()
+        self.assertEqual(sorted(forma - ours), [], "Forma colours links in components the panel-link rule would recolour")
+        self.assertEqual(sorted(ours - forma - {"forma-button", "echelon-nav-tabs"}), [],
+                         "exclusions that Forma no longer uses to colour links")
+
     @unittest.skipUnless(FORMA_ALL_CSS, "set FORMA_ALL_CSS to a Forma release's forma-all.css")
     def test_forma_hooks_exist_in_the_forma_release(self):
         data = pathlib.Path(FORMA_ALL_CSS).read_bytes()

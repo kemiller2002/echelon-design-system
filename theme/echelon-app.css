@@ -167,8 +167,12 @@
     margin-bottom: -1px;
   }
   [data-forma-brand="echelon"] .echelon-nav-tabs a:hover { color: var(--forma-color-text-primary); }
+  /* The current tab is also heavier, so it differs from the others by more
+     than the rule (on sunken and accent panels the re-paired inactive colour
+     is close to the heading colour). */
   [data-forma-brand="echelon"] .echelon-nav-tabs a[aria-current="page"] {
     color: var(--forma-color-text-heading);
+    font-weight: 800;
     border-bottom-color: var(--echelon-accent-rule);
   }
   [data-forma-brand="echelon"] .echelon-nav-tabs a:focus-visible {
@@ -249,11 +253,15 @@
   [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-pairwise__versus {
     color: var(--echelon-text-secondary);
   }
-  /* Links in panels: Forma's accent link colour (#a87e5e in dark) is 4.35:1
-     on the dark raised surface and 4.19:1 on the dark accent surface, so links
-     in every panel use the action colour: the same value as Forma's accent in
-     light, bronze pale (#c9a07f) in dark. */
-  [data-forma-brand="echelon"] .echelon-panel a:not(.forma-button) {
+  /* Plain content links in panels: Forma's base link colour (#a87e5e in
+     dark) is 4.35:1 on the dark raised surface and 4.19:1 on the dark accent
+     surface, so they use the action colour: the same value as Forma's accent
+     in light, bronze pale (#c9a07f) in dark. Links that a Forma or Echelon
+     component colours itself are left alone: the exclusions are every class
+     that Forma 1.0.1 uses to colour a link (its own class, or the component
+     the link sits in), checked against Forma's CSS in
+     tests/test_theme_package.py, plus this layer's nav tabs. */
+  [data-forma-brand="echelon"] .echelon-panel a:not(.forma-button, .forma-badge, :where(.forma-menu__list, .forma-pagination, .forma-master-detail__master, .forma-diagram-node, .forma-validation-summary, .forma-site, .forma-doc__nav, .forma-doc__aside, .echelon-nav-tabs) a) {
     color: var(--echelon-action-primary);
   }
   [data-forma-brand="echelon"] .echelon-panel[data-echelon-attention="true"] {
