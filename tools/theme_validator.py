@@ -18,7 +18,8 @@ data-forma-brand (Forma 1.x). Checks:
 
 Application layer and fonts (1.1.0):
 
-- every file under dist/ is in the asset manifest and in checksums.txt;
+- every file under dist/ is in the asset manifest, and every shipped file
+  (dist/, theme/, logos/) is in checksums.txt;
 - every font is WOFF2 under dist/fonts/ with matching bytes and sha256, its
   npm package and version are recorded, and each package's OFL licence text is
   packaged under dist/fonts/licenses/;
@@ -30,7 +31,8 @@ Application layer and fonts (1.1.0):
   .forma-* class, data-forma-* attribute and var(--forma-*) used is one that
   Forma has (tools/forma-hooks.json; --forma-css checks that list against a
   Forma build); only --echelon-* properties are declared; no --ef-* at all;
-- every font URL is relative and resolves to a packaged font under dist/fonts/;
+- every font URL is relative and resolves to a packaged font under dist/fonts/,
+  with format("woff2"), and every font has a valid WOFF2 header;
 - every infinite animation stops under prefers-reduced-motion: reduce, and
   forced-colors rules use system colours, never brand colours.
 
@@ -58,6 +60,8 @@ FONTS_CSS = "dist/echelon-fonts.css"
 APP_LAYER = "echelon.app"
 REQUIRED_STYLESHEETS = ("dist/echelon.css", "dist/echelon-marketing.css", FONTS_CSS, APP_CSS)
 GENERATED_INDEXES = ("dist/asset-manifest.json", "dist/checksums.txt")
+# Directories that package.json "files" ships; every file in them is checksummed.
+SHIPPED_DIRS = ("dist", "theme", "logos")
 FONT_FAMILIES = frozenset({"Manrope", "Newsreader", "IBM Plex Mono"})
 FONT_DIR = "dist/fonts/"
 LICENSE_PATH = re.compile(r"dist/fonts/licenses/[a-z0-9-]*OFL[a-z0-9-]*\.txt")
@@ -365,11 +369,26 @@ def load_hooks(path: pathlib.Path = HOOKS_PATH) -> dict:
     return json.loads(path.read_text())
 
 
+def css_unescape(text: str) -> str:
+    """Resolves CSS escapes (\\66 or \\f), so `.\\66orma-panel` reads as `.forma-panel`."""
+    def one(match: re.Match) -> str:
+        hex_digits, char = match.group(1), match.group(2)
+        if hex_digits:
+            code = int(hex_digits, 16)
+            return chr(code) if 0 < code <= 0x10FFFF else "\ufffd"
+        return char
+    return re.sub(r"\\(?:([0-9a-fA-F]{1,6})[ \t\n]?|(.))", one, text)
+
+
 def namespace_problems(name: str, css: str, nodes: list[Node], hooks: dict) -> list[str]:
-    """Nothing in Forma's namespace is defined; only --echelon-* is declared; no --ef-*."""
+    """Nothing in Forma's namespace is defined; only --echelon-* is declared; no --ef-*.
+    Names are compared after resolving CSS escapes."""
     problems = []
     classes, attributes, properties = set(hooks["classes"]), set(hooks["attributes"]), set(hooks["properties"])
-    text = strip_css_comments(css)
+    text = css_unescape(strip_css_comments(css))
+    nodes = [node._replace(prelude=css_unescape(node.prelude),
+                           declarations=tuple((css_unescape(p), css_unescape(v)) for p, v in node.declarations))
+             for node in nodes]
     if re.search(r"--ef-[\w-]", text):
         problems.append(f"{name}: uses the retired --ef-* namespace")
     if re.search(r"\bdata-ef-[\w-]|\.ef-[\w-]", text):
@@ -483,6 +502,9 @@ def fonts_css_problems(css: str, attribute: str, brand_id: str, hooks: dict, fon
                 problems.append(f"{FONTS_CSS}: @font-face for '{family}' has no src url")
             for url in urls:
                 problems += font_url_problems(url, fonts)
+            for source in _split_top(values.get("src", ""), ","):
+                if not re.fullmatch(r"\s*url\([^)]*\)\s+format\(\s*(['\"])woff2\1\s*\)\s*", source):
+                    problems.append(f"{FONTS_CSS}: @font-face src '{source.strip()}' must be url(...) format(\"woff2\")")
         else:
             problems.append(f"{FONTS_CSS}: unexpected {node.prelude.split()[0]} rule")
     other_urls = re.findall(r"url\(\s*['\"]?([^'\")]+?)['\"]?\s*\)", strip_css_comments(css))
@@ -491,6 +513,76 @@ def fonts_css_problems(css: str, attribute: str, brand_id: str, hooks: dict, fon
     for url in sorted(set(other_urls) - font_face_urls):
         problems += font_url_problems(url, fonts) or [f"{FONTS_CSS}: URL '{url}' outside an @font-face src"]
     return problems + namespace_problems(FONTS_CSS, css, nodes, hooks)
+
+
+def woff2_problems(data: bytes) -> list[str]:
+    """Checks the WOFF2 header (W3C WOFF2 §3): signature, length, table count,
+    reserved field and declared sizes. Pure."""
+    if len(data) < 48 or data[:4] != b"wOF2":
+        return ["is not WOFF2 (no wOF2 signature or a header shorter than 48 bytes)"]
+    length = int.from_bytes(data[8:12], "big")
+    num_tables = int.from_bytes(data[12:14], "big")
+    reserved = int.from_bytes(data[14:16], "big")
+    total_sfnt = int.from_bytes(data[16:20], "big")
+    compressed = int.from_bytes(data[20:24], "big")
+    problems = []
+    if length != len(data):
+        problems.append(f"is not WOFF2: header length {length} does not match the file size {len(data)}")
+    if not 1 <= num_tables <= 256:
+        problems.append(f"is not WOFF2: numTables {num_tables} is out of range")
+    if reserved != 0:
+        problems.append("is not WOFF2: reserved header field is not zero")
+    if total_sfnt == 0 or compressed == 0 or compressed >= len(data):
+        problems.append("is not WOFF2: totalSfntSize or totalCompressedSize is not plausible")
+    if data[4:8] not in (b"\x00\x01\x00\x00", b"OTTO", b"true"):
+        problems.append("is not WOFF2: unknown flavor")
+    if problems:
+        return problems
+    end = _woff2_directory_end(data, num_tables)
+    if end is None:
+        return ["is not WOFF2: the table directory does not parse"]
+    if end + compressed > len(data):
+        return [f"is not WOFF2: the compressed stream ({compressed} bytes after the directory) overruns the file"]
+    return []
+
+
+def _woff2_directory_end(data: bytes, num_tables: int) -> int | None:
+    """Offset just past the WOFF2 table directory, or None if it is malformed."""
+    def base128(pos: int) -> tuple[int, int] | None:
+        value = 0
+        for i in range(5):
+            if pos + i >= len(data):
+                return None
+            byte = data[pos + i]
+            if i == 0 and byte == 0x80:
+                return None
+            value = (value << 7) | (byte & 0x7F)
+            if not byte & 0x80:
+                return value, pos + i + 1
+        return None
+
+    def entry(pos: int) -> int | None:
+        if pos >= len(data):
+            return None
+        flags = data[pos]
+        tag_index, version = flags & 0x3F, flags >> 6
+        pos += 5 if tag_index == 0x3F else 1
+        original = base128(pos)
+        if original is None:
+            return None
+        pos = original[1]
+        transformed = version == 0 if tag_index in (10, 11) else version != 0
+        if transformed:
+            length = base128(pos)
+            return None if length is None else length[1]
+        return pos
+
+    pos: int | None = 48
+    for _ in range(num_tables):
+        pos = entry(pos)
+        if pos is None:
+            return None
+    return pos
 
 
 def font_problems(root: pathlib.Path, manifest: dict) -> list[str]:
@@ -509,8 +601,8 @@ def font_problems(root: pathlib.Path, manifest: dict) -> list[str]:
         if font.get("mediaType") != "font/woff2":
             problems.append(f"font '{path}' must have mediaType font/woff2")
         file = root / path
-        if file.is_file() and not file.read_bytes().startswith(b"wOF2"):
-            problems.append(f"font '{path}' is not WOFF2")
+        if file.is_file():
+            problems += [f"font '{path}' {p}" for p in woff2_problems(file.read_bytes())]
         package = packages.get(font.get("package"))
         if not package or package.get("version") != font.get("version") or not str(package.get("integrity", "")).startswith("sha512-"):
             problems.append(f"font '{path}': its npm package, version and integrity are not recorded")
@@ -533,7 +625,9 @@ def coverage_problems(root: pathlib.Path, manifest: dict, checksummed: set) -> l
     problems = [f"'{path}' is not in the asset manifest" for path in sorted(on_disk - listed - set(GENERATED_INDEXES))]
     problems += [f"stylesheet '{path}' is missing from the asset manifest"
                  for path in REQUIRED_STYLESHEETS if path not in {s.get("path") for s in manifest.get("stylesheets", [])}]
-    needs_checksum = (listed | on_disk) - {"dist/checksums.txt"}
+    shipped = {p.relative_to(root).as_posix() for d in SHIPPED_DIRS if (root / d).is_dir()
+               for p in (root / d).rglob("*") if p.is_file()}
+    needs_checksum = (listed | on_disk | shipped) - {"dist/checksums.txt"}
     problems += [f"'{path}' is not listed in checksums.txt" for path in sorted(needs_checksum - checksummed)]
     return problems
 

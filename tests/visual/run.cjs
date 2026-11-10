@@ -8,17 +8,31 @@
  * and this package's dist/echelon.css, dist/echelon-fonts.css and
  * dist/echelon-app.css over HTTP, then uses Playwright Chromium to check:
  *
- *   coverage      the fixture renders every echelon- class and data-echelon-* value in the CSS
- *   contrast      WCAG AA for every text pair (light, dark, explicit light, explicit dark)
- *   focus         every interactive element shows a visible keyboard focus indicator
- *   reflow        no horizontal overflow at 390px wide with 200% text (light and dark)
- *   motion        no infinite animation runs under prefers-reduced-motion: reduce
- *                 (and the shimmer does run without it, so the check is live)
- *   chips         each tone has a non-empty label and a marker shape distinct from
- *                 the other tones in its family, without using hue
- *   fonts         every @font-face loads from dist/fonts/ (document.fonts)
- *   forced        under forced colours: borders and focus stay visible, markers keep
- *                 their shape, and no brand colour is painted
+ *   coverage   the fixture renders every echelon- class and data-echelon-* value
+ *              in the CSS, every chip tone on the app bar, and a button or link
+ *              on each surface (canvas, raised, sunken, accent, chrome)
+ *   contrast   WCAG AA (4.5:1, 3:1 for large text) for EVERY visible text node
+ *              and every pseudo-element with text content, measured against
+ *              the composited background; at 1280px in light, dark, explicit
+ *              light and explicit dark, and at 390px with 200% text in light and
+ *              dark (where Forma's data-grid shows its ::before labels)
+ *   focus      for every link and button, in light and dark: reaching it with
+ *              Tab makes it :focus-visible, and a screenshot of it and its
+ *              surroundings changes, with at least one CSS-pixel perimeter's
+ *              worth of pixels whose focused colour has >= 3:1 contrast with
+ *              their unfocused colour (WCAG 2.4.7, 1.4.11; 2.4.13's area test)
+ *   reflow     no horizontal overflow at 390px with 200% text (light and dark)
+ *   motion     no infinite animation and no shimmer under reduced motion (the
+ *              skeleton's own computed style, since Forma's global reduced-motion
+ *              rule would hide a missing Echelon rule); the shimmer does run
+ *              without reduced motion, so the check is live
+ *   chips      each tone has a non-empty label and a marker shape distinct from
+ *              the other tones in its family, without using hue
+ *   fonts      every @font-face loads from dist/fonts/ (document.fonts), and no
+ *              text asks for an IBM Plex Mono weight that is not shipped
+ *              (400, 500), which the browser would synthesize
+ *   forced     under forced colours: borders and focus outlines stay visible,
+ *              markers keep their shapes, and no brand colour is painted
  *
  * Writes screenshots and results.json to --out (default tests/visual/out) and
  * exits 1 when any check fails.
@@ -38,12 +52,15 @@ const FONT_FACES = [
   ['Newsreader', 'normal', '500'], ['Newsreader', 'italic', '400'],
   ['IBM Plex Mono', 'normal', '400'], ['IBM Plex Mono', 'normal', '500'],
 ];
+const SHIPPED_WEIGHTS = { 'IBM Plex Mono': [400, 500], Manrope: [200, 800], Newsreader: [200, 800] };
 const SCHEMES = [
   { name: 'light', colorScheme: 'light', theme: null },
   { name: 'dark', colorScheme: 'dark', theme: null },
   { name: 'explicit-dark', colorScheme: 'light', theme: 'dark' },
   { name: 'explicit-light', colorScheme: 'dark', theme: 'light' },
 ];
+const SURFACES = ['canvas', 'raised', 'sunken', 'accent', 'chrome'];
+const TONES = ['draft', 'review', 'published', 'ready', 'progress', 'complete', 'sealed', 'closed'];
 
 const args = (argv) => Object.fromEntries(
   argv.flatMap((a, i) => (a.startsWith('--') ? [[a.slice(2), argv[i + 1]]] : [])));
@@ -61,8 +78,10 @@ const serve = (formaCss) => new Promise((resolve) => {
   server.listen(0, '127.0.0.1', () => resolve(server));
 });
 
-// ---- In-page probes (run inside Chromium; pure over the DOM) ---------------
+// ---- In-page probes (run inside Chromium; read-only over the DOM) -----------
 
+// Every visible text node and every pseudo-element with text content, with its
+// colour composited over the backgrounds and opacities beneath it.
 const probeContrast = () => {
   const parse = (c) => {
     const m = /rgba?\(([^)]+)\)/.exec(c || '');
@@ -81,40 +100,42 @@ const probeContrast = () => {
   const hex = ({ r, g, b }) => '#' + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, '0')).join('');
   const chain = (el) => (el ? [...chain(el.parentElement), el] : []);
   const describe = (el) => el.tagName.toLowerCase() + [...el.classList].map((c) => '.' + c).join('');
-  const ownText = (el) => [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
   const visible = (el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility === 'visible';
-  return [...document.querySelectorAll('body *')].filter((el) => ownText(el) && visible(el)).map((el) => {
-    const { bg, alpha, image } = chain(el).reduce((acc, node) => {
-      const s = getComputedStyle(node);
-      const alphaNow = acc.alpha * Number(s.opacity);
-      const color = parse(s.backgroundColor);
-      return {
-        alpha: alphaNow,
-        image: acc.image || (s.backgroundImage !== 'none' && node !== el ? s.backgroundImage : null),
-        bg: color && color.a > 0 ? over(color, color.a * alphaNow, acc.bg) : acc.bg,
-      };
-    }, { bg: { r: 255, g: 255, b: 255, a: 1 }, alpha: 1, image: null });
-    const s = getComputedStyle(el);
-    const text = parse(s.color);
-    const fg = over(text, text.a * alpha, bg);
+  const backdrop = (el) => chain(el).reduce((acc, node) => {
+    const s = getComputedStyle(node);
+    const alpha = acc.alpha * Number(s.opacity);
+    const color = parse(s.backgroundColor);
+    return {
+      alpha,
+      image: acc.image || (s.backgroundImage !== 'none' ? s.backgroundImage : null),
+      bg: color && color.a > 0 ? over(color, color.a * alpha, acc.bg) : acc.bg,
+    };
+  }, { bg: { r: 255, g: 255, b: 255, a: 1 }, alpha: 1, image: null });
+  const measure = (el, style, text, pseudo, under) => {
+    const pseudoBg = parse(style.backgroundColor);
+    const bg = pseudo && pseudoBg && pseudoBg.a > 0 ? over(pseudoBg, pseudoBg.a * under.alpha, under.bg) : under.bg;
+    const color = parse(style.color);
+    const fg = over(color, color.a * under.alpha * (pseudo ? Number(style.opacity) : 1), bg);
     const [hi, lo] = [lum(fg), lum(bg)].sort((x, y) => y - x);
     const ratio = (hi + 0.05) / (lo + 0.05);
-    const size = parseFloat(s.fontSize);
-    const large = size >= 24 || (size >= 18.66 && Number(s.fontWeight) >= 700);
-    return { element: describe(el), text: el.textContent.trim().slice(0, 40), fg: hex(fg), bg: hex(bg),
-             ratio: Math.floor(ratio * 100) / 100, exact: ratio, need: large ? 3 : 4.5, image };
-  });
-};
-
-const probeFocus = () => {
-  const el = document.activeElement;
-  if (!el || el === document.body) return null;
-  const s = getComputedStyle(el);
-  const alpha = (c) => { const m = /rgba\([^)]*,\s*([\d.]+)\)/.exec(c); return m ? Number(m[1]) : (c === 'transparent' ? 0 : 1); };
-  const outline = s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0 && alpha(s.outlineColor) > 0;
-  const rect = el.getBoundingClientRect();
-  return { element: el.tagName.toLowerCase() + ' "' + (el.textContent || '').trim().slice(0, 24) + '"',
-           id: el.dataset.fxId, outline, shadow: s.boxShadow !== 'none', inView: rect.width > 0 && rect.height > 0 };
+    const size = parseFloat(style.fontSize);
+    const large = size >= 24 || (size >= 18.66 && Number(style.fontWeight) >= 700);
+    return { element: describe(el) + (pseudo || ''), text: text.slice(0, 40), fg: hex(fg), bg: hex(bg),
+             ratio: Math.floor(ratio * 100) / 100, exact: ratio, need: large ? 3 : 4.5, image: under.image,
+             family: style.fontFamily.split(',')[0].replace(/["']/g, '').trim(), weight: Number(style.fontWeight) };
+  };
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) if (n.textContent.trim()) textNodes.push(n);
+  const fromText = textNodes.filter((n) => visible(n.parentElement)).map((n) =>
+    measure(n.parentElement, getComputedStyle(n.parentElement), n.textContent.trim(), null, backdrop(n.parentElement)));
+  const fromPseudo = [...document.querySelectorAll('body *')].filter(visible).flatMap((el) =>
+    ['::before', '::after'].flatMap((pseudo) => {
+      const s = getComputedStyle(el, pseudo);
+      const text = /^["']/.test(s.content) ? s.content.slice(1, -1).trim() : '';
+      return text && s.display !== 'none' ? [measure(el, s, text, pseudo, backdrop(el))] : [];
+    }));
+  return { textNodes: textNodes.length, measured: [...fromText, ...fromPseudo] };
 };
 
 const probeChips = () => {
@@ -139,10 +160,19 @@ const probeChips = () => {
   }));
 };
 
-const probeCoverage = ({ classes, attributes }) => ({
-  missingClasses: classes.filter((c) => !document.querySelector('.' + c)),
-  missingAttributes: attributes.filter(([a, v]) => !document.querySelector(`[${a}="${v}"]`)).map(([a, v]) => `${a}="${v}"`),
-});
+const probeCoverage = ({ classes, attributes, tones }) => {
+  const surfaceOf = (el) => (el.closest('.echelon-app-bar') ? 'chrome'
+    : el.closest('.echelon-panel[data-echelon-surface="sunken"]') ? 'sunken'
+      : el.closest('.echelon-panel[data-echelon-surface="accent"]') ? 'accent'
+        : el.closest('.echelon-panel') ? 'raised' : 'canvas');
+  const interactive = [...document.querySelectorAll('a[href], button')];
+  return {
+    missingClasses: classes.filter((c) => !document.querySelector('.' + c)),
+    missingAttributes: attributes.filter(([a, v]) => !document.querySelector(`[${a}="${v}"]`)).map(([a, v]) => `${a}="${v}"`),
+    missingBarTones: tones.filter((t) => !document.querySelector(`.echelon-app-bar .echelon-chip[data-echelon-tone="${t}"]`)),
+    surfaces: [...new Set(interactive.map(surfaceOf))].sort(),
+  };
+};
 
 const probeFonts = async (faces) => {
   const within = (promise, fallback) => Promise.race([promise.catch(() => fallback),
@@ -172,8 +202,36 @@ const probeForced = (brandColours) => {
       const s = getComputedStyle(el, pseudo);
       return props.filter((p) => brandColours.includes(hex(s[p]))).map((p) => `${describe(el)}${pseudo || ''} ${p} ${hex(s[p])}`);
     }));
-  const forced = matchMedia('(forced-colors: active)').matches;
-  return { forced, borders, painted };
+  return { forced: matchMedia('(forced-colors: active)').matches, borders, painted };
+};
+
+// Decodes two PNG screenshots (base64) in a blank page and compares them pixel
+// by pixel: how many pixels changed at all, and how many changed with >= 3:1
+// contrast between their unfocused and focused colours.
+const probeDiff = async ([before, after]) => {
+  const pixels = async (b64) => {
+    const bitmap = await createImageBitmap(await (await fetch('data:image/png;base64,' + b64)).blob());
+    const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+    const context = canvas.getContext('2d');
+    context.drawImage(bitmap, 0, 0);
+    return context.getImageData(0, 0, bitmap.width, bitmap.height).data;
+  };
+  const [a, b] = await Promise.all([pixels(before), pixels(after)]);
+  const lum = (d, i) => {
+    const f = (v) => { const s = v / 255; return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4; };
+    return 0.2126 * f(d[i]) + 0.7152 * f(d[i + 1]) + 0.0722 * f(d[i + 2]);
+  };
+  const counts = { changed: 0, strong: 0, maxRatio: 1 };
+  for (let i = 0; i < a.length; i += 4) {
+    if (a[i] !== b[i] || a[i + 1] !== b[i + 1] || a[i + 2] !== b[i + 2]) {
+      const [hi, lo] = [lum(a, i), lum(b, i)].sort((x, y) => y - x);
+      const ratio = (hi + 0.05) / (lo + 0.05);
+      counts.changed += 1;
+      counts.strong += ratio >= 3 ? 1 : 0;
+      counts.maxRatio = Math.max(counts.maxRatio, ratio);
+    }
+  }
+  return { ...counts, maxRatio: Math.floor(counts.maxRatio * 100) / 100 };
 };
 
 // ---- Checks (Node side) ------------------------------------------------------
@@ -182,6 +240,7 @@ const vocabulary = (css) => ({
   classes: [...new Set([...css.matchAll(/\.(echelon-[\w-]+)/g)].map((m) => m[1]))].filter((c) => !c.startsWith('echelon-shimmer')),
   attributes: [...new Set([...css.matchAll(/\[(data-echelon-[\w-]+)="([\w-]+)"\]/g)].map((m) => `${m[1]}=${m[2]}`))]
     .map((p) => p.split('=')),
+  tones: TONES,
 });
 
 const brandColours = (...sheets) => [...new Set(sheets.flatMap((css) =>
@@ -201,19 +260,97 @@ const tabThrough = async (page, limit) => {
   const step = async (n, acc) => {
     if (n >= limit) return acc;
     await page.keyboard.press('Tab');
-    const stop = await page.evaluate(probeFocus);
+    const stop = await page.evaluate(() => {
+      const el = document.activeElement;
+      if (!el || el === document.body) return null;
+      const s = getComputedStyle(el);
+      const alpha = (c) => { const m = /rgba\([^)]*,\s*([\d.]+)\)/.exec(c); return m ? Number(m[1]) : (c === 'transparent' ? 0 : 1); };
+      return { id: el.dataset.fxId, element: el.tagName.toLowerCase() + ' "' + (el.textContent || '').trim().slice(0, 24) + '"',
+               outline: s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0 && alpha(s.outlineColor) > 0 };
+    });
     return stop === null || acc.some((s) => s.id === stop.id) ? acc : step(n + 1, [...acc, stop]);
   };
   return step(0, []);
 };
 
-const focusCheck = async (page, requireOutline) => {
-  const total = await page.evaluate(() => [...document.querySelectorAll('a[href], button')]
-    .map((el, i) => { el.dataset.fxId = String(i); return i; }).length);
-  const stops = await tabThrough(page, total + 2);
-  const bad = stops.filter((s) => !s.inView || !(s.outline || (!requireOutline && s.shadow)));
-  return { total, reached: stops.length, bad: bad.map((s) => s.element),
-           pass: stops.length === total && bad.length === 0 };
+const tagInteractive = (page) => page.evaluate(() => [...document.querySelectorAll('a[href], button')].map((el, i) => {
+  el.dataset.fxId = String(i);
+  const surface = el.closest('.echelon-app-bar') ? 'chrome'
+    : el.closest('.echelon-panel[data-echelon-surface="sunken"]') ? 'sunken'
+      : el.closest('.echelon-panel[data-echelon-surface="accent"]') ? 'accent'
+        : el.closest('.echelon-panel') ? 'raised' : 'canvas';
+  return { id: String(i), surface, label: `${el.tagName.toLowerCase()}${el.dataset.echelonEmphasis ? '[' + el.dataset.echelonEmphasis + ']' : ''} "${el.textContent.trim().slice(0, 24)}"` };
+}));
+
+// Forced colours drop box-shadows, so there the outline itself must show.
+const forcedFocus = async (page) => {
+  const targets = await tagInteractive(page);
+  const stops = await tabThrough(page, targets.length + 2);
+  const bad = stops.filter((s) => !s.outline).map((s) => s.element);
+  return { total: targets.length, reached: stops.length, bad, pass: stops.length === targets.length && bad.length === 0 };
+};
+
+// Screenshot each element and its surroundings unfocused and keyboard-focused,
+// and require a visible change with >= 3:1 contrast over at least one
+// CSS-pixel perimeter of the element.
+const focusVisual = async (browser, colorScheme, url, out) => {
+  const { context, page } = await openPage(browser, { viewport: { width: 1280, height: 900 }, colorScheme }, null, url);
+  const differ = await context.newPage();
+  const targets = await tagInteractive(page);
+  const one = async (target, index) => {
+    await page.mouse.move(0, 0);
+    // Reach the element with the keyboard: focus its neighbour, then Tab (or
+    // Shift+Tab for the first element) so the focus is keyboard focus.
+    const neighbour = index > 0 ? targets[index - 1].id : targets[1].id;
+    await page.evaluate(({ id, from }) => {
+      if (document.activeElement) document.activeElement.blur();
+      document.querySelector(`[data-fx-id="${id}"]`).scrollIntoView({ block: 'center' });
+      document.querySelector(`[data-fx-id="${from}"]`).focus({ preventScroll: true });
+    }, { id: target.id, from: neighbour });
+    await page.keyboard.press(index > 0 ? 'Tab' : 'Shift+Tab');
+    await page.waitForTimeout(150);
+    const state = await page.evaluate((id) => {
+      const el = document.activeElement;
+      const r = document.querySelector(`[data-fx-id="${id}"]`).getBoundingClientRect();
+      return { focused: el && el.dataset.fxId === id, visible: el ? el.matches(':focus-visible') : false,
+               box: { x: r.x, y: r.y, width: r.width, height: r.height }, vw: innerWidth, vh: innerHeight };
+    }, target.id);
+    const pad = 12;
+    const x = Math.max(0, Math.floor(state.box.x - pad));
+    const y = Math.max(0, Math.floor(state.box.y - pad));
+    const clip = { x, y, width: Math.min(state.vw - x, Math.ceil(state.box.width + 2 * pad)),
+                   height: Math.min(state.vh - y, Math.ceil(state.box.height + 2 * pad)) };
+    const after = await page.screenshot({ clip });
+    await page.evaluate(() => document.activeElement && document.activeElement.blur());
+    await page.waitForTimeout(150);
+    const before = await page.screenshot({ clip });
+    const diff = await differ.evaluate(probeDiff, [before.toString('base64'), after.toString('base64')]);
+    const perimeter = Math.round(2 * (state.box.width + state.box.height));
+    const pass = state.focused && state.visible && diff.strong >= perimeter;
+    if (!pass) fs.writeFileSync(path.join(out, `focus-fail-${colorScheme}-${target.id}.png`), after);
+    return { ...target, colorScheme, focused: state.focused, focusVisible: state.visible, perimeter, ...diff, pass };
+  };
+  const results = await targets.reduce(async (acc, target, i) => [...await acc, await one(target, i)], Promise.resolve([]));
+  await context.close();
+  return results;
+};
+
+const contrastVerdict = (name, probe) => {
+  const unique = [...new Map(probe.measured.map((p) => [`${p.fg}|${p.bg}|${p.need}`, p])).values()];
+  const fails = probe.measured.filter((p) => p.exact < p.need || p.image);
+  return { name: `contrast (${name})`, pass: fails.length === 0 && probe.measured.length >= probe.textNodes,
+           detail: { textNodes: probe.textNodes, measured: probe.measured.length, uniquePairs: unique.length,
+                     minRatio: Math.min(...probe.measured.map((p) => p.ratio)),
+                     fails: fails.map(({ exact, ...p }) => p) },
+           pairs: unique.map(({ exact, ...p }) => p) };
+};
+
+const weightVerdict = (name, probe) => {
+  const bad = probe.measured.filter((p) => SHIPPED_WEIGHTS[p.family] && (
+    p.family === 'IBM Plex Mono' ? !SHIPPED_WEIGHTS[p.family].includes(p.weight)
+      : p.weight < SHIPPED_WEIGHTS[p.family][0] || p.weight > SHIPPED_WEIGHTS[p.family][1]));
+  return { name: `fonts: no synthesized weights (${name})`, pass: bad.length === 0,
+           detail: [...new Set(bad.map((p) => `${p.element} ${p.family} ${p.weight}`))] };
 };
 
 async function main() {
@@ -231,13 +368,12 @@ async function main() {
   const perScheme = async (scheme) => {
     const { context, page } = await openPage(browser, { viewport: { width: 1280, height: 900 }, colorScheme: scheme.colorScheme }, scheme.theme, url);
     await shot(page, `fixture-${scheme.name}`);
-    const pairs = await page.evaluate(probeContrast);
+    const contrast = await page.evaluate(probeContrast);
     const coverage = await page.evaluate(probeCoverage, vocabulary(appCss));
     const chips = await page.evaluate(probeChips);
     const fonts = await page.evaluate(probeFonts, FONT_FACES);
-    const focus = await focusCheck(page, false);
     await context.close();
-    return { scheme: scheme.name, pairs, coverage, chips, fonts, focus };
+    return { scheme: scheme.name, contrast, coverage, chips, fonts };
   };
   const schemes = await Promise.all(SCHEMES.map(perScheme));
 
@@ -250,10 +386,13 @@ async function main() {
       offenders: [...document.querySelectorAll('body *')].filter((e) => e.getBoundingClientRect().right > innerWidth + 1
         && !e.closest('.forma-data-grid')).slice(0, 8).map((e) => e.tagName.toLowerCase() + '.' + [...e.classList].join('.')),
     }));
+    const contrast = await page.evaluate(probeContrast);
     await shot(page, `reflow-390-text200-${colorScheme}`);
     await context.close();
-    return { colorScheme, ...r, pass: r.scrollWidth <= r.innerWidth };
+    return { colorScheme, ...r, contrast, pass: r.scrollWidth <= r.innerWidth };
   }));
+
+  const focus = [...await focusVisual(browser, 'light', url, out), ...await focusVisual(browser, 'dark', url, out)];
 
   const motion = await Promise.all(['reduce', 'no-preference'].map(async (reducedMotion) => {
     const { context, page } = await openPage(browser, { reducedMotion }, null, url);
@@ -261,9 +400,6 @@ async function main() {
     const running = await page.evaluate(() => document.getAnimations()
       .filter((a) => a.playState === 'running' && a.effect && a.effect.getComputedTiming().iterations === Infinity)
       .map((a) => a.animationName || 'animation'));
-    // Forma's own reduced-motion rule caps every animation at one iteration, so
-    // also read the skeleton lines' own declarations: the Echelon rule itself
-    // must remove the shimmer (no animation, no gradient).
     const shimmer = await page.evaluate(() => [...document.querySelectorAll('.echelon-skeleton-line')]
       .filter((el) => { const s = getComputedStyle(el); return s.animationName !== 'none' || s.backgroundImage !== 'none'; }).length);
     await context.close();
@@ -275,9 +411,9 @@ async function main() {
     await shot(page, 'fixture-forced-colors');
     const result = await page.evaluate(probeForced, brandColours(appCss, brandCss));
     const chips = await page.evaluate(probeChips);
-    const focus = await focusCheck(page, true);
+    const focusResult = await forcedFocus(page);
     await context.close();
-    return { ...result, chips, focus };
+    return { ...result, chips, focus: focusResult };
   })();
 
   await browser.close();
@@ -289,24 +425,34 @@ async function main() {
     ...chips.filter((c) => !c.markerVisible).map((c) => `${family}/${c.tone}: marker not visible`),
     ...chips.filter((c, i) => chips.some((d, j) => j !== i && d.shape === c.shape)).map((c) => `${family}/${c.tone}: marker shape not distinct`),
   ]);
-  const uniquePairs = (pairs) => [...new Map(pairs.map((p) => [`${p.fg}|${p.bg}|${p.need}`, p])).values()];
+  const contrastChecks = [
+    ...schemes.map((s) => contrastVerdict(s.scheme, s.contrast)),
+    ...reflow.map((r) => contrastVerdict(`390px 200% ${r.colorScheme}`, r.contrast)),
+  ];
+  const focusSurfaces = (scheme) => [...new Set(focus.filter((f) => f.colorScheme === scheme).map((f) => f.surface))].sort();
   const checks = [
-    ...schemes.map((s) => ({ name: `coverage (${s.scheme})`, pass: !s.coverage.missingClasses.length && !s.coverage.missingAttributes.length, detail: s.coverage })),
-    ...schemes.map((s) => {
-      const pairs = uniquePairs(s.pairs);
-      const fails = pairs.filter((p) => p.exact < p.need || p.image);
-      return { name: `contrast (${s.scheme})`, pass: fails.length === 0,
-               detail: { textElements: s.pairs.length, uniquePairs: pairs.length, minRatio: Math.min(...pairs.map((p) => p.ratio)), fails } };
+    ...schemes.map((s) => ({ name: `coverage (${s.scheme})`,
+      pass: !s.coverage.missingClasses.length && !s.coverage.missingAttributes.length && !s.coverage.missingBarTones.length
+        && SURFACES.every((x) => s.coverage.surfaces.includes(x)), detail: s.coverage })),
+    ...contrastChecks.map(({ pairs, ...c }) => c),
+    ...['light', 'dark'].map((scheme) => {
+      const rows = focus.filter((f) => f.colorScheme === scheme);
+      const bad = rows.filter((f) => !f.pass);
+      return { name: `focus indicator visible, >= 3:1 change (${scheme})`,
+               pass: bad.length === 0 && rows.length > 0 && SURFACES.every((x) => focusSurfaces(scheme).includes(x)),
+               detail: { elements: rows.length, surfaces: focusSurfaces(scheme),
+                         minStrongOverPerimeter: Math.min(...rows.map((f) => Math.floor((f.strong / f.perimeter) * 100) / 100)),
+                         fails: bad.map((f) => `${f.surface} ${f.label}: focused=${f.focused} focusVisible=${f.focusVisible} strong=${f.strong}/${f.perimeter} changed=${f.changed} max=${f.maxRatio}`) } };
     }),
-    ...schemes.map((s) => ({ name: `focus (${s.scheme})`, pass: s.focus.pass, detail: s.focus })),
     ...schemes.map((s) => ({ name: `chips (${s.scheme})`, pass: chipVerdict(s.chips).length === 0 && s.chips.length === 2, detail: chipVerdict(s.chips) })),
     ...schemes.map((s) => ({
-      name: `fonts (${s.scheme})`,
+      name: `fonts load (${s.scheme})`,
       pass: s.fonts.loaded.every((f) => f.loaded > 0) && s.fonts.requests.length === 5
         && s.fonts.requests.every((r) => r.url.startsWith('/dist/fonts/') && r.status === 200),
       detail: s.fonts,
     })),
-    ...reflow.map((r) => ({ name: `reflow 390px, 200% text (${r.colorScheme})`, pass: r.pass, detail: r })),
+    ...schemes.map((s) => weightVerdict(s.scheme, s.contrast)),
+    ...reflow.map((r) => ({ name: `reflow 390px, 200% text (${r.colorScheme})`, pass: r.pass, detail: (({ contrast, ...x }) => x)(r) })),
     { name: 'motion: no infinite animation under reduced motion', pass: motion[0].running.length === 0, detail: motion[0] },
     { name: 'motion: no shimmer declared under reduced motion', pass: motion[0].shimmer === 0, detail: motion[0] },
     { name: 'motion: shimmer runs without reduced motion (check is live)',
@@ -317,10 +463,14 @@ async function main() {
     { name: 'forced colours: chip markers keep distinct shapes', pass: chipVerdict(forced.chips).length === 0, detail: chipVerdict(forced.chips) },
     { name: 'forced colours: focus outline visible', pass: forced.focus.pass, detail: forced.focus },
   ];
-  const contrast = schemes.map((s) => ({ scheme: s.scheme, pairs: uniquePairs(s.pairs).map(({ exact, ...p }) => p) }));
-  fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({ checks, contrast }, null, 2) + '\n');
+  const contrast = contrastChecks.map((c) => ({ check: c.name, pairs: c.pairs }));
+  fs.writeFileSync(path.join(out, 'results.json'), JSON.stringify({ checks, contrast, focus }, null, 2) + '\n');
   checks.forEach((c) => console.log(`${c.pass ? 'PASS' : 'FAIL'}: ${c.name}${c.pass ? '' : '\n      ' + JSON.stringify(c.detail)}`));
-  contrast.forEach((s) => console.log(`contrast ${s.scheme}: ${s.pairs.length} unique text pairs, min ${Math.min(...s.pairs.map((p) => p.ratio))}:1`));
+  contrastChecks.forEach((c) => console.log(`${c.name}: ${c.detail.textNodes} text nodes, ${c.detail.measured} measured, ${c.detail.uniquePairs} unique pairs, min ${c.detail.minRatio}:1`));
+  ['light', 'dark'].forEach((scheme) => {
+    const rows = focus.filter((f) => f.colorScheme === scheme);
+    console.log(`focus ${scheme}: ${rows.length} elements on ${focusSurfaces(scheme).join(', ')}; weakest has ${Math.min(...rows.map((f) => f.strong))} px at >= 3:1 (needs one perimeter)`);
+  });
   const failed = checks.filter((c) => !c.pass).length;
   console.log(`${checks.length - failed} passed, ${failed} failed`);
   process.exitCode = failed ? 1 : 0;

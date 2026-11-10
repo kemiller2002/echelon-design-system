@@ -132,10 +132,12 @@
     align-items: center;
     font-size: 0.875rem;
   }
-  /* Quiet controls and chips in the bar take the chrome's text colour (the
-     review mockups did this with inline styles, which Signal's CSP forbids). */
+  /* Quiet controls in the bar take the chrome's text colour (the review
+     mockups did this with inline styles, which Signal's CSP forbids). Chips
+     in the bar are restyled after the chip rules, below. */
   [data-forma-brand="echelon"] .echelon-app-bar .forma-button[data-echelon-emphasis="tertiary"] { color: inherit; }
-  [data-forma-brand="echelon"] .echelon-app-bar .echelon-chip { background: transparent; color: inherit; border-color: currentColor; }
+  /* Plain links on the chrome: Forma's bronze link colour is 2.71:1 there. */
+  [data-forma-brand="echelon"] .echelon-app-bar a:not(.forma-button) { color: inherit; }
 
   /* ---- Route-link tabs ------------------------------------------------- */
   [data-forma-brand="echelon"] .echelon-nav-tabs {
@@ -182,6 +184,65 @@
   /* Secondary text is re-paired on tinted surfaces so it keeps AA contrast. */
   [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) {
     --echelon-text-secondary: var(--forma-color-text-on-secondary-surface);
+  }
+  /* Forma's own secondary text, re-paired the same way. Forma colours these
+     elements with --forma-color-text-secondary, which fails AA on the sunken
+     and accent surfaces; this layer may not redefine that token, so it
+     recolours exactly the selectors Forma 1.0.1 colours with it (the list is
+     checked against Forma's CSS in tests/test_theme_package.py). */
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) :where(p),
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-field__description,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-switch__description,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-checkbox__description,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-slider__bounds,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-search__status,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-combobox__help,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-collection-toolbar__count,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-pagination__summary,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-metric-card__label,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-progress__value,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-wizard__position,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-wizard__steps li,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-file-upload__queue small,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-master-detail__master span,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-provenance-trail__kind,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-provenance-trail small,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-wizard__steps [data-state="current"]::after,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-data-grid td::before,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-composer__context p,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-understanding__header p,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-composer__status,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-turn__speaker,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-understanding__item p,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-fault__severity,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-fault-reference,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-fault-summary__meta,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-fault-details__boundary,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) :where(.forma-security-posture__meta,.forma-security-unknown dl,.forma-security-exception dl) dt,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-security-posture__qualification,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-invariant-result dt,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-verification-frame__facts dt,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-comparison-pairs__value::before,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-attention-path [data-attention-step]::before,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-emphasis-label,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-app-identity__context,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-startup__slow,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-question__help,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-choice__content > span,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-survey-progress__value,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-survey-progress__context,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-semantic-differential__endpoints,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-range-entry__separator,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-selection-guidance,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-best-worst__header,
+  [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-pairwise__versus {
+    color: var(--echelon-text-secondary);
+  }
+  /* Links on the accent surface: Forma's accent link colour is 4.19:1 on the
+     dark accent surface, so links there use the action colour (the same value
+     as Forma's accent in light, bronze pale in dark). */
+  [data-forma-brand="echelon"] .echelon-panel[data-echelon-surface="accent"] a:not(.forma-button) {
+    color: var(--echelon-action-primary);
   }
   [data-forma-brand="echelon"] .echelon-panel[data-echelon-attention="true"] {
     border-inline-start: 4px solid var(--forma-color-status-warning);
@@ -233,8 +294,10 @@
     font-size: clamp(2.25rem, 5vw, 3.5rem);
     line-height: 1.05;
   }
+  /* Mono labels use 500: IBM Plex Mono ships 400 and 500 only, so a heavier
+     weight would be synthesized. */
   [data-forma-brand="echelon"] .echelon-eyebrow {
-    font: var(--echelon-weight-label) 0.75rem/1.2 var(--forma-primitive-font-family-mono);
+    font: 500 0.75rem/1.2 var(--forma-primitive-font-family-mono);
     letter-spacing: var(--echelon-tracking-label);
     text-transform: uppercase;
     color: var(--echelon-text-secondary);
@@ -261,6 +324,13 @@
     box-shadow: var(--echelon-elevation-1);
   }
   [data-forma-brand="echelon"] .forma-button[data-echelon-emphasis="primary"]:hover { filter: brightness(1.08); }
+  /* Forma draws keyboard focus as a focus-gap outline plus a focus-ring
+     box-shadow. The elevation above would replace that ring (this layer
+     outranks Forma), so while focused the ring comes first and the elevation
+     follows it; Forma's outline is untouched. */
+  [data-forma-brand="echelon"] .forma-button[data-echelon-emphasis="primary"]:focus-visible {
+    box-shadow: 0 0 0 5px var(--forma-color-focus-ring), var(--echelon-elevation-1);
+  }
   [data-forma-brand="echelon"] .forma-button[data-echelon-emphasis="tertiary"] {
     background: transparent;
     border-color: transparent;
@@ -339,6 +409,15 @@
   [data-forma-brand="echelon"] .echelon-chip[data-echelon-tone="closed"]::before {
     block-size: 0.125rem;
     border-radius: 1px;
+  }
+  /* Chips on the app bar's dark chrome take the chrome's text colour, with no
+     fill, whatever their tone; the marker shape still tells tones apart. This
+     comes after the tone rules and is more specific than all of them. */
+  [data-forma-brand="echelon"] .echelon-app-bar .echelon-chip,
+  [data-forma-brand="echelon"] .echelon-app-bar .echelon-chip[data-echelon-tone] {
+    background: transparent;
+    color: inherit;
+    border-color: currentColor;
   }
 
   /* ---- Loading --------------------------------------------------------- */

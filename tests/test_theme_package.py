@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 import pathlib
+import re
 import shutil
 import subprocess
 import sys
@@ -181,7 +182,12 @@ class AdversarialFixtures(unittest.TestCase):
                               "fonts-declares-forma-property", "app-uses-ef-namespace",
                               "fonts-absolute-url", "fonts-url-leaves-package", "fonts-remote-url",
                               "app-infinite-animation-without-reduced-motion",
-                              "app-brand-colour-under-forced-colors"}, names)
+                              "app-brand-colour-under-forced-colors",
+                              # review of PR #6
+                              "app-defines-forma-class-escaped", "app-declares-forma-property-escaped",
+                              "fonts-truetype-format-on-woff2", "font-woff2-signature-then-junk",
+                              "font-woff2-bad-table-directory", "theme-file-not-in-checksums",
+                              "logo-not-in-checksums"}, names)
 
     def test_validator_rejects_a_package_checked_against_another_brand_attribute(self):
         other = "data-forma-brand" if PIN["brandAttribute"] == "data-ef-brand" else "data-ef-brand"
@@ -361,6 +367,42 @@ class ApplicationLayer(unittest.TestCase):
         nodes, problems = theme_validator.parse_css('a { content: "}{;"; } @keyframes x { from { a: 1 } }')
         self.assertEqual(problems, [])
         self.assertEqual([n.kind for n in nodes], ["style", "keyframes"])
+
+    REPAIR_PREFIX = '[data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) '
+
+    def repaired_selectors(self) -> set:
+        nodes, _ = theme_validator.parse_css(self.css)
+        return {" ".join(s.split())[len(self.REPAIR_PREFIX):]
+                for n in nodes if n.kind == "style" and dict(n.declarations).get("color") == "var(--echelon-text-secondary)"
+                for s in theme_validator._split_top(n.prelude, ",") if " ".join(s.split()).startswith(self.REPAIR_PREFIX)}
+
+    def test_sunken_and_accent_panels_repair_forma_secondary_text_without_redefining_the_token(self):
+        repaired = self.repaired_selectors()
+        self.assertIn(":where(p)", repaired)
+        self.assertIn(".forma-field__description", repaired)
+        self.assertGreaterEqual(len(repaired), 40)
+        nodes, _ = theme_validator.parse_css(self.css)
+        self.assertFalse([p for n in nodes for p, _ in n.declarations if p.startswith("--forma-")])
+
+    def test_mono_text_uses_a_shipped_plex_mono_weight(self):
+        nodes, _ = theme_validator.parse_css(self.css)
+        for node in nodes:
+            values = dict(node.declarations)
+            mono = "font-family-mono" in values.get("font", "") + values.get("font-family", "")
+            with self.subTest(rule=node.prelude):
+                if mono and "font" in values:
+                    self.assertRegex(values["font"], r"^(400|500) ")
+                if mono and "font-weight" in values:
+                    self.assertIn(values["font-weight"], ("400", "500"))
+
+    @unittest.skipUnless(FORMA_ALL_CSS, "set FORMA_ALL_CSS to a Forma release's forma-all.css")
+    def test_every_forma_secondary_text_selector_is_repaired(self):
+        forma, _ = theme_validator.parse_css(pathlib.Path(FORMA_ALL_CSS).read_text())
+        uses = {" ".join(s.split()) for n in forma if n.kind == "style"
+                if any(p == "color" and re.search(r"var\(--forma-color-text-(secondary|muted)\b", v) for p, v in n.declarations)
+                for s in theme_validator._split_top(n.prelude, ",")}
+        self.assertGreaterEqual(len(uses), 40)
+        self.assertEqual(sorted(uses - self.repaired_selectors()), [])
 
     @unittest.skipUnless(FORMA_ALL_CSS, "set FORMA_ALL_CSS to a Forma release's forma-all.css")
     def test_forma_hooks_exist_in_the_forma_release(self):

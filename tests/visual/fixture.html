@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="/tests/visual/fixture.css">
 </head>
 <body>
+<!-- Surface: chrome. Every interactive element and every chip tone on the app bar. -->
 <header class="echelon-app-bar">
   <a class="forma-app-identity" href="#top">
     <span class="forma-app-identity__mark">
@@ -23,16 +24,28 @@
   </a>
   <span class="echelon-app-bar__context">Administration</span>
   <span class="echelon-app-bar__end">
+    <span class="echelon-chip" data-echelon-tone="draft">Draft</span>
+    <span class="echelon-chip" data-echelon-tone="review">Review</span>
     <span class="echelon-chip" data-echelon-tone="published">Signed in</span>
+    <span class="echelon-chip" data-echelon-tone="ready">Ready</span>
+    <span class="echelon-chip" data-echelon-tone="progress">Importing</span>
+    <span class="echelon-chip" data-echelon-tone="complete">Complete</span>
+    <span class="echelon-chip" data-echelon-tone="sealed">Sealed</span>
+    <span class="echelon-chip" data-echelon-tone="closed">Superseded</span>
+    <a href="#top">Help</a>
+    <button class="forma-button" type="button" data-echelon-emphasis="primary">Save</button>
+    <button class="forma-button" type="button">Share</button>
     <button class="forma-button" type="button" data-echelon-emphasis="tertiary">Sign out</button>
   </span>
 </header>
 
+<!-- Surface: canvas. -->
 <main id="top" class="fx-main">
   <div class="fx-title">
     <span class="echelon-eyebrow">Dataset</span>
     <h1 class="echelon-display">Engagement survey</h1>
     <p class="echelon-lead">Every class of the Echelon application layer, rendered on Forma 1.0.1 with the Echelon brand, in light and dark.</p>
+    <p>A plain paragraph on the canvas. <small>Small print on the canvas.</small></p>
   </div>
 
   <nav class="echelon-nav-tabs" aria-label="Administration">
@@ -42,6 +55,15 @@
     <a href="#loading">Reports</a>
   </nav>
 
+  <div class="forma-actions">
+    <button class="forma-button" type="button" data-echelon-emphasis="primary">Create</button>
+    <button class="forma-button" type="button">Import</button>
+    <button class="forma-button" type="button" data-echelon-emphasis="tertiary">Export</button>
+    <button class="forma-button" type="button" data-echelon-emphasis="danger">Delete</button>
+    <a href="#groups">Canvas link</a>
+  </div>
+
+  <!-- Surface: raised. -->
   <section class="echelon-panel" aria-labelledby="actions-title">
     <div class="echelon-panel__header">
       <h2 id="actions-title" class="echelon-heading">Actions</h2>
@@ -53,25 +75,25 @@
       </div>
     </div>
     <div class="echelon-panel__body">
-      <p>A raised panel with a heading, body text and a figure.</p>
+      <p>A plain paragraph on a raised panel. <small>Small print on a raised panel.</small></p>
       <div class="fx-kpis">
         <div><span class="echelon-eyebrow">Accepted</span> <span class="echelon-figure">31</span></div>
         <div><span class="echelon-eyebrow">Invited</span> <span class="echelon-figure">48</span></div>
       </div>
       <div class="forma-data-grid">
         <table>
-          <caption>Groups</caption>
+          <caption>Groups on a raised panel</caption>
           <thead><tr><th scope="col">Group</th><th scope="col">Accepted</th><th scope="col">State</th></tr></thead>
           <tbody>
-            <tr><td><a href="#groups">engineering-q4</a></td><td>31 of 48</td><td><span class="echelon-chip" data-echelon-tone="review">Reconciling</span></td></tr>
-            <tr><td><a href="#groups">support-q4</a></td><td>16 of 16</td><td><span class="echelon-chip" data-echelon-tone="complete">Complete</span></td></tr>
+            <tr><td data-label="Group"><a href="#groups">engineering-q4</a></td><td data-label="Accepted">31 of 48</td><td data-label="State"><span class="echelon-chip" data-echelon-tone="review">Reconciling</span></td></tr>
+            <tr><td data-label="Group"><a href="#groups">support-q4</a></td><td data-label="Accepted">16 of 16</td><td data-label="State"><span class="echelon-chip" data-echelon-tone="complete">Complete</span></td></tr>
           </tbody>
         </table>
       </div>
     </div>
     <div class="echelon-panel__footer">
       <button class="forma-button" type="button">Previous</button>
-      <span>Page 1 of 3</span>
+      <span class="forma-pagination__summary">Page 1 of 3</span>
     </div>
   </section>
 
@@ -92,13 +114,25 @@
     </div>
   </section>
 
+  <!-- Surface: sunken, without forma-surface: the layer alone must re-pair secondary text. -->
   <section id="templates" class="echelon-panel" data-echelon-surface="sunken" aria-labelledby="templates-title">
     <div class="echelon-panel__header">
       <h2 id="templates-title" class="echelon-heading">Template lifecycle (sunken)</h2>
+      <div class="forma-actions">
+        <button class="forma-button" type="button" data-echelon-emphasis="primary">Publish draft</button>
+        <button class="forma-button" type="button">Duplicate</button>
+        <button class="forma-button" type="button" data-echelon-emphasis="tertiary">History</button>
+        <button class="forma-button" type="button" data-echelon-emphasis="danger">Discard</button>
+      </div>
     </div>
     <div class="echelon-panel__body">
       <span class="echelon-eyebrow">Secondary text re-paired on a sunken surface</span>
       <p class="echelon-lead">Lead text on the sunken surface.</p>
+      <p>A plain paragraph on a sunken panel. <small>Small print on a sunken panel.</small> <a href="#templates">Sunken link</a></p>
+      <span class="forma-field__description">Forma field description on sunken</span>
+      <span class="forma-metric-card__label">Forma metric label on sunken</span>
+      <span class="forma-question__help">Forma question help on sunken</span>
+      <span class="forma-app-identity__context">Forma identity context on sunken</span>
       <ul class="fx-chips" data-fx-family="lifecycle">
         <li><span class="echelon-chip" data-echelon-tone="draft">Draft</span></li>
         <li><span class="echelon-chip" data-echelon-tone="review">In review</span></li>
@@ -111,24 +145,61 @@
         <li><span class="echelon-chip" data-echelon-tone="sealed">Finalized</span></li>
         <li><span class="echelon-chip" data-echelon-tone="closed">Superseded</span></li>
       </ul>
+      <div class="forma-data-grid">
+        <table>
+          <caption>Versions on a sunken panel</caption>
+          <thead><tr><th scope="col">Version</th><th scope="col">State</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Version">3</td><td data-label="State"><span class="echelon-chip" data-echelon-tone="draft">Draft</span></td></tr>
+          </tbody>
+        </table>
+      </div>
       <div class="echelon-loading" role="status"><span class="forma-spinner" data-forma-state="idle"><span class="forma-spinner__indicator" aria-hidden="true"></span></span><span>Saved</span></div>
     </div>
   </section>
 
-  <section class="echelon-panel forma-surface" data-echelon-surface="accent" aria-labelledby="accent-title">
+  <!-- Surface: accent, without forma-surface. -->
+  <section class="echelon-panel" data-echelon-surface="accent" aria-labelledby="accent-title">
     <div class="echelon-panel__header">
       <h2 id="accent-title" class="echelon-heading">Accent surface</h2>
+      <div class="forma-actions">
+        <button class="forma-button" type="button" data-echelon-emphasis="primary">Start</button>
+        <button class="forma-button" type="button">Later</button>
+        <button class="forma-button" type="button" data-echelon-emphasis="tertiary">Why?</button>
+        <button class="forma-button" type="button" data-echelon-emphasis="danger">Opt out</button>
+      </div>
     </div>
     <div class="echelon-panel__body">
       <span class="echelon-eyebrow">For respondents</span>
       <p class="echelon-lead">Lead text on the accent surface.</p>
-      <span class="forma-app-identity__context">Forma secondary text, re-paired by composing forma-surface</span>
+      <p>A plain paragraph on an accent panel. <small>Small print on an accent panel.</small> <a href="#top">Accent link</a></p>
+      <span class="forma-field__description">Forma field description on accent</span>
+      <span class="forma-pagination__summary">Forma pagination summary on accent</span>
+      <span class="forma-survey-progress__context">Forma survey progress context on accent</span>
+      <div class="forma-data-grid">
+        <table>
+          <caption>Answers on an accent panel</caption>
+          <thead><tr><th scope="col">Question</th><th scope="col">Answer</th></tr></thead>
+          <tbody><tr><td data-label="Question">Q1</td><td data-label="Answer">Agree</td></tr></tbody>
+        </table>
+      </div>
       <ul class="fx-chips">
         <li><span class="echelon-chip" data-echelon-tone="draft">Draft</span></li>
         <li><span class="echelon-chip" data-echelon-tone="ready">Ready</span></li>
         <li><span class="echelon-chip" data-echelon-tone="closed">Closed</span></li>
         <li><span class="echelon-chip" data-echelon-tone="review">Review</span></li>
       </ul>
+    </div>
+  </section>
+
+  <!-- Accent composed with Forma's forma-surface: must keep working. -->
+  <section class="echelon-panel forma-surface" data-echelon-surface="accent" aria-labelledby="surface-title">
+    <div class="echelon-panel__header">
+      <h2 id="surface-title" class="echelon-heading">Accent with forma-surface</h2>
+    </div>
+    <div class="echelon-panel__body">
+      <p>A plain paragraph in a composed panel. <small>Small print in a composed panel.</small></p>
+      <span class="forma-app-identity__context">Forma secondary text in a composed panel</span>
     </div>
   </section>
 

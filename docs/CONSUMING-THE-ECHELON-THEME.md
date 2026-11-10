@@ -107,23 +107,23 @@ Light values apply on the brand element; dark values apply under `data-forma-the
 | `--echelon-tracking-display` / `--echelon-tracking-label` | `-0.02em` / `0.08em` | same |
 | `--echelon-text-secondary` | Forma's `--forma-color-text-secondary`; on sunken and accent panels, Forma's `--forma-color-text-on-secondary-surface` | same |
 
-The brand element also gets `background: var(--echelon-surface-canvas)`. `--echelon-border-subtle` darkens Forma's subtle border in dark mode for this layer's own rules only; Forma components keep Forma's value. `--echelon-text-secondary` carries the Echelon AUDIT §6 re-pairing (no secondary text on stone-family surfaces) without redefining a Forma token.
+The brand element also gets `background: var(--echelon-surface-canvas)`. `--echelon-border-subtle` darkens Forma's subtle border in dark mode for this layer's own rules only; Forma components keep Forma's value. `--echelon-text-secondary` carries the Echelon AUDIT §6 re-pairing (no secondary text on stone-family surfaces) without redefining a Forma token. `--echelon-text-secondary` is not in the interface contract's table; it is how the contract's re-pairing is done without touching Forma's token.
 
 ### Classes and attributes
 
 | Hook | What it does |
 | --- | --- |
-| `.echelon-app-bar`, `__context`, `__end` | Dark application chrome with a bronze bottom rule; wraps. A `.forma-app-identity` inside always shows its `data-forma-scheme="dark"` variant (the light-tile mark). `__context` is a mono, uppercase section label; `__end` holds session details and actions at the inline end. Tertiary buttons and chips in the bar take the chrome's text colour. |
+| `.echelon-app-bar`, `__context`, `__end` | Dark application chrome with a bronze bottom rule; wraps. A `.forma-app-identity` inside always shows its `data-forma-scheme="dark"` variant (the light-tile mark). `__context` is a mono, uppercase section label; `__end` holds session details and actions at the inline end. Plain links, tertiary buttons and chips of every tone in the bar take the chrome's text colour (chips lose their fill but keep their marker shapes). |
 | `.echelon-nav-tabs` | Route-link tabs: `<nav class="echelon-nav-tabs" aria-label="…"><a href="…" aria-current="page">…</a>…</nav>`. The current link gets the bronze rule. |
 | `.echelon-panel`, `__header`, `__body`, `__footer` | Raised surface with `--echelon-radius-container` and `--echelon-elevation-1`. A `.forma-actions` row in the header sits at the inline end; a `.forma-data-grid` inside drops its own border. |
-| `.echelon-panel[data-echelon-surface="sunken"\|"accent"]` | Sunken (flat) or accent (bronze wash) surface; this layer's secondary text is re-paired. For Forma components with secondary text inside such a panel, also add Forma's `forma-surface` class (`class="echelon-panel forma-surface"`): Forma then re-pairs its own secondary text. The panel keeps its Echelon surface and padding. |
+| `.echelon-panel[data-echelon-surface="sunken"\|"accent"]` | Sunken (flat) or accent (bronze wash) surface. Secondary text is re-paired to `--forma-color-text-on-secondary-surface` with no opt-in: this layer's own secondary text, plain `<p>`, and every element Forma 1.0.1 colours with `--forma-color-text-secondary` (its 46 selectors, from field descriptions to data-grid labels; CI checks the list against Forma's CSS). Inside such a panel, a Forma state that colours one of those elements differently (for example a wizard's current step) takes the re-paired colour too. Links on the accent surface use `--echelon-action-primary` (Forma's accent link colour is 4.19:1 on the dark accent surface). Composing Forma's `forma-surface` class on the panel still works; the panel keeps its Echelon surface and padding. |
 | `.echelon-panel[data-echelon-attention="true"]` | Status-warning start border for a panel that needs action. |
-| `.echelon-panel[aria-busy="true"]` | The panel recedes onto the canvas (no raised surface, no elevation) and its body shows a progress cursor. Text keeps full contrast. |
+| `.echelon-panel[aria-busy="true"]` | The panel recedes onto the canvas (no raised surface, no elevation) and its body shows a progress cursor. Text keeps full contrast. This is a visible change from the approved mock, which dimmed the body to 55% opacity (about 3.9:1 for body text in light, below AA): a busy panel is now flattened, not dimmed. |
 | `.echelon-display`, `.echelon-heading` | Newsreader display and heading roles (weight 500, tracking `-0.02em`). `.echelon-display` is the page title size. |
-| `.echelon-eyebrow` | Mono, uppercase label above a heading or figure. |
+| `.echelon-eyebrow` | Mono, uppercase label above a heading or figure, at weight 500 (IBM Plex Mono ships 400 and 500 only). |
 | `.echelon-lead` | Introductory paragraph, 19px, secondary colour, 38rem measure. |
 | `.echelon-figure` | Large tabular figure for a key number. |
-| `.forma-button[data-echelon-emphasis="primary"\|"tertiary"\|"danger"]` | Emphasis on Forma's own buttons: bronze primary, underlined tertiary, outlined danger. Unmarked buttons are Forma's secondary button, unchanged. Every `.forma-button` under the brand gets `--echelon-radius-control`. |
+| `.forma-button[data-echelon-emphasis="primary"\|"tertiary"\|"danger"]` | Emphasis on Forma's own buttons: bronze primary, underlined tertiary, outlined danger. Unmarked buttons are Forma's secondary button, unchanged. Every `.forma-button` under the brand gets `--echelon-radius-control`. Keyboard focus is Forma's: its focus-gap outline and focus-ring shadow; on a primary button the ring is drawn first and the elevation after it, so the elevation never hides the ring. |
 | `.echelon-chip[data-echelon-tone="…"]` | Status chip. Always put the state's name in the chip as text. The marker shape is a second cue that does not depend on hue (mapping below). |
 | `.echelon-loading` | `<div class="echelon-loading" role="status"><span class="forma-spinner"><span class="forma-spinner__indicator" aria-hidden="true"></span></span><span>Loading groups…</span></div>`: Forma's spinner and a visible label. |
 | `.echelon-skeleton`, `.echelon-skeleton-line` | Placeholder lines. Always pair them with a text label (for example `.echelon-loading`) and `aria-busy="true"` on the region; mark the skeleton itself `aria-hidden="true"`. The lines shimmer only while the region (or the skeleton) is `aria-busy="true"`. |
@@ -151,11 +151,23 @@ The tones that share a marker family never share a shape: draft, review and publ
 
 The fonts are licensed under the **SIL Open Font License 1.1**, not under this package's licence. Each package's licence text ships in `dist/fonts/licenses/` (`newsreader-OFL.txt`, `manrope-OFL.txt`, `ibm-plex-mono-OFL.txt`). If you redistribute the font files, keep those texts with them. The OFL allows bundling and self-hosting; it forbids selling the fonts on their own and using the reserved font names for modified versions. These files are unmodified.
 
-To move to new font versions, change the versions in `theme/echelon-fonts.json`, run `python tools/fonts.py --update` (it fetches with `npm pack` and records integrity and sha256), then rebuild. The build fetches the same tarballs and fails if any byte differs from the record; `python tools/fonts.py --check` verifies without writing.
+To move to new font versions, change the versions in `theme/echelon-fonts.json`, run `python tools/fonts.py --update` (it fetches with `npm pack` and records integrity and sha256), then rebuild. The build fetches the same tarballs and fails if any byte differs from the record. `python tools/fonts.py --check` verifies without writing and also compares every file in `dist/fonts/` with the npm tarballs byte for byte. That comparison is the guarantee that a font is real: the validator's WOFF2 header and directory check catches malformed or substituted files, but it does not decompress the font.
+
+The GitHub release also attaches `echelon-fonts.css`, the `.woff2` files and the OFL texts on their own, for inspection and checksum verification. Install from the tarball: `echelon-fonts.css` loads `fonts/<file>.woff2` relative to itself, so it needs the package's `dist/fonts/` layout beside it.
 
 ### Render and accessibility tests
 
-`tests/visual/run.cjs` serves `tests/visual/fixture.html` (every class and tone above) with Forma 1.0.1's `forma-all.css` and the three theme stylesheets, and checks in Playwright Chromium: WCAG AA for every text pair in light, dark, explicit light and explicit dark; a visible focus indicator on every link and button; no horizontal overflow at 390px with 200% text; no infinite animation and no shimmer under reduced motion; distinct chip marker shapes and non-empty labels; that every font loads from `dist/fonts/`; and, under forced colours, kept borders, focus and marker shapes with no brand colour. CI runs it in the `render` job and uploads the screenshots.
+`tests/visual/run.cjs` serves `tests/visual/fixture.html` with Forma 1.0.1's `forma-all.css` and the three theme stylesheets. The fixture has every class and tone above, every chip tone on the app bar, buttons of each emphasis and links on the canvas, raised, sunken, accent and chrome surfaces, and plain `<p>`, `<small>`, table captions, data-grid labels and Forma secondary-text classes on sunken and accent panels (with and without `forma-surface`). In Playwright Chromium it checks:
+
+- **contrast:** every visible text node and every pseudo-element with text, against its composited background, meets WCAG AA (4.5:1, or 3:1 for large text) at 1280px in light, dark, explicit light and explicit dark, and at 390px with 200% text in light and dark;
+- **focus:** every link and button, reached with the keyboard in light and dark, matches `:focus-visible`, and a screenshot of it and its surroundings changes, with at least one CSS-pixel perimeter's worth of pixels whose focused colour has at least 3:1 contrast with their unfocused colour;
+- **reflow:** no horizontal overflow at 390px with 200% text;
+- **motion:** under reduced motion, no infinite animation and no shimmer in the skeleton's own computed style;
+- **chips:** distinct marker shapes and non-empty labels;
+- **fonts:** every font loads from `dist/fonts/`, and no text asks for an IBM Plex Mono weight other than 400 or 500;
+- **forced colours:** borders and focus outlines are kept, marker shapes survive, and no brand colour is painted.
+
+CI runs it in the `render` job and uploads the screenshots and `results.json`.
 
 ## Verifying a package
 
@@ -173,10 +185,11 @@ The validator fails in any of these cases:
 - a rule in `dist/echelon.css` is not scoped to the brand attribute;
 - `checksums.txt` does not match the files;
 - a file under `dist/` is missing from the asset manifest or from `checksums.txt`;
-- a font is not WOFF2, its sha256 does not match, its npm package and version are not recorded, or its package's OFL text is not packaged;
+- a file shipped under `dist/`, `theme/` or `logos/` is not listed in `checksums.txt`;
+- a font has no valid WOFF2 header and table directory (signature, length equal to the file size, table count, reserved field, flavor), its sha256 does not match, its npm package and version are not recorded, or its package's OFL text is not packaged;
 - a rule in `dist/echelon-app.css` or `dist/echelon-fonts.css` is not scoped to the brand attribute (a scope inside `:is()`/`:not()`/`:has()` or behind a sibling combinator does not count), or a rule in `dist/echelon-app.css` is outside `@layer echelon.app`;
-- either file declares a `--forma-*` property, uses a `.forma-*` class, `data-forma-*` attribute or `--forma-*` property that Forma does not have (`tools/forma-hooks.json`), declares a custom property outside `--echelon-*`, or mentions `--ef-*`;
-- a font URL is not relative or leaves `dist/fonts/`;
+- after CSS escapes are resolved (so `.\66orma-panel` reads as `.forma-panel`), either file declares a `--forma-*` property, uses a `.forma-*` class, `data-forma-*` attribute or `--forma-*` property that Forma does not have (`tools/forma-hooks.json`), declares a custom property outside `--echelon-*`, or mentions `--ef-*`;
+- a font URL is not relative or leaves `dist/fonts/`, or an `@font-face` source is not `url(...) format("woff2")`;
 - an infinite animation has no `prefers-reduced-motion: reduce` stop, or a forced-colors rule uses a brand colour.
 
 Add `--forma-css <forma-all.css>` to also check `tools/forma-hooks.json` against a Forma build.

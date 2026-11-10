@@ -35,6 +35,13 @@
     {"name": "font-licence-not-in-manifest", "manifestPatch": {"section": "licenses", "path": "dist/fonts/licenses/newsreader-OFL.txt", "remove": true}, "expect": "no OFL licence packaged for @fontsource-variable/newsreader"},
     {"name": "file-not-in-manifest", "addFile": {"path": "dist/fonts/extra-latin-400-normal.woff2", "with": "not-a-font.woff2", "checksum": true}, "expect": "'dist/fonts/extra-latin-400-normal.woff2' is not in the asset manifest"},
     {"name": "file-not-in-checksums", "dropChecksum": "dist/echelon-app.css", "expect": "'dist/echelon-app.css' is not listed in checksums.txt"},
-    {"name": "stylesheet-not-in-manifest", "manifestPatch": {"section": "stylesheets", "path": "dist/echelon-fonts.css", "remove": true}, "expect": "'dist/echelon-fonts.css' is not in the asset manifest"}
+    {"name": "stylesheet-not-in-manifest", "manifestPatch": {"section": "stylesheets", "path": "dist/echelon-fonts.css", "remove": true}, "expect": "'dist/echelon-fonts.css' is not in the asset manifest"},
+    {"name": "app-defines-forma-class-escaped", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-defines-forma-class-escaped.css", "refreshDigest": true}, "expect": "defines Forma class .forma-panel"},
+    {"name": "app-declares-forma-property-escaped", "replaceFile": {"path": "dist/echelon-app.css", "with": "app-declares-forma-property-escaped.css", "refreshDigest": true}, "expect": "declares Forma custom property --forma-color-surface-canvas"},
+    {"name": "fonts-truetype-format-on-woff2", "replaceFile": {"path": "dist/echelon-fonts.css", "with": "fonts-truetype-format.css", "refreshDigest": true}, "expect": "must be url(...) format(\"woff2\")"},
+    {"name": "font-woff2-signature-then-junk", "replaceFile": {"path": "dist/fonts/manrope-latin-wght-normal.woff2", "with": "woff2-header-junk.woff2", "refreshDigest": true}, "expect": "header length"},
+    {"name": "font-woff2-bad-table-directory", "replaceFile": {"path": "dist/fonts/manrope-latin-wght-normal.woff2", "with": "woff2-bad-directory.woff2", "refreshDigest": true}, "expect": "table directory does not parse"},
+    {"name": "theme-file-not-in-checksums", "dropChecksum": "theme/echelon-app.css", "expect": "'theme/echelon-app.css' is not listed in checksums.txt"},
+    {"name": "logo-not-in-checksums", "dropChecksum": "logos/echelon-foundry/mark-mono.svg", "expect": "'logos/echelon-foundry/mark-mono.svg' is not listed in checksums.txt"}
   ]
 }

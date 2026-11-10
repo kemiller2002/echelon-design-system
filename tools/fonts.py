@@ -5,7 +5,8 @@ theme/echelon-fonts.json names each package, its exact version, the latin
 WOFF2 subsets to take and where its OFL licence goes, and records the npm
 tarball integrity and the sha256 of every file taken from it.
 
-    python tools/fonts.py --check     # fetch and verify against the record (no writes)
+    python tools/fonts.py --check     # fetch, verify the record, and compare dist/fonts/
+                                      # with the npm tarballs byte for byte (no writes)
     python tools/fonts.py --update    # fetch and re-record integrity and sha256
 
 tools/build_theme.py calls `fetch_tarballs` and `resolve` for every build, so
@@ -198,6 +199,18 @@ def manifest_packages(spec: Mapping) -> list[dict]:
             for p in spec["packages"]]
 
 
+def packaged_differences(resolved: Resolved, root: pathlib.Path) -> list[str]:
+    """Files under dist/fonts/ that are missing, extra, or differ from the tarball bytes."""
+    expected = resolved.files
+    on_disk = {p.relative_to(root).as_posix() for p in (root / FONT_DIR).rglob("*") if p.is_file()} \
+        if (root / FONT_DIR).is_dir() else set()
+    missing = [f"{path}: missing" for path in sorted(set(expected) - on_disk)]
+    extra = [f"{path}: not taken from any npm tarball" for path in sorted(on_disk - set(expected))]
+    differ = [f"{path}: differs from the npm tarball" for path in sorted(set(expected) & on_disk)
+              if (root / path).read_bytes() != expected[path]]
+    return missing + extra + differ
+
+
 def load_spec(path: pathlib.Path = SPEC_PATH) -> dict:
     return json.loads(path.read_text())
 
@@ -234,11 +247,17 @@ def main(argv=None) -> int:
     except FontError as error:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
+    if args.check:
+        differences = packaged_differences(resolved, ROOT)
+        if differences:
+            print("FAIL: dist/fonts/ does not match the npm tarballs:\n  " + "\n  ".join(differences), file=sys.stderr)
+            return 1
     for face in resolved.faces:
         print(f"{face.sha256}  {face.path}  ({face.package}@{face.version})")
     for licence in resolved.licenses:
         print(f"{licence['sha256']}  {licence['path']}  ({licence['package']}@{licence['version']})")
-    print(f"PASS: {len(resolved.faces)} faces and {len(resolved.licenses)} licences match the npm tarballs")
+    print(f"PASS: {len(resolved.faces)} faces and {len(resolved.licenses)} licences match the npm tarballs"
+          + (" and dist/fonts/ byte for byte" if args.check else ""))
     return 0
 
 
