@@ -1,0 +1,2 @@
+# Frozen rendered table text retains tab delimiters for empty Note cells.
+docs/reviews/signal/2026-11-10/evidence/live-before/results-text.txt whitespace=-blank-at-eol

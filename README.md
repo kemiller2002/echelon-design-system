@@ -17,7 +17,11 @@ Applications consume immutable, versioned artifacts, not the moving `main` branc
 
 ## Status
 
-**Bootstrap / brand source audit recorded, owner approval pending.** Balanced Charcoal and Bronze is the selected direction. [`brand/AUDIT.md`](brand/AUDIT.md) records the verified values from Forma, the echelonfoundry.com source repository, Folio and Forma Studio. None of the candidate brand hex values below appears in any verified source, and no approved EF logo exists. Do not publish candidate values as final brand tokens.
+**Brand source audit recorded; v1 palette freeze remains pending.** Balanced Charcoal and Bronze is the selected direction. [`brand/AUDIT.md`](brand/AUDIT.md) records the verified source values and historical findings. Owner-approved corporate and Signal marks are recorded in [`brand/logos/catalog.json`](brand/logos/catalog.json); its dated approvals supersede older statements that no approved logo exists. The released Echelon theme carries verified existing colors and does not freeze the candidate palette below. Do not publish candidate values as final brand tokens.
+
+## Consumer review findings
+
+[Signal visual-design findings, 2026-11-10](docs/reviews/signal/2026-11-10/README.md) centralizes the branding audit, screen-by-screen findings, architecture ownership, 136 before-and-after screenshots, report PDF, separate functional evidence, corrected failures and remaining acceptance gates. The complete source evidence is preserved with checksums. This review does not grant whole-application visual acceptance or alter released theme contracts.
 
 ### Candidate palette (unverified)
 
