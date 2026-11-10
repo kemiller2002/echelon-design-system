@@ -32,6 +32,10 @@
     --echelon-surface-accent: #efe5da;   /* faint bronze wash */
     --echelon-surface-chrome: #202421;   /* foundry charcoal */
     --echelon-text-on-chrome: #f2efe7;
+    /* Danger text on the always-dark chrome: Echelon's dark-scheme danger
+       (#ef9a8b), in light and dark, because Forma's light danger is 2.36:1
+       on the chrome. */
+    --echelon-danger-on-chrome: #ef9a8b;
     --echelon-accent-rule: #905831;      /* oxide bronze */
     --echelon-text-on-accent: #f8f6f1;
     --echelon-action-primary: #905831;
@@ -144,6 +148,13 @@
   [data-forma-brand="echelon"] .echelon-app-bar .forma-button[data-echelon-emphasis="tertiary"] { color: inherit; }
   /* Plain links on the chrome: Forma's bronze link colour is 2.71:1 there. */
   [data-forma-brand="echelon"] .echelon-app-bar a:not(.forma-button) { color: inherit; }
+  /* Danger actions on the chrome keep the danger button's shape (an outline
+     on no fill, unlike the filled primary and secondary buttons and the
+     borderless tertiary) and its label; only the colour changes, to one that
+     passes on the chrome. It is more specific than the danger rule below. */
+  [data-forma-brand="echelon"] .echelon-app-bar .forma-button[data-echelon-emphasis="danger"] {
+    color: var(--echelon-danger-on-chrome);
+  }
 
   /* ---- Route-link tabs ------------------------------------------------- */
   [data-forma-brand="echelon"] .echelon-nav-tabs {
@@ -244,10 +255,11 @@
   [data-forma-brand="echelon"] .echelon-panel:is([data-echelon-surface="sunken"], [data-echelon-surface="accent"]) .forma-pairwise__versus {
     color: var(--echelon-text-secondary);
   }
-  /* Links on the accent surface: Forma's accent link colour is 4.19:1 on the
-     dark accent surface, so links there use the action colour (the same value
-     as Forma's accent in light, bronze pale in dark). */
-  [data-forma-brand="echelon"] .echelon-panel[data-echelon-surface="accent"] a:not(.forma-button) {
+  /* Links in panels: Forma's accent link colour (#a87e5e in dark) is 4.35:1
+     on the dark raised surface and 4.19:1 on the dark accent surface, so links
+     in every panel use the action colour: the same value as Forma's accent in
+     light, bronze pale (#c9a07f) in dark. */
+  [data-forma-brand="echelon"] .echelon-panel a:not(.forma-button) {
     color: var(--echelon-action-primary);
   }
   [data-forma-brand="echelon"] .echelon-panel[data-echelon-attention="true"] {

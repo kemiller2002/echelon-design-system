@@ -166,7 +166,22 @@ const probeCoverage = ({ classes, attributes, tones }) => {
       : el.closest('.echelon-panel[data-echelon-surface="accent"]') ? 'accent'
         : el.closest('.echelon-panel') ? 'raised' : 'canvas');
   const interactive = [...document.querySelectorAll('a[href], button')];
+  // A busy panel must say so in text: a visible .echelon-loading with role="status".
+  const busyWithoutStatus = [...document.querySelectorAll('.echelon-panel[aria-busy="true"]')]
+    .filter((panel) => ![...panel.querySelectorAll('.echelon-loading[role="status"]')]
+      .some((el) => el.getClientRects().length > 0 && getComputedStyle(el).visibility === 'visible' && el.textContent.trim()))
+    .map((panel) => panel.id || panel.getAttribute('aria-labelledby') || 'panel');
+  const linksOutsideGrids = (selector) => [...document.querySelectorAll(selector)]
+    .some((a) => !a.closest('.forma-data-grid'));
   return {
+    busyPanels: document.querySelectorAll('.echelon-panel[aria-busy="true"]').length,
+    busyWithoutStatus,
+    panelLinks: {
+      raised: linksOutsideGrids('.echelon-panel:not([data-echelon-surface]) a[href]:not(.forma-button)'),
+      sunken: linksOutsideGrids('.echelon-panel[data-echelon-surface="sunken"] a[href]:not(.forma-button)'),
+      accent: linksOutsideGrids('.echelon-panel[data-echelon-surface="accent"] a[href]:not(.forma-button)'),
+    },
+    barDanger: Boolean(document.querySelector('.echelon-app-bar .forma-button[data-echelon-emphasis="danger"]')),
     missingClasses: classes.filter((c) => !document.querySelector('.' + c)),
     missingAttributes: attributes.filter(([a, v]) => !document.querySelector(`[${a}="${v}"]`)).map(([a, v]) => `${a}="${v}"`),
     missingBarTones: tones.filter((t) => !document.querySelector(`.echelon-app-bar .echelon-chip[data-echelon-tone="${t}"]`)),
@@ -433,7 +448,11 @@ async function main() {
   const checks = [
     ...schemes.map((s) => ({ name: `coverage (${s.scheme})`,
       pass: !s.coverage.missingClasses.length && !s.coverage.missingAttributes.length && !s.coverage.missingBarTones.length
-        && SURFACES.every((x) => s.coverage.surfaces.includes(x)), detail: s.coverage })),
+        && SURFACES.every((x) => s.coverage.surfaces.includes(x))
+        && Object.values(s.coverage.panelLinks).every(Boolean) && s.coverage.barDanger, detail: s.coverage })),
+    ...schemes.map((s) => ({ name: `busy panels show a loading status (${s.scheme})`,
+      pass: s.coverage.busyPanels > 0 && s.coverage.busyWithoutStatus.length === 0,
+      detail: { busyPanels: s.coverage.busyPanels, withoutStatus: s.coverage.busyWithoutStatus } })),
     ...contrastChecks.map(({ pairs, ...c }) => c),
     ...['light', 'dark'].map((scheme) => {
       const rows = focus.filter((f) => f.colorScheme === scheme);
