@@ -11,7 +11,6 @@
     "forma-app-identity__context",
     "forma-app-identity__variant",
     "forma-attention-path",
-    "forma-badge",
     "forma-best-worst__header",
     "forma-button",
     "forma-checkbox__description",
@@ -55,6 +54,7 @@
     "forma-slider__bounds",
     "forma-spinner",
     "forma-startup__slow",
+    "forma-surface",
     "forma-survey-progress__context",
     "forma-survey-progress__value",
     "forma-switch__description",
@@ -87,6 +87,7 @@
     "--forma-primitive-font-family-mono",
     "--forma-primitive-font-family-sans",
     "--forma-primitive-radius-pill",
-    "--forma-space-4"
+    "--forma-space-4",
+    "--forma-surface-accent-text-color"
   ]
 }

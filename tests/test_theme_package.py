@@ -405,44 +405,75 @@ class ApplicationLayer(unittest.TestCase):
         self.assertEqual(sorted(uses - self.repaired_selectors()), [])
 
     PANEL_LINK_PREFIX = '[data-forma-brand="echelon"] .echelon-panel a:not('
+    SURFACE_ACCENT = "--forma-surface-accent-text-color"
 
-    def panel_link_exclusions(self) -> set:
+    def panel_link_rule(self):
         nodes, _ = theme_validator.parse_css(self.css)
         rules = [n for n in nodes if n.kind == "style" and n.prelude.startswith(self.PANEL_LINK_PREFIX)]
         self.assertEqual(len(rules), 1)
-        return set(re.findall(r"\.((?:forma|echelon)-[\w-]+)", rules[0].prelude.removeprefix(self.PANEL_LINK_PREFIX)))
+        return rules[0]
+
+    def panel_link_containers(self) -> set:
+        """Classes in the rule's `:where(...) a` exclusion: links inside them are left alone."""
+        where = re.search(r":where\(([^)]*)\)\s+a\)", self.panel_link_rule().prelude)
+        self.assertIsNotNone(where)
+        return set(re.findall(r"\.((?:forma|echelon)-[\w-]+)", where.group(1)))
 
     @staticmethod
-    def forma_link_colourers(forma_css: str) -> set:
-        """Classes Forma uses to colour a link: the link's own class, or else the
-        component class the link sits in. Forma's base `:where(a)` is not one."""
+    def forma_link_colourers(forma_css: str) -> tuple[set, set, set]:
+        """How Forma colours links, from its CSS: (own, containers, accent_setters).
+        own: classes on the link itself in a selector that sets `color` on it;
+        containers: the component class a link sits in, for such selectors;
+        accent_setters: selectors that set --forma-surface-accent-text-color,
+        which Forma's base link rule reads. Forma's base `:where(a)` is none."""
         nodes, _ = theme_validator.parse_css(forma_css)
         link = re.compile(r"(^|[\s>+~(,])a(?![\w-])")
-        found = set()
+        own, containers, setters = set(), set(), set()
         for node in nodes:
-            if node.kind != "style" or not any(p == "color" for p, _ in node.declarations):
+            if node.kind != "style":
                 continue
-            for selector in (" ".join(s.split()) for s in theme_validator._split_top(node.prelude, ",")):
+            selectors = [" ".join(s.split()) for s in theme_validator._split_top(node.prelude, ",")]
+            if any(p == ApplicationLayer.SURFACE_ACCENT for p, _ in node.declarations):
+                setters.update(selectors)
+            if not any(p == "color" for p, _ in node.declarations):
+                continue
+            for selector in selectors:
                 if not link.search(selector) or selector == ":where(a)":
                     continue
-                own = re.search(r"(?:^|[\s>+~(,])a((?:[.:\[][^\s>+~,()]*)*)", selector)
-                own_class = re.search(r"\.(forma-[\w-]+)", own.group(1)) if own else None
-                found.add(own_class.group(1) if own_class else re.search(r"\.(forma-[\w-]+)", selector).group(1))
-        return found
+                compound = re.search(r"(?:^|[\s>+~(,])a((?:[.:\[][^\s>+~,()]*)*)", selector)
+                own_class = re.search(r"\.(forma-[\w-]+)", compound.group(1)) if compound else None
+                if own_class:
+                    own.add(own_class.group(1))
+                else:
+                    containers.add(re.search(r"\.(forma-[\w-]+)", selector).group(1))
+        return own, containers, setters
 
     def test_panel_links_leave_component_links_alone(self):
-        exclusions = self.panel_link_exclusions()
-        self.assertLessEqual({"forma-button", "forma-pagination", "forma-validation-summary", "forma-menu__list",
-                              "forma-master-detail__master", "echelon-nav-tabs"}, exclusions)
+        rule = self.panel_link_rule()
+        self.assertIn('a:not([class*="forma-"]', rule.prelude)
+        self.assertLessEqual({"forma-pagination", "forma-validation-summary", "forma-menu__list",
+                              "forma-master-detail__master", "echelon-nav-tabs"}, self.panel_link_containers())
+        self.assertEqual(dict(rule.declarations)["color"],
+                         f"var({self.SURFACE_ACCENT}, var(--echelon-action-primary))")
 
     @unittest.skipUnless(FORMA_ALL_CSS, "set FORMA_ALL_CSS to a Forma release's forma-all.css")
-    def test_panel_link_exclusions_match_every_forma_link_colouring_class(self):
-        forma = self.forma_link_colourers(pathlib.Path(FORMA_ALL_CSS).read_text())
-        self.assertGreaterEqual(len(forma), 9)
-        ours = self.panel_link_exclusions()
-        self.assertEqual(sorted(forma - ours), [], "Forma colours links in components the panel-link rule would recolour")
-        self.assertEqual(sorted(ours - forma - {"forma-button", "echelon-nav-tabs"}), [],
-                         "exclusions that Forma no longer uses to colour links")
+    def test_panel_link_rule_honours_every_way_forma_colours_links(self):
+        own, containers, setters = self.forma_link_colourers(pathlib.Path(FORMA_ALL_CSS).read_text())
+        # 1. A link with a Forma class of its own is excluded by [class*="forma-"].
+        self.assertTrue(own)
+        self.assertTrue(all(c.startswith("forma-") for c in own))
+        # 2. Containers that colour their links directly are listed, and nothing else is.
+        ours = self.panel_link_containers()
+        self.assertGreaterEqual(len(containers), 8)
+        self.assertEqual(sorted(containers - ours), [], "Forma colours links in components the panel-link rule would recolour")
+        self.assertEqual(sorted(ours - containers - {"echelon-nav-tabs"}), [], "exclusions Forma no longer uses")
+        # 3. Components that set --forma-surface-accent-text-color: the rule reads it first.
+        self.assertGreaterEqual(len(setters), 20)
+        self.assertIn(".forma-surface", setters)
+        self.assertIn(".forma-data-grid th", setters)
+        self.assertTrue(dict(self.panel_link_rule().declarations)["color"].startswith(f"var({self.SURFACE_ACCENT},"))
+        # Forma never sets it globally, so the fallback applies outside those components.
+        self.assertFalse([s for s in setters if s in (":root", "html", "body", "*") or s.startswith(":where(:root")])
 
     @unittest.skipUnless(FORMA_ALL_CSS, "set FORMA_ALL_CSS to a Forma release's forma-all.css")
     def test_forma_hooks_exist_in_the_forma_release(self):

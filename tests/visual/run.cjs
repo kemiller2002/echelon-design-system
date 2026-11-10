@@ -189,7 +189,8 @@ const probeCoverage = ({ classes, attributes, tones }) => {
     missingComponents: ['raised', 'sunken', 'accent'].flatMap((surface) => {
       const panel = surface === 'raised' ? '.echelon-panel:not([data-echelon-surface])' : `.echelon-panel[data-echelon-surface="${surface}"]`;
       return ['.forma-pagination a[aria-current="page"]', '.forma-validation-summary a', '.echelon-nav-tabs a[aria-current="page"]',
-              '.forma-menu__list a', '.forma-master-detail__master a']
+              '.forma-menu__list a', '.forma-master-detail__master a', '.forma-surface a', '.forma-data-grid th a',
+              '.forma-fault--inline a', '.forma-segmented a', 'a.forma-card__link']
         .filter((c) => !document.querySelector(`${panel} ${c}`)).map((c) => `${surface}: ${c}`);
     }),
     missingClasses: classes.filter((c) => !document.querySelector('.' + c)),
@@ -310,7 +311,8 @@ const tabThrough = async (page, limit) => {
     const stop = await page.evaluate(() => {
       const el = document.activeElement;
       if (!el || el === document.body) return null;
-      const s = getComputedStyle(el);
+      // Forma's stretched card link puts its focus outline on the card.
+      const s = getComputedStyle(el.matches('.forma-card__link') && el.closest('.forma-card') || el);
       const alpha = (c) => { const m = /rgba\([^)]*,\s*([\d.]+)\)/.exec(c); return m ? Number(m[1]) : (c === 'transparent' ? 0 : 1); };
       return { id: el.dataset.fxId, element: el.tagName.toLowerCase() + ' "' + (el.textContent || '').trim().slice(0, 24) + '"',
                outline: s.outlineStyle !== 'none' && parseFloat(s.outlineWidth) > 0 && alpha(s.outlineColor) > 0 };
@@ -358,7 +360,11 @@ const focusVisual = async (browser, colorScheme, url, out) => {
     await page.waitForTimeout(150);
     const state = await page.evaluate((id) => {
       const el = document.activeElement;
-      const r = document.querySelector(`[data-fx-id="${id}"]`).getBoundingClientRect();
+      const target = document.querySelector(`[data-fx-id="${id}"]`);
+      // Forma's stretched card link draws its focus ring on the card (inset),
+      // not on the link: measure the card, against the card's own perimeter.
+      const indicator = target.matches('.forma-card__link') && target.closest('.forma-card') || target;
+      const r = indicator.getBoundingClientRect();
       return { focused: el && el.dataset.fxId === id, visible: el ? el.matches(':focus-visible') : false,
                box: { x: r.x, y: r.y, width: r.width, height: r.height }, vw: innerWidth, vh: innerHeight };
     }, target.id);
