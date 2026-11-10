@@ -1,0 +1,4 @@
+/* Defines .forma-panel through a CSS escape (\66 is "f"). */
+@layer echelon.app {
+  [data-forma-brand="echelon"] .\66orma-panel { border-radius: 10px; }
+}

@@ -121,7 +121,11 @@ jobs:
           cp dist/asset-manifest.json "$RUNNER_TEMP/out/asset-manifest.json"
           # Release checksums: the package's own dist/checksums.txt plus the tarball.
           cp dist/checksums.txt "$RUNNER_TEMP/out/checksums.txt"
-          (cd "$RUNNER_TEMP/out" && sha256sum "$tgz" >> checksums.txt)
+          # 1.1.0: the application layer, font CSS, fonts and OFL texts are also
+          # attached as flat release assets (the tarball keeps the dist/fonts/
+          # layout that echelon-fonts.css's relative URLs need).
+          cp dist/echelon-app.css dist/echelon-fonts.css dist/fonts/*.woff2 dist/fonts/licenses/*OFL*.txt "$RUNNER_TEMP/out/"
+          (cd "$RUNNER_TEMP/out" && sha256sum "$tgz" echelon-app.css echelon-fonts.css *.woff2 *OFL*.txt >> checksums.txt)
           echo "TGZ=$tgz" >> "$GITHUB_ENV"
           cat "$RUNNER_TEMP/out/checksums.txt"
       - name: Publish GitHub release
@@ -132,5 +136,7 @@ jobs:
           if [ "$GITHUB_REF_TYPE" = tag ]; then target=(--verify-tag); else target=(--target "$GITHUB_SHA"); fi
           gh release create "$RELEASE_TAG" "${target[@]}" \
             --title "@echelon-foundry/echelon-theme $RELEASE_TAG" \
-            --notes "Built against Forma $FORMA_REF with $FORMA_BRAND_ATTRIBUTE. Verify the tarball against checksums.txt before installing; see docs/CONSUMING-THE-ECHELON-THEME.md." \
-            "$RUNNER_TEMP/out/$TGZ" "$RUNNER_TEMP/out/checksums.txt" "$RUNNER_TEMP/out/asset-manifest.json"
+            --notes "Built against Forma $FORMA_REF with $FORMA_BRAND_ATTRIBUTE. Verify the tarball against checksums.txt before installing; see docs/CONSUMING-THE-ECHELON-THEME.md. Install from the tarball: echelon-fonts.css loads its fonts from a fonts/ folder beside it (the package's dist/fonts/ layout), so the separately attached echelon-fonts.css does not work on its own; the attached .woff2 and OFL files are for inspection and checksum verification." \
+            "$RUNNER_TEMP/out/$TGZ" "$RUNNER_TEMP/out/checksums.txt" "$RUNNER_TEMP/out/asset-manifest.json" \
+            "$RUNNER_TEMP/out/echelon-app.css" "$RUNNER_TEMP/out/echelon-fonts.css" \
+            "$RUNNER_TEMP/out"/*.woff2 "$RUNNER_TEMP/out"/*OFL*.txt

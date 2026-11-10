@@ -1,0 +1,4 @@
+/* Declares --forma-x through a CSS escape. */
+@layer echelon.app {
+  [data-forma-brand="echelon"] { --\66orma-color-surface-canvas: #f2efe7; }
+}

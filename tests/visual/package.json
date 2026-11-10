@@ -1,0 +1,9 @@
+{
+  "name": "echelon-theme-render-tests",
+  "private": true,
+  "description": "Render and accessibility tests for the Echelon application layer (CI only; not part of the published package).",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

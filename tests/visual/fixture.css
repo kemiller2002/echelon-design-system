@@ -1,0 +1,25 @@
+/* Page composition for the render fixture: layout only, like a consumer's own
+   page CSS. It sets no colours, fonts or echelon-/forma- styling. */
+body { margin: 0; }
+.fx-main {
+  display: grid;
+  gap: 1.5rem;
+  max-inline-size: 64rem;
+  margin-inline: auto;
+  padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 3rem;
+}
+.fx-main > * { min-inline-size: 0; }
+.fx-title { display: grid; gap: 0.5rem; }
+.fx-kpis { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.fx-kpis > div { display: grid; gap: 0.35rem; }
+.fx-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fx-chips > li { min-inline-size: 0; max-inline-size: 100%; }
+.fx-components { display: grid; gap: 1rem; }
+.fx-components > * { min-inline-size: 0; }

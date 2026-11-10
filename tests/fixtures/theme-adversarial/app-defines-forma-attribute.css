@@ -1,0 +1,4 @@
+/* Invents a data-forma-* attribute (the review mock's data-forma-tone). */
+@layer echelon.app {
+  [data-forma-brand="echelon"] .echelon-chip[data-forma-tone="draft"] { border-style: dashed; }
+}

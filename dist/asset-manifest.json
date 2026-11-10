@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "package": "@echelon-foundry/echelon-theme",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "brand": "echelon",
   "brandAttribute": "data-forma-brand",
   "namespace": "forma",
@@ -98,7 +98,133 @@
       "path": "dist/echelon-marketing.css",
       "mediaType": "text/css",
       "bytes": 6818,
-      "sha256": "f83f6afaf385014facdcd161099471794f9493844c58295c97e81ff701ce652c"
+      "sha256": "b682315e10fcb052e956566ba378ce1bffb45977a23f4de19c334eed8b0cc944"
+    },
+    {
+      "path": "dist/echelon-fonts.css",
+      "mediaType": "text/css",
+      "bytes": 2669,
+      "sha256": "b8c81581c682e877f73bca84c927167ba5d8476f732dd9381215ca896f99e629"
+    },
+    {
+      "path": "dist/echelon-app.css",
+      "mediaType": "text/css",
+      "bytes": 29358,
+      "sha256": "d65759e601af7bef107a60ab04567939a305f36d61df757c78f58bdf85917669"
+    }
+  ],
+  "fontPackages": [
+    {
+      "name": "@fontsource-variable/manrope",
+      "version": "5.3.0",
+      "integrity": "sha512-6D5dgokHsWDDMtmXHznKa0hK229NN+1a4BLPmUCLqcO1Pw5EEhWY5RFt0AcXnVRAljFFPfRtLkJePQj6LSsV6g==",
+      "license": "OFL-1.1"
+    },
+    {
+      "name": "@fontsource-variable/newsreader",
+      "version": "5.3.0",
+      "integrity": "sha512-rrzYi43qMpbzwuFtf9OkWH8sxAPVPcQQQEwXpPtwaKYeJ8yVg5aLs5kawmo1f2Q1t1M38TLmEKCkGVDsYwgdFw==",
+      "license": "OFL-1.1"
+    },
+    {
+      "name": "@fontsource/ibm-plex-mono",
+      "version": "5.3.0",
+      "integrity": "sha512-eTgnZjZEGk1QtD3ZstF+Vclo2HLAni8YMy34/DxllwZvyz1lR/1RF/xTiAquOBO7MvqBx8D2Ig2WCPMVfdZu7Q==",
+      "license": "OFL-1.1"
+    }
+  ],
+  "fonts": [
+    {
+      "path": "dist/fonts/manrope-latin-wght-normal.woff2",
+      "mediaType": "font/woff2",
+      "bytes": 24836,
+      "sha256": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
+      "family": "Manrope",
+      "style": "normal",
+      "weight": "200 800",
+      "package": "@fontsource-variable/manrope",
+      "version": "5.3.0",
+      "source": "files/manrope-latin-wght-normal.woff2"
+    },
+    {
+      "path": "dist/fonts/newsreader-latin-wght-normal.woff2",
+      "mediaType": "font/woff2",
+      "bytes": 58084,
+      "sha256": "62981321d9a3cc7a61a73792729043703fd6112da86e8ec848bb57f088578757",
+      "family": "Newsreader",
+      "style": "normal",
+      "weight": "200 800",
+      "package": "@fontsource-variable/newsreader",
+      "version": "5.3.0",
+      "source": "files/newsreader-latin-wght-normal.woff2"
+    },
+    {
+      "path": "dist/fonts/newsreader-latin-wght-italic.woff2",
+      "mediaType": "font/woff2",
+      "bytes": 64520,
+      "sha256": "48bc8861b9b2ca9300747cad4fd6a3b4ac3028d364df00bd1b72097baa75e509",
+      "family": "Newsreader",
+      "style": "italic",
+      "weight": "200 800",
+      "package": "@fontsource-variable/newsreader",
+      "version": "5.3.0",
+      "source": "files/newsreader-latin-wght-italic.woff2"
+    },
+    {
+      "path": "dist/fonts/ibm-plex-mono-latin-400-normal.woff2",
+      "mediaType": "font/woff2",
+      "bytes": 14708,
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+      "family": "IBM Plex Mono",
+      "style": "normal",
+      "weight": "400",
+      "package": "@fontsource/ibm-plex-mono",
+      "version": "5.3.0",
+      "source": "files/ibm-plex-mono-latin-400-normal.woff2"
+    },
+    {
+      "path": "dist/fonts/ibm-plex-mono-latin-500-normal.woff2",
+      "mediaType": "font/woff2",
+      "bytes": 14888,
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
+      "family": "IBM Plex Mono",
+      "style": "normal",
+      "weight": "500",
+      "package": "@fontsource/ibm-plex-mono",
+      "version": "5.3.0",
+      "source": "files/ibm-plex-mono-latin-500-normal.woff2"
+    }
+  ],
+  "licenses": [
+    {
+      "path": "dist/fonts/licenses/manrope-OFL.txt",
+      "mediaType": "text/plain",
+      "bytes": 4383,
+      "sha256": "d826ab6583b12c26807d8716a545bdbbb672df04f48608a364ba9efdbe501c30",
+      "license": "OFL-1.1",
+      "package": "@fontsource-variable/manrope",
+      "version": "5.3.0",
+      "source": "LICENSE"
+    },
+    {
+      "path": "dist/fonts/licenses/newsreader-OFL.txt",
+      "mediaType": "text/plain",
+      "bytes": 4520,
+      "sha256": "26028ec4e13b650065fa525a09532176f8a668b76ff849ea01c564a7480f91e7",
+      "license": "OFL-1.1",
+      "package": "@fontsource-variable/newsreader",
+      "version": "5.3.0",
+      "source": "LICENSE"
+    },
+    {
+      "path": "dist/fonts/licenses/ibm-plex-mono-OFL.txt",
+      "mediaType": "text/plain",
+      "bytes": 5299,
+      "sha256": "23b0a9d0c6d3f140a0b77e483c5cfa6bba574325ef5cb189ed9f2fec4884533f",
+      "license": "OFL-1.1",
+      "package": "@fontsource/ibm-plex-mono",
+      "version": "5.3.0",
+      "source": "LICENSE"
     }
   ]
 }

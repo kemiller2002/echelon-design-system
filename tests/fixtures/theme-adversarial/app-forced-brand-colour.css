@@ -1,0 +1,6 @@
+/* Paints a brand colour under forced colours. */
+@layer echelon.app {
+  @media (forced-colors: active) {
+    [data-forma-brand="echelon"] .echelon-app-bar { border-bottom-color: #905831; }
+  }
+}

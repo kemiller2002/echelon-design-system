@@ -1,0 +1,4 @@
+/* Redefines a Forma token instead of declaring an Echelon one. */
+@layer echelon.app {
+  [data-forma-brand="echelon"] { --forma-color-surface-canvas: #f2efe7; }
+}

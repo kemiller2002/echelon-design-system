@@ -1,0 +1,5 @@
+/* A brand-scoped rule outside @layer echelon.app. */
+@layer echelon.app {
+  [data-forma-brand="echelon"] .echelon-panel { border-radius: 10px; }
+}
+[data-forma-brand="echelon"] .echelon-chip { border-radius: 999px; }

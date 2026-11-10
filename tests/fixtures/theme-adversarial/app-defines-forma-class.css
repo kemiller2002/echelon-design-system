@@ -1,0 +1,4 @@
+/* Styles a Forma-namespaced class that Forma does not have (the review mock's .forma-panel). */
+@layer echelon.app {
+  [data-forma-brand="echelon"] .forma-panel { border-radius: 10px; }
+}
