@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" data-forma-brand="echelon" data-forma-type="application">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal · proposed results and scoring</title>
+{{CSS}}
+<style>
+  .re-main { max-width: 80rem; margin-inline:auto; padding: 1.5rem clamp(1rem,4vw,2.5rem) 3rem; display:grid; gap:1.5rem; }
+  .re-head { display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-end; }
+  .re-head h1 { margin:0; font-size: clamp(1.75rem,3vw,2.25rem); }
+  .re-head .forma-actions { margin-inline-start:auto; display:flex; gap:.5rem; flex-wrap:wrap; }
+  .re-top { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,2fr); gap:1.5rem; }
+  .re-overall { padding:1.5rem; display:grid; gap:.75rem; align-content:start; }
+  .re-overall .big { font: 500 4rem/1 var(--forma-primitive-font-family-display); color: var(--forma-color-text-heading); }
+  .re-overall .big small { font-size:1.25rem; color: var(--forma-color-text-secondary); }
+  .re-bars { list-style:none; margin:0; padding:0 1.25rem 1.25rem; display:grid; gap:1rem; }
+  .re-bars li { display:grid; grid-template-columns: 11rem 1fr 3.5rem; gap:1rem; align-items:center; }
+  .re-track { block-size:.75rem; background: var(--forma-color-surface-sunken); border-radius:99px; position:relative; overflow:hidden; }
+  .re-track span { position:absolute; inset-block:0; inset-inline-start:0; background: var(--forma-color-accent-rule); border-radius:99px; }
+  .re-track i { position:absolute; inset-block:-3px; inline-size:2px; background: var(--forma-color-text-primary); }
+  .re-val { font: 500 1rem/1 var(--forma-primitive-font-family-mono); text-align:right; }
+  .re-grid { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap:1.5rem; }
+  .re-list { margin:0; padding:0 1.25rem 1.25rem 2.5rem; display:grid; gap:.5rem; }
+  .re-derive { padding:1.25rem; display:grid; gap:.6rem; }
+  .re-derive code { font-family: var(--forma-primitive-font-family-mono); font-size:.8125rem; }
+  .re-legend { display:flex; gap:1rem; font-size:.8125rem; color: var(--forma-color-text-secondary); padding: 0 1.25rem; }
+  .re-legend i { display:inline-block; inline-size:.75rem; block-size:.75rem; border-radius:2px; background: var(--forma-color-accent-rule); vertical-align:middle; margin-inline-end:.35rem; }
+  .re-legend i.m { inline-size:2px; block-size:.9rem; background: var(--forma-color-text-primary); }
+  @media (max-width: 900px) { .re-top, .re-grid { grid-template-columns:1fr; } .re-bars li { grid-template-columns: 1fr 3.5rem; } .re-bars li > span:first-child { grid-column: 1 / -1; } .forma-app-bar__context { display:none; } }
+</style>
+</head>
+<body>
+<header class="forma-app-bar">
+  <a class="forma-app-identity" href="#">{{MARK}}<span class="forma-app-identity__name">Signal</span></a>
+  <span class="forma-app-bar__context">Results</span>
+  <span class="forma-app-bar__end"><span>kemiller2002</span></span>
+</header>
+<main class="re-main">
+  <div class="re-head">
+    <div style="display:grid;gap:.4rem"><span class="forma-eyebrow">Group · <code>engineering-q4</code> · Team health v3</span><h1 class="forma-heading">Results</h1>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap"><span class="forma-chip" data-forma-tone="published">48 accepted submissions</span><span class="forma-chip" data-forma-tone="closed">Snapshot 2026-11-08</span></div></div>
+    <div class="forma-actions"><button class="forma-button">Compare groups</button><button class="forma-button" data-forma-emphasis="primary">Export report</button></div>
+  </div>
+  <nav class="forma-nav-tabs" aria-label="Group"><a href="#">Overview</a><a href="#" aria-current="page">Scoring</a><a href="#">Exploration</a><a href="#">Imports</a><a href="#">Retention</a></nav>
+  <div class="re-top">
+    <section class="forma-panel re-overall" aria-labelledby="o"><span class="forma-eyebrow" id="o">Overall score</span><div class="big">3.1<small> / 4</small></div><p style="margin:0;color:var(--forma-color-text-secondary)">“Healthy, with friction in tools &amp; access.” Interpretation band 3.0–3.5.</p></section>
+    <section class="forma-panel" aria-labelledby="sx">
+      <div class="forma-panel__header"><h2 id="sx" class="forma-heading" style="font-size:1.375rem">Section means</h2></div>
+      <div class="re-legend" style="padding-top:.75rem"><span><i></i>This group</span><span><i class="m"></i>Dataset mean</span></div>
+      <ul class="re-bars" style="padding-top:1rem">
+        <li><span>Psychological safety</span><span class="re-track"><span style="inline-size:86%"></span><i style="inset-inline-start:78%"></i></span><span class="re-val">3.44</span></li>
+        <li><span>Delivery cadence</span><span class="re-track"><span style="inline-size:80%"></span><i style="inset-inline-start:74%"></i></span><span class="re-val">3.20</span></li>
+        <li><span>Support</span><span class="re-track"><span style="inline-size:76%"></span><i style="inset-inline-start:79%"></i></span><span class="re-val">3.04</span></li>
+        <li><span>Tools &amp; access</span><span class="re-track"><span style="inline-size:58%"></span><i style="inset-inline-start:71%"></i></span><span class="re-val">2.32</span></li>
+      </ul>
+    </section>
+  </div>
+  <div class="re-grid">
+    <section class="forma-panel" aria-labelledby="st"><div class="forma-panel__header"><h2 id="st" class="forma-heading" style="font-size:1.25rem">Strengths and weaknesses</h2></div>
+      <ol class="re-list" style="padding-top:.75rem"><li><strong>Strongest:</strong> people feel safe raising problems (3.44).</li><li><strong>Weakest:</strong> access to tools in the first week (2.32, 0.52 below dataset).</li><li><strong>Recommendation:</strong> pre-provision accounts before day one.</li></ol></section>
+    <section class="forma-panel re-derive" data-forma-surface="accent" aria-labelledby="dv"><span class="forma-eyebrow" id="dv">How this was calculated</span>
+      <p style="margin:0">Section mean = mean of scored answers, excluding “don’t know”, “not observed” and “not applicable”. Overall = weighted mean of sections.</p>
+      <p style="margin:0"><code>template team-health@3 · scoring rule v3.0 · 48 submissions · coverage 94%</code></p>
+      <div><button class="forma-button" data-forma-emphasis="tertiary">View full derivation</button></div></section>
+  </div>
+</main>
+</body>
+</html>

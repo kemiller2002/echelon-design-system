@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" data-forma-brand="echelon" data-forma-type="application">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal · proposed administrator dashboard</title>
+{{CSS}}
+<style>
+  .ad-main { max-width: 80rem; margin-inline:auto; padding: 1.5rem clamp(1rem,4vw,2.5rem) 3rem; display:grid; gap:1.5rem; }
+  .ad-title { display:flex; flex-wrap:wrap; align-items:flex-end; gap:1rem; }
+  .ad-title h1 { margin:0; font-size: clamp(1.75rem,3vw,2.25rem); }
+  .ad-title .forma-actions { margin-inline-start:auto; display:flex; gap:.5rem; flex-wrap:wrap; }
+  .ad-session { background: transparent !important; color: inherit !important; border-color: currentColor !important; }
+  .ad-kpis { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); max-width: 40rem; gap:1rem; }
+  .ad-kpi { padding: 1rem 1.25rem; display:grid; gap:.35rem; }
+  .ad-kpi small { color: var(--forma-color-text-secondary); }
+  .ad-grid { display:grid; grid-template-columns: minmax(0,1.6fr) minmax(0,1fr); gap:1.5rem; align-items:start; }
+  table.ad-table { inline-size:100%; border-collapse:collapse; font-size:.9375rem; }
+  .ad-table th { text-align:left; font: var(--forma-type-weight-label) .75rem/1.2 var(--forma-primitive-font-family-sans); letter-spacing:.06em; text-transform:uppercase; color: var(--forma-color-text-on-secondary-surface); padding:.6rem 1.25rem; background: var(--forma-color-surface-sunken); border-block:1px solid var(--forma-color-border-subtle); }
+  .ad-table td { padding:.8rem 1.25rem; border-bottom:1px solid var(--forma-color-border-subtle); vertical-align:middle; }
+  .ad-table tr:last-child td { border-bottom:0; }
+  .ad-table td code { font-family: var(--forma-primitive-font-family-mono); font-size:.8125rem; }
+  .ad-table a { color: var(--forma-color-text-heading); font-weight:650; }
+  .ad-work { list-style:none; margin:0; padding:0; display:grid; }
+  .ad-work li { display:grid; grid-template-columns: auto 1fr auto; gap:.75rem; align-items:center; padding:.8rem 1.25rem; border-top:1px solid var(--forma-color-border-subtle); }
+  .ad-work li:first-child { border-top:0; }
+  .ad-dot { inline-size:.6rem; block-size:.6rem; border-radius:50%; background: var(--forma-color-status-warning); }
+  .ad-dot.info { background: var(--forma-color-status-info); }
+  .ad-muted { color: var(--forma-color-text-secondary); font-size:.875rem; }
+  @media (max-width: 1000px) { .ad-kpis { grid-template-columns: repeat(2, minmax(0,1fr)); } .ad-grid { grid-template-columns:1fr; } }
+  @media (max-width: 760px) { .forma-app-bar { flex-wrap: wrap; } .forma-app-bar__context, .ad-hide-sm { display:none; } }
+</style>
+</head>
+<body>
+<header class="forma-app-bar">
+  <a class="forma-app-identity" href="#">{{MARK}}<span class="forma-app-identity__name">Signal</span></a>
+  <span class="forma-app-bar__context">Administration</span>
+  <span class="forma-app-bar__end"><span class="forma-chip ad-session" data-forma-tone="published">Signed in · changes can be saved</span><span class="ad-hide-sm">github:583231</span><button class="forma-button" data-forma-emphasis="tertiary" style="color:inherit">Copy link</button><button class="forma-button" data-forma-emphasis="tertiary" style="color:inherit">Sign out</button></span>
+</header>
+<main class="ad-main">
+  <div class="ad-title">
+    <div style="display:grid;gap:.35rem"><span class="forma-eyebrow">Dataset</span><h1 class="forma-heading">Engagement</h1></div>
+    <div class="forma-actions"><button class="forma-button" aria-busy="true">Refreshing</button></div>
+  </div>
+  <nav class="forma-nav-tabs" aria-label="Administration"><a href="#" aria-current="page">Overview</a><a href="#">Groups</a><a href="#">Compare</a><a href="#">Assessments</a><a href="#">Reports</a><a href="#">Administrators</a><a href="#">Storage</a></nav>
+
+  <section class="forma-panel" aria-labelledby="w" data-forma-attention="true">
+    <div class="forma-panel__header"><h2 id="w" class="forma-heading" style="font-size:1.375rem">Unresolved work</h2><span class="forma-chip" data-forma-tone="review">2 items</span></div>
+    <ul class="ad-work" style="margin-top:.75rem">
+      <li><span class="ad-dot" aria-hidden="true"></span><span>1 import needs reconciling before anything is sent again. <span class="ad-muted">Group <code>engineering-q4</code></span></span><a class="forma-button" data-forma-emphasis="primary" href="#">Reconcile import</a></li>
+      <li><span class="ad-dot info" aria-hidden="true"></span><span>The derived index is out of date; rebuild it.</span><button class="forma-button">Rebuild index</button></li>
+    </ul>
+  </section>
+
+  <section class="ad-kpis" aria-label="Groups at a glance">
+    <div class="forma-panel ad-kpi"><span class="forma-eyebrow">Waiting for imports</span><span class="forma-figure">3</span><small>groups · Ready, Partial or Reconciling</small></div>
+    <div class="forma-panel ad-kpi"><span class="forma-eyebrow">Complete</span><span class="forma-figure">1</span><small>group</small></div>
+  </section>
+
+  <section class="forma-panel" aria-labelledby="g">
+    <div class="forma-panel__header"><h2 id="g" class="forma-heading" style="font-size:1.375rem">Groups</h2><div class="forma-actions"><button class="forma-button">New group</button></div></div>
+    <div style="padding-top:1rem;overflow-x:auto">
+    <table class="ad-table">
+      <thead><tr><th>Group</th><th>Survey</th><th>Identity</th><th>Accepted</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td><a href="#">engineering-q4</a></td><td>Team health <code>3</code></td><td>Anonymous</td><td>31 of 48</td><td><span class="forma-chip" data-forma-tone="review">Reconciling</span></td></tr>
+        <tr><td><a href="#">design-q4</a></td><td>Team health <code>3</code></td><td>Anonymous</td><td>12 of 20</td><td><span class="forma-chip" data-forma-tone="progress">Partial</span></td></tr>
+        <tr><td><a href="#">leadership-360</a></td><td>Leadership 360 <code>1</code></td><td>Identified</td><td>0 of 9</td><td><span class="forma-chip" data-forma-tone="ready">Ready</span></td></tr>
+        <tr><td><a href="#">support-q4</a></td><td>Team health <code>3</code></td><td>Anonymous</td><td>16 of 16</td><td><span class="forma-chip" data-forma-tone="complete">Complete</span></td></tr>
+        <tr><td><a href="#">engineering-q3</a></td><td>Team health <code>2</code></td><td>Anonymous</td><td>64 of 64</td><td><span class="forma-chip" data-forma-tone="sealed">Sealed</span></td></tr>
+        <tr><td><a href="#">pilot-q2</a></td><td>Team health <code>1</code></td><td>Anonymous</td><td>7 of 30</td><td><span class="forma-chip" data-forma-tone="closed">Closed incomplete</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" data-forma-brand="echelon">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal · proposed landing page</title>
+{{CSS}}
+<style>
+  .lp-header { display:flex; align-items:center; padding: 1.25rem clamp(1rem, 5vw, 4rem); }
+  .lp-header nav { margin-inline-start:auto; display:flex; gap:1.5rem; font-size:.9375rem; }
+  .lp-header nav a { color: var(--forma-color-text-primary); text-decoration:none; font-weight:600; }
+  .lp-hero { padding: clamp(2.5rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem) clamp(2.5rem, 6vw, 4.5rem); display:grid; gap:2.5rem; grid-template-columns: minmax(0,1.15fr) minmax(0,.85fr); align-items:center; max-width: 76rem; margin-inline:auto; }
+  .lp-hero__copy { display:grid; gap:1.25rem; }
+  .lp-hero .forma-actions { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:.5rem; }
+  .lp-link-card { padding: 1.5rem; display:grid; gap:1rem; }
+  .lp-url { font: 500 .8125rem/1.5 var(--forma-primitive-font-family-mono); background: var(--forma-color-surface-sunken); border-radius: 6px; padding:.6rem .75rem; overflow-wrap:anywhere; color: var(--forma-color-text-primary); }
+  .lp-url b { color: var(--forma-color-accent-rule); font-weight:500; }
+  .lp-meter { display:grid; grid-template-columns: repeat(6, 1fr); gap:.35rem; }
+  .lp-meter span { block-size:.5rem; border-radius:99px; background: var(--forma-color-accent-rule); }
+  .lp-meter span.o { background: var(--forma-color-surface-sunken); }
+  .lp-band { background: var(--forma-color-surface-raised); border-block: 1px solid var(--forma-color-border-subtle); }
+  .lp-section { max-width: 76rem; margin-inline:auto; padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1rem, 5vw, 4rem); display:grid; gap:2rem; }
+  .lp-section > header { display:grid; gap:.5rem; max-width: 40rem; }
+  .lp-section h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); margin:0; }
+  .lp-roles { display:grid; gap:1.25rem; grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .lp-roles .forma-panel__body p { margin:0; color: var(--forma-color-text-secondary); }
+  .lp-roles h3 { margin:0; font-size:1.375rem; }
+  .lp-roles .lp-rule { inline-size: 2rem; block-size: 3px; background: var(--forma-color-accent-rule); }
+  .lp-steps { display:grid; gap:1.5rem; grid-template-columns: repeat(3, minmax(0,1fr)); counter-reset: s; list-style:none; padding:0; margin:0; }
+  .lp-steps li { display:grid; gap:.5rem; align-content:start; padding-top:1rem; border-top: 1px solid var(--forma-color-border-functional); }
+  .lp-steps li::before { counter-increment: s; content: "0" counter(s); font: 500 2.5rem/1 var(--forma-primitive-font-family-display); color: var(--forma-color-accent-rule); }
+  .lp-steps h3 { margin:0; font-size:1.125rem; font-family: var(--forma-primitive-font-family-sans); font-weight:700; letter-spacing:0; }
+  .lp-steps p { margin:0; color: var(--forma-color-text-secondary); }
+  .lp-respondent { display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-start; padding:1.25rem 1.5rem; }
+  .lp-footer { padding: 2rem clamp(1rem,5vw,4rem); display:flex; gap:1rem; flex-wrap:wrap; justify-content:space-between; color: var(--forma-color-text-secondary); font-size:.875rem; border-top:1px solid var(--forma-color-border-subtle); max-width:76rem; margin-inline:auto; }
+  @media (max-width: 900px) { .lp-hero { grid-template-columns: 1fr; } .lp-roles, .lp-steps { grid-template-columns: 1fr; } .lp-header nav { display:none; } }
+</style>
+</head>
+<body>
+<header class="lp-header">
+  <a class="forma-app-identity" href="#">{{MARK}}<span class="forma-app-identity__name">Signal</span></a>
+  <nav aria-label="Site"><a href="#how">How it works</a><a href="#who">Who it is for</a></nav>
+</header>
+<main>
+  <section class="lp-hero" aria-labelledby="t">
+    <div class="lp-hero__copy">
+      <span class="forma-eyebrow">Surveys &amp; assessments · by Echelon Foundry</span>
+      <h1 id="t" class="forma-display">Surveys whose answers live in the link.</h1>
+      <p class="forma-lead">Signal runs surveys and assessments from published, immutable templates. Each respondent’s answers travel in their own link — not on a server — and results are calculated the same way every time.</p>
+      <div class="forma-actions">
+        <a class="forma-button" data-forma-emphasis="primary" href="#">Open the administrator console</a>
+        <a class="forma-button" href="#how">See how it works</a>
+      </div>
+    </div>
+    <aside class="forma-panel lp-link-card" aria-label="What a respondent’s link holds">
+      <span class="forma-eyebrow">A respondent’s link</span>
+      <div class="lp-url">signal.echelonfoundry.com/web/survey/#<b>t=team-health@3</b>&amp;a=Q1.4,Q2.2,Q3.5…</div>
+      <div class="lp-meter" aria-hidden="true"><span></span><span></span><span></span><span></span><span class="o"></span><span class="o"></span></div>
+      <p style="margin:0;color:var(--forma-color-text-secondary)">4 of 6 sections answered. Close the tab and come back — the link is the save.</p>
+    </aside>
+  </section>
+
+  <div class="lp-band"><section class="lp-section" id="who" aria-labelledby="who-t">
+    <header><span class="forma-eyebrow">Who it is for</span><h2 id="who-t" class="forma-heading">Three roles, one fixed meaning</h2></header>
+    <div class="lp-roles">
+      <article class="forma-panel"><div class="forma-panel__body"><span class="lp-rule"></span><h3 class="forma-heading">Survey authors</h3><p>Publish a template whose questions, branching, validation and scoring cannot change after publication.</p></div></article>
+      <article class="forma-panel"><div class="forma-panel__body"><span class="lp-rule"></span><h3 class="forma-heading">Respondents</h3><p>Answer from a link. It always holds their current answers, so they can stop and continue later.</p></div></article>
+      <article class="forma-panel"><div class="forma-panel__body"><span class="lp-rule"></span><h3 class="forma-heading">Administrators</h3><p>Import completed submissions and read results together with exactly how they were calculated.</p></div></article>
+    </div>
+  </section></div>
+
+  <section class="lp-section" id="how" aria-labelledby="how-t">
+    <header><span class="forma-eyebrow">How it works</span><h2 id="how-t" class="forma-heading">From template to traceable result</h2></header>
+    <ol class="lp-steps">
+      <li><h3>Publish a template</h3><p>Its version fixes the meaning of every answer.</p></li>
+      <li><h3>Respondents answer</h3><p>In the browser. An anonymous submission holds no personal information.</p></li>
+      <li><h3>Import and read results</h3><p>Signal recalculates deterministically and shows how every figure was derived.</p></li>
+    </ol>
+    <div class="forma-panel lp-respondent" data-forma-surface="accent"><strong>Answering a survey?</strong><span>Use the link your survey administrator sent you. Signal never asks respondents to sign in.</span></div>
+  </section>
+</main>
+<footer class="lp-footer"><span>Signal · Echelon Foundry</span><span>Answers stay in the respondent’s link.</span></footer>
+</body>
+</html>

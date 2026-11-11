@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" data-forma-brand="echelon" data-forma-type="application">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal · proposed survey authoring</title>
+{{CSS}}
+<style>
+  .au-main { max-width: 84rem; margin-inline:auto; padding: 1.5rem clamp(1rem,4vw,2.5rem) 3rem; display:grid; gap:1.25rem; }
+  .au-head { display:flex; flex-wrap:wrap; gap:1rem; align-items:flex-end; }
+  .au-head h1 { margin:0; font-size: clamp(1.75rem,3vw,2.25rem); }
+  .au-head .forma-actions { margin-inline-start:auto; display:flex; gap:.5rem; flex-wrap:wrap; }
+  .au-versions { display:flex; gap:.5rem; flex-wrap:wrap; align-items:center; font-size:.875rem; color: var(--forma-color-text-secondary); }
+  .au-layout { display:grid; grid-template-columns: 15rem minmax(0,1fr) 22rem; gap:1.25rem; align-items:start; }
+  .au-outline { padding:.75rem; }
+  .au-outline ol { list-style:none; margin:0; padding:0; display:grid; gap:.15rem; }
+  .au-outline a { display:flex; justify-content:space-between; gap:.5rem; padding:.5rem .65rem; border-radius:6px; color: var(--forma-color-text-primary); text-decoration:none; font-size:.9375rem; }
+  .au-outline a[aria-current="page"] { background: var(--forma-color-surface-raised); box-shadow: var(--forma-elevation-1); font-weight:650; border-inline-start:3px solid var(--forma-color-accent-rule); }
+  .au-outline small { color: var(--forma-color-text-secondary); font-family: var(--forma-primitive-font-family-mono); }
+  .au-q { display:grid; grid-template-columns: auto 1fr auto; gap:.75rem 1rem; padding:1rem 1.25rem; border-top:1px solid var(--forma-color-border-subtle); align-items:start; }
+  .au-q code { font: 500 .8125rem/1.6 var(--forma-primitive-font-family-mono); color: var(--forma-color-text-secondary); }
+  .au-q p { margin:0; }
+  .au-q .meta { grid-column: 2; display:flex; gap:.5rem; flex-wrap:wrap; }
+  .au-tag { font-size:.75rem; padding:.15rem .5rem; border-radius:4px; background: var(--forma-color-surface-sunken); color: var(--forma-color-text-on-secondary-surface); }
+  .au-field { display:grid; gap:.35rem; }
+  .au-field label { font-weight:650; font-size:.875rem; }
+  .au-field input, .au-field textarea { font: inherit; padding:.6rem .7rem; border:1px solid var(--forma-color-border-functional); border-radius: var(--forma-shape-radius-control); background: var(--forma-color-surface-raised); color: var(--forma-color-text-primary); }
+  .au-preview { position: sticky; top: 1rem; }
+  .au-preview .forma-ordinal-scale__options { grid-template-columns: 1fr; }
+  .au-valid { display:flex; gap:.5rem; align-items:center; font-size:.875rem; color: var(--forma-color-status-success); font-weight:650; }
+  @media (max-width: 1150px) { .au-layout { grid-template-columns: 13rem minmax(0,1fr); } .au-preview { display:none; } }
+  @media (max-width: 720px) { .au-layout { grid-template-columns: 1fr; } .forma-app-bar__context { display:none; } }
+</style>
+</head>
+<body>
+<header class="forma-app-bar">
+  <a class="forma-app-identity" href="#">{{MARK}}<span class="forma-app-identity__name">Signal</span></a>
+  <span class="forma-app-bar__context">Authoring</span>
+  <span class="forma-app-bar__end"><span>kemiller2002</span></span>
+</header>
+<main class="au-main">
+  <div class="au-head">
+    <div style="display:grid;gap:.4rem">
+      <span class="forma-eyebrow">Template · <code>onboarding-pulse</code></span>
+      <h1 class="forma-heading">Onboarding pulse</h1>
+      <div class="au-versions"><span class="forma-chip" data-forma-tone="draft">Draft · unpublished changes</span><span>based on</span><span class="forma-chip" data-forma-tone="published">Published v2</span><span>saved 2 min ago</span></div>
+    </div>
+    <div class="forma-actions">
+      <button class="forma-button" data-forma-emphasis="danger">Delete draft…</button>
+      <button class="forma-button" data-forma-emphasis="tertiary">Request review</button>
+      <button class="forma-button" aria-busy="true">Saving draft</button>
+      <button class="forma-button" data-forma-emphasis="primary">Publish v3…</button>
+    </div>
+  </div>
+  <nav class="forma-nav-tabs" aria-label="Draft"><a href="#" aria-current="page">Questions</a><a href="#">Conditions</a><a href="#">Scoring</a><a href="#">Presentation</a><a href="#">Translations</a><a href="#">Test fixtures</a><a href="#">Review</a></nav>
+  <div class="au-layout">
+    <nav class="forma-panel au-outline" data-forma-surface="sunken" aria-label="Sections">
+      <span class="forma-eyebrow" style="padding:.5rem .65rem;display:block">Sections</span>
+      <ol><li><a href="#" aria-current="page">First week <small>4</small></a></li><li><a href="#">Tools &amp; access <small>3</small></a></li><li><a href="#">Team &amp; manager <small>5</small></a></li><li><a href="#">Overall <small>2</small></a></li></ol>
+    </nav>
+    <section class="forma-panel" aria-labelledby="s1">
+      <div class="forma-panel__header"><h2 id="s1" class="forma-heading" style="font-size:1.375rem">First week</h2><div class="forma-actions"><button class="forma-button" data-forma-emphasis="tertiary">Add question</button></div></div>
+      <div class="forma-panel__body" style="padding-bottom:.25rem"><div class="au-field"><label for="d">Section description</label><textarea id="d" rows="2">How your first week went, from arrival to your first contribution.</textarea></div></div>
+      <div class="au-q"><code>FW1</code><p><strong>I knew who to ask when I was stuck.</strong></p><button class="forma-button" data-forma-emphasis="tertiary">Edit</button><div class="meta"><span class="au-tag">Frequency, 5 points</span><span class="au-tag">Scored · Support</span></div></div>
+      <div class="au-q"><code>FW2</code><p><strong>My development environment worked by the end of day one.</strong></p><button class="forma-button" data-forma-emphasis="tertiary">Edit</button><div class="meta"><span class="au-tag">Yes / No</span><span class="au-tag">Shown if FW1 ≥ 2</span></div></div>
+      <div class="au-q"><code>FW3</code><p><strong>I had a meaningful task within my first three days.</strong></p><button class="forma-button" data-forma-emphasis="tertiary">Edit</button><div class="meta"><span class="au-tag">Agreement, 5 points</span><span class="au-tag">Scored · Momentum</span></div></div>
+      <div class="forma-panel__footer"><span class="au-valid">✓ No validation problems</span><span class="ad-muted" style="margin-inline-start:auto;color:var(--forma-color-text-secondary);font-size:.875rem">4 questions · 2 scored</span></div>
+    </section>
+    <aside class="forma-panel au-preview" aria-label="Respondent preview">
+      <div class="forma-panel__header"><span class="forma-eyebrow">Respondent preview</span></div>
+      <div class="forma-panel__body">
+        <fieldset class="forma-ordinal-scale forma-ordinal-scale--5"><legend class="forma-ordinal-scale__legend">I knew who to ask when I was stuck.</legend>
+          <div class="forma-ordinal-scale__options">
+            <label class="forma-ordinal-option"><input type="radio" name="p"><span class="forma-ordinal-option__marker">0</span><span class="forma-ordinal-option__label">Never</span></label>
+            <label class="forma-ordinal-option"><input type="radio" name="p" checked><span class="forma-ordinal-option__marker">3</span><span class="forma-ordinal-option__label">Often</span></label>
+            <label class="forma-ordinal-option"><input type="radio" name="p"><span class="forma-ordinal-option__marker">4</span><span class="forma-ordinal-option__label">Almost always</span></label>
+          </div></fieldset>
+      </div>
+    </aside>
+  </div>
+</main>
+</body>
+</html>

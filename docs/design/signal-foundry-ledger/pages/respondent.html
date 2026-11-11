@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" data-forma-brand="echelon" data-forma-type="application">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal · proposed respondent experience</title>
+{{CSS}}
+<style>
+  .rs-top { display:flex; align-items:center; gap:1rem; padding: 1rem clamp(1rem,4vw,2.5rem); border-bottom:1px solid var(--forma-color-border-subtle); background: var(--forma-color-surface-raised); }
+  .rs-top .rs-survey { font-weight:650; }
+  .rs-top .rs-save { margin-inline-start:auto; font-size:.875rem; color: var(--forma-color-text-secondary); }
+  .rs-main { max-width: 46rem; margin-inline:auto; padding: 2rem 1rem 4rem; display:grid; gap:1.5rem; }
+  .rs-steps { display:grid; grid-template-columns: repeat(4, 1fr); gap:.5rem; list-style:none; margin:0; padding:0; }
+  .rs-steps li { display:grid; gap:.4rem; font-size:.8125rem; color: var(--forma-color-text-secondary); }
+  .rs-steps li::before { content:""; block-size:4px; border-radius:99px; background: var(--forma-color-surface-sunken); }
+  .rs-steps li[data-state="done"]::before { background: var(--forma-color-accent-rule); }
+  .rs-steps li[data-state="current"]::before { background: linear-gradient(90deg, var(--forma-color-accent-rule) 40%, var(--forma-color-surface-sunken) 40%); }
+  .rs-steps li[data-state="current"] { color: var(--forma-color-text-heading); font-weight:650; }
+  .rs-card { padding: clamp(1.25rem,4vw,2rem); display:grid; gap:1.25rem; }
+  .rs-card .forma-ordinal-scale__legend { font-family: var(--forma-type-family-heading); font-size: clamp(1.375rem, 3vw, 1.75rem); line-height:1.25; font-weight: var(--forma-type-weight-heading); letter-spacing: var(--forma-type-tracking-display); color: var(--forma-color-text-heading); margin-bottom:1rem; }
+  .rs-card .forma-ordinal-option { border-radius: var(--forma-shape-radius-control); }
+  .rs-nav { display:flex; gap:.75rem; justify-content:space-between; flex-wrap:wrap; }
+  .rs-note { font-size:.875rem; color: var(--forma-color-text-secondary); margin:0; }
+</style>
+</head>
+<body>
+<header class="rs-top">
+  <span class="forma-app-identity">{{MARK}}<span class="forma-app-identity__name">Signal</span></span>
+  <span class="rs-survey">· Onboarding pulse</span>
+  <span class="rs-save">Answers are saved in your link</span>
+</header>
+<main class="rs-main">
+  <ol class="rs-steps" aria-label="Sections"><li data-state="done">First week</li><li data-state="current" aria-current="step">Tools &amp; access</li><li>Team &amp; manager</li><li>Overall</li></ol>
+  <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="forma-eyebrow">Page 2 of 4 · Tools &amp; access</span><span class="rs-note" role="status">6 of 14 answered</span></div>
+  <section class="forma-panel rs-card forma-question" aria-label="Question">
+    <fieldset class="forma-ordinal-scale forma-ordinal-scale--5">
+      <legend class="forma-ordinal-scale__legend">I had the access I needed to do my work by the end of my first week.</legend>
+      <div class="forma-ordinal-scale__options">
+        <label class="forma-ordinal-option"><input type="radio" name="q" value="0"><span class="forma-ordinal-option__marker" aria-hidden="true">0</span><span class="forma-ordinal-option__label">Never or almost never</span></label>
+        <label class="forma-ordinal-option"><input type="radio" name="q" value="1"><span class="forma-ordinal-option__marker" aria-hidden="true">1</span><span class="forma-ordinal-option__label">Rarely</span></label>
+        <label class="forma-ordinal-option"><input type="radio" name="q" value="2"><span class="forma-ordinal-option__marker" aria-hidden="true">2</span><span class="forma-ordinal-option__label">Sometimes</span></label>
+        <label class="forma-ordinal-option"><input type="radio" name="q" value="3" checked><span class="forma-ordinal-option__marker" aria-hidden="true">3</span><span class="forma-ordinal-option__label">Often</span></label>
+        <label class="forma-ordinal-option"><input type="radio" name="q" value="4"><span class="forma-ordinal-option__marker" aria-hidden="true">4</span><span class="forma-ordinal-option__label">Almost always</span></label>
+      </div>
+    </fieldset>
+    <p class="rs-note">“Don’t know”, “not observed” and “not applicable” are not counted as zero.</p>
+  </section>
+  <div class="rs-nav"><button class="forma-button" data-forma-emphasis="tertiary">Back</button><button class="forma-button" data-forma-emphasis="primary">Next question</button></div>
+</main>
+</body>
+</html>
