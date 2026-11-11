@@ -1,0 +1,13 @@
+/* Page-composition rules for the review mockups (would live in Signal's page CSS). */
+:is(.ad-main, .au-main, .re-main, .rs-main, .au-layout, .re-top, .re-grid) > * { min-inline-size: 0; }
+:is(.ad-title, .au-head, .re-head) > * { min-inline-size: 0; }
+:is(.ad-title, .au-head, .re-head) h1 { overflow-wrap: anywhere; }
+.rs-steps { grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)) !important; }
+.forma-nav-tabs a { white-space: nowrap; }
+.ad-work li { grid-template-columns: auto minmax(0, 1fr) !important; }
+.ad-work li > :last-child { grid-column: 2; justify-self: start; }
+@media (min-width: 720px) { .ad-work li { grid-template-columns: auto minmax(0, 1fr) auto !important; } .ad-work li > :last-child { grid-column: auto; } }
+.au-q { grid-template-columns: auto minmax(0, 1fr) auto !important; }
+.au-field :is(input, textarea) { inline-size: 100%; box-sizing: border-box; }
+.forma-panel > * { min-inline-size: 0; }
+.forma-panel :is(h2, h3, li) { overflow-wrap: anywhere; }
