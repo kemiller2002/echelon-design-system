@@ -43,7 +43,7 @@ Forma components (`forma-button`, `forma-ordinal-scale`) are used as designed.
 - **Echelon theme 1.1.0:** `dist/echelon-fonts.css` and `dist/echelon-app.css`
   (`@layer echelon.app`, scoped to `[data-forma-brand="echelon"]`).
 - **echelon-current 1.39.0** (echelon-registry #113), qualified by Conditor
-  v0.10.25 (conditor #139).
+  v0.10.25 (conditor #138; scaffold note in #139).
 - **Signal**, each change independently reviewed and verified by its
   deployed-site check: admin shell #136, authoring #137, respondent #139 and
   #141, results #140 and #142. Signal's visual evidence lives on its
